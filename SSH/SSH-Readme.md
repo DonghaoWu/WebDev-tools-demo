@@ -13,7 +13,7 @@
 
 - 另外一种 ssh 方式，如果没有设置好 key pairs 的设置是无法进行所有跟 Git 的互动，但一旦完成了 `GitHub SSH keys`，相当于远程账户把本地电脑归入白名单。相对而言，SSH的方式更安全更值得推荐。
 
-- 目前而言，首要目的是为了免输入密码和用户名，次要目标是安全。
+- 目前而言，首要目的是安全，次要目标是为了免输入密码和用户名。
 
 ### `Brief Contents & codes position`
 - 1.1 How to connect remote server?
