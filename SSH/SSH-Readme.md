@@ -57,9 +57,9 @@ $ ssh root@167.99.146.57
 
 - If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
 
-Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
+- Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
 
-You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
+- You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
 
 A. __`GitHub HTTPS Caching.`__
 
@@ -105,15 +105,15 @@ B. __`GitHub SSH keys.`__
 
 #### `C. What are symmetrical encryption, asymmetrical encryption and hashing?`
 
-1. symmetrical encryption (secret key) need key change 双方都有同一把key.
+1. `symmetrical encryption` (secret key) need key change 双方都有同一把key.
 
-2. asymmetrical encryption 每人有两把 key（pubilc key & private key）
+2. `asymmetrical encryption` 每人有两把 key（pubilc key & private key）
 原理： 本地有两把钥匙，设定为红色，目标也有两把钥匙，设定为蓝色。当红色电脑需要传输文件到蓝色电脑时，会首先从蓝色电脑获得蓝色`public key`,
 然后用蓝色`public key`加密需要加密的文件，然后传输到蓝色电脑，最后用蓝色`private key`解密。
 
-通俗意思是：我不相信任何电脑，任何电脑向我发送文件必须使用我的箱子（public key）装着，然后发过来我才能接受并且解密。`实现了git account（远程） 对 实体电脑（本地）的信任，相当于把本地电脑列入远程电脑的信任白列表`。
+3. 通俗意思是：我不相信任何电脑，任何电脑向我发送文件必须使用我的箱子（public key）装着，然后发过来我才能接受并且解密。`实现了git account（远程） 对 实体电脑（本地）的信任，相当于把本地电脑列入远程电脑的信任白列表`。
 
-3. 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
+4. `hashing` 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
 但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
 解密的，不排除有些算法把这两个 key 融合在一起使用。
 
