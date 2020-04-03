@@ -8,660 +8,119 @@
 
 - 
 
+### `本章背景：`
+- 从 git 上下载 repo 现在有两种方式，为 https 和 ssh， https 的方式比较方便下载，但在上传（git pull & git fetch）的时候需要输入密码和用户名，这个可以通过 `GitHub HTTPS Caching` 实现。
+
+- 另外一种 ssh 方式，如果没有设置好 key pairs 的设置是无法进行所有跟 Git 的互动，但一旦完成了 `GitHub SSH keys`，相当于远程账户把本地电脑归入白名单。相对而言，SSH的方式更安全更值得推荐。
+
+- 目前而言，首要目的是为了免输入密码和用户名，次要目标是安全。
+
 ### `Brief Contents & codes position`
-- 1.1 
-- 1.2 
+- 1.1 How to connect remote server?
+- 1.2 Why is Git always asking for my password?
 - 1.3 
 
-### `Step1: .`
+### `Step1: How to connect remote server?`
 
-a. __`Install`__
+A. __`Connect command.`__
+
 ```bash
-(venv) $ pip install flask-bootstrap
+$ ssh root@167.99.146.57  # ip address is from remote server, now you can control the remote server.
+
+(remote) $ ls
+(remote) $ mkdir test
+(remote) $ ls
 ```
-b. __`Create instance right after the flask application is created.`__
-#### `(*11.1)Location: ./app/__init__.py`
 
-```py
-from flask import Flask
-from config import Config
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager
+B. __`Install git in remote server.`__
 
-from flask_mail import Mail
+```bash
+(remote) $ sudo apt-get install git
+(remote) $ git clone `ssh-url`  # failed, have not configured ssh public key
+(remote) $ git clone `https-url` # success, but it will always ask you for username and password if you don't finish configure on the remote server.
+```
 
-from flask_bootstrap import Bootstrap
+C. __`Copy some local files and paste them on remote server.`__
 
-import logging
-from logging.handlers import SMTPHandler
-from logging.handlers import RotatingFileHandler
-import os
+```bash
+$ cd test_folder 
+$ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login = LoginManager(app)
-login.login_view = 'login'
-mail = Mail(app)
-bootstrap = Bootstrap(app)
-
-if not app.debug:
-    if app.config['MAIL_SERVER']:
-        auth = None
-        if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-            auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
-        secure = None
-        if app.config['MAIL_USE_TLS']:
-            secure = ()
-        mail_handler = SMTPHandler(
-            mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-            fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-            toaddrs=app.config['ADMINS'], subject='Microblog Failure',
-            credentials=auth, secure=secure)
-        mail_handler.setLevel(logging.ERROR)
-        app.logger.addHandler(mail_handler)
-
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=10240, backupCount=10)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('Microblog startup')
-
-from app import routes, models, errors
+$ ssh root@167.99.146.57
+(remote)$ ls # Check if it is successful
 ```
 
 #### `Comment:`
-1. 引进 bootstrap 并 使用：
-```py
-from flask_bootstrap import Bootstrap
-# ...
-bootstrap = Bootstrap(app)
+1. 
+
+### `Step2: Why is Git always asking for my password?.`
+
+- If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
+
+Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
+
+You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
+
+A. __`GitHub HTTPS Caching.`__
+
+1. Install `osxkeychain`
+
+```bash
+$ git credential-osxkeychain  # Check if the helper is already installed
+
+$ curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain # Download the helper
+
+$ chmod u+x git-credential-osxkeychain # Fix the permissions on the file so it can be run
+
+$ sudo mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain" # Move the helper to the path where git is installed
+
+$ git config --global credential.helper osxkeychain # Set git to use the osxkeychain credential helper
 ```
 
-### `Step2: Change html code in normal templates.`
+2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
 
-#### `(*11.2)Location: ./app/templates/base.html`
+B. __`GitHub SSH keys.`__
 
-```html
-{% extends 'bootstrap/base.html' %}
+1. 
 
-{% block title %}
-    {% if title %}{{ title }} - Microblog{% else %}Welcome to Microblog{% endif %}
-{% endblock %}
-
-{% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Microblog</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('explore') }}">Explore</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-{% endblock %}
-
-{% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
-{% endblock %}
-```
 
 #### `Comment:`
-1. Old version
-```html
-<html>
+1. 
 
-<head>
-    {% if title %}
-    <title>{{ title }} - microblog</title>
-    {% else %}
-    <title>microblog</title>
-    {% endif %}
-</head>
 
-<body>
-    <div>
-        Microblog:
-        <a href="{{ url_for('index') }}">Home</a>
-        {% if current_user.is_anonymous %}
-            <a href="{{ url_for('login') }}">Login</a>
-        {% else %}
+### `Step3. .`
 
-            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% endif %}
-    </div>
-    <hr> {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %} 
-    {% endwith %} 
-    {% block content %}{% endblock %}
-</body>
+#### ``
 
-</html>
-```
-
-2. 最大的不同是新版把文件分成3部分：__`{% block title %}`__  __`{% block navbar %}`__  __`{% block content %}`__ ，而且引进了
-
-```html
-{% extends 'bootstrap/base.html' %}
-```
-- 这样就可以直接使用 `bootstrap`中的自定义 `class`。
-
-3. 把所有子组件都称为 `app_content`。
-
-#### `(*11.3)Location: ./app/templates/404.html`
-
-```html
-{% extends "base.html" %}
-
-{% block app_content %}
-    <h1>File Not Found</h1>
-    <p><a href="{{ url_for('index') }}">Back</a></p>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>File Not Found</h1>
-    <p><a href="{{ url_for('index') }}">Back</a></p>
-{% endblock %}
-```
-
-#### `(*11.4)Location: ./app/templates/500.html`
-
-```html
-{% extends "base.html" %}
-
-{% block app_content %}
-    <h1>An unexpected error has occurred</h1>
-    <p>The administrator has been notified. Sorry for the inconvenience!</p>
-    <p><a href="{{ url_for('index') }}">Back</a></p>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>An unexpected error has occurred</h1>
-    <p>The administrator has been notified. Sorry for the inconvenience!</p>
-    <p><a href="{{ url_for('index') }}">Back</a></p>
-{% endblock %}
-```
-
-#### `(*11.5)Location: ./app/templates/_post.html`
-
-```html
-    <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('user', username=post.author.username) }}">
-                    <img src="{{ post.author.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                <a href="{{ url_for('user', username=post.author.username) }}">
-                    {{ post.author.username }}
-                </a>
-                says:
-                <br>
-                {{ post.body }}
-            </td>
-        </tr>
-    </table>
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-<table>
-    <tr valign="top">
-        <td>
-            <img src="{{ post.author.avatar(36) }}">
-        </td>
-        <td>{{ post.author.username }} says:
-            <br>{{ post.body }}</td>
-    </tr>
-</table>
-```
-
-#### `(*11.6)Location: ./app/templates/user.html`
-
-```html
-{% extends "base.html" %}
-
-{% block app_content %}
-    <table class="table table-hover">
-        <tr>
-            <td width="256px"><img src="{{ user.avatar(256) }}"></td>
-            <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}
-                    <p>{{ user.about_me }}</p>
-                {% endif %}
-                {% if user.last_seen %}
-                    <p>Last seen on: {{ user.last_seen }}</p>
-                {% endif %}
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-                {% if user == current_user %}
-                    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                    <p><a href="{{ url_for('follow', username=user.username) }}">Follow</a></p>
-                {% else %}
-                    <p><a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></p>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> Newer posts
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    Older posts <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                {% if user == current_user %}
-                <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-    <hr>
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-{% endblock %}
-```
-
-2. 总结：在以上的修改中一般都是如下：
-
-```diff
-- {% block content %}
-+ {% block app_content %}
-```
-
-3. 这是因为在bootstrap中已经有自定义的 __`content`__ 模块了，所以需要在 __`base.html`__ 中新定义另外模块 __`app_content`__ 来连接子模块。
-
-4. Finally, in the content block (__`base.html`__) I'm defining a top-level container, and inside it I have the logic that renders flashed messages, which are now going to appear styled as Bootstrap alerts. That is followed with a new app_content block that is defined just so that derived templates can define their own content.
-
-
-### `Step3. Change html code in form templates.`
-
-#### `(*11.7)Location: ./app/templates/index.html`
-
-```html
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> Newer posts
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    Older posts <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
-{% endblock %}
-```
-
-#### `(*11.8)Location: ./app/templates/register.html`
-
-```html
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Register</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Register</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=64) }}<br>
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=32) }}<br>
-            {% for error in form.password2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
-```
-
-#### `(*11.9)Location: ./app/templates/login.html`
-
-```html
-{% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Sign In</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-    <br>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
-    <p>
-        Forgot Your Password?
-        <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>
-    </p>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
-{% endblock %}
-```
-
-#### `(*11.10)Location: ./app/templates/edit_profile.html`
-
-```html
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Edit Profile</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-{% endblock %}
-```
-
-#### `Comment:`
-1. Old version
-
-```html
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Edit Profile</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
-```
-
-2. 总结：在以上的修改中一般都是：
-
-```diff
-+ {% import 'bootstrap/wtf.html' as wtf %}
-```
-
-3. 然后用
-```html
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-```
-
-- 代替原代码表示表格。比如在`./app/templates/edit_profile.html`中代替：
-
-```html
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-```
-
-4. The import statement near the top works similarly to a Python import on the template side. That adds a wtf.quick_form() macro that in a single line of code renders the complete form, __`including support for display validation errors, and all styled as appropriate for the Bootstrap framework.`__
-
-
-#### `(*11.11)Location: ./app/templates/reset_password.html`
-
-```html
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Reset Your Password</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-{% endblock %}
-```
-
-#### `(*11.12)Location: ./app/templates/reset_password_request.html`
-
-```html
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
-{% block app_content %}
-    <h1>Reset Password</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-{% endblock %}
-```
 
 
 ### `Step4 Concept questions.`
 
-#### `A. Why do we need SSH?`
+#### `A. What is SSH?`
 
-1. The idea is to use a three-level hierarchy instead of just two. The bootstrap/base.html template provides the basic structure of the page, which includes the Bootstrap framework files. This template exports a few blocks for derived templates such as title, navbar and content (see the complete list of blocks here). I'm going to change my base.html template to derive from bootstrap/base.html and provide implementations for the title, navbar and content blocks. In turn, base.html will export its own app_content block for its derived templates to define the page content.
+1. 
 
-#### `B. What is the benefits of using Bootstrap?`
-1. These are some of the benefits of using Bootstrap to style your web pages:
+#### `B. What does SSH use for?`
+1. 
 
-```diff
-+ Similar look in all major web browsers
-+ Handling of desktop, tablet and phone screen sizes
-+ Customizable layouts
-+ Nicely styled navigation bars, forms, buttons, alerts, popups, etc.
-```
+#### `C. What are symmetrical encryption, asymmetrical encryption and hashing?`
 
-### `Step5 TEST.`
+1. symmetrical encryption (secret key) need key change 双方都有同一把key.
+
+2. asymmetrical encryption 每人有两把 key（pubilc key & private key）
+原理： 本地有两把钥匙，设定为红色，目标也有两把钥匙，设定为蓝色。当红色电脑需要传输文件到蓝色电脑时，会首先从蓝色电脑获得蓝色`public key`,
+然后用蓝色`public key`加密需要加密的文件，然后传输到蓝色电脑，最后用蓝色`private key`解密。
+
+通俗意思是：我不相信任何电脑，任何电脑向我发送文件必须使用我的箱子（public key）装着，然后发过来我才能接受并且解密。`实现了git account（远程） 对 实体电脑（本地）的信任，相当于把本地电脑列入远程电脑的信任白列表`。
+
+3. 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
+但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
+解密的，不排除有些算法把这两个 key 融合在一起使用。
+
+### `Step5 DEMO.`
 
 ```bash
-(venv) $ flask run
+
 ```
 
 1. Login.html
@@ -669,24 +128,4 @@ bootstrap = Bootstrap(app)
 <img src="../assets/p135.png" width=90%>
 </p>
 
-2. index.html
-<p align="center">
-<img src="../assets/p136.png" width=90%>
-</p>
-
-
-3. profile.html
-<p align="center">
-<img src="../assets/p137.png" width=90%>
-</p>
-
-4. edit_profile.html
-<p align="center">
-<img src="../assets/p138.png" width=90%>
-</p>
-
-5. register.html
-<p align="center">
-<img src="../assets/p139.png" width=90%>
-</p>
 

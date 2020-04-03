@@ -56,6 +56,9 @@ password 是不安全的，使用 SSH 相当于安全地授权。
 
 如何使用 SSH 连接 remote server，相当于把本地电脑列入远程电脑的信任白列表：
 
+
+
+
 `在本地创建 key pairs`
 
 
