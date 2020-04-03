@@ -43,6 +43,8 @@ B. __`Install git in remote server.`__
 C. __`Copy some local files and paste them on remote server.`__
 
 ```bash
+$ cd ..
+$ mkdir test_folder
 $ cd test_folder 
 $ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
 
@@ -61,7 +63,7 @@ $ ssh root@167.99.146.57
 
 - You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
 
-A. __`GitHub HTTPS Caching.`__
+A. __`Solution 1: GitHub HTTPS Caching.`__
 
 1. Install `osxkeychain`
 
@@ -79,7 +81,7 @@ $ git config --global credential.helper osxkeychain # Set git to use the osxkeyc
 
 2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
 
-B. __`GitHub SSH keys.`__
+B. __`Solution 2: GitHub SSH keys.`__
 
 1. 
 
