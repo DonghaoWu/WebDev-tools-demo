@@ -25,9 +25,9 @@
 A. __`Connect command.`__
 
 ```bash
-$ ssh root@167.99.146.57  # ip address is from remote server, now you can control the remote server.
+$ ssh root@167.99.146.57  # ip address is from remote server 
 
-(remote) $ ls
+(remote) $ ls # now you can control the remote server.
 (remote) $ mkdir test
 (remote) $ ls
 ```
