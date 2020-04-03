@@ -644,7 +644,7 @@ bootstrap = Bootstrap(app)
 
 ### `Step4 Concept questions.`
 
-#### `A. How to fit the Bootstrap base template?`
+#### `A. Why do we need SSH?`
 
 1. The idea is to use a three-level hierarchy instead of just two. The bootstrap/base.html template provides the basic structure of the page, which includes the Bootstrap framework files. This template exports a few blocks for derived templates such as title, navbar and content (see the complete list of blocks here). I'm going to change my base.html template to derive from bootstrap/base.html and provide implementations for the title, navbar and content blocks. In turn, base.html will export its own app_content block for its derived templates to define the page content.
 
