@@ -6,7 +6,7 @@
 
 ### `Check Dependencies:`
 
-- 
+- None
 
 ### `本章背景：`
 - 从 git 上下载 repo 现在有两种方式，为 https 和 ssh， https 的方式比较方便下载，但在上传（git pull & git fetch）的时候需要输入密码和用户名，这个可以通过 `GitHub HTTPS Caching` 实现。
