@@ -155,9 +155,6 @@ B. __`Solution 2: GitHub SSH keys.`__
 ```bash
 (local) $ ssh-add ~/ .ssh/id_rsa ## 设定本地目前生效的唯一 private key。
 ```
-#### ``
-
-
 
 ### `Step4 Concept questions.`
 
@@ -182,17 +179,5 @@ B. __`Solution 2: GitHub SSH keys.`__
 但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
 解密的，不排除有些算法把这两个 key 融合在一起使用。
 
-#### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote？?`
-
-### `Step5 DEMO.`
-
-```bash
-
-```
-
-1. Login.html
-<p align="center">
-<img src="../assets/p135.png" width=90%>
-</p>
-
+#### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote?`
 
