@@ -109,6 +109,16 @@ B. __`Solution 2: GitHub SSH keys.`__
 <img src="../assets/w3.png" width=90%>
 </p>
 
+-----------------------------------------------------------------
+<p align="center">
+<img src="../assets/w4.png" width=90%>
+</p>
+
+-----------------------------------------------------------------
+<p align="center">
+<img src="../assets/w5.png" width=90%>
+</p>
+
 #### `Comment:`
 1. Other ssh comands:
 ```bash
