@@ -16,10 +16,10 @@
 - 
 
 ### `Brief Contents & codes position`
-- 1.1 Minimize text
-- 1.2 Minimize image
-- 1.3 Media queries
-- 1.4 Content-delivery api
+- 1.1 Minimize text.
+- 1.2 Minimize images.
+- 1.3 Media queries.
+- 1.4 Content-delivery api.
 
 ### `Step1: Minimize text`
 
@@ -38,13 +38,15 @@ A. Tool: [Minify.js](https://www.minifier.org/)
 #### `Comment:`
 1. 
 
-### `Step2: Minimize image.`
+### `Step2: Minimize images.`
 
 <p align="center">
 <img src="../assets/w8.png" width=90%>
 </p>
 
 -------------------------------------------------------------
+
+__`Location: ./index.html`__
 
 <p align="center">
 <img src="../assets/w9.png" width=90%>
