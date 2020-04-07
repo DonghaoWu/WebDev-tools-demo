@@ -53,6 +53,11 @@ __`Location: ./example1.1/index.html`__
 </p>
 
 -------------------------------------------------------------
+<p align="center">
+<img src="../assets/w14.png" width=90%>
+</p>
+
+-------------------------------------------------------------
 
 <p align="center">
 <img src="../assets/w10.png" width=90%>
