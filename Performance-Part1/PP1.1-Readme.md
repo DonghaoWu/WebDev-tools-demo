@@ -101,8 +101,7 @@ h1 {
 ```
 
 #### `Comment:`
-1. 
-
+1. 这样做的好处就是可以根据不同的客户端的大小：电脑/平板/手机，设定传输对应大小跟像素的图片，以达到提升速度却不影响体验的目的。
 
 ### `Step4. Less trips.`
 
@@ -182,43 +181,16 @@ __`Location: ./example1.1/index.html`__
 
 ### `Step5. Content-delivery api.`
 
+A. Tool: [imgix](https://www.imgix.com/)
 
-
+<p align="center">
+<img src="../assets/w13.png" width=90%>
+</p>
 
 ### `Step6 Concept questions.`
 
-#### `A. What is SSH?`
+#### `A. `
 
-- The SSH protocol (also referred to as Secure Shell) is a method for secure remote login from one computer to another. It provides several alternative options for strong authentication, and it protects the communications security and integrity with strong encryption. It is a secure alternative to the non-protected login protocols (such as telnet, rlogin) and insecure file transfer methods (such as FTP).
+- 
 
-- The protocol works in the client-server model, which means that the connection is established by the SSH client connecting to the SSH server. The SSH client drives the connection setup process and uses public key cryptography to verify the identity of the SSH server. After the setup phase the SSH protocol uses strong symmetric encryption and hashing algorithms to ensure the privacy and integrity of the data that is exchanged between the client and server.
-
-#### `B. What does SSH use for?`
-- providing secure access for users and automated processes
-
-- interactive and automated file transfers
-
-- issuing remote commands
-
-- managing network infrastructure and other mission-critical system components.
-
-- Strong authentication with SSH keys
-
-- SSH provides strong encryption and integrity protection
-
-#### `C. What are symmetrical encryption, asymmetrical encryption and hashing?`
-
-- `symmetrical encryption` (secret key) need key change 双方都有同一把key.
-
-- `asymmetrical encryption` 每人有两把 key（pubilc key & private key）
-原理： 本地有两把钥匙，设定为红色，目标也有两把钥匙，设定为蓝色。当红色电脑需要传输文件到蓝色电脑时，会首先从蓝色电脑获得蓝色`public key`,
-然后用蓝色`public key`加密需要加密的文件，然后传输到蓝色电脑，最后用蓝色`private key`解密。
-
-- 通俗意思是：我不相信任何电脑，任何电脑向我发送文件必须使用我的箱子（public key）装着，然后发过来我才能接受并且解密。`实现了git account（远程） 对 实体电脑（本地）的信任，相当于把本地电脑列入远程电脑的信任白列表`。
-
-- `hashing` 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
-但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
-解密的，不排除有些算法把这两个 key 融合在一起使用。
-
-#### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote?`
 

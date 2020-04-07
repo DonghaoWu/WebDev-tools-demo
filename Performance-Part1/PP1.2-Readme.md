@@ -86,6 +86,19 @@ developing tools -> network tag -> refresh -> slow 3G -> disable cache -> hard r
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 `critical render path `
 
 html -> dom 
