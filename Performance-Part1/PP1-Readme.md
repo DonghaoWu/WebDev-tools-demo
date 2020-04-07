@@ -112,6 +112,38 @@ reading js file -> loading DOM content -> finish all work, 主要理解举例的
 
 Avoid long running JavaScript：一些弹窗的 js 功能 会使整个网页的功能都打断。
 
+提问：整个过程是怎样的？
+html(DOM) -> css(CSSOM) -> js -> DOMContentLoaded -> Render Tree -> layout -> paint -> js -> load -> Render tree...
+
+检测网页速度的工具：
+
+PageSpeed Insights
+WebPagetest
+
+faster website:
+
+1. html file , put all css files into one file
+
+2. move all scripts to the bottom.
+
+3. check minimize files
+
+4. above the fold loading
+
+5. you don't need jquery
+
+6. check the answer
+
+
+`HTTP2:`
+
+`HTTP3:`
+
+
+
+
+
+
 
 
 
