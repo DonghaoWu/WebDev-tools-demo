@@ -38,77 +38,29 @@ A. Tool: [Minify.js](https://www.minifier.org/)
 #### `Comment:`
 1. 
 
-### `Step2: Why is Git always asking for my password?.`
-
-- If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
-
-- Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
-
-- You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
-
-A. __`Solution 1: GitHub HTTPS Caching.`__
-
-1. Install `osxkeychain`
-
-```bash
-(local) $ git credential-osxkeychain  # Check if the helper is already installed
-
-(local) $ curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain # Download the helper
-
-(local) $ chmod u+x git-credential-osxkeychain # Fix the permissions on the file so it can be run
-
-(local) $ sudo mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain" # Move the helper to the path where git is installed
-
-(local) $ git config --global credential.helper osxkeychain # Set git to use the osxkeychain credential helper
-```
-
-2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
-
-B. __`Solution 2: GitHub SSH keys.`__
-
-1. Generate key pairs and copy the content of public key.
-
-```bash
-(local) $ cd .ssh
-(local) $ ls
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub
-(local) $ ssh-add ~/ .ssh/id_rsa
-```
-
-2. Paste the public key in github ssh key setting.
+### `Step2: Minimize image.`
 
 <p align="center">
-<img src="../assets/w1.png" width=90%>
+<img src="../assets/w8.png" width=90%>
 </p>
 
------------------------------------------------------------------
+-------------------------------------------------------------
+
 <p align="center">
-<img src="../assets/w2.png" width=90%>
+<img src="../assets/w9.png" width=90%>
 </p>
 
------------------------------------------------------------------
+-------------------------------------------------------------
+
 <p align="center">
-<img src="../assets/w3.png" width=90%>
+<img src="../assets/w10.png" width=90%>
 </p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w4.png" width=90%>
-</p>
-
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w5.png" width=90%>
-</p>
+-------------------------------------------------------------
 
 #### `Comment:`
-1. Other ssh comands:
-```bash
-(local) $ ssh-add -l
-(local) $ ssh-add -D
-(local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
-```
+1.
+
 
 ### `Step3. Using SSH to connect remote server.`
 
