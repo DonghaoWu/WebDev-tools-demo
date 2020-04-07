@@ -66,10 +66,10 @@ __`Location: ./example1.1/index.html`__
 -------------------------------------------------------------
 
 #### `Comment:`
-1.  JPG: photos,complex and useful colors
-    SVG: logo, 但可放大缩小而不影响清晰度
-    PNG: logo
-    Gif: 小动图
+1.  - JPG: photos,complex and useful colors
+    - SVG: logo, 但可放大缩小而不影响清晰度
+    - PNG: logo
+    - Gif: 小动图
 
 - free tools: 1. JPEG-optimizer website
             2. TinyPNG
