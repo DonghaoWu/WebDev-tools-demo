@@ -68,7 +68,7 @@ free tools: 1. `imgix`    content-delivery api
             2. remove metadata (exif data)
 
 
-The travleling deliverryman
+The travleling deliveryman
 
 less trips.
 

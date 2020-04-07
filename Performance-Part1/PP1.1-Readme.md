@@ -46,7 +46,7 @@ A. Tool: [Minify.js](https://www.minifier.org/)
 
 -------------------------------------------------------------
 
-__`Location: ./index.html`__
+__`Location: ./example1.1/index.html`__
 
 <p align="center">
 <img src="../assets/w9.png" width=90%>
@@ -61,37 +61,121 @@ __`Location: ./index.html`__
 -------------------------------------------------------------
 
 #### `Comment:`
-1.
+1.  JPG: photos,complex and useful colors
+    SVG: logo, 但可放大缩小而不影响清晰度
+    PNG: logo
+    Gif: 小动图
+
+- free tools: 1. JPEG-optimizer website
+            2. TinyPNG
+
+- Always lower jpeg quality 30-60%
 
 
-### `Step3. Using SSH to connect remote server.`
+### `Step3. Media queries.`
 
-1. Generate key pairs locally.
+__`Location: ./example1.1/style.css`__
 
-```bash
-(local) $ cd ～/.ssh
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ ls   ## (这时就有两个新的文件： id_rsa 和 id_rsa.pub）
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub ## 本地复制一份 public key 的内容
+```css
+body {
+  background: yellow;
+}
+
+@media screen and (min-width: 900px) {
+  body {
+    background: url('./large-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    background: url('./large-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+h1 {
+  color: red;
+}
 ```
 
-2. Paste the content to remote server.
+#### `Comment:`
+1. 
 
-```bash
-(local) $ ssh root@167.99.146.57
-(remote) $ mkdir .ssh
-(remote) $ cd /.ssh
-(remote) $ nano authorized_keys 
-## 输入这个命令之后，进入编辑文件界面， 在编辑文件界面， 先 command + c 
-## 把 public key放到文件里面，然后 command + x 退出编辑界面。
-(remote) $ exit ## 退出远程命令 terminal， logout
+
+### `Step4. Less trips.`
+
+__`Location: ./example1.1/index.html`__
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network Performance</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
+</head>
+<body>
+  <h1>Helloooo</h1>
+
+  <!-- Large Image -->
+  <img src="./puppy.jpg" width="131px" height="200px">
+
+  <!-- javascript -->
+  <script type="text/javascript" src="./script.js"></script>
+</body>
+</html>
 ```
 
-3. Set up the local private key.
+#### `Comment:`
+1. Previous code:
 
-```bash
-(local) $ ssh-add ~/ .ssh/id_rsa ## 设定本地目前生效的唯一 private key。
+```html
+<!-- #1 Minimize all text -->
+<!-- #2 Minimize images -->
+<!-- #3 Media Queries -->
+<!-- #4 Minimize # of files -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network Performance</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <link rel="stylesheet" type="text/css" href="./style2.css">
+
+</head>
+<body>
+  <h1>Helloooo</h1>
+
+  <!-- Large Image -->
+  <img src="./puppy.jpg" width="300px" height="200px">
+
+  <!-- javascript -->
+  <script type="text/javascript" src="./script.js"></script>
+  <script type="text/javascript" src="./script2.js"></script>
+  <script type="text/javascript" src="./script3.js"></script>
+</body>
+</html>
 ```
+
+2. 取消了 style2.css, script2.js, script3.js 的连接，把 script2.js, script3.js 的内容合并到 script.js 中。
+
+3. 效果对比：
+
+<p align="center">
+<img src="../assets/w11.png" width=90%>
+</p>
+
+-------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/w12.png" width=90%>
+</p>
+
 
 ### `Step4 Concept questions.`
 

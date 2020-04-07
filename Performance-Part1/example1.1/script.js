@@ -1,4 +1,6 @@
-console.log('this is script 1')
+console.log('this is script 1');
+console.log('this is script 2');
+console.log('this is script 3');
 
 // Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 // tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
