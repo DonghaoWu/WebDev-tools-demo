@@ -74,7 +74,7 @@ less trips.
 
 do you have to download all files?
 
-newwork optimizations
+network optimizations
 
 1. minimize all text: website Minify
 2. minimize images: open the image -> tools -> adjust size(改变实际图片的大小让它跟 css 里面定义的一样。)
@@ -82,6 +82,8 @@ newwork optimizations
 4. minimize all of files：把所有 js 文件放一起，所有 css 文件放一起。
 
 developing tools -> network tag -> refresh -> slow 3G -> disable cache -> hard reload
+
+
 
 
 `critical render path `

@@ -1,6 +1,6 @@
 # Web development tools (Part 2)
 
-## `Section: Performance`(Performance-Part1)
+## `Section: Performance`(Performance-Part1.1)
 
 ### `Summary`: In this documentation, we improve website performance in some simple ways.
 
@@ -9,20 +9,21 @@
 - None
 
 ### `本章背景：`
-- 从 git 上下载 repo 现在有两种方式，为 https 和 ssh， https 的方式比较方便下载，但在上传（git pull & git fetch）的时候需要输入密码和用户名，这个可以通过 `GitHub HTTPS Caching` 实现。
+- 本章是第一部分第一小节，第一小节目的在于优化代码和文件的大小达到缩减传输文件总量大小从而提升速度，第二小节的目的在于根据 `Rendering path` 改善传输中的文件优先级和先后顺序达到提升用户浏览加载体验。
 
-- 另外一种 ssh 方式，如果没有设置好 key pairs 的设置是无法进行所有跟 Git 的互动，但一旦完成了 `GitHub SSH keys`，相当于远程账户把本地电脑归入白名单。相对而言，SSH的方式更安全更值得推荐。
+- 本小节包括的内容有：代码压缩工具，不同图片的使用法则，使用 `media query` 根据浏览器/平板电脑/手机的大小而分配对应大小和像素的图片
 
-- 目前而言，首要目的是安全，次要目标是为了免输入密码和用户名。
+- 
 
 ### `Brief Contents & codes position`
-- 1.1 How to connect remote server?
-- 1.2 Why is Git always asking for my password?
-- 1.3 Extra: Using SSH to connect remote server.
+- 1.1 Minimize text
+- 1.2 Minimize image
+- 1.3 Media queries
+- 1.4 Content-delivery api
 
-### `Step1: How to connect remote server?`
+### `Step1: Minimize text`
 
-A. __`Connect command.`__
+A. Tool: [Minify.js](https://www.minifier.org/)
 
 ```bash
 (local) $ ssh root@167.99.146.57  # ip address is from remote server 
