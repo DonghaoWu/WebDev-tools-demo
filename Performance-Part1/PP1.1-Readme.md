@@ -25,33 +25,15 @@
 
 A. Tool: [Minify.js](https://www.minifier.org/)
 
-```bash
-(local) $ ssh root@167.99.146.57  # ip address is from remote server 
+<p align="center">
+<img src="../assets/w6.png" width=90%>
+</p>
 
-(remote) $ ls # now you can control the remote server.
-(remote) $ mkdir test
-(remote) $ ls
-```
+-------------------------------------------------------------
 
-B. __`Install git in remote server.`__
-
-```bash
-(remote) $ sudo apt-get install git
-(remote) $ git clone `ssh-url`  # failed, have not configured ssh public key
-(remote) $ git clone `https-url` # success, but it will always ask you for username and password if you don't finish configure on the remote server.
-```
-
-C. __`Copy some local files and paste them on remote server.`__
-
-```bash
-(local) $ cd ..
-(local) $ mkdir test_folder
-(local) $ cd test_folder 
-(local) $ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
-
-(local) $ ssh root@167.99.146.57
-(remote)$ ls # Check if it is successful
-```
+<p align="center">
+<img src="../assets/w7.png" width=90%>
+</p>
 
 #### `Comment:`
 1. 
