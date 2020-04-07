@@ -19,7 +19,8 @@
 - 1.1 Minimize text.
 - 1.2 Minimize images.
 - 1.3 Media queries.
-- 1.4 Content-delivery api.
+- 1.4 Less trips.
+- 1.5 Content-delivery api.
 
 ### `Step1: Minimize text`
 
@@ -166,18 +167,26 @@ __`Location: ./example1.1/index.html`__
 
 3. 效果对比：
 
+- Before.
+
 <p align="center">
 <img src="../assets/w11.png" width=90%>
 </p>
 
 -------------------------------------------------------------
 
+- After.
+
 <p align="center">
 <img src="../assets/w12.png" width=90%>
 </p>
 
+### `Step5. Content-delivery api.`
 
-### `Step4 Concept questions.`
+
+
+
+### `Step6 Concept questions.`
 
 #### `A. What is SSH?`
 
