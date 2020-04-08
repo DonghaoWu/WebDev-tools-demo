@@ -23,7 +23,8 @@
 
 ### `Step1: Minimize text`
 
-A. Tool: Minify.js [https://www.minifier.org/](https://www.minifier.org/)
+A. Tool: Minify.js
+- [https://www.minifier.org/](https://www.minifier.org/)
 
 <p align="center">
 <img src="../assets/w6.png" width=90%>
@@ -186,7 +187,8 @@ __`Location: ./example1.1/index.html`__
 
 ### `Step5. Content-delivery api.`
 
-A. Tool: imgix [https://www.imgix.com/](https://www.imgix.com/)
+A. Tool: imgix 
+- [https://www.imgix.com/](https://www.imgix.com/)
 
 <p align="center">
 <img src="../assets/w13.png" width=90%>
