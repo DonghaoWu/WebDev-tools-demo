@@ -164,6 +164,8 @@ B. __`Solution 2: GitHub SSH keys.`__
 
 - The protocol works in the client-server model, which means that the connection is established by the SSH client connecting to the SSH server. The SSH client drives the connection setup process and uses public key cryptography to verify the identity of the SSH server. After the setup phase the SSH protocol uses strong symmetric encryption and hashing algorithms to ensure the privacy and integrity of the data that is exchanged between the client and server.
 
+------------------------------------------------------------
+
 #### `B. What does SSH use for?`
 - providing secure access for users and automated processes
 
@@ -176,6 +178,8 @@ B. __`Solution 2: GitHub SSH keys.`__
 - Strong authentication with SSH keys
 
 - SSH provides strong encryption and integrity protection
+
+------------------------------------------------------------
 
 #### `C. What are symmetrical encryption, asymmetrical encryption and hashing?`
 
@@ -190,6 +194,8 @@ B. __`Solution 2: GitHub SSH keys.`__
 - `hashing` 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
 但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
 解密的，不排除有些算法把这两个 key 融合在一起使用。
+
+------------------------------------------------------------
 
 #### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote?`
 
