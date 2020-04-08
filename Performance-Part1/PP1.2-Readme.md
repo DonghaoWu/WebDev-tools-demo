@@ -70,6 +70,8 @@ B. 当然这种情况只对于相对静态的网页而言，相对动态一点�
 - Paint
   - When we get to the paint stage, the browser has to pick up the layout result, and paint the pixels to the screen, beware in this stage that not all styles have the same paint times, also combinations of styles can have a greater paint time than the sum of their parts. For an instance mixing a border-radius with a box-shadow, can triple the paint time of an element instead of using just one of the latter.
 
+------------------------------------------------------------
+
 #### `B. How does the browser rendering engine work?`
 
 In order to render content the browser has to go through a series of steps:
@@ -79,13 +81,17 @@ In order to render content the browser has to go through a series of steps:
 4. Layout
 5. Paint.
 
+------------------------------------------------------------
+
 #### `C. Dealing with Javascript.`
 
 - Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for the DOM, then it has to download and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.
 
 - When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, this is why Javascript is parser blocking.
 
-#### 个人理解：
+------------------------------------------------------------
+
+#### `D. 个人理解`
   1. 浏览器的运作是这样的，收到 html 文件之后，就从上往下读取代码，这个过程叫做 parsing ，目的是为了建立 DOM。
   2. 在 parsing 过程中，如果遇到了 css 文件，parsing 会被打断，DOM 的建立也会停止。这时会进行下载和读取对应 css 文件的代码，目的是为了建立 CSSOM。
   3. 由上可见，html parsing 跟 css 的读取是共用一个线程的，所以也会有人把它们放在一起讨论。
