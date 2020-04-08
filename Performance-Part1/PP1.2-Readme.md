@@ -22,166 +22,29 @@
 
 ### `Step1: Optimize html file`
 
-A. Tool: Minify.js [https://www.minifier.org/](https://www.minifier.org/)
+A. 正常相对静态的网页的优化规则是使用`普通型`或者`defer型`，如果使用`普通型`则把 js 文件放在最后，css 文件放在前面；如果使用`defer型`，则 js 文件的位置不需要讲究。
 
-<p align="center">
-<img src="../assets/w6.png" width=90%>
-</p>
+B. 当然这种情况只对于相对静态的网页而言，相对动态一点的需要马上执行 js 文件的话就可以考虑`普通型`或者`async型`。
 
--------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/w7.png" width=90%>
-</p>
 
 #### `Comment:`
 1. 
 
-### `Step2: Minimize images.`
-
-<p align="center">
-<img src="../assets/w8.png" width=90%>
-</p>
-
--------------------------------------------------------------
-
-__`Location: ./example1.1/index.html`__
-
-<p align="center">
-<img src="../assets/w9.png" width=90%>
-</p>
-
--------------------------------------------------------------
-<p align="center">
-<img src="../assets/w14.png" width=90%>
-</p>
-
--------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/w10.png" width=90%>
-</p>
-
--------------------------------------------------------------
+### `Step2: Optimize css file.`
 
 #### `Comment:`
-1.  - JPG: photos,complex and useful colors
-    - SVG: logo, 但可放大缩小而不影响清晰度
-    - PNG: logo
-    - Gif: 小动图
-
-- free tools: 1. JPEG-optimizer website
-            2. TinyPNG
-
-- Always lower jpeg quality 30-60%
+1. 
 
 
-### `Step3. Media queries.`
-
-__`Location: ./example1.1/style.css`__
-
-```css
-body {
-  background: yellow;
-}
-
-@media screen and (min-width: 900px) {
-  body {
-    background: url('./large-background.jpg') no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  body {
-    background: url('./large-background.jpg') no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-h1 {
-  color: red;
-}
-```
+### `Step3: Optimize js file.`
 
 #### `Comment:`
-1. 这样做的好处就是可以根据不同的客户端的大小：电脑/平板/手机，设定传输对应大小跟像素的图片，以达到提升速度却不影响体验的目的。
+1. 
 
-### `Step4. Less trips.`
-
-__`Location: ./example1.1/index.html`__
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Network Performance</title>
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="./style.css">
-
-</head>
-<body>
-  <h1>Helloooo</h1>
-
-  <!-- Large Image -->
-  <img src="./puppy.jpg" width="131px" height="200px">
-
-  <!-- javascript -->
-  <script type="text/javascript" src="./script.js"></script>
-</body>
-</html>
-```
+### `Step4: Tools to check website performance.`
 
 #### `Comment:`
-1. Previous code:
-
-```html
-<!-- #1 Minimize all text -->
-<!-- #2 Minimize images -->
-<!-- #3 Media Queries -->
-<!-- #4 Minimize # of files -->
-
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Network Performance</title>
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="./style.css">
-  <link rel="stylesheet" type="text/css" href="./style2.css">
-
-</head>
-<body>
-  <h1>Helloooo</h1>
-
-  <!-- Large Image -->
-  <img src="./puppy.jpg" width="300px" height="200px">
-
-  <!-- javascript -->
-  <script type="text/javascript" src="./script.js"></script>
-  <script type="text/javascript" src="./script2.js"></script>
-  <script type="text/javascript" src="./script3.js"></script>
-</body>
-</html>
-```
-
-2. 取消了 style2.css, script2.js, script3.js 的连接，把 script2.js, script3.js 的内容合并到 script.js 中。
-
-3. 效果对比：
-
-- Before.
-
-<p align="center">
-<img src="../assets/w11.png" width=90%>
-</p>
-
--------------------------------------------------------------
-
-- After.
-
-<p align="center">
-<img src="../assets/w12.png" width=90%>
-</p>
+1.
 
 ### `Step5. Content-delivery api.`
 
@@ -193,6 +56,65 @@ A. Tool: imgix [https://www.imgix.com/](https://www.imgix.com/)
 
 ### `Step6 Concept questions.`
 
-#### `A. `
+#### `A. What is critical render path?`
+
+- Check this post. [Understanding the critical rendering path, rendering pages in 1 second](https://medium.com/@luisvieira_gmr/understanding-the-critical-rendering-path-rendering-pages-in-1-second-735c6e45b47a)
+
+- Build DOM tree from html file
+  - When this process is finished the browser will have the full content of the page, but to be able to render the browser has to wait for the CSS Object Model, also known as CSSOM event, which will tell the browser how the elements should look like when rendered.
+
+- Build CSSOM from css file
+  - CSS is one of the most important elements of the critical rendering path, because the browser blocks page rendering until it receives and processes all the css files in your page, CSS is render blocking.
+
+- The Render Tree
+  - This stage is where the browser `combines the DOM and CSSOM`, this process outputs a final render tree, which contains both the content and the style information of all the visible content on the screen.
+
+- Layout
+  - This stage is where the browser calculates the size and position of each visible element on the page, every time an update to the render tree is made, or the size of the viewport changes, the browser has to run layout again.
+
+- Paint
+  - When we get to the paint stage, the browser has to pick up the layout result, and paint the pixels to the screen, beware in this stage that not all styles have the same paint times, also combinations of styles can have a greater paint time than the sum of their parts. For an instance mixing a border-radius with a box-shadow, can triple the paint time of an element instead of using just one of the latter.
+
+#### `B. How does the browser rendering engine work?`
+
+In order to render content the browser has to go through a series of steps:
+1. Document Object Model(DOM)
+2. CSS object model(CSSOM)
+3. Render Tree
+4. Layout
+5. Paint.
+
+#### `C. Dealing with Javascript.`
+
+- Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for the DOM, then it has to download and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.
+
+- When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, this is why Javascript is parser blocking.
+
+- 个人理解：
+  1. 浏览器的运作是这样的，收到 html 文件之后，就从上往下读取代码，这个过程叫做 parsing ，目的是为了建立 DOM。
+  2. 在 parsing 过程中，如果遇到了 css 文件，parsing 会被打断，DOM 的建立也会停止。这时会进行下载和读取对应 css 文件的代码，目的是为了建立 CSSOM。
+  3. 由上可见，html parsing 跟 css 的读取是共用一个线程的，所以也会有人把它们放在一起讨论。
+  4. 关于 js 文件的下载，就相对不一样。首先相同的是 js 文件跟 css 文件一样，会打断所有关于 DOM 和 CSSOM 的过程，而且 js 因为是动态互动属性，所以现在会把它的下载和执行过程分多种情况讨论，下面讨论一些常见情况：
+
+    - 如果网页是静态为主，那么应该把 js 文件放在最后，等对应的 DOM 和 CSSOM 建立完成后再下载并执行 js 文件。
+
+    - 对于上一种情况，也可以考虑使用`defer`型，`defer`型可以开出一条或多条新进程同步下载 js 文件而不打断整体进程，当下载完毕时不马上执行，在其他同步脚本执行后，DOMContentLoaded 事件前依次执行。`具有顺序性。`
+
+    - 如果相关的 js 文件是需要马上对已建立的 DOM 进行改动的，可以使用普通型或者 `async`型，`async`型可以开出一条或多条新进程同步下载 js 文件而不打断整体进程，当下载完毕时马上执行，这时会打断原有的整体进程。但需要注意的是如果有多个`async`连续进行的话，执行时的顺序是无法分先后的，甚至是随机的。`不具有顺序性。`
+
+    - 如果相关的 js 文件是不需要马上对已建立的 DOM 进行改动的，可以考虑使用`defer`型。
+
+  5. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
+
+  6. 为了帮助理解可以看下面的流程图对比：
+
+  - 普通型：马上打断主进程进行下载并执行 js 文件
+  - async 型：不打断主进行下载 js 文件，完成下载后打断主进程，执行 js 文件，如果是多个文件执行则是异步执行，不保证顺序。
+  - defer 型：不打断主进程进行下载 js 文件，完成下载后执行，主进程完成后按顺序执行。
+
+<p align="center">
+<img src="../assets/w15.png" width=90%>
+</p>
+
 
 
