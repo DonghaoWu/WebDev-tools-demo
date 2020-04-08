@@ -8,17 +8,22 @@
 
 - None
 
+------------------------------------------------------------
+
 #### `本章背景：`
 - 本章是第一部分第一小节，第一小节目的在于优化代码和文件的大小达到缩减传输文件总量大小从而提升速度，第二小节的目的在于根据 `Rendering path` 改善传输中的文件优先级和先后顺序达到提升用户浏览加载体验。
 
 - 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行优化。
 
+------------------------------------------------------------
 
 ### `Brief Contents & codes position`
 - 3.1 Optimize html file.
 - 3.2 Optimize css file.
 - 3.3 Optimize js file.
 - 3.4 Tools to check website performance.
+
+------------------------------------------------------------
 
 ### `Step1: Optimize html file`
 
