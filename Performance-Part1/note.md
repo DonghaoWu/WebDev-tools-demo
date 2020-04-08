@@ -1,195 +1,169 @@
-# Web development tools (Part 2)
+keiko corp
 
-## `Section: Performance`(Performance-Part1)
+make website faster
 
-### `Summary`: In this documentation, we improve website performance in some simple ways.
+best practice
 
-### `Check Dependencies:`
+do not want to wait
 
-- None
+what happen when you browse the website?
 
-### `本章背景：`
-- 从 git 上下载 repo 现在有两种方式，为 https 和 ssh， https 的方式比较方便下载，但在上传（git pull & git fetch）的时候需要输入密码和用户名，这个可以通过 `GitHub HTTPS Caching` 实现。
+client - server
 
-- 另外一种 ssh 方式，如果没有设置好 key pairs 的设置是无法进行所有跟 Git 的互动，但一旦完成了 `GitHub SSH keys`，相当于远程账户把本地电脑归入白名单。相对而言，SSH的方式更安全更值得推荐。
+3 seconds
 
-- 目前而言，首要目的是安全，次要目标是为了免输入密码和用户名。
+frontend backend think like a senior developer
 
-### `Brief Contents & codes position`
-- 1.1 How to connect remote server?
-- 1.2 Why is Git always asking for my password?
-- 1.3 Extra: Using SSH to connect remote server.
+transfer part
 
-### `Step1: How to connect remote server?`
+send a request
 
-A. __`Connect command.`__
+Honey I shrunk the files
 
-```bash
-(local) $ ssh root@167.99.146.57  # ip address is from remote server 
+The traveling deliveryman
 
-(remote) $ ls # now you can control the remote server.
-(remote) $ mkdir test
-(remote) $ ls
+download all related files
+
+minimize text
+
+library:
+
+`uglifyjs`
+
+minimize images
+
+JPG: photos,complex and useful colors
+SVG: logo, 但可放大缩小而不影响清晰度
+PNG: logo
+Gif: 小动图
+
+free tools: 1. JPEG-optimizer website
+            2. TinyPNG
+
+always lower jpeg quality 30-60%
+media query 根据浏览器/平板电脑/手机的大小而分配图片
+
+```css
+body{
+    background:yellow;
+}
+
+@media screen and (min-width: 900px){
+    body{
+        background:url('./assets/w2.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width: 500px){
+    body{
+        background:url('./assets/w2.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+}
 ```
 
-B. __`Install git in remote server.`__
+free tools: 1. `imgix`    content-delivery api
+            upload the image and get minimize image url
+            2. remove metadata (exif data)
 
-```bash
-(remote) $ sudo apt-get install git
-(remote) $ git clone `ssh-url`  # failed, have not configured ssh public key
-(remote) $ git clone `https-url` # success, but it will always ask you for username and password if you don't finish configure on the remote server.
-```
 
-C. __`Copy some local files and paste them on remote server.`__
+The travleling deliveryman
 
-```bash
-(local) $ cd ..
-(local) $ mkdir test_folder
-(local) $ cd test_folder 
-(local) $ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
+less trips.
 
-(local) $ ssh root@167.99.146.57
-(remote)$ ls # Check if it is successful
-```
+do you have to download all files?
 
-#### `Comment:`
-1. 
+network optimizations
 
-### `Step2: Why is Git always asking for my password?.`
+1. minimize all text: website Minify
+2. minimize images: open the image -> tools -> adjust size(改变实际图片的大小让它跟 css 里面定义的一样。)
+3. media queries：参考上面
+4. minimize all of files：把所有 js 文件放一起，所有 css 文件放一起。
 
-- If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
+developing tools -> network tag -> refresh -> slow 3G -> disable cache -> hard reload
 
-- Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
 
-- You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
 
-A. __`Solution 1: GitHub HTTPS Caching.`__
 
-1. Install `osxkeychain`
 
-```bash
-(local) $ git credential-osxkeychain  # Check if the helper is already installed
 
-(local) $ curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain # Download the helper
 
-(local) $ chmod u+x git-credential-osxkeychain # Fix the permissions on the file so it can be run
 
-(local) $ sudo mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain" # Move the helper to the path where git is installed
 
-(local) $ git config --global credential.helper osxkeychain # Set git to use the osxkeychain credential helper
-```
 
-2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
 
-B. __`Solution 2: GitHub SSH keys.`__
 
-1. Generate key pairs and copy the content of public key.
 
-```bash
-(local) $ cd .ssh
-(local) $ ls
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub
-(local) $ ssh-add ~/ .ssh/id_rsa
-```
 
-2. Paste the public key in github ssh key setting.
 
-<p align="center">
-<img src="../assets/w1.png" width=90%>
-</p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w2.png" width=90%>
-</p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w3.png" width=90%>
-</p>
+`critical render path `
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w4.png" width=90%>
-</p>
+html -> dom 
+css -> css dom
+js -> interaction
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w5.png" width=90%>
-</p>
+1. optimize html file : css as soon as possible, js as late as possible
 
-#### `Comment:`
-1. Other ssh comands:
-```bash
-(local) $ ssh-add -l
-(local) $ ssh-add -D
-(local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
-```
+2. for css: only load whatever is needed. Above the fold loading, media attributes, less specificity
 
-### `Step3. Using SSH to connect remote server.`
+above the fold loading: 即打开网页的时候，优先加载先开到的 css 文件，然后在后台加载其他部分的 css。
 
-1. Generate key pairs locally.
+media attributes：即限定指定的 css 文件在多长的文件框内才出现和下载。
 
-```bash
-(local) $ cd ～/.ssh
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ ls   ## (这时就有两个新的文件： id_rsa 和 id_rsa.pub）
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub ## 本地复制一份 public key 的内容
-```
+less specificity：即少层级的定位。或使用直接放进 html 的 style tag，或者 inline style tag。
 
-2. Paste the content to remote server.
+3. `重点难点：`load scripts asynchronously, defer loading of scripts, minimize DOM manipulation, Avoid long running JavaScript
 
-```bash
-(local) $ ssh root@167.99.146.57
-(remote) $ mkdir .ssh
-(remote) $ cd /.ssh
-(remote) $ nano authorized_keys 
-## 输入这个命令之后，进入编辑文件界面， 在编辑文件界面， 先 command + c 
-## 把 public key放到文件里面，然后 command + x 退出编辑界面。
-(remote) $ exit ## 退出远程命令 terminal， logout
-```
+load scripts asynchronously: 使用 async 就是要开一条新的 thread 去同时下载 js file，但读取完之后马上执行 js file，这样就会对主流程（html parsing）进行截断。（互动优先）
 
-3. Set up the local private key.
+defer loading：就是等 js file下载完， 主流程也同时运行，直到两个流程都完成，最后才执行 js file。（浏览优先）
 
-```bash
-(local) $ ssh-add ~/ .ssh/id_rsa ## 设定本地目前生效的唯一 private key。
-```
+minimize DOM manipulation：
 
-### `Step4 Concept questions.`
+reading js file -> loading DOM content -> finish all work, 主要理解举例的工作原理。`可以模拟一个流程图`
 
-#### `A. What is SSH?`
+Avoid long running JavaScript：一些弹窗的 js 功能 会使整个网页的功能都打断。
 
-- The SSH protocol (also referred to as Secure Shell) is a method for secure remote login from one computer to another. It provides several alternative options for strong authentication, and it protects the communications security and integrity with strong encryption. It is a secure alternative to the non-protected login protocols (such as telnet, rlogin) and insecure file transfer methods (such as FTP).
+提问：整个过程是怎样的？
+html(DOM) -> css(CSSOM) -> js -> DOMContentLoaded -> Render Tree -> layout -> paint -> js -> load -> Render tree...
 
-- The protocol works in the client-server model, which means that the connection is established by the SSH client connecting to the SSH server. The SSH client drives the connection setup process and uses public key cryptography to verify the identity of the SSH server. After the setup phase the SSH protocol uses strong symmetric encryption and hashing algorithms to ensure the privacy and integrity of the data that is exchanged between the client and server.
+检测网页速度的工具：
 
-#### `B. What does SSH use for?`
-- providing secure access for users and automated processes
+PageSpeed Insights
+WebPagetest
 
-- interactive and automated file transfers
+faster website:
 
-- issuing remote commands
+1. html file , put all css files into one file
 
-- managing network infrastructure and other mission-critical system components.
+2. move all scripts to the bottom.
 
-- Strong authentication with SSH keys
+3. check minimize files
 
-- SSH provides strong encryption and integrity protection
+4. above the fold loading
 
-#### `C. What are symmetrical encryption, asymmetrical encryption and hashing?`
+5. you don't need jquery
 
-- `symmetrical encryption` (secret key) need key change 双方都有同一把key.
+6. check the answer
 
-- `asymmetrical encryption` 每人有两把 key（pubilc key & private key）
-原理： 本地有两把钥匙，设定为红色，目标也有两把钥匙，设定为蓝色。当红色电脑需要传输文件到蓝色电脑时，会首先从蓝色电脑获得蓝色`public key`,
-然后用蓝色`public key`加密需要加密的文件，然后传输到蓝色电脑，最后用蓝色`private key`解密。
 
-- 通俗意思是：我不相信任何电脑，任何电脑向我发送文件必须使用我的箱子（public key）装着，然后发过来我才能接受并且解密。`实现了git account（远程） 对 实体电脑（本地）的信任，相当于把本地电脑列入远程电脑的信任白列表`。
+`HTTP2:`
 
-- `hashing` 简单理解就是对信息内容进行乱码加密，也就是说就算你能够获得 public key 去伪装目标，信息回来的时候也可以使用 private key 打开，
-但是这是打开后的内容是乱码的，而要恢复这些乱码信息需要 另外一个 secret key 去解开， 也就是说这个过程是需要两个 私密 key 才能
-解密的，不排除有些算法把这两个 key 融合在一起使用。
+`HTTP3:`
 
-#### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote?`
+
+
+
+
+
+
+
+
+
+
+
+
 

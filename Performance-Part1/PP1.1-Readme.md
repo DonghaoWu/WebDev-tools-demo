@@ -15,11 +15,11 @@
 
 
 ### `Brief Contents & codes position`
-- 1.1 Minimize text.
-- 1.2 Minimize images.
-- 1.3 Media queries.
-- 1.4 Less trips.
-- 1.5 Content-delivery api.
+- 2.1 Minimize text.
+- 2.2 Minimize images.
+- 2.3 Media queries.
+- 2.4 Less trips.
+- 2.5 Content-delivery api.
 
 ### `Step1: Minimize text`
 
@@ -195,7 +195,5 @@ A. Tool: imgix [https://www.imgix.com/](https://www.imgix.com/)
 ### `Step6 Concept questions.`
 
 #### `A. `
-
-- 
 
 

@@ -1,169 +1,198 @@
-keiko corp
+# Web development tools (Part 3)
 
-make website faster
+## `Section: Performance`(Performance-Part1.2)
 
-best practice
+### `Summary`: In this documentation, we improve website performance by analycing the critical render path.
 
-do not want to wait
+### `Check Dependencies:`
 
-what happen when you browse the website?
+- None
 
-client - server
+### `本章背景：`
+- 本章是第一部分第一小节，第一小节目的在于优化代码和文件的大小达到缩减传输文件总量大小从而提升速度，第二小节的目的在于根据 `Rendering path` 改善传输中的文件优先级和先后顺序达到提升用户浏览加载体验。
 
-3 seconds
+- 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行分析。
 
-frontend backend think like a senior developer
 
-transfer part
+### `Brief Contents & codes position`
+- 3.1 Optimize html file.
+- 3.2 Optimize css file.
+- 3.3 Optimize js file.
+- 3.4 Tools to check website performance.
 
-send a request
+### `Step1: Optimize html file`
 
-Honey I shrunk the files
+A. Tool: Minify.js [https://www.minifier.org/](https://www.minifier.org/)
 
-The traveling deliveryman
+<p align="center">
+<img src="../assets/w6.png" width=90%>
+</p>
 
-download all related files
+-------------------------------------------------------------
 
-minimize text
+<p align="center">
+<img src="../assets/w7.png" width=90%>
+</p>
 
-library:
+#### `Comment:`
+1. 
 
-`uglifyjs`
+### `Step2: Minimize images.`
 
-minimize images
+<p align="center">
+<img src="../assets/w8.png" width=90%>
+</p>
 
-JPG: photos,complex and useful colors
-SVG: logo, 但可放大缩小而不影响清晰度
-PNG: logo
-Gif: 小动图
+-------------------------------------------------------------
 
-free tools: 1. JPEG-optimizer website
+__`Location: ./example1.1/index.html`__
+
+<p align="center">
+<img src="../assets/w9.png" width=90%>
+</p>
+
+-------------------------------------------------------------
+<p align="center">
+<img src="../assets/w14.png" width=90%>
+</p>
+
+-------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/w10.png" width=90%>
+</p>
+
+-------------------------------------------------------------
+
+#### `Comment:`
+1.  - JPG: photos,complex and useful colors
+    - SVG: logo, 但可放大缩小而不影响清晰度
+    - PNG: logo
+    - Gif: 小动图
+
+- free tools: 1. JPEG-optimizer website
             2. TinyPNG
 
-always lower jpeg quality 30-60%
-media query 根据浏览器/平板电脑/手机的大小而分配图片
+- Always lower jpeg quality 30-60%
+
+
+### `Step3. Media queries.`
+
+__`Location: ./example1.1/style.css`__
 
 ```css
-body{
-    background:yellow;
+body {
+  background: yellow;
 }
 
-@media screen and (min-width: 900px){
-    body{
-        background:url('./assets/w2.jpg') no-repeat center center fixed;
-        background-size: cover;
-    }
+@media screen and (min-width: 900px) {
+  body {
+    background: url('./large-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
 }
 
-@media screen and (max-width: 500px){
-    body{
-        background:url('./assets/w2.jpg') no-repeat center center fixed;
-        background-size: cover;
-    }
+@media screen and (max-width: 500px) {
+  body {
+    background: url('./large-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+h1 {
+  color: red;
 }
 ```
 
-free tools: 1. `imgix`    content-delivery api
-            upload the image and get minimize image url
-            2. remove metadata (exif data)
+#### `Comment:`
+1. 这样做的好处就是可以根据不同的客户端的大小：电脑/平板/手机，设定传输对应大小跟像素的图片，以达到提升速度却不影响体验的目的。
+
+### `Step4. Less trips.`
+
+__`Location: ./example1.1/index.html`__
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network Performance</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
+</head>
+<body>
+  <h1>Helloooo</h1>
+
+  <!-- Large Image -->
+  <img src="./puppy.jpg" width="131px" height="200px">
+
+  <!-- javascript -->
+  <script type="text/javascript" src="./script.js"></script>
+</body>
+</html>
+```
+
+#### `Comment:`
+1. Previous code:
+
+```html
+<!-- #1 Minimize all text -->
+<!-- #2 Minimize images -->
+<!-- #3 Media Queries -->
+<!-- #4 Minimize # of files -->
 
 
-The travleling deliveryman
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network Performance</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <link rel="stylesheet" type="text/css" href="./style2.css">
 
-less trips.
+</head>
+<body>
+  <h1>Helloooo</h1>
 
-do you have to download all files?
+  <!-- Large Image -->
+  <img src="./puppy.jpg" width="300px" height="200px">
 
-network optimizations
+  <!-- javascript -->
+  <script type="text/javascript" src="./script.js"></script>
+  <script type="text/javascript" src="./script2.js"></script>
+  <script type="text/javascript" src="./script3.js"></script>
+</body>
+</html>
+```
 
-1. minimize all text: website Minify
-2. minimize images: open the image -> tools -> adjust size(改变实际图片的大小让它跟 css 里面定义的一样。)
-3. media queries：参考上面
-4. minimize all of files：把所有 js 文件放一起，所有 css 文件放一起。
+2. 取消了 style2.css, script2.js, script3.js 的连接，把 script2.js, script3.js 的内容合并到 script.js 中。
 
-developing tools -> network tag -> refresh -> slow 3G -> disable cache -> hard reload
+3. 效果对比：
 
+- Before.
 
+<p align="center">
+<img src="../assets/w11.png" width=90%>
+</p>
 
+-------------------------------------------------------------
 
+- After.
 
+<p align="center">
+<img src="../assets/w12.png" width=90%>
+</p>
 
+### `Step5. Content-delivery api.`
 
+A. Tool: imgix [https://www.imgix.com/](https://www.imgix.com/)
 
+<p align="center">
+<img src="../assets/w13.png" width=90%>
+</p>
 
+### `Step6 Concept questions.`
 
-
-
-
-
-
-
-
-`critical render path `
-
-html -> dom 
-css -> css dom
-js -> interaction
-
-1. optimize html file : css as soon as possible, js as late as possible
-
-2. for css: only load whatever is needed. Above the fold loading, media attributes, less specificity
-
-above the fold loading: 即打开网页的时候，优先加载先开到的 css 文件，然后在后台加载其他部分的 css。
-
-media attributes：即限定指定的 css 文件在多长的文件框内才出现和下载。
-
-less specificity：即少层级的定位。或使用直接放进 html 的 style tag，或者 inline style tag。
-
-3. `重点难点：`load scripts asynchronously, defer loading of scripts, minimize DOM manipulation, Avoid long running JavaScript
-
-load scripts asynchronously: 使用 async 就是要开一条新的 thread 去同时下载 js file，但读取完之后马上执行 js file，这样就会对主流程（html parsing）进行截断。（互动优先）
-
-defer loading：就是等 js file下载完， 主流程也同时运行，直到两个流程都完成，最后才执行 js file。（浏览优先）
-
-minimize DOM manipulation：
-
-reading js file -> loading DOM content -> finish all work, 主要理解举例的工作原理。`可以模拟一个流程图`
-
-Avoid long running JavaScript：一些弹窗的 js 功能 会使整个网页的功能都打断。
-
-提问：整个过程是怎样的？
-html(DOM) -> css(CSSOM) -> js -> DOMContentLoaded -> Render Tree -> layout -> paint -> js -> load -> Render tree...
-
-检测网页速度的工具：
-
-PageSpeed Insights
-WebPagetest
-
-faster website:
-
-1. html file , put all css files into one file
-
-2. move all scripts to the bottom.
-
-3. check minimize files
-
-4. above the fold loading
-
-5. you don't need jquery
-
-6. check the answer
-
-
-`HTTP2:`
-
-`HTTP3:`
-
-
-
-
-
-
-
-
-
-
-
-
+#### `A. `
 
 
