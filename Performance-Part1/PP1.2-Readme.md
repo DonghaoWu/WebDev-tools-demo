@@ -46,13 +46,8 @@ B. 当然这种情况只对于相对静态的网页而言，相对动态一点�
 #### `Comment:`
 1.
 
-### `Step5. Content-delivery api.`
+### `Step5. .`
 
-A. Tool: imgix [https://www.imgix.com/](https://www.imgix.com/)
-
-<p align="center">
-<img src="../assets/w13.png" width=90%>
-</p>
 
 ### `Step6 Concept questions.`
 
