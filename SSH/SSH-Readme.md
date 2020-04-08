@@ -8,7 +8,7 @@
 
 - None
 
-### `本章背景：`
+#### `本章背景：`
 - 从 git 上下载 repo 现在有两种方式，为 https 和 ssh， https 的方式比较方便下载，但在上传（git pull & git fetch）的时候需要输入密码和用户名，这个可以通过 `GitHub HTTPS Caching` 实现。
 
 - 另外一种 ssh 方式，如果没有设置好 key pairs 的设置是无法进行所有跟 Git 的互动，但一旦完成了 `GitHub SSH keys`，相当于远程账户把本地电脑归入白名单。相对而言，SSH的方式更安全更值得推荐。
