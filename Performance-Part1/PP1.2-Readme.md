@@ -341,7 +341,7 @@ __`Location: ./example1.2/index.html`__
 	<script type="text/javascript" src="js/wow.js"></script>
 	<script type="text/javascript" src="js/parallax.js"></script>
 	<script type="text/javascript" src="js/nicescroll.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/scrollTo.js"></script>
   
 </body>
