@@ -15,6 +15,10 @@
 
 - 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行优化。
 
+<p align="center">
+<img src="../assets/w18.png" width=90%>
+</p>
+
 ------------------------------------------------------------
 
 ### `Brief Contents & codes position`
