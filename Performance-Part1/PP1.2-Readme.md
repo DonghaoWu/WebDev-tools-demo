@@ -15,6 +15,13 @@
 
 - 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行优化。
 
+```diff
++ 在学习 critical render path 过程中，有两个事件需要特别重视。
++ 第一个是 `DOMContentLoaded`，意味着内容（html，css，js）加载完毕，所有文件已经下载完毕，html 和 css 执行完毕，js 文件是否执行看实际属性，开始渲染。
++ 第二个是 `Load`，意味着渲染完毕。
++ 要注意的是加载过程中 html 和 css 是一直在进行下载和执行动作的，但 js 文件的下载和执行动作是根据实际的 tag attribute 分开或者合并执行的。
+```
+
 <p align="center">
 <img src="../assets/w18.png" width=90%>
 </p>
@@ -407,8 +414,19 @@ __`Location: ./example1.2/index.html`__
 
 ### `Step3: Optimize js file.`
 
+```html
+<script></script>
+
+<script async></script>
+
+<script defer></script>
+```
+
 #### `Comment:`
-1. 
+1. Load Scripts asynchronously. 具体使用规则参考 `Step6`。
+2. Defer Loading of Scripts.
+3. Minimize DOM manipulation.
+4. Avoid long running JavaScript. (举例，有些 JS 按钮功能会阻止整个加载过程。)
 
 ### `Step4: Tools to check website performance.`
 
