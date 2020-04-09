@@ -382,11 +382,27 @@ __`Location: ./example1.2/index.html`__
 </body>
 ```
 
+2. Media Attributes. (加载的 css 文件根据浏览器大小进行针对下载)。
+
+```html
+<head>
+  <link rel="stylesheet" href="./css/styleTest2.css" media="only screen and (min-width:500px)">
+<head>
+```
+
 #### `Comment:`
 1. Only load whatever is needed, check each css file. (减少加载无用的语句和文件)
 2. Above the fold loading.（重要的首要页面先加载，次要的指定后台加载。）
 3. Media Attributes.
-4. Less Specificity.
+4. Less Specificity. （尽量缩减 css 选择器的层数，同时如果 css 内容不多可以考虑使用 `html internal css 或者 inline css`）。
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/w18.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
 
 
 ### `Step3: Optimize js file.`
