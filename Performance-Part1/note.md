@@ -154,6 +154,12 @@ faster website:
 
 `HTTP3:`
 
+1. html file, minimize
+2. do we need all css files?
+3. put script tags after body
+4. what do you need and what you don't need
+5. media query
+
 
 
 
