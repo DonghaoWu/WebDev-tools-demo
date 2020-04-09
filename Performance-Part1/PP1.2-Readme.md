@@ -356,8 +356,8 @@ __`Location: ./example1.2/index.html`__
 ```
 
 #### `Comment:`
-1. Load style tag in the <head>.
-2. Load script right before </body>.
+1. Load style tag in the `<head>`.
+2. Load script right before `</body>`.
 
 ### `Step2: Optimize css file.`
 
@@ -436,11 +436,9 @@ __`Location: ./example1.2/index.html`__
 
 - WebPagetest
   [https://www.webpagetest.org/](https://www.webpagetest.org/)
-  
+
 #### `Comment:`
 1.
-
-### `Step5. .`
 
 
 ### `Step6 Concept questions.`
