@@ -24,11 +24,11 @@
 - 3.4 Tools to check website performance.
 
 <p align="center">
-<img src="../assets/w16.png" width=90%>
+<img src="../assets/w17.png" width=90%>
 </p>
 
 <p align="center">
-<img src="../assets/w17.png" width=90%>
+<img src="../assets/w16.png" width=90%>
 </p>
 
 ------------------------------------------------------------
