@@ -362,6 +362,7 @@ __`Location: ./example1.2/index.html`__
 ### `Step2: Optimize css file.`
 
 1. Above the fold loading. (把次要的 css 文件放在后台下载执行)。
+
 __`Location: ./example1.2/index.html`__
 
 ```html
@@ -430,6 +431,12 @@ __`Location: ./example1.2/index.html`__
 
 ### `Step4: Tools to check website performance.`
 
+- PageSpeed Insights
+  [https://developers.google.com/speed/pagespeed/insights/](https://developers.google.com/speed/pagespeed/insights/)
+
+- WebPagetest
+  [https://www.webpagetest.org/](https://www.webpagetest.org/)
+  
 #### `Comment:`
 1.
 
