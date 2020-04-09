@@ -18,8 +18,8 @@
 ```diff
 + 在学习 critical render path 过程中，有两个事件需要特别重视。
 + 第一个是 `DOMContentLoaded`，意味着内容（html，css，js）加载完毕，所有文件已经下载完毕，html 和 css 执行完毕，js 文件是否执行看实际属性，开始渲染。
-+ 第二个是 `Load`，意味着渲染完毕。
-+ 要注意的是加载过程中 html 和 css 是一直在进行下载和执行动作的，但 js 文件的下载和执行动作是根据实际的 tag attribute 分开或者合并执行的。
++ 第二个是 `Load`，意味着渲染完毕，整个流程完成。
++ 要注意的是加载过程中 html 和 css 是一直在进行下载和执行动作的，但 js 文件的执行动作是根据实际的 tag attribute 而定的。
 ```
 
 <p align="center">
