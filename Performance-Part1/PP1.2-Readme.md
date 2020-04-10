@@ -390,7 +390,7 @@ __`Location: ./example1.2/index.html`__
 </body>
 ```
 
-2. Media Attributes. (加载的 css 文件根据浏览器大小进行针对下载)。
+2. Media Attributes. ( css 文件根据浏览器类型大小进行针对下载)。
 
 ```html
 <head>
@@ -401,8 +401,8 @@ __`Location: ./example1.2/index.html`__
 #### `Comment:`
 1. Only load whatever is needed, check each css file. (减少加载无用的语句和文件)
 2. Above the fold loading.（重要的首要页面先加载，次要的指定后台加载。）
-3. Media Attributes.
-4. Less Specificity. （尽量缩减 css 选择器的层数，同时如果 css 内容不多可以考虑使用 `html internal css 或者 inline css`）。
+3. Media Attributes. ( css 文件根据浏览器类型大小进行针对下载)
+4. Less Specificity. （尽量缩减 css 选择器的层级，同时如果 css 内容不多可以考虑使用 `html internal css 或者 inline css`）。
 
 ----------------------------------------------------------------------------
 
@@ -441,7 +441,7 @@ __`Location: ./example1.2/index.html`__
 1.
 
 
-### `Step6 Concept questions.`
+### `Step5 Concept questions.`
 
 #### `A. What is critical render path?`
 
