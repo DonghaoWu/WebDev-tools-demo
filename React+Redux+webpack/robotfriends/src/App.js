@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import HelloFunc from './components/Hello-func';
+import HelloClass from './components/Hello-class';
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
           Learn React
         </a>
       </header>
+      <body>
+        <HelloClass greeting={`How are you from class component?`} />
+        <HelloFunc greeting={`How are you from functional component?`} />
+      </body>
     </div>
   );
 }
