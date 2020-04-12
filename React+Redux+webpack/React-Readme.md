@@ -32,16 +32,36 @@
 
 ### `Step1: About `create-react-app` command.`
 
+- 旧版操作
 ```bash
+$ sudo npm install -g create-react-app # only run once.
 
+$ create-react-app YOUR-APP-NAME
+$ cd YOUR-APP-NAME
+$ npm start
 ```
+
+- 新版操作
+```bash
+$ npx create-react-app YOUR-APP-NAME
+```
+
+- 升级方法：
+    1. 手动修改：
+        __`Location: ./package.json`__ 里面的`"react-scripts":"2.1.1",`版本号。
+
+    2. 执行命令：
+
+    ```bash
+    $ npm install
+    ```
 
 #### `Comment:`
 1. 
 
 ### `Step2: Class component & Functional component.`
 
-__`Location: ./example1.2/index.html`__
+__`Location: ./robotfriends/src/App.js`__
 
 ```html
 
