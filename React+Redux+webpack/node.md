@@ -336,8 +336,158 @@ class App extends Component{
         )
     }
 }
-
 ```
 
 
+
+
+
+styling your react app
+
+className
+
+advanced react section
+
+introduction about API
+
+life-cycle hoot
+
+every the state change, call render() method again.
+
+json is a promise.
+
+fetch is a window method.
+
+termery `? :`
+
+```jsx
+class App extends Component{
+    constructor(){
+        super();
+        this.state = {
+            robots : robots,
+            searchField : '',
+        }
+    }
+
+    onSearchChange = (event) => {
+        this.setState({searchField: event.target.value})
+    }
+
+    componentDidMount(){
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response=>{
+            return response.json();
+        })
+        .then(users =>{
+            this.setState({
+                robots: users,
+            })
+        })
+    }
+
+    render(){
+        const filterdRobots = this.state.robots.filter(robot =>{
+            return robot.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+        })
+        if(this.state.robots.length === 0){
+            return <h1>Loading</h1>
+        }
+        else{
+            return(
+                <div>
+                    <hi>Robots Friends</h1>
+                    <SearchBox onSearchChange={this.onSearchChange}/>
+                    <CardList robots={filterdRobots} />
+                </div>
+            )
+        }
+    }
+}
+```
+
+如何实现指定组件被包围，成为可滑动组件？
+
+包围型 componet
+
+wrap component
+
+
+
+```jsx
+import Scroll from 'Scroll';
+
+<Scroll>
+    <CardList robots={filterdRobots} />
+</Scroll>
+```
+
+```jsx
+import React from 'react';
+
+const Scroll = (props) => {
+    return{
+        <div style={{overflowY:'scroll',border:'5px solid black', height:'600px'}}>
+            {props.children}
+        </div>
+    }
+}
+```
+
+file structure
+
+components folder: pure functions
+containers folder: state functions
+
+distructuring
+termery
+
+```bash
+$ npm run build
+```
+
+Keep your project up to date and secure
+
+`update all dependencies and ifx vuneribility`
+
+```bash
+$ npm audit fix
+$ npm audit
+$ npm audit fix --force
+
+$ npm update
+```
+
+react error boundary, 
+类似于后端的 error handling。
+
+这里叠加了一个 children wrap component 的操作。
+
+这个只会在 production 模式中看到详细出错的地方。
+
+```jsx
+import React, {Component} from 'react';
+
+class ErrorBoundry extends Component{
+    constructor(props){
+        super();
+        this.state = {
+            hsaError:false,
+        }
+    }
+
+    componentDidCatch(error, info){
+        this.setState({ hasError: true})
+    }
+
+    render(){
+        if(this.state.hasError){
+            return <h1>Something is wrong</h1>
+        }
+        return this.state.props.children;
+    }
+}
+```
+
+Deploy your react app in Github.
 
