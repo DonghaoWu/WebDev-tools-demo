@@ -235,11 +235,11 @@ A. __为什么要使用 `<Fragment>`？__
     class Table extends React.Component {
         render() {
             return (
-            <table>
-                <tr>
-                <Columns />
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <Columns />
+                    </tr>
+                </table>
             );
         }
     }
@@ -247,10 +247,10 @@ A. __为什么要使用 `<Fragment>`？__
     class Columns extends React.Component {
         render() {
             return (
-            <div>
-                <td>Hello</td>
-                <td>World</td>
-            </div>
+                <div>
+                    <td>Hello</td>
+                    <td>World</td>
+                </div>
             );
         }
     }
@@ -261,8 +261,8 @@ A. __为什么要使用 `<Fragment>`？__
     <table>
         <tr>
             <div>
-            <td>Hello</td>
-            <td>World</td>
+                <td>Hello</td>
+                <td>World</td>
             </div>
         </tr>
     </table>
@@ -276,10 +276,10 @@ import { Fragment } from React;
 class Columns extends React.Component {
     render() {
         return (
-        <Fragment>
-            <td>Hello</td>
-            <td>World</td>
-        </Fragment>
+            <Fragment>
+                <td>Hello</td>
+                <td>World</td>
+            </Fragment>
         );
     }
 }
