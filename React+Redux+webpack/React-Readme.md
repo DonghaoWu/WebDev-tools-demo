@@ -648,5 +648,6 @@ export default SearchBox;
 
 #### `A. How does react life-cycle work?`
 
-
-
+<p align="center">
+<img src="../assets/w22.png" width=90%>
+</p>
