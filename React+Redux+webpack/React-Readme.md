@@ -56,8 +56,7 @@ $ npx create-react-app YOUR-APP-NAME
     $ npm install
     ```
 
-- Keep your project up to date and secure
-    - `update all dependencies and fix vulnerabilities`
+- Keep your project up to date and secure, `update all dependencies and fix vulnerabilities`
     
     ```bash
     $ npm audit fix
@@ -168,9 +167,9 @@ ReactDOM.render(<Hello greeting={'Hello'} />, document.getElementById('root'))
 - 在 child component 接收数据。
 
 ```jsx
-this.props.greeting // class component
+    { this.props.greeting } // class component
 
-props.greeting // functional component
+    { props.greeting } // functional component
 ```
 
 - 例子：
@@ -215,7 +214,7 @@ export default HelloFunc;
 #### `Comment:`
 1. 
 
-### `Step4: `<Fragment>` & Wrap component.`
+### `Step4: <Fragment> & Wrap component.`
 
 A. __为什么要使用 `<Fragment>`？__
 
