@@ -107,16 +107,12 @@ export default App;
 ```
 
 ```jsx
-
-
-
 render(){
     // 必须有return
     return ( //return 里面必须用括号包住
         <div>只能有一个 div / element </div> 
     )
 }
-
 ```
 
 ```bash
@@ -174,6 +170,7 @@ export default HelloClass;
 
 ## 不是 export default 情况
 ## JSX 中填入 JS 变量都需要使用 `{}`
+
 ```jsx
 import {robots} from './robots'; 
 
@@ -277,6 +274,8 @@ class Columns extends React.Component {
 ```
 
 这就是 Fragment 的使用场景。
+
+
 
 parent and children
 
