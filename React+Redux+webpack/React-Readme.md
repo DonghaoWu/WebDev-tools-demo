@@ -46,7 +46,7 @@ $ npm start
 $ npx create-react-app YOUR-APP-NAME
 ```
 
-- 升级方法：
+- 升级 `create-react-app` 方法：
     1. 手动修改：
         __`Location: ./package.json`__ 里面的`"react-scripts":"2.1.1",`版本号。
 
@@ -289,6 +289,8 @@ export default Columns;
 
 B. __如何实现`窗中窗`功能 Wrap component？__
 
+__`Location: ./robotfriends/src/containers/App.js`__
+
 ```jsx
 import Scroll from 'Scroll';
 
@@ -297,22 +299,26 @@ import Scroll from 'Scroll';
 </Scroll>
 ```
 
+__`Location: ./robotfriends/src/components/Scoll.js`__
+
 ```jsx
 import React from 'react';
 
 const Scroll = (props) => {
-    return{
-        <div style={{overflowY:'scroll',border:'5px solid black', height:'600px'}}>
-            {props.children}
-        </div>
-    }
-}
+  return (
+    <div style={{ overflow: 'scroll', border: '5px solid black', height: '800px' }}>
+      {props.children}
+    </div>
+  );
+};
+
+export default Scroll;
 ```
 
 效果展示：
 
 <p align="center">
-<img src="../assets/w9.png" width=90%>
+<img src="../assets/w20.png" width=90%>
 </p>
 
 #### `Comment:`
@@ -320,79 +326,82 @@ const Scroll = (props) => {
 
 ### `Step5: life-cycle.`
 
+__`Location: ./robotfriends/src/containers/App.js`__
+
 ```jsx
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            robots: robots,
-            searchField: '',
-        }
+  constructor() {
+    super();
+    this.state = {
+      robots: robots,
+      searchField: '',
     }
+  }
 
-    onSearchChange = (event) => {
-        this.setState({ searchField: event.target.value })
-    }
+  onSearchChange = (event) => {
+    this.setState({ searchField: event.target.value })
+  }
 
-    componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-                return response.json();
-            })
-            .then(users => {
-                this.setState({
-                    robots: users,
-                })
-            })
-    }
-
-    render() {
-        const filterdRobots = this.state.robots.filter(robot => {
-            return robot.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        return response.json();
+      })
+      .then(users => {
+        this.setState({
+          robots: users,
         })
-        if (this.state.robots.length === 0) {
-            return <h1>Loading</h1>
-        }
-        else {
-            return (
-                <div>
-                    <h1>Robots Friends</h1>
-                    <SearchBox onSearchChange={this.onSearchChange} />
-                    <CardList robots={filterdRobots} />
-                </div>
-            )
-        }
+      })
+  }
+
+  render() {
+    const filterdRobots = this.state.robots.filter(robot => {
+      return robot.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+    })
+    if (this.state.robots.length === 0) {
+      return <h1>Loading</h1>
     }
+    else {
+      return (
+        <div>
+          <h1>Robots Friends</h1>
+          <SearchBox onSearchChange={this.onSearchChange} />
+          <CardList robots={filterdRobots} />
+        </div>
+      )
+    }
+  }
 }
 ```
-
 
 #### `Comment:`
 1. 
 
 ### `Step6: React error boundary.`
 
+__`Location: ./robotfriends/src/containers/App.js`__
+
 ```jsx
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-class ErrorBoundry extends Component{
-    constructor(props){
-        super();
-        this.state = {
-            hasError:false,
-        }
+class ErrorBoundry extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      hasError: false,
     }
+  }
 
-    componentDidCatch(error, info){
-        this.setState({ hasError: true})
-    }
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true })
+  }
 
-    render(){
-        if(this.state.hasError){
-            return <h1>Something is wrong.</h1>
-        }
-        return this.state.props.children;
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something is wrong.</h1>
     }
+    return this.state.props.children;
+  }
 }
 ```
 
@@ -403,6 +412,8 @@ class ErrorBoundry extends Component{
 2. 这里叠加了一个 children wrap component 的操作。
 
 3. 这个只会在 production 模式中看到详细出错的地方。
+
+4. componentDidCatch() 是一个新的 method，主要是捕捉错误。
 
 ### `Step7: React syntax.`
 
