@@ -174,7 +174,7 @@ ReactDOM.render(<Hello greeting={'Hello'} />, document.getElementById('root'))
 
 - 例子：
 
-- Class component.
+    - Class component.
 ```jsx
 import React, {Component} from 'react';
 import './Hello.css';
