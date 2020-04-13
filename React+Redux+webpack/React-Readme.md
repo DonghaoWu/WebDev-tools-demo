@@ -621,7 +621,7 @@ __`Location: ./robotfriends/src/components/SearchBox.js`__
 ```jsx
 import React from 'react';
 
-const SearchBox = ({ searchfield, searchChange }) => {
+const SearchBox = ({ searchChange }) => {
   return (
     <div className='pa2'>
       <input
