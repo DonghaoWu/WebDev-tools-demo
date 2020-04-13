@@ -30,7 +30,7 @@
 
 ------------------------------------------------------------
 
-### `Step1: About `create-react-app` command.`
+### `Step1: About create-react-app command.`
 
 - 旧版操作
 ```bash
@@ -273,16 +273,16 @@ A. __为什么要使用 `<Fragment>`？__
 ```jsx
 import { Fragment } from React;
 
-    class Columns extends React.Component {
-        render() {
-            return (
-            <Fragment>
-                <td>Hello</td>
-                <td>World</td>
-            </Fragment>
-            );
-        }
+class Columns extends React.Component {
+    render() {
+        return (
+        <Fragment>
+            <td>Hello</td>
+            <td>World</td>
+        </Fragment>
+        );
     }
+}
 
 export default Columns;
 ```
@@ -389,7 +389,7 @@ class ErrorBoundry extends Component{
 
     render(){
         if(this.state.hasError){
-            return <h1>Something is wrong</h1>
+            return <h1>Something is wrong.</h1>
         }
         return this.state.props.children;
     }
@@ -409,15 +409,15 @@ class ErrorBoundry extends Component{
 1. 多个 component 显示。
 
 ```jsx
-import {robots} from './robots'; 
+import { robots } from './robots';
 
 ReactDOM.render(
     <div>
-        <Hello/> 
-        <Hello/> 
-        <Hello/> 
-        <Hello/> 
-    </div>
+        <Hello />
+        <Hello />
+        <Hello />
+        <Hello />
+    </div>,
     document.getElementById('root'))
 ```
 
@@ -457,18 +457,18 @@ export default HelloFunc;
 
 ```jsx
 import React from 'react';
-import Card form './Card';
+import Card from './Card';
 
-const CardList = ({robots}) =>{
-    const cardsArray = robots.map((user, i) =>{
-        return <Card 
-                key={i} 
-                id={robots[i].id} 
-                name={robots[i].name} 
-                email={robots[i].email} 
-                />
+const CardList = ({ robots }) => {
+    const cardsArray = robots.map((user, i) => {
+        return <Card
+                key={i}
+                id={robots[i].id}
+                name={robots[i].name}
+                email={robots[i].email}
+        />
     })
-    return(
+    return (
         <div>
             {cardsArray}
         </div>
@@ -476,7 +476,7 @@ const CardList = ({robots}) =>{
 }
 ```
 
-8. defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。
+8. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor中使用 bind 操作。`
 
 ```jsx
 class App extends Component {
@@ -513,7 +513,7 @@ class App extends Component {
 
 11. fetch() is a window method.
 
-12. every time the state change, call render() method again.
+12. Every time the state change, call render() method again.
 
 13. ternary `? :`.
 
@@ -522,15 +522,13 @@ class App extends Component {
 
 ### `Step8: Deploy React app in Github.`
 
-
 #### `Comment:`
 1. 
 
 
-
 ### `Step9 Concept questions.`
 
-#### `A. `
+#### `A. How does react life-cycle work?`
 
 
 
