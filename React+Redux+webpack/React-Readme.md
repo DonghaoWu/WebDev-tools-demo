@@ -329,49 +329,54 @@ export default Scroll;
 __`Location: ./robotfriends/src/containers/App.js`__
 
 ```jsx
+import React, { Component } from 'react';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
+import ErrorBoundary from '../components/ErrorBoundary';
+import './App.css';
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      robots: robots,
-      searchField: '',
+      robots: [],
+      searchfield: ''
     }
-  }
-
-  onSearchChange = (event) => {
-    this.setState({ searchField: event.target.value })
   }
 
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        return response.json();
-      })
-      .then(users => {
-        this.setState({
-          robots: users,
-        })
-      })
+      .then(response => response.json())
+      .then(users => { this.setState({ robots: users }) });
+  }
+
+  onSearchChange = (event) => {
+    this.setState({ searchfield: event.target.value })
   }
 
   render() {
-    const filterdRobots = this.state.robots.filter(robot => {
-      return robot.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+    const { robots, searchfield } = this.state;
+    const filteredRobots = robots.filter(robot => {
+      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     })
-    if (this.state.robots.length === 0) {
-      return <h1>Loading</h1>
-    }
-    else {
-      return (
-        <div>
-          <h1>Robots Friends</h1>
-          <SearchBox onSearchChange={this.onSearchChange} />
-          <CardList robots={filterdRobots} />
+    return !robots.length ?
+      <h1>Loading</h1> :
+      (
+        <div className='tc'>
+          <h1 className='f1'>RoboFriends</h1>
+          <SearchBox searchChange={this.onSearchChange} />
+          <Scroll>
+            <ErrorBoundary>
+              <CardList robots={filteredRobots} />
+            </ErrorBoundary>
+          </Scroll>
         </div>
-      )
-    }
+      );
   }
 }
+
+export default App;
 ```
 
 #### `Comment:`
@@ -379,32 +384,81 @@ class App extends Component {
 
 ### `Step6: React error boundary.`
 
-__`Location: ./robotfriends/src/containers/App.js`__
+__`Location: ./robotfriends/src/components/ErrorBoundary.js`__
 
 ```jsx
 import React, { Component } from 'react';
 
-class ErrorBoundry extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      hasError: false,
+class ErrorBoundary extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasError: false,
+        }
     }
-  }
 
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true })
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <h1>Something is wrong.</h1>
+    componentDidCatch(error, info) {
+        this.setState({ hasError: true })
     }
-    return this.state.props.children;
-  }
+
+    render() {
+        if (this.state.hasError) {
+            return <h1>Something is wrong.</h1>
+        }
+        return this.props.children;
+    }
 }
+
+export default ErrorBoundary;
 ```
 
+- 使用方法：
+__`Location: ./robotfriends/src/containers/App.js`__
+
+```jsx
+<Scroll>
+    <ErrorBoundary>
+        <CardList robots={filteredRobots} />
+    </ErrorBoundary>
+</Scroll>
+```
+
+- 测试方法：
+
+__`Location: ./robotfriends/src/components/CardList.js`__
+
+```jsx
+import React from 'react';
+import Card from './Card';
+
+const CardList = ({ robots }) => {
+  if (true) throw new Error('This is a test from CardList component.');
+  return (
+    <div>
+      {
+        robots.map((user, i) => {
+          return (
+            <Card
+              key={i}
+              id={robots[i].id}
+              name={robots[i].name}
+              email={robots[i].email}
+            />
+          );
+        })
+      }
+    </div>
+  );
+}
+
+export default CardList;
+```
+
+效果展示：
+
+<p align="center">
+<img src="../assets/w21.png" width=90%>
+</p>
 
 #### `Comment:`
 1. react error boundary，类似于后端的 error handling。
