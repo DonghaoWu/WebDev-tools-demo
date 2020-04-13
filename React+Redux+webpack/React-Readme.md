@@ -495,16 +495,33 @@ export default CardList;
 
 #### `Comment:`
 1. react error boundary，类似于后端的 error handling。
-
 2. 这里叠加了一个 children wrap component 的操作。
-
 3. 这个只会在 production 模式中看到详细出错的地方。
-
 4. componentDidCatch() 是一个新的 method，主要是捕捉错误。
+
+
 
 ### `Step7: React syntax.`
 
-1. 多个 component 显示。
+1. 必须要写 `import React from 'react';`才能使用 JSX 语句。
+
+2. 不是 export default 情况，JSX 中填入 JS 变量都需要使用 `{}`，也叫做 distructuring。
+
+3. file structure
+    - components folder: pure functions
+    - containers folder: state functions
+
+4. 使用 className 而不是 class。
+
+5. json() is a promise.
+
+6. fetch() is a window method.
+
+7. Every time the state change, call render() method again.
+
+8. ternary `? :`.
+
+9. 多个 component 显示。
 
 ```jsx
 import { robots } from './robots';
@@ -519,13 +536,13 @@ ReactDOM.render(
     document.getElementById('root'))
 ```
 
-2. 使用 API 获得图片。
+10. 使用 API 获得图片。
 
 ```jsx
 <img alt='robots' src={`https://robohash.org/${props.id}?200x200`} />
 ```
 
-3. Distructuring。
+11. Distructuring。
 
 ```jsx
 import React from 'react';
@@ -543,15 +560,7 @@ const HelloFunc = ({ greeting }) => {
 export default HelloFunc;
 ```
 
-4. 必须要写 `import React from 'react';`才能使用 JSX 语句。
-
-5. 不是 export default 情况，JSX 中填入 JS 变量都需要使用 `{}`，也叫做 distructuring。
-
-6. file structure
-    - components folder: pure functions
-    - containers folder: state functions
-
-7. Using map method to render an array :
+12. Using map method to render an array :
 
 ```jsx
 import React from 'react';
@@ -574,7 +583,7 @@ const CardList = ({ robots }) => {
 }
 ```
 
-8. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor 中使用 bind 操作。`
+13. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor 中使用 bind 操作。`
 
 ```jsx
 class App extends Component {
@@ -604,16 +613,6 @@ class App extends Component {
     }
 }
 ```
-
-9. 使用 className 而不是 class。
-
-10. json() is a promise.
-
-11. fetch() is a window method.
-
-12. Every time the state change, call render() method again.
-
-13. ternary `? :`.
 
 14. 在子组件引用父组件的函数：
 
