@@ -175,41 +175,41 @@ ReactDOM.render(<Hello greeting={'Hello'} />, document.getElementById('root'))
 - 例子：
 
     - Class component.
-```jsx
-import React, {Component} from 'react';
-import './Hello.css';
+    ```jsx
+    import React, {Component} from 'react';
+    import './Hello.css';
 
-class HelloClass extends Component{
-    render(){
+    class HelloClass extends Component{
+        render(){
+            return(
+                <div className='f1 tc'>
+                    <h1>Hello</h1>
+                    <p>{this.props.greeting}</p>
+                </div>
+            )
+        }
+    }
+
+    export default HelloClass;
+    ```
+
+    - Functional component.
+
+    ```jsx
+    import React from 'react';
+    import './Hello.css';
+
+    const HelloFunc = (props)=>{ // const HelloFunc = ({ greeting }) => {}
         return(
             <div className='f1 tc'>
                 <h1>Hello</h1>
-                <p>{this.props.greeting}</p>
+                <p>{props.greeting}</p>
             </div>
         )
     }
-}
 
-export default HelloClass;
-```
-
-- Functional component.
-
-```jsx
-import React from 'react';
-import './Hello.css';
-
-const HelloFunc = (props)=>{ // const HelloFunc = ({ greeting }) => {}
-    return(
-        <div className='f1 tc'>
-            <h1>Hello</h1>
-            <p>{props.greeting}</p>
-        </div>
-    )
-}
-
-export default HelloFunc;
-```
+    export default HelloFunc;
+    ```
 
 #### `Comment:`
 1. 
