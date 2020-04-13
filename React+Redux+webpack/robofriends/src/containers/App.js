@@ -18,7 +18,7 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-      const robots = await response.data;
+      const robots = response.data;
       this.setState(this.setState({ robots: robots }));
     } catch (error) {
       console.log(error);
