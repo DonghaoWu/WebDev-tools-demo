@@ -3,6 +3,7 @@ import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundary from '../components/ErrorBoundary';
+import axios from 'axios';
 import './App.css';
 
 class App extends Component {
@@ -14,10 +15,17 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(users => this.setState({ robots: users }));
+  componentDidMount = async () => {
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+      const robots = await response.data;
+      this.setState(this.setState({ robots: robots }));
+    } catch (error) {
+      console.log(error);
+    }
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    //   .then(response => response.json())
+    //   .then(users => this.setState({ robots: users }));
   }
 
   onSearchChange = (event) => {

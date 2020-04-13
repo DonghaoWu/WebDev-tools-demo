@@ -8,6 +8,7 @@
 
 - react
 - tachyons
+- axios
 
 ------------------------------------------------------------
 
@@ -329,54 +330,25 @@ export default Scroll;
 __`Location: ./robotfriends/src/containers/App.js`__
 
 ```jsx
-import React, { Component } from 'react';
-import CardList from '../components/CardList';
-import SearchBox from '../components/SearchBox';
-import Scroll from '../components/Scroll';
-import ErrorBoundary from '../components/ErrorBoundary';
-import './App.css';
-
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      robots: [],
-      searchfield: ''
-    }
-  }
-
-  componentDidMount() {
+componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(users => { this.setState({ robots: users }) });
-  }
-
-  onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value })
-  }
-
-  render() {
-    const { robots, searchfield } = this.state;
-    const filteredRobots = robots.filter(robot => {
-      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
-    })
-    return !robots.length ?
-      <h1>Loading</h1> :
-      (
-        <div className='tc'>
-          <h1 className='f1'>RoboFriends</h1>
-          <SearchBox searchChange={this.onSearchChange} />
-          <Scroll>
-            <ErrorBoundary>
-              <CardList robots={filteredRobots} />
-            </ErrorBoundary>
-          </Scroll>
-        </div>
-      );
-  }
+        .then(response => response.json())
+        .then(users => { this.setState({ robots: users }) });
 }
+```
 
-export default App;
+- 或者引用 axios 代替 fetch
+
+```jsx
+componentDidMount = async () => {
+    try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+        const robots = await response.data;
+        this.setState(this.setState({ robots: robots }));
+    } catch (error) {
+        console.log(error);
+    }
+}
 ```
 
 #### `Comment:`
@@ -541,7 +513,7 @@ const CardList = ({ robots }) => {
 }
 ```
 
-8. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor中使用 bind 操作。`
+8. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor 中使用 bind 操作。`
 
 ```jsx
 class App extends Component {
@@ -581,6 +553,29 @@ class App extends Component {
 12. Every time the state change, call render() method again.
 
 13. ternary `? :`.
+
+14. 在子组件引用父组件的函数：
+
+__`Location: ./robotfriends/src/components/SearchBox.js`__
+
+```jsx
+import React from 'react';
+
+const SearchBox = ({ searchfield, searchChange }) => {
+  return (
+    <div className='pa2'>
+      <input
+        className='pa3 ba b--green bg-lightest-blue'
+        type='search'
+        placeholder='search robots'
+        onChange={searchChange}
+      />
+    </div>
+  );
+}
+
+export default SearchBox;
+```
 
 #### `Comment:`
 1. 
