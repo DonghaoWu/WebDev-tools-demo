@@ -348,5 +348,5 @@ componentDidMount() {
 - 下面我们通过一张图来介绍 thunk 的工作原理：
 
 <p align="center">
-<img src="../assets/w23.jpeg" width=90%>
+<img src="../assets/w23.png" width=90%>
 </p>
