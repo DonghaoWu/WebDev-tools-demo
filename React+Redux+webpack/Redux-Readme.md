@@ -344,3 +344,9 @@ componentDidMount() {
     - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。
     - redux-thunk主要的功能就是可以让我们dispatch一个函数，而不只是普通的 Object。
     - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk!
+
+- 下面我们通过一张图来介绍 thunk 的工作原理：
+
+<p align="center">
+<img src="../assets/w23.jpeg" width=90%>
+</p>
