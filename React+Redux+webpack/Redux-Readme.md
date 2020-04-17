@@ -350,3 +350,5 @@ componentDidMount() {
 <p align="center">
 <img src="../assets/w23.png" width=90%>
 </p>
+
+- 关于更详细的 thunk 原理：
