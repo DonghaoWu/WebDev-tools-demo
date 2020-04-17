@@ -1,78 +1,203 @@
-# Web development tools (Part 5)
+# Web development tools (Part 6)
 
-## `Section: Front-end`(Redux)
+## `Section: Front-end`(Thunk)
 
-### `Summary`: In this documentation, we learn Redux.js.
+### `Summary`: In this documentation, we learn dispatch & Thunk.
 
 ### `Check Dependencies:`
 
 - react
 - tachyons
 - axios
-
-```diff
-+ redux
-+ react-redux
-+ redux-thunk
-+ redux-logger
-```
+- redux
+- react-redux
+- redux-thunk
+- redux-logger
 
 ------------------------------------------------------------
 
 #### `本章背景：`
-- 本章主要介绍如何使用 redux：
+- 本章主要介绍如何使用 dispatch & Thunk:
 
-- redux 的 八大要素：
-    - store
-    - rootReducer
-    - Provider
-    - constants.js 或者 type.js
-    - actions
-    - reducers
-    - connect
-    - dispatch
+    - 下面我们通过一张图来介绍 thunk 的工作原理：
 
-------------------------------------------------------------
+<p align="center">
+<img src="../assets/w23.png" width=90%>
+</p>
+
 
 ### `Brief Contents & codes position`
-- 5.1 Install the dependencies.
-- 5.2 Set up store, combineReducers and redx-middleware.
-- 5.3 Set up types, actions, reducers.
-- 5.4 Connect state and method to components and use the props and methods.
-- 5.5 Create redux async fucntion.
+- 6.1 How to use `dispatch`?
+- 6.2 How to make async action without thunk middleware.
+- 6.3 How to set up thunk middleware?
 
 ------------------------------------------------------------
 
-### `Step1: Install the dependencies.`
+### `Step1: How to use `dispatch`?`
 
-```bash
-$ npm i redux
-$ npm i react-redux
-$ npm i redux-logger
-$ npm i redux-thunk
-```
+- Edition 1:
+  1. Set up:
+
+  ```js
+  import { createStore } from 'redux';
+
+  const WRITE_MESSAGE = 'WRITE_MESSAGE';
+
+  export const writeMessage = (inputContent) => {
+      return {
+          type: WRITE_MESSAGE,
+          payload: inputContent,
+      };
+  }
+
+  const initialState = {
+      newMessageEntry: '',
+  }
+
+  const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case WRITE_MESSAGE:
+            return { ...state, newMessageEntry: action.payload };
+        default:
+            return state;
+    }
+  }
+
+  export default createStore(reducer);
+  ```
+
+  2. Execute the action by using `dispatch`
+
+    ```js
+    import React, { Component } from 'react';
+    import store from '../store';
+    import { writeMessage, postMessage } from '../store';
+    import axios from 'axios';
+    import socket from '../socket'
+
+
+    export default class NewMessageEntry extends Component {
+      constructor() {
+        super();
+        this.state = store.getState();
+      }
+
+      componentDidMount() {
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+      }
+
+      componentWillUnmount() {
+        this.unsubscribe();
+      }
+
+      handleChange = (evt) => {
+        store.dispatch(writeMessage(evt.target.value))
+      }
+
+      handleSubmit = (evt) => {
+        event.preventDefault();
+        const content = this.state.newMessageEntry;
+        const channelId = this.props.channelId;
+
+        store.dispatch(postMessage(content, channelId, this.state.nameEntry))
+      }
+
+      render() {
+        return (
+          <form id="new-message-form" onSubmit={this.handleSubmit}>
+            <div className="input-group input-group-lg">
+              <input
+                className="form-control"
+                type="text"
+                name="content"
+                placeholder="Say something nice..."
+                value={this.state.newMessageEntry}
+                onChange={this.handleChange}
+              />
+              <span className="input-group-btn">
+                <button className="btn btn-default" type="submit">Chat!</button>
+              </span>
+            </div>
+          </form>
+        );
+      }
+    }
+    ```
 
 #### `Comment:`
-1. 
-
-### `Step2: Set up store, combineReducers and redux-middleware.`
-
-- store and redux-middleware
-
-__`Location: ./robotfriends-redux/src/store.js`__
-
+1. 数据流动过程：
 ```jsx
-import { applyMiddleware, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import rootReducer from './rootReducer';
+      handleChange = (evt) => {
+        store.dispatch(writeMessage(evt.target.value))
+      }
 
-const logger = createLogger()
-
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger))
-
-export default store;
+      // ...
+      onChange={this.handleChange}
 ```
+2. 解说：
+  - 用户输入，引发 `onChange` 对应的函数 `handleChange`;
+  - `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
+
+  - 执行：
+    ```jsx
+    store.dispatch(writeMessage(evt.target.value));
+    ```
+    先执行：
+    ```jsx
+    writeMessage(evt.target.value);
+    ```
+    得到：
+    ```jsx
+    store.dispatch({
+      type: WRITE_MESSAGE,
+      payload: evt.target.value,
+    });
+    ```
+  
+3. dispatch:
+  - 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
+  ```jsx
+  handleChange = (evt) => {
+    store.dispatch({
+      type: WRITE_MESSAGE,
+      payload: evt.target.value,
+    });
+  }
+  ```
+
+  - 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
+
+  - 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
+
+### `Step2: How to make async action without thunk middleware？`
+
+
+  ```js
+  import { createStore } from 'redux';
+
+  const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
+
+  export const gotMessagesFromServer = (messages) => {
+      return {
+          type: GOT_MESSAGES_FROM_SERVER,
+          payload: messages,
+      }
+  }
+
+  const initialState = {
+    messages: []
+  }
+
+  const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case GOT_MESSAGES_FROM_SERVER:
+            return { ...state, messages: [...action.payload] };
+        default:
+            return state;
+    }
+  }
+  ```
+
 
 - rootReducer
 __`Location: ./robotfriends-redux/src/rootReducer.js`__
@@ -344,3 +469,11 @@ componentDidMount() {
     - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。
     - redux-thunk主要的功能就是可以让我们dispatch一个函数，而不只是普通的 Object。
     - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk!
+
+- 下面我们通过一张图来介绍 thunk 的工作原理：
+
+<p align="center">
+<img src="../assets/w23.png" width=90%>
+</p>
+
+- 关于更详细的 thunk 原理：
