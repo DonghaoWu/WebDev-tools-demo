@@ -34,14 +34,13 @@
 [XXXX](#jump)
 
 ### `Brief Contents & codes position`
-- 6.1 How to use `dispatch`?
-- 6.2 How to make async action without thunk middleware？
-- 6.3 How to set up thunk middleware?
-- <span id="jump">Hello World</span>
+- [6.1 How to use `dispatch`?](#6.1)
+- [6.2 How to make async action without thunk middleware?](6.2)
+- [6.3 How to set up thunk middleware?](6.3)
 
 ------------------------------------------------------------
 
-### `Step1: How to use "dispatch"?`
+### <span id="6.1">`Step1: How to use "dispatch"?`</span>
 
 - Edition 1:
   1. Set up:
