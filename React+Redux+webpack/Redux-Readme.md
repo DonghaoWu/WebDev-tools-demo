@@ -34,16 +34,18 @@
 
 ------------------------------------------------------------
 
-### `Brief Contents & codes position`
-- 5.1 Install the dependencies.
-- 5.2 Set up store, combineReducers and redux middleware.
-- 5.3 Set up types, actions, initialstate, reducers.
-- 5.4 Connect state and method to components and use the props and methods.
-- 5.5 Create redux async fucntion.
+### <span id="5.0">`Brief Contents & codes position`</span>
+- [5.1 Install the dependencies.](#5.1)
+- [5.2 Set up store, combineReducers and redux middleware.](#5.2)
+- [5.3 Set up types, actions, initialstate, reducers.](#5.3)
+- [5.4 Connect state and method to components and use the props and methods.](#5.4)
+- [5.5 Create redux async fucntion.](#5.5)
 
 ------------------------------------------------------------
 
-### `Step1: Install the dependencies.`
+### <span id="5.1">`Step1: Install the dependencies.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 ```bash
 $ npm i redux
@@ -55,7 +57,9 @@ $ npm i redux-thunk
 #### `Comment:`
 1. 
 
-### `Step2: Set up store, combineReducers and redux-middleware.`
+### <span id="5.2">`Step2: Set up store, combineReducers and redux-middleware.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 - store and redux middleware.
 
@@ -111,7 +115,9 @@ registerServiceWorker();
 #### `Comment:`
 1. 
 
-### `Step3: Set up types, actions, reducers.`
+### <span id="5.3">`Step3: Set up types, actions, reducers.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 - TYPES
 __`Location: ./robotfriends-redux/src/constants.js`__
@@ -196,7 +202,9 @@ export const requestRobotsReducer = (state = initialStateRobots, action = {}) =>
 }
 ```
 
-### `Step4: Connect state and method to components and use the props and methods.`
+### <span id="5.4">`Step4: Connect state and method to components and use the props and methods.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 - 主要代码：
 ```jsx
@@ -250,7 +258,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
     - connect
 
 
-### `Step5: Create redux async fucntion.`
+### <span id="5.5">`Step5: Create redux async fucntion.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 - 下面具体来分析 `dispatch` 的使用。
 
@@ -346,7 +356,9 @@ componentDidMount() {
     - `redux-thunk`主要的功能就是可以让我们dispatch一个函数，但也保留可以是普通的 `Object`。
     - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk! `(这个想法不是很全面，redux-thunk 只是 redux简化代码的一个中间件，属于锦上添花类型，详细可以参考“Dispatch-Thunk.md”,4月18日记)`
 
-### `Step6: More materials.`
+### <span id="5.6">`Step6: More materials.`</span>
+
+- #### Click here: [BACK TO MENU](#5.0)
 
 1. GLOSSARY OF TERMS
     1. Action: an object that has `at least a "type" field`, and any other fields needed to calculate the change to the state
@@ -365,3 +377,5 @@ componentDidMount() {
 <p align="center">
 <img src="../assets/w24.png" width=90%>
 </p>
+
+- #### Click here: [BACK TO MENU](#5.0)
