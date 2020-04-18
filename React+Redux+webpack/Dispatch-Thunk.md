@@ -298,9 +298,9 @@ componentDidMount() {
 
   - 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
 
-  - 4月18日更新，以上讲法是不完全成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。（一下例子证明 `thunkMiddleware` 不成立。）
+  - 4月18日更新，以上讲法是不完全成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。（以下例子证明 `thunkMiddleware` 不成立。）
 
-  - 可以尝试以下代码验证：
+  - 以下代码验证：
 
     ```jsx
     componentDidMount() {
@@ -312,7 +312,7 @@ componentDidMount() {
     }
     ```
 
- - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async promise` 的内容。
+ - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async & promise` 的内容。
 
 
 ### `Step3: How to set up thunk middleware?`
@@ -327,7 +327,7 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 
 - Conver the old code.
 
-  - old function:
+  - Previous function:
   ```jsx
   componentDidMount() {
     axios.get('/api/messages')
@@ -338,7 +338,7 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
   }
   ```
 
-  - Thunk:
+  - New function (Thunk):
   ```jsx
   import store from '../store';
 
@@ -408,8 +408,8 @@ export const fetchMessages = () => {
 
 2. Before, our reducer expected an action to be a plain JavaScript object with some identifying type field. However, thunk middleware will give us a powerful new ability: instead of dispatching an action object, we can dispatch a function! When thunkMiddleware sees that we've dispatched a function instead of a regular object, it will say,
 
-  - Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要！)
+  - Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要，middlware 里面继续处理 async function，外面依然处理同步函数！)
 
 3. `Thunk`: a function that we can pass to "store.dispatch" if we configure our store with "thunkMiddleware". If we dispatch a thunk, the thunk middleware will invoke the function and pass the store's "dispatch" and "getState" methods to it. Thunks are a desirable place to perform side effects (like AJAX requests) because it de-clutters our components, and because `they make it easy to eventually dispatch other actions when some asynchronous behavior resolves.`(这句很重要！)
 
-4. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is every likely that we will end up dispatching another action (or even another thunk), and the process repeats.
+4. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats.
