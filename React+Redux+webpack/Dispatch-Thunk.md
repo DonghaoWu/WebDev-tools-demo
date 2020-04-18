@@ -186,6 +186,9 @@ onChange={this.handleChange}
   - 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
+
+#### Click here: [BACK TO MENU](#6.0)
+
 - Edition 2:
   1. Set up:
 
@@ -317,6 +320,8 @@ componentDidMount() {
 
 ### <span id="6.3">`Step3: How to set up thunk middleware?`</span>
 
+#### Click here: [BACK TO MENU](#6.0)
+
 - Import and apply the middleware.
 ```jsx
 import { createStore, applyMiddleware } from 'redux';
@@ -386,6 +391,8 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 
 ### `Step4: My understanding.`
 
+#### Click here: [BACK TO MENU](#6.0)
+
 1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
 ```jsx
@@ -410,6 +417,8 @@ export const fetchMessages = () => {
 1. 
 
 ### `Step5: More materials.`
+
+#### Click here: [BACK TO MENU](#6.0)
 
 1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
   1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
