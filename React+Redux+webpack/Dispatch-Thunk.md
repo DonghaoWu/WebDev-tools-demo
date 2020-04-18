@@ -32,12 +32,12 @@
 
 ### `Brief Contents & codes position`
 - [6.1 How to use `dispatch`?](#6.1)
-- [6.2 How to make async action without thunk middleware?](6.2)
-- [6.3 How to set up thunk middleware?](6.3)
+- [6.2 How to make async action without thunk middleware?](#6.2)
+- [6.3 How to set up thunk middleware?](#6.3)
 
 ------------------------------------------------------------
 
-<span id="6.1">`Step1: How to use "dispatch"?`</span>
+### <span id="6.1">`Step1: How to use "dispatch"?`</span>
 
 - Edition 1:
   1. Set up:
@@ -183,7 +183,7 @@ onChange={this.handleChange}
 
   - 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
 
-### `Step2: How to make async action without thunk middleware？`
+### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 - Edition 2:
   1. Set up:
 
@@ -313,8 +313,7 @@ componentDidMount() {
 
  - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async & promise` 的内容。
 
-[`Step3: How to set up thunk middleware?`](#jump)
-### `Step3: How to set up thunk middleware?`
+### <span id="6.3">`Step3: How to set up thunk middleware?`</span>
 
 - Import and apply the middleware.
 ```jsx
