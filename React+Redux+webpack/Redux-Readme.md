@@ -254,7 +254,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 - 下面具体来分析 `dispatch` 的使用。
 
-- 例子一：dispatch 同步函数。
+- 例子一：dispatch 同步函数/ `object`。
 
 ```jsx
 // 定义一个同步函数，作为一个 action ，返回一个 object。
