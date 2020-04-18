@@ -19,14 +19,16 @@
 
 ------------------------------------------------------------
 
-### `Brief Contents & codes position`
-- 1.1 How to connect remote server?
-- 1.2 Why is Git always asking for my password?
-- 1.3 Extra: Using SSH to connect remote server.
+### <span id="1.0">`Brief Contents & codes position`</span>
+- [1.1 How to connect remote server?](#1.1)
+- [1.2 Why is Git always asking for my password?](#1.2)
+- [1.3 Extra: Using SSH to connect remote server.](#1.3)
 
 ------------------------------------------------------------
 
-### `Step1: How to connect remote server?`
+### <span id="1.1">`Step1: How to connect remote server?`</span>
+
+- #### Click here: [BACK TO MENU](#1.0)
 
 A. __`Connect command.`__
 
@@ -61,7 +63,9 @@ C. __`Copy some local files and paste them on remote server.`__
 #### `Comment:`
 1. 
 
-### `Step2: Why is Git always asking for my password?.`
+### <span id="1.2">`Step2: Why is Git always asking for my password?.`</span>
+
+- #### Click here: [BACK TO MENU](#1.0)
 
 - If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
 
@@ -133,7 +137,9 @@ B. __`Solution 2: GitHub SSH keys.`__
 (local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
 ```
 
-### `Step3. Using SSH to connect remote server.`
+### <span id="1.3">`Step3. Using SSH to connect remote server.`</span>
+
+- #### Click here: [BACK TO MENU](#1.0)
 
 1. Generate key pairs locally.
 

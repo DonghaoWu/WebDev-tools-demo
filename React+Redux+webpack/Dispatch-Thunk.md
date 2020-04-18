@@ -41,7 +41,7 @@
 
 ### <span id="6.1">`Step1: How to use "dispatch"?`</span>
 
-#### Click here: [BACK TO MENU](#6.0)
+- #### Click here: [BACK TO MENU](#6.0)
 
 - Edition 1:
   1. Set up:
