@@ -38,9 +38,9 @@ class App extends Component {
 // parameter state comes from index.js provider store state(rootReducers)
 const mapStateToProps = (state) => {
   return {
-    searchField: state.searchRobots.searchField,
-    robots: state.requestRobots.robots,
-    isPending: state.requestRobots.isPending
+    searchField: state.searchRobotsReducer.searchField,
+    robots: state.requestRobotsReducer.robots,
+    isPending: state.requestRobotsReducer.isPending
   }
 }
 

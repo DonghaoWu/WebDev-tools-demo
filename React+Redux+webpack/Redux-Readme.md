@@ -152,7 +152,7 @@ export const requestRobots = () => (dispatch) => {
 
 2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
 
-- sub reducers
+- Reducers
 __`Location: ./robotfriends-redux/src/actions.js`__
 
 ```jsx
@@ -167,7 +167,7 @@ const initialStateSearch = {
   searchField: ''
 }
 
-export const searchRobots = (state = initialStateSearch, action = {}) => {
+export const searchRobotsReducer = (state = initialStateSearch, action = {}) => {
   switch (action.type) {
     case CHANGE_SEARCHFIELD:
       return { ...state, searchField: action.payload }
@@ -182,7 +182,7 @@ const initialStateRobots = {
   error: '',
 }
 
-export const requestRobots = (state = initialStateRobots, action = {}) => {
+export const requestRobotsReducer = (state = initialStateRobots, action = {}) => {
   switch (action.type) {
     case REQUEST_ROBOTS_PENDING:
       return { ...state, isPending: true }
@@ -218,9 +218,9 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchField: state.searchRobots.searchField,
-    robots: state.requestRobots.robots,
-    isPending: state.requestRobots.isPending
+    searchField: state.searchRobotsReducer.searchField,
+    robots: state.requestRobotsReducer.robots,
+    isPending: state.requestRobotsReducer.isPending
   }
 }
 
