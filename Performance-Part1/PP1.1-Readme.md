@@ -34,8 +34,6 @@
 
 - #### Click here: [BACK TO MENU](#2.0)
 
-- #### Click here: [BACK TO MENU](#6.0)
-
 A. Tool: Minify.js
 - [https://www.minifier.org/](https://www.minifier.org/)
 
