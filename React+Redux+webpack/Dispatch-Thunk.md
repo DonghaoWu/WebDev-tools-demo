@@ -27,7 +27,7 @@
 - 本章最重要的几个观点：
   1. `actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
   2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
-  3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is every likely that we will end up dispatching another action (or even another thunk), and the process repeats.
+  3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is every likely that we will end up dispatching another action (or even another thunk), and the process repeats. __`(Important)`__
   4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
 

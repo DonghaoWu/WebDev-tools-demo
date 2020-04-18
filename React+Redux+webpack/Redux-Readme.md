@@ -341,6 +341,6 @@ componentDidMount() {
     - 这是一个奇怪的组合。
     - 在 thunkMiddleware 和 dispatch 的作用下，运行从 requestRobots 得到的函数，而这个函数是一个同步函数接着异步函数，而同步函数和异步函数都有另外一个 `dispatch`去派发 `object`。
     - 很多资料都说 thunkMiddleware 是针对 `dispatch 异步函数`，为什么不能用于同步函数，或者说这里面是怎么运作的，后面需要继续学习。
-    - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。
-    - redux-thunk主要的功能就是可以让我们dispatch一个函数，而不只是普通的 Object。
-    - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk!
+    - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。`(这个想法已经被证实，详细可以参考“Dispatch-Thunk.md”,4月18日记)`
+    - `redux-thunk`主要的功能就是可以让我们dispatch一个函数，但也保留可以是普通的 `Object`。
+    - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk! `(这个想法不是很全面，redux-thunk 只是 redux简化代码的一个中间件，属于锦上添花类型，详细可以参考“Dispatch-Thunk.md”,4月18日记)`
