@@ -21,16 +21,20 @@
 
 ------------------------------------------------------------
 
-### `Brief Contents & codes position`
-- 2.1 Minimize text.
-- 2.2 Minimize images.
-- 2.3 Media queries.
-- 2.4 Less trips.
-- 2.5 Content-delivery api.
+### <span id="2.0">`Brief Contents & codes position`</span>
+- [2.1 Minimize text.](#2.1)
+- [2.2 Minimize images.](#2.2)
+- [2.3 Media queries.](#2.3)
+- [2.4 Less trips.](#2.4)
+- [2.5 Content-delivery api.](#2.5)
 
 ------------------------------------------------------------
 
-### `Step1: Minimize text`
+### <span id="2.1">`Step1: Minimize text`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
+
+- #### Click here: [BACK TO MENU](#6.0)
 
 A. Tool: Minify.js
 - [https://www.minifier.org/](https://www.minifier.org/)
@@ -48,7 +52,9 @@ A. Tool: Minify.js
 #### `Comment:`
 1. 
 
-### `Step2: Minimize images.`
+### <span id="2.2">`Step2: Minimize images.`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
 
 <p align="center">
 <img src="../assets/w8.png" width=90%>
@@ -87,7 +93,9 @@ __`Location: ./example1.1/index.html`__
 - Always lower jpeg quality 30-60%
 
 
-### `Step3. Media queries.`
+### <span id="2.3">`Step3. Media queries.`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
 
 __`Location: ./example1.1/style.css`__
 
@@ -118,7 +126,9 @@ h1 {
 #### `Comment:`
 1. 这样做的好处就是可以根据不同的客户端的大小：电脑/平板/手机，设定传输对应大小跟像素的图片，以达到提升速度却不影响体验的目的。
 
-### `Step4. Less trips.`
+### <span id="2.4">`Step4. Less trips.`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
 
 __`Location: ./example1.1/index.html`__
 
@@ -194,7 +204,9 @@ __`Location: ./example1.1/index.html`__
 <img src="../assets/w12.png" width=90%>
 </p>
 
-### `Step5. Content-delivery api.`
+### <span id="2.5">`Step5. Content-delivery api.`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
 
 A. Tool: imgix 
 - [https://www.imgix.com/](https://www.imgix.com/)
@@ -203,7 +215,9 @@ A. Tool: imgix
 <img src="../assets/w13.png" width=90%>
 </p>
 
-### `Step6 Concept questions.`
+### <span id="2.6">`Step6 Concept questions.`</span>
+
+- #### Click here: [BACK TO MENU](#2.0)
 
 #### `A. `
 
