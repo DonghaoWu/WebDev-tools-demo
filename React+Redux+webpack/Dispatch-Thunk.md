@@ -28,7 +28,7 @@
 
 ### `Brief Contents & codes position`
 - 6.1 How to use `dispatch`?
-- 6.2 How to make async action without thunk middleware.
+- 6.2 How to make async action without thunk middleware？
 - 6.3 How to set up thunk middleware?
 
 ------------------------------------------------------------
@@ -125,7 +125,7 @@
     ```
 
 #### `Comment:`
-1. 数据流动过程：
+1. 核心代码：
 ```jsx
       handleChange = (evt) => {
         store.dispatch(writeMessage(evt.target.value))
@@ -156,6 +156,7 @@
   
 3. dispatch:
   - 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
+
   ```jsx
   handleChange = (evt) => {
     store.dispatch({
@@ -169,8 +170,11 @@
 
   - 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
 
-### `Step2: How to make async action without thunk middleware？`
+  - 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
 
+### `Step2: How to make async action without thunk middleware？`
+- Edition 2:
+  1. Set up:
 
   ```js
   import { createStore } from 'redux';
@@ -197,283 +201,147 @@
     }
   }
   ```
+2. Execute the async action by using `dispatch`.
 
+    ```jsx
+    import React, { Component } from 'react';
+    import Message from './Message';
+    import NewMessageEntry from './NewMessageEntry';
+    import axios from 'axios';
+    import store from '../store';
+    import { gotMessagesFromServer } from '../store';
 
-- rootReducer
-__`Location: ./robotfriends-redux/src/rootReducer.js`__
+    export default class MessagesList extends Component {
 
+      constructor() {
+        super();
+        this.state = store.getState();
+      }
+
+      componentDidMount() {
+        axios.get('/api/messages')
+          .then(res => res.data)
+          .then(messages => store.dispatch(gotMessagesFromServer(messages)));
+
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+      }
+
+      componentWillUnmount() {
+        this.unsubscribe();
+      }
+
+      render() {
+
+        const channelId = Number(this.props.match.params.channelId);
+        const messages = this.state.messages;
+        const filteredMessages = messages.filter(message => message.channelId === channelId);
+        return (
+          <div>
+            <ul className="media-list">
+              {filteredMessages.map(message => <Message message={message} key={message.id} />)}
+            </ul>
+            <NewMessageEntry channelId={channelId} />
+          </div>
+        );
+      }
+    }
+    ```
+
+#### `Comment:`
+1. 核心代码：
 ```jsx
-import { requestRobots, searchRobots } from './reducers';
-import { combineReducers } from 'redux';
+componentDidMount() {
+  axios.get('/api/messages')
+    .then(res => res.data)
+    .then(messages => store.dispatch(gotMessagesFromServer(messages)));
 
-const rootReducer = combineReducers({ requestRobots, searchRobots });
-
-export default rootReducer;
+  this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+}
 ```
 
-- Apply redux to application.
-__`Location: ./robotfriends-redux/src/index.js`__
+2. 解说：
+  - 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。
+  - 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
+
+### `Step3: How to set up thunk middleware?`
+
+- Import and apply the middleware.
+```jsx
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+
+export default createStore(reducer, applyMiddleware(thunkMiddleware));
+```
+
+- Conver the old code.
+
+  - old function:
+  ```jsx
+  componentDidMount() {
+    axios.get('/api/messages')
+      .then(res => res.data)
+      .then(messages => store.dispatch(gotMessagesFromServer(messages)));
+
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+  }
+  ```
+
+  - Thunk:
+  ```jsx
+  import store from '../store';
+
+  const gotNewMessageFromServer = (message) => {
+    return {
+        type: GOT_NEW_MESSAGE_FROM_SERVER,
+        payload: message
+    };
+  }
+
+  const fetchMessages = () => {
+    return (dispatch) => {
+        axios.get('/api/messages')
+            .then(res => res.data)
+            .then(messages => dispatch(gotMessagesFromServer(messages)));
+    }
+  }
+
+  componentDidMount() {
+    store.dispatch(fetchMessages());
+
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+  }
+  ```
+
+#### `Comment:`
+1. 主要变化是原来的 `dispatch` 只能以 `object` 为参数，引进 `thunkMiddleware` 之后 `dispatch` 可以以 `function` 为参数了，执行过程是如果 `dispatch` 的参数是 `function` 时，它会马上执行这个 `function` ，而由于这个函数是一个 `async function`，它会一直等着整个 `promise` 完成之后然后再调用 `dispatch` 一个结果（`object`）到 `reducer`。
+
+2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
+
+3. Thunk 的英文资料整理在 `step5`。
+
+### `Step4: My understanding.`
+
+1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'tachyons';
-import App from './containers/App';
-import registerServiceWorker from './registerServiceWorker';
-import { Provider } from 'react-redux';
-import store from './store'
-import './index.css';
-
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
-registerServiceWorker();
+export const fetchMessages = () => {
+    axios.get('/api/messages')
+        .then(res => res.data)
+        .then(messages => {
+            return {
+                action: GOT_MESSAGES_FROM_SERVER,
+                payload: messages,
+            }
+        });
+}
 ```
+
+2. 以上结果是行不通的，具体原因未明。应该是跟 `promise` 是 `async action` 而不能返回 `object` 有关，实际使用中，上面这个 `fetchMessages()` 返回的是 `undefined`。
+
+3. 后续跟进，需要补充 `promise` 和 `async function` 之后，估计可以使用 `promise` 的方法来实现。
+
+
 
 #### `Comment:`
 1. 
-
-### `Step3: Set up types, actions, reducers.`
-
-- TYPES
-__`Location: ./robotfriends-redux/src/constants.js`__
-
-```jsx
-export const CHANGE_SEARCHFIELD = 'CHANGE_SEARCHFIELD';
-
-export const REQUEST_ROBOTS_PENDING = 'REQUEST_ROBOTS_PENDING';
-export const REQUEST_ROBOTS_SUCCESS = 'REQUEST_ROBOTS_SUCCESS';
-export const REQUEST_ROBOTS_FAILED = 'REQUEST_ROBOTS_FAILED';
-```
-
-- ACTIONS
-__`Location: ./robotfriends-redux/src/actions.js`__
-
-```jsx
-import { apiCall } from './api/api'
-import {
-  CHANGE_SEARCHFIELD,
-  REQUEST_ROBOTS_PENDING,
-  REQUEST_ROBOTS_SUCCESS,
-  REQUEST_ROBOTS_FAILED
- } from './constants'
-
-
-export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text })
-
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  apiCall('https://jsonplaceholder.typicode.com/users')
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-}
-```
-
-#### `Comment:`
-1. 在这里需要说明一个事情，第一个函数 `setSearchField` 实际是一个返回 `Object` 的函数，所以在后面调用的时候直接使用 `dispatch` 就可以将 `Object` 派发到对应的 `reducer` 中。这里的函数相当于是一个 `同步函数`。可以实际调用中认为 `dispatch` 是用来派发 `Object` 的。
-
-2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
-
-- sub reducers
-__`Location: ./robotfriends-redux/src/actions.js`__
-
-```jsx
-import {
-  CHANGE_SEARCHFIELD,
-  REQUEST_ROBOTS_PENDING,
-  REQUEST_ROBOTS_SUCCESS,
-  REQUEST_ROBOTS_FAILED
-} from './constants';
-
-const initialStateSearch = {
-  searchField: ''
-}
-
-export const searchRobots = (state = initialStateSearch, action = {}) => {
-  switch (action.type) {
-    case CHANGE_SEARCHFIELD:
-      return { ...state, searchField: action.payload }
-    default:
-      return state
-  }
-}
-
-const initialStateRobots = {
-  robots: [],
-  isPending: true,
-  error: '',
-}
-
-export const requestRobots = (state = initialStateRobots, action = {}) => {
-  switch (action.type) {
-    case REQUEST_ROBOTS_PENDING:
-      return { ...state, isPending: true }
-    case REQUEST_ROBOTS_SUCCESS:
-      return { ...state, robots: action.payload, isPending: false }
-    case REQUEST_ROBOTS_FAILED:
-      return { ...state, error: action.payload }
-    default:
-      return state
-  }
-}
-```
-
-### `Step4: Connect state and method to components and use the props and methods.`
-
-- 主要代码：
-```jsx
-import { connect } from 'react-redux';
-import { setSearchField, requestRobots } from '../actions';
-
-class App extends Component {
-  // ...
   
-  componentDidMount() {
-    this.props.onRequestRobots();
-  }
-
-  render() {
-    const { robots, searchField, onSearchChange, isPending } = this.props;
-    // ...
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    searchField: state.searchRobots.searchField,
-    robots: state.requestRobots.robots,
-    isPending: state.requestRobots.isPending
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-    onRequestRobots: () => dispatch(requestRobots())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
-```
-
-#### `Comment:`
-1. 之前有种写法：
-
-    ```jsx
-    export default connect(mapStateToProps, { setSearchField, requestRobots})(App);
-    ```
-    - 在这里出现了错误，具体原因后面分析。
-
-2. 连接 component 的几大要素：
-
-    - action functions
-    - mapStateToProps
-    - mapDispatchToProps
-    - connect
-
-
-### `Step5: Create redux async fucntion.`
-
-- 下面具体来分析 `dispatch` 的使用。
-
-- 例子一：dispatch 同步函数。
-
-```jsx
-// 定义一个同步函数，作为一个 action ，返回一个 object。
-const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text });
-
-// onSearchChange 是一个函数，它的运作顺序是接收变量，执行 setSearchField 后返回一个 object，最后调用 dispatch 进行派发 object。
-const mapDispatchToProps = (dispatch) => {
-  return {
-          onSearchChange: (event) => dispatch(setSearchField(event.target.value))
-  }
-}
-
-// 父组件的函数向下传递
-<SearchBox searchChange={this.props.onSearchChange} />
-
-// 在这里有点特殊，当用户输入时，onChange 触发，同时 searchChange 触发，同时自动捕捉输入时产生的 event 变量并自动放到 searchChange 中作为变量。
-const SearchBox = ({ searchfield, searchChange }) => {
-  return (
-    <div className='pa2'>
-      <input
-        className='pa3 ba b--green bg-lightest-blue'
-        type='search'
-        placeholder='search robots'
-        onChange={searchChange}
-      />
-    </div>
-  );
-}
-```
-
-#### `Comment:`
-1. 运行顺序：
-    - 用户输入
-    - onChange(event)
-    - searchChange(event)
-    - onSearchChange(event)
-    - setSearchField(event.target.value) 获得一个 `object`
-    - dispatch({ object })
-    - reducer: searchRobots
-
-- 例子二：dispatch 异步函数。
-
-```jsx
-// 定义一个函数，作为一个 action ，返回一个 function。
-export const requestRobots = () => {
-  return fucntion(dispatch){
-    dispatch({ type: REQUEST_ROBOTS_PENDING })
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-      .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-  }
-}
-
-// onRequestRobots 是一个函数，跟上一个例子不一样，这里是执行了 requestRobots 之后返回一个函数，上一个例子执行了函数之后返回一个对象。
-//这是第一个最大的不同，当返回的是一个 object 时是不用到 thunkMiddleware 的，只有返回函数的时候，才需要用到这个中间件。
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onRequestRobots: () => dispatch(requestRobots())
-  }
-}
-
-componentDidMount() {
-    this.props.onRequestRobots();
-}
-```
-
-#### `Comment:`
-1. 运行顺序：
-    - componentDidMount();
-    - onReduestRobots(); 
-    - requestRobots(); 获得一个函数。
-    - dispatch 一个函数。相当于：
-
-    ```jsx
-        dispatch(function (dispatch) {
-            dispatch({ type: REQUEST_ROBOTS_PENDING })
-            fetch('https://jsonplaceholder.typicode.com/users')
-                .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-                .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-            }
-        )
-    ```
-
-    - 这是一个奇怪的组合。
-    - 在 thunkMiddleware 和 dispatch 的作用下，运行从 requestRobots 得到的函数，而这个函数是一个同步函数接着异步函数，而同步函数和异步函数都有另外一个 `dispatch`去派发 `object`。
-    - 很多资料都说 thunkMiddleware 是针对 `dispatch 异步函数`，为什么不能用于同步函数，或者说这里面是怎么运作的，后面需要继续学习。
-    - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。
-    - redux-thunk主要的功能就是可以让我们dispatch一个函数，而不只是普通的 Object。
-    - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk!
-
-- 下面我们通过一张图来介绍 thunk 的工作原理：
-
-<p align="center">
-<img src="../assets/w23.png" width=90%>
-</p>
-
-- 关于更详细的 thunk 原理：
