@@ -30,7 +30,7 @@
   3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats. __`(Important)`__
   4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
-### `Brief Contents & codes position`
+### <span id="6.0">`Brief Contents & codes position`</span>
 - [6.1 How to use `dispatch`?](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
 - [6.3 How to set up thunk middleware?](#6.3)
@@ -38,6 +38,8 @@
 ------------------------------------------------------------
 
 ### <span id="6.1">`Step1: How to use "dispatch"?`</span>
+
+### [BACK TO MENU](#6.0)
 
 - Edition 1:
   1. Set up:
