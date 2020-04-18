@@ -36,8 +36,8 @@
 
 ### `Brief Contents & codes position`
 - 5.1 Install the dependencies.
-- 5.2 Set up store, combineReducers and redx-middleware.
-- 5.3 Set up types, actions, reducers.
+- 5.2 Set up store, combineReducers and redux middleware.
+- 5.3 Set up types, actions, initialstate, reducers.
 - 5.4 Connect state and method to components and use the props and methods.
 - 5.5 Create redux async fucntion.
 
