@@ -28,11 +28,11 @@
 
 ------------------------------------------------------------
 
-### `Brief Contents & codes position`
-- 3.1 Optimize html file.
-- 3.2 Optimize css file.
-- 3.3 Optimize js file.
-- 3.4 Tools to check website performance.
+### <span id="3.0">`Brief Contents & codes position`</span>
+- [3.1 Optimize html file.](#3.1)
+- [3.2 Optimize css file.](#3.2)
+- [3.3 Optimize js file.](#3.3)
+- [3.4 Tools to check website performance.](#3.4)
 
 <p align="center">
 <img src="../assets/w17.png" width=90%>
@@ -44,7 +44,9 @@
 
 ------------------------------------------------------------
 
-### `Step1: Optimize html file`
+### <span id="3.1">`Step1: Optimize html file`</span>
+
+- #### Click here: [BACK TO MENU](#3.0)
 
 A. 正常相对静态的网页的优化规则是使用`普通型`或者`defer型`，如果使用`普通型`则把 js 文件放在最后，css 文件放在前面；如果使用`defer型`，则 js 文件的位置不需要讲究。
 
@@ -359,7 +361,9 @@ __`Location: ./example1.2/index.html`__
 1. Load style tag in the `<head>`.
 2. Load script right before `</body>`.
 
-### `Step2: Optimize css file.`
+### <span id="3.2">`Step2: Optimize css file.`</span>
+
+- #### Click here: [BACK TO MENU](#3.0)
 
 1. Above the fold loading. (把次要的 css 文件放在后台下载执行)。
 
@@ -413,7 +417,9 @@ __`Location: ./example1.2/index.html`__
 ----------------------------------------------------------------------------
 
 
-### `Step3: Optimize js file.`
+### <span id="3.3">`Step3: Optimize js file.`</span>
+
+- #### Click here: [BACK TO MENU](#3.0)
 
 ```html
 <script></script>
@@ -429,7 +435,9 @@ __`Location: ./example1.2/index.html`__
 3. Minimize DOM manipulation.
 4. Avoid long running JavaScript. (举例，有些 JS 按钮功能会阻止整个加载过程。)
 
-### `Step4: Tools to check website performance.`
+### <span id="3.4">`Step4: Tools to check website performance.`</span>
+
+- #### Click here: [BACK TO MENU](#3.0)
 
 - PageSpeed Insights
   [https://developers.google.com/speed/pagespeed/insights/](https://developers.google.com/speed/pagespeed/insights/)
@@ -441,7 +449,9 @@ __`Location: ./example1.2/index.html`__
 1.
 
 
-### `Step5 Concept questions.`
+### <span id="3.5">`Step5 Concept questions.`</span>
+
+- #### Click here: [BACK TO MENU](#3.0)
 
 #### `A. What is critical render path?`
 
