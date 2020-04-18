@@ -294,11 +294,11 @@ componentDidMount() {
   }
   ```
 
-  ### 这样在 console 显示的结果是，`1=>3=>4=>2`。
+  #### 这样在 console 显示的结果是，`1=>3=>4=>2`。
 
   - 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
 
-  - 4月18日更新，以上讲法是不成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。
+  - 4月18日更新，以上讲法是不完全成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。（一下例子证明 `thunkMiddleware` 不成立。）
 
   - 可以尝试以下代码验证：
 
