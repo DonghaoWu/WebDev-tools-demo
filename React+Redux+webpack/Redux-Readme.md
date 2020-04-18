@@ -363,5 +363,5 @@ componentDidMount() {
 
 -------------------------------------------------------------
 <p align="center">
-<img src="../assets/w23.png" width=90%>
+<img src="../assets/w24.png" width=90%>
 </p>
