@@ -1,6 +1,6 @@
 # Web development tools (Part 5)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Redux)
 
@@ -38,7 +38,7 @@
 
 ### <span id="5.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [5.1 Install the dependencies.](#5.1)
 - [5.2 Set up store, combineReducers and redux middleware.](#5.2)
@@ -384,4 +384,4 @@ componentDidMount() {
 </p>
 
 - #### Click here: [BACK TO CONTENT](#5.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

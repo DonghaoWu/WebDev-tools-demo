@@ -1,6 +1,6 @@
 # Web development tools (Part 3)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part1.2)
 
@@ -32,7 +32,7 @@
 
 ### <span id="3.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [3.1 Optimize html file.](#3.1)
 - [3.2 Optimize css file.](#3.2)
@@ -525,7 +525,7 @@ In order to render content the browser has to go through a series of steps:
 </p>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

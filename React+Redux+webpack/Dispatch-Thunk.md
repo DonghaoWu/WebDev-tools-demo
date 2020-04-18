@@ -1,6 +1,6 @@
 # Web development tools (Part 6)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Thunk)
 
@@ -34,7 +34,7 @@
 
 ### <span id="6.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [6.1 How to use `dispatch`?](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
@@ -445,4 +445,4 @@ export const fetchMessages = () => {
 
 
 - #### Click here: [BACK TO CONTENT](#6.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
