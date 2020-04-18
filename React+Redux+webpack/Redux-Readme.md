@@ -293,7 +293,7 @@ const SearchBox = ({ searchfield, searchChange }) => {
     - onSearchChange(event)
     - setSearchField(event.target.value) 获得一个 `object`
     - dispatch({ object })
-    - reducer: searchRobots
+    - reducer: searchRobotsReducer
 
 - 例子二：dispatch 异步函数。
 
