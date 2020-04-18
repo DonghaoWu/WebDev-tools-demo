@@ -349,7 +349,7 @@ export const fetchMessages = () => {
 #### `Comment:`
 1. 
 
-### `Step5: Some materials.`
+### `Step5: More materials.`
 
 1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
   1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
