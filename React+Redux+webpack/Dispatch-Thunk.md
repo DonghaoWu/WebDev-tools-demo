@@ -18,12 +18,17 @@
 
 #### `本章背景：`
 - 本章主要介绍如何使用 dispatch & Thunk:
-
     - 下面我们通过一张图来介绍 thunk 的工作原理：
 
 <p align="center">
 <img src="../assets/w23.png" width=90%>
 </p>
+
+- 本章最重要的几个观点：
+  1. `actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
+  2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
+  3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is every likely that we will end up dispatching another action (or even another thunk), and the process repeats.
+  4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
 
 ### `Brief Contents & codes position`
@@ -341,7 +346,23 @@ export const fetchMessages = () => {
 3. 后续跟进，需要补充 `promise` 和 `async function` 之后，估计可以使用 `promise` 的方法来实现。
 
 
-
 #### `Comment:`
 1. 
-  
+
+### `Step5: Some materials.`
+
+1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
+  1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
+    a. If it's a function, the store invokes that function immediately and passes the `dispatch` and `getState` methods to it as arguments. Do not move on to step 2.
+    b. If it's a regular object, move on to step 2.
+  2. The store invokes our reducer with the action and the previous state, and sets the return value 
+    as the new state.
+  3. The store invokes all listeners that have been registered with it (via `store.subscribe`).
+
+2. Before, our reducer expected an action to be a plain JavaScript object with some identifying type field. However, thunk middleware will give us a powerful new ability: instead of dispatching an action object, we can dispatch a function! When thunkMiddleware sees that we've dispatched a function instead of a regular object, it will say,
+
+  - Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要！)
+
+3. `Thunk`: a function that we can pass to "store.dispatch" if we configure our store with "thunkMiddleware". If we dispatch a thunk, the thunk middleware will invoke the function and pass the store's "dispatch" and "getState" methods to it. Thunks are a desirable place to perform side effects (like AJAX requests) because it de-clutters our components, and because `they make it easy to eventually dispatch other actions when some asynchronous behavior resolves.`(这句很重要！)
+
+4. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is every likely that we will end up dispatching another action (or even another thunk), and the process repeats.
