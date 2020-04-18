@@ -57,7 +57,7 @@ $ npm i redux-thunk
 
 ### `Step2: Set up store, combineReducers and redux-middleware.`
 
-- store and redux-middleware
+- store and redux middleware.
 
 __`Location: ./robotfriends-redux/src/store.js`__
 
@@ -78,10 +78,10 @@ export default store;
 __`Location: ./robotfriends-redux/src/rootReducer.js`__
 
 ```jsx
-import { requestRobots, searchRobots } from './reducers';
+import { requestRobotsReducer, searchRobotsReducer } from './reducers';
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({ requestRobots, searchRobots });
+const rootReducer = combineReducers({ requestRobotsReducer, searchRobotsReducer });
 
 export default rootReducer;
 ```
