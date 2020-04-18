@@ -158,7 +158,7 @@ onChange={this.handleChange}
     ```jsx
     writeMessage(evt.target.value);
     ```
-    得到：
+    实际得到：
     ```jsx
     store.dispatch({
       type: WRITE_MESSAGE,
@@ -272,7 +272,7 @@ componentDidMount() {
 ```
 
 2. 解说：
-  - 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。
+  - 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。`(4月18日更新，这里感觉不是使用一个 promise，而是一个异步函数加一个同步函数，同步函数先完成，异步函数后完成，顺序是先连接 state 后改变 state。)`
   - 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
 
 ### `Step3: How to set up thunk middleware?`
