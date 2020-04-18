@@ -384,5 +384,4 @@ componentDidMount() {
 </p>
 
 - #### Click here: [BACK TO CONTENT](#5.0)
-
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)

@@ -525,7 +525,6 @@ In order to render content the browser has to go through a series of steps:
 </p>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
-
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
 
 
