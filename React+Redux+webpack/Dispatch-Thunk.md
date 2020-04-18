@@ -34,6 +34,8 @@
 - [6.1 How to use `dispatch`?](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
 - [6.3 How to set up thunk middleware?](#6.3)
+- [6.4 My understanding.](#6.4)
+- [6.5 More material.](#6.5)
 
 ------------------------------------------------------------
 
@@ -389,7 +391,7 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 
 3. Thunk 的英文资料整理在 `step5`。
 
-### `Step4: My understanding.`
+### <span id="6.4">`Step4: My understanding.`</span>
 
 #### Click here: [BACK TO MENU](#6.0)
 
@@ -416,7 +418,7 @@ export const fetchMessages = () => {
 #### `Comment:`
 1. 
 
-### `Step5: More materials.`
+### <span id="6.5">`Step5: More materials.`</span>
 
 #### Click here: [BACK TO MENU](#6.0)
 
