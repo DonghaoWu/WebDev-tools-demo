@@ -30,11 +30,14 @@
   3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats. __`(Important)`__
   4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
+<span id="jump">Hello World</span>
+[XXXX](#jump)
 
 ### `Brief Contents & codes position`
 - 6.1 How to use `dispatch`?
 - 6.2 How to make async action without thunk middleware？
 - 6.3 How to set up thunk middleware?
+- <span id="jump">Hello World</span>
 
 ------------------------------------------------------------
 
@@ -314,7 +317,7 @@ componentDidMount() {
 
  - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async & promise` 的内容。
 
-
+[`Step3: How to set up thunk middleware?`](#jump)
 ### `Step3: How to set up thunk middleware?`
 
 - Import and apply the middleware.
