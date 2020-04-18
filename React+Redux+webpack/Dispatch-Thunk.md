@@ -365,6 +365,19 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
   ```
 
 #### `Comment:`
+```diff
+- componentDidMount() {
+-    axios.get('/api/messages')
+-     .then(res => res.data)
+-      .then(messages => store.dispatch(gotMessagesFromServer(messages)));
+-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+-  }
+
++ componentDidMount() {
++    store.dispatch(fetchMessages());
++    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
++  }
+```
 1. 主要变化是原来的 `dispatch` 只能以 `object` 为参数，引进 `thunkMiddleware` 之后 `dispatch` 可以以 `function` 为参数了，执行过程是如果 `dispatch` 的参数是 `function` 时，它会马上执行这个 `function` ，而由于这个函数是一个 `async function`，它会一直等着整个 `promise` 完成之后然后再调用 `dispatch` 一个结果（`object`）到 `reducer`。
 
 2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
