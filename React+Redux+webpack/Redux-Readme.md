@@ -1,5 +1,7 @@
 # Web development tools (Part 5)
 
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 ## `Section: Front-end`(Redux)
 
 ### `Summary`: In this documentation, we learn Redux.js.
@@ -35,6 +37,9 @@
 ------------------------------------------------------------
 
 ### <span id="5.0">`Brief Contents & codes position`</span>
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 - [5.1 Install the dependencies.](#5.1)
 - [5.2 Set up store, combineReducers and redux middleware.](#5.2)
 - [5.3 Set up types, actions, initialstate, reducers.](#5.3)
@@ -379,3 +384,5 @@ componentDidMount() {
 </p>
 
 - #### Click here: [BACK TO MENU](#5.0)
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)

@@ -1,5 +1,7 @@
 # Web development tools (Part 3)
 
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 ## `Section: Performance`(Performance-Part1.2)
 
 ### `Summary`: In this documentation, we improve website performance by analycing the critical render path.
@@ -29,6 +31,9 @@
 ------------------------------------------------------------
 
 ### <span id="3.0">`Brief Contents & codes position`</span>
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 - [3.1 Optimize html file.](#3.1)
 - [3.2 Optimize css file.](#3.2)
 - [3.3 Optimize js file.](#3.3)
@@ -520,6 +525,8 @@ In order to render content the browser has to go through a series of steps:
 </p>
 
 - #### Click here: [BACK TO MENU](#3.0)
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
 
 
 

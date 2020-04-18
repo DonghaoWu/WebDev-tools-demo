@@ -1,5 +1,7 @@
 # Web development tools (Part 6)
 
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 ## `Section: Front-end`(Thunk)
 
 ### `Summary`: In this documentation, we learn dispatch & Thunk.
@@ -31,6 +33,9 @@
   4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
 ### <span id="6.0">`Brief Contents & codes position`</span>
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 - [6.1 How to use `dispatch`?](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
 - [6.3 How to set up thunk middleware?](#6.3)
@@ -440,3 +445,5 @@ export const fetchMessages = () => {
 
 
 - #### Click here: [BACK TO MENU](#6.0)
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)

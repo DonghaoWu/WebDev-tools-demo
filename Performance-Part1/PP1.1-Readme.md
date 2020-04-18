@@ -1,5 +1,7 @@
 # Web development tools (Part 2)
 
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 ## `Section: Performance`(Performance-Part1.1)
 
 ### `Summary`: In this documentation, we improve website performance in some simple ways.
@@ -22,6 +24,9 @@
 ------------------------------------------------------------
 
 ### <span id="2.0">`Brief Contents & codes position`</span>
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
+
 - [2.1 Minimize text.](#2.1)
 - [2.2 Minimize images.](#2.2)
 - [2.3 Media queries.](#2.3)
@@ -221,4 +226,6 @@ A. Tool: imgix
 
 
 - #### Click here: [BACK TO MENU](#2.0)
+
+- #### Click here: [BACK TO Navigation](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/content.md)
 
