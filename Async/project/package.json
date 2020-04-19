@@ -1,0 +1,18 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ed1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^2.0.4",
+    "superagent": "^5.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
