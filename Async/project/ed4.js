@@ -37,3 +37,4 @@ const example1 = () => {
 // 关于把一个 call back function 转化成 promise
 
 example1();
+
