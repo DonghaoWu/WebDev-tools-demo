@@ -123,30 +123,30 @@ const writeFilePro = (file, data) => {
 
 // 利用 throw 打断整个链条。可以通过修改观察。
 
-const getDogPic = async () => {
-    try {
-        const data = await readFilePro(`${__dirname}/dog.txt`);
-        console.log(`Breed:${data}`);
-        const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
-        console.log(res.body.message);
-        await writeFilePro('dog-img.txt', res.body.message);
-        console.log('Random dog image saved to file!');
-    } catch (error) {
-        console.log(error.message);
-        throw (error);
-    }
-    return `2`;
-}
+// const getDogPic = async () => {
+//     try {
+//         const data = await readFilePro(`${__dirname}/dog.txt`);
+//         console.log(`Breed:${data}`);
+//         const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+//         console.log(res.body.message);
+//         await writeFilePro('dog-img.txt', res.body.message);
+//         console.log('Random dog image saved to file!');
+//     } catch (error) {
+//         console.log(error.message);
+//         throw (error);
+//     }
+//     return `2`;
+// }
 
-(async () => {
-    try {
-        console.log(`1`);
-        const x = await getDogPic();
-        console.log(x);
-        console.log(`3`);
-    } catch (error) {
-        console.log('ERROR!!!!');
-    }
-})();
+// (async () => {
+//     try {
+//         console.log(`1`);
+//         const x = await getDogPic();
+//         console.log(x);
+//         console.log(`3`);
+//     } catch (error) {
+//         console.log('ERROR!!!!');
+//     }
+// })();
 
 // recap: async returns a promise, the value of the promise will be the resolve data.(most important!!!!)

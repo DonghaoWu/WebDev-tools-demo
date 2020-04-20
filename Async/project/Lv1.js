@@ -21,3 +21,4 @@ const example1 = () => {
 // 备注：这里面有3个 async functin，运行顺序是 fs.readFile => superagent => writeFile
 // 设计原理是把一个 call back function 放在另一个 call back function 的代码里面。
 
+example1();

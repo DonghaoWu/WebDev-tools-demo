@@ -25,8 +25,8 @@
 - [7.3 What do async function and promise return?](#7.3)
 - [7.4 Callback hell.](#7.4)
 - [7.5 Promise a callback hell.](#7.5)
-- [7.6 Deal with Promise.](#7.6)
-- [7.7 A better way to consume Promise.](#7.7)
+- [7.6 Consume Promise in async mode.](#7.6)
+- [7.7 Deep dive in async function.](#7.7)
 
 
 ------------------------------------------------------------
@@ -78,7 +78,7 @@ console.log(x);
 + Promise {<pending>}
 ```
 
-2. 这里有一个很重要的认识，`async function`不会实时返回一个值，`Promise`会返回一个 pending promise。
+2. 这里有一个很重要的认识，`async function` 不会在同步模式中返回值，`promise` 在同步模式中返回一个 `pending promise`.
 
 3. 其他例子：
 ```js
@@ -107,6 +107,8 @@ const writeFilePro = (file, data) => {
     1. 答案是可以的，`Promise` 化只是一个让代码看起来更顺畅的工具，实际机器运作的顺序是不变的，唯一变化的是 `Promise化` 让代码读起来更简洁更好操作。
     2. `Promise` 精简代码的最好例子是转化 `Callback hell`，在第三步介绍 `Callback hell`。
     3. 只有 `async function` 才需要 `Promise化`。
+
+4. 学习 `Promise` 的写法需要清楚语法，需要产出什么，还有包含一个异步动作。
 
 ### <span id="7.3">`Step3: What do async function and promise return?`</span>
 
@@ -142,55 +144,175 @@ console.log(y); //---------> promise
 ```
 
 #### `Comment:`
-1. 目前而言 async function 是没有返回值，Promise 返回 `Promise {<pending>}`，关于 async function 的返回值后面应该会有更多探讨（后更！）
+1. 目前而言 async function 在同步模式下是没有返回值，Promise 在同步模式下返回 `Promise {<pending>}`，关于 async function 的返回值后面应该会有更多探讨（后更！ ！！！）
 
 ### <span id="7.4">`Step4: Callback hell.`</span>
 
-- #### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
-1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
+```js
+const superagent = require("superagent");
 
-```jsx
-export const fetchMessages = () => {
-    axios.get('/api/messages')
-        .then(res => res.data)
-        .then(messages => {
-            return {
-                action: GOT_MESSAGES_FROM_SERVER,
-                payload: messages,
-            }
-        });
-}
+const example1 = () => {
+    fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
+        console.log(`Breed:${data}`);
+
+        superagent.get(`https://dog.ceo/api/breed/${data}/images/random`).end((err, res) => {
+            if (err) return console.log(err.message);
+            console.log(res.body.message);
+
+            fs.writeFile('dog-img.txt', res.body.message, err => {
+                if (err) return console.log(err.message);
+                console.log('Random dog image saved to file!');
+            })
+        })
+    })
+};
+
+example1();
 ```
 
-2. 以上结果是行不通的，具体原因未明。应该是跟 `promise` 是 `async action` 而不能返回 `object` 有关，实际使用中，上面这个 `fetchMessages()` 返回的是 `undefined`。
+#### `Comment:`
+1. 在 `example1` 中，一共运行了3个异步动作，其中：
+    - `fs.readFile` 是 `async function`;
+    - `superagent.get` 是 `promise`;
+    - `fs.writeFile` 是 `async function`;
 
-3. 后续跟进，需要补充 `promise` 和 `async function` 之后，估计可以使用 `promise` 的方法来实现。
+2. 以上通过层叠嵌套方式把 `async function` 跟 `promise` 结合起来，实行了3个异步动作的`有序执行`。
 
+3. 但是这种形式表达有点繁琐，且调试起来吃力，所以叫做 `callback hell`。
+
+4. 一个很重要的认识是，没有 `promise` 的最原始方案都可以实现多个异步动作的`按序执行`。
+
+### <span id="7.5">`Step5: Promise a callback hell.`</span>
+
+- #### Click here: [BACK TO CONTENT](#7.0)
+
+```js
+const fs = require("fs");
+const superagent = require("superagent");
+
+const readFilePro = file => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(file, (err, data) => {
+            if (err) reject({ message: 'I could not find the file.' });
+            resolve(data);
+        })
+    })
+}
+
+const writeFilePro = (file, data) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(file, data, err => {
+            if (err) reject({ message: 'I could not write the file.' });
+            resolve('success');
+        })
+    })
+}
+
+const example2 = () => {
+    readFilePro(`${__dirname}/dog.txt`)
+        .then(data => {
+            console.log(`Breed:${data}`);
+            return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`)
+        }).then(res => {
+            console.log(res.body.message);
+            return writeFilePro('dog-img.txt', res.body.message);
+        })
+        .then(() => {
+            console.log('Random dog image saved to file!')
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+example2();
+```
 
 #### `Comment:`
-1. 
+1. 在 `example2` 中，一共运行了3个异步动作，其中：
+    - `readFilePro` 是 `promise`;
+    - `superagent.get` 是 `promise`;
+    - `writeFilePro` 是 `promise`;
 
-### <span id="6.6">`Step5: More materials.`</span>
+2. 在这里有两个比较难懂的点，第一个是`.then`后面意味着什么，它的意思是当这个`promise`一旦成功完成就会捕捉一个结果，但这不是说这个是平时的同步函数里面的直接返回值，它是一个处理后得出的值。
+    - 很重要的点要强调，这个与上文所说 `promise 在同步函数中返回一个 pending promise` 有矛盾。
+    - 用自己的话说，`promise 在同步调用模式中返回一个 pending promise`，`promise 在异步调用模式中可能会返回一个 value。`
 
-- #### Click here: [BACK TO CONTENT](#6.0)
+    - 4月20日记，感觉这个解释不算很清楚，后面继续探索。
 
-1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
-  1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
-    a. If it's a function, the store invokes that function immediately and passes the `dispatch` and `getState` methods to it as arguments. Do not move on to step 2.
-    b. If it's a regular object, move on to step 2.
-  2. The store invokes our reducer with the action and the previous state, and sets the return value 
-    as the new state.
-  3. The store invokes all listeners that have been registered with it (via `store.subscribe`).
+3. 第二个难点是在 `promise` 之前使用 `return` 关键词，这是因为在处理 `promise` 链条时，如果想在上一个 `promise` 成功后把数据用于下一个 `promise`，需要做的是调用当下的 `promise` 并使用 `return` 关键词，整个意思是运行一个 `promise` 并返回这个 `promise` 的结果交给 `.then`和`.catch` 处理。
 
-2. Before, our reducer expected an action to be a plain JavaScript object with some identifying type field. However, thunk middleware will give us a powerful new ability: instead of dispatching an action object, we can dispatch a function! When thunkMiddleware sees that we've dispatched a function instead of a regular object, it will say,
+4. 使用这种处理 `promise` 方法的另外一个好处是把错误集中处理并简化代码，可以看到在`example1`中需要使用多个`if ... return`去进行打断处理，比较重复。
 
-  - Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要，middlware 里面继续处理 async function，外面依然处理同步函数！)
+### <span id="7.6">`Step6: Consume Promise in async mode.`</span>
 
-3. `Thunk`: a function that we can pass to "store.dispatch" if we configure our store with "thunkMiddleware". If we dispatch a thunk, the thunk middleware will invoke the function and pass the store's "dispatch" and "getState" methods to it. Thunks are a desirable place to perform side effects (like AJAX requests) because it de-clutters our components, and because `they make it easy to eventually dispatch other actions when some asynchronous behavior resolves.`(这句很重要！)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
-4. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats.
+```js
+const fs = require("fs");
+const superagent = require("superagent");
+
+const readFilePro = file => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(file, (err, data) => {
+            if (err) reject({ message: 'I could not find the file.' });
+            resolve(data);
+        })
+    })
+}
+
+const writeFilePro = (file, data) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(file, data, err => {
+            if (err) reject({ message: 'I could not write the file.' });
+            resolve('success');
+        })
+    })
+}
+
+const example3 = async () => {
+    try {
+        // stop the code here and wait for the promise finish. stop ... until
+        const data = await readFilePro(`${__dirname}/dog.txt`); //await 后面必须放的是一个 promise， 等待这个过程完成。
+        console.log(`Breed:${data}`);
+        const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+        console.log(res.body.message);
+        await writeFilePro('dog-img.txt', res.body.message);
+        console.log('Random dog image saved to file!');
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+example3();
+```
+
+#### `Comment:`
+1. 第一个必须注明的是，这只是一种新的方法去处理`async action/ promise`，目的都是为了让异步动作`有序执行`。`example3`写法更好理解和维护，但是后台执行的原理跟`example1`和`example2`一模一样。
+
+2. 使用 `async` 定义的函数，表示里面可以使用关键词`await`和`try catch`。
+3. 目前从代码上面看，`await` 后面是必须跟一个 `promise`的，所以必须要把异步函数先`promise`化。`await`的意思是等待这个`promise`成功完成，有返回值的话就赋值。
+4. 可以看出，在异步模式下加上`async`和`await`就可以使`promise`返回一个值，不过这个异步模式的赋值不能用在同步模式的执行上，因为执行模式不一样，所以跟同步函数的运行和思考模式不一样。操作模式不一样，对应的结果也难互相使用，当然同步函数的值可以使用在异步函数中。
+
+5. 目前为止，提到几个比较容易混淆的单词：同步函数，异步函数，同步模式，异步模式，同步动作，异步动作。后面需要继续解释，理清概念边界。（4月20日）
 
 
-- #### Click here: [BACK TO CONTENT](#6.0)
+### <span id="7.7">`Step7: Deep dive in async function.`</span>
+
+```js
+
+```
+
+#### `Comment:`
+1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。
+2. 使用 `async` 定义的函数，同步模式执行返回值一定是一个`promise`。
+3. 目前的想法，在`async` 定义的函数，是不是只能使用`promise`，而不能用`其他 async function`？
+4. 
+
+
+- #### Click here: [BACK TO CONTENT](#7.0)
+
+- #### Click here: [BACK TO CONTENT](#7.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

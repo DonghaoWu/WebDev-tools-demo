@@ -20,7 +20,7 @@ const writeFilePro = (file, data) => {
 }
 // async 意味着你可以使用 await 和 try catch 了。 comsuming promise all the time。
 // 标记了 async 之后，不会打断其他同步函数应有的顺序（event loop），而是走了 async 异步流程。但是这个 async 里面如果用到 await 的话，对应的 promise 也一定是 同步的。
-const getDogPic = async () => {
+const example3 = async () => {
     try {
         // stop the code here and wait for the promise finish. stop ... until
         const data = await readFilePro(`${__dirname}/dog.txt`); //await 后面必须放的是一个 promise， 等待这个过程完成。
@@ -34,4 +34,4 @@ const getDogPic = async () => {
     }
 }
 
-getDogPic();
+example3();
