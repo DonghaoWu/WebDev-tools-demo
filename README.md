@@ -14,3 +14,6 @@
 
 - [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) 
 
+- [Part7 - Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
+
+- [Part8 - Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research.md) 

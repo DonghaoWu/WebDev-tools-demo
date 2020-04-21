@@ -305,7 +305,7 @@ example3();
 ### <span id="7.7">`Step7: More about async function.`</span>
 
 - #### Click here: [BACK TO CONTENT](#7.0)
-- #### Click here: [Part8: Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [Part8: Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research.md)
 
 #### `Comment:`
 1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。
