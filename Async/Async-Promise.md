@@ -300,24 +300,19 @@ example3();
 
 6. 总的来说，`async function` 加上`Promise`生成`promise`，`promise`使用`async`定义并内部调用是一种简化的`处理 promise`的方式。还是那句话，没有`async`定义并调用，`promise`也可以使用旧方式处理。
 
-7. 要指出的是，被`async`作为关键词定义的一切函数，在同步模式之行下都是同步输出一个`promise`
+7. 要指出的是，被`async`作为关键词定义的一切函数，在同步模式之行下都是同步输出一个`promise`。
 
+### <span id="7.7">`Step7: More about async function.`</span>
 
-
-### <span id="7.7">`Step7: Deep dive in async function.`</span>
-
-```js
-
-```
+- #### Click here: [BACK TO CONTENT](#7.0)
+- #### Click here: [Part8: Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 #### `Comment:`
 1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。
 2. 使用 `async` 定义的函数，同步模式执行返回值一定是一个`promise`。
 3. 目前的想法，在`async` 定义的函数，是不是只能使用`promise`，而不能用`其他 async function`？
-4. 
 
-
-- #### Click here: [BACK TO CONTENT](#7.0)
+4. 待补充材料：`throw` & `promise.all`
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
