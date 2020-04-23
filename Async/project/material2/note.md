@@ -922,6 +922,275 @@ Even though promises are cool, there are certain limitations with them. `For exa
 
 Another thing about promises is, they are not replayable or retriable. Once a promise is resolved and handled, `you can not invoke it again to do the same task. This is one of the frustrating drawbacks of promise.`
 
+第四篇：
+https://itnext.io/javascripts-async-await-versus-promise-the-great-debate-6308cb2e10b3
+
+I didn’t really see any benefits of async/await that outweighed using promises — they both ended up accomplishing the same thing: `handling asynchronous data calls in a performant, consistent manner.`
+
+- AJAX & Callbacks
+AJAX, which stands for Asynchronous JavaScript And XML and callbacks were an OG way of handling asynchronous calls in JavaScript. What it boils down to, is when one function is meant to be executed after another function has finished executing — hence the name ‘call back’.
+
+callback hell
+
+If you’d like to error handle that or even try to add some new functionality in the middle of that mess, be my guest.
+
+I, however, won’t have anything to do with it, so let’s agree that AJAX and callbacks were once a way to handle asynchronous data, but they are no longer the de facto way. There’s much better solutions that have come about that I’ll show you next. Let’s move on to promises.
+
+`A Promise is an object representing the eventual completion or failure of an asynchronous operation…Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.`
+
+(这里提到 asynchronous operation)
+
+This may seem like a minor improvement right now, but once you start chaining promises together or waiting for multiple promises to resolve before moving forward, having one single .catch() block at the end to handle anything that goes wrong within, is pretty handy. Read on and I’ll show you.
+
+Pros of Promises over Callbacks
+In addition to a cleaner syntax, promises offer advantages over callbacks.
+
+- Callbacks added with then() even after the success or failure of the asynchronous operation, will be called, as above.
+
+- Multiple callbacks may be added by calling then() several times. Each callback is executed one after another, in the order in which they were inserted (this is the chaining I mentioned earlier).
+
+- It’s possible to chain events together after a failure, i.e. a catch, which is useful to accomplish new actions even after an action failed in the chain.
+
+- Promise.all() returns a single Promise that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. Callbacks can’t do that.
+
+- Promises solve a fundamental flaw with the callback pyramid of doom, by catching all errors, even thrown exceptions and programming errors. This is essential for functional composition of asynchronous operations.
+
+`The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`
+
+`An async function can contain an await expression that pauses the execution of the async function and waits for the passed Promise's resolution, and then resumes the asyncfunction's execution and returns the resolved value.`
+
+```js
+function logFetch(url) {
+  return fetch(url)
+    .then(response => response.text())
+    .then(text => {
+      console.log(text);
+    }).catch(err => {
+      console.error('fetch failed', err);
+    });
+}
+```
+
+```js
+async function logFetch(url) {
+  try {
+    const response = await fetch(url);
+    console.log(await response.text());
+  }
+  catch (err) {
+    console.log('fetch failed', err);
+  }
+}
+```
+
+- The syntax and structure of your code using async functions is much more like using standard synchronous functions.
+
+- In the examples above, the logFetch() functions are the same number of lines, but all the callbacks are gone. This makes it easier to read, especially for those less familiar with promises.
+
+- Another interesting tidbit, is that anything you await is passed through Promise.resolve() (for us, typically the .then(result) resolution of the promise), so you can safely await non-native promises. That’s pretty cool.
+
+- And you can safely combine async/await with Promise.all() to wait for multiple asynchronous calls to return before moving ahead.
+
+The V8 team made improvements that make async/await functions run faster than traditional promises in the JavaScript engine.
+
+`Promises and async/await accomplish the same thing. They make retrieving and handling asynchronous data easier. They eliminate the need for callbacks, they simplify error handling, they cut down on extraneous code, they make waiting for multiple concurrent calls to return easy, and they make adding additional code in between calls a snap.`
+
+第五篇：
+
+https://medium.com/codebuddies/getting-to-know-asynchronous-javascript-callbacks-promises-and-async-await-17e0673281ee
+
+`(这一篇对 callback 的认识比较深)`
+That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an “asynchronous non-blocking I/O model”. What that means is that while the execution of JavaScript is blocking, I/O operations are not. I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.
+
+Registering event listeners in a browser with “addEventListener”, reading a files content with “fs.readFile” or registering a middleware in an express web server with “server.use” are examples of common APIs that uses callbacks.
+`之前已经存在的 callback 函数，后来这种形式用来处理 async operation`
+
+`As you can see, “request” takes a function as its last argument. This function is not executed together with the code above. It is saved to be executed later once the underlying I/O operation of fetching data over HTTP(s) is done. The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`
+(这一段解释了整个运作过程)
+
+Callbacks are a good way to declare what will happen once an I/O operation has a result, but what if you want to use that data in order to make another request? You can only handle the result of the request (if we use the example above) within the callback function provided.
+（接着上一个 callback 的数据放到下一个 callback 中使用。）
+
+```js
+const request = require(‘request’);
+let result;
+request('http://www.somepage.com', function (error, response, body) {
+    if(error){
+        // Handle error.
+    }
+    else {
+        result = body;
+    }
+});
+console.log(result);
+```
+
+The last line will output “undefined” to the console because at the time that line is being executed, the callback has not been called. Even if the request were somehow to complete before the result variable is printed to the console (highly unlikely though), this code will still run to completion before the callback is executed anyway because that is the nature of the non-blocking I/O model in JavaScript.
+
+So if we want to do a second request based on the result of a first one we have to do it inside the callback function of the first request because that is where the result will be available:
+
+```js
+request('http://www.somepage.com', function (firstError, firstResponse, firstBody) {
+    if(firstError){
+        // Handle error.
+    }
+    else {
+        request(`http://www.somepage.com/${firstBody.someValue}`, function (secondError, secondResponse, secondBody) {
+            if(secondError){
+                // Handle error.
+            }
+            else {
+                // Use secondBody for something
+            }
+        });
+    }
+});
+```
+
+When you have a callback in a callback like this, the code tends to be a bit less readable and a bit messy. In some cases you may have a callback in a callback in a callback or even a callback in a callback in a callback in a callback. You get the point: it gets messy.
+
+One thing to note here is the first argument in every callback function will contain an error if something went wrong, or will be empty if all went well. `This pattern is called “error first callbacks” and is very common.` It is the standard pattern for callback-based APIs in NodeJs. `This means that for every callback declared we need to check if there is an error and that just adds to the mess when dealing with nested callbacks.`
+
+This is the anti-pattern that has been named “callback hell”.
+
+- Promise
+
+A promise is an object that wraps an asynchronous operation and notifies when it’s done. This sounds exactly like callbacks, but the important differences are in the usage of Promises. `Instead of providing a callback, a promise has its own methods` which you call to tell the promise what will happen when it is successful or when it fails. The methods a promise provides are “then(…)” for when a successful result is available and “catch(…)” for when something went wrong.
+
+```js
+someAsyncOperation(someParams)
+.then(function(result){
+    // Do something with the result
+})
+.catch(function(error){
+    // Handle error
+});
+```
+
+One important side note here is that “someAsyncOperation(someParams)” is not a Promise itself but a function that returns a Promise.
+`(这个纠正了我刚开始时的认识)`
+
+The true power of promises is shown when you have several asynchronous operations that depend on each other, just like in the example above under “Callback Hell”. So let’s revisit the case where we have a request that depends on the result of another request. This time we are going to use a module called `“axios” that is similiar to “request” but it uses promises instead of callbacks. This is also to point out that callbacks and promises are not interchangeable.`
+
+
+Instead of nesting callbacks inside callbacks inside callbacks, you chain .then() calls together making it more readable and easier to follow. `Every .then() should either return a new Promise or just a value or object which will be passed to the next .then() in the chain.` Another important thing to notice is that even though we are doing two different asynchronous requests we only have one .catch() where we handle our errors.` That’s because any error that occurs in the Promise chain will stop further execution and an error will end up in the next .catch() in the chain.`
+
+A friendly reminder: `just like with callback based APIs, this is still asynchronous operations.` The code that is executed when the request has finished — that is, the subsequent .then() calls — `is put on the event loop just like a callback function would be. This means you cannot access any variables passed to or declared in the Promise chain outside the Promise.` The same goes for errors thrown in the Promise chain. You must also have at least one .catch() at the end of your Promise chain for you to be able to handle errors that occur. If you do not have a .catch(), any errors will silently pass and fade away and you will have no idea why your Promise does not behave as expected.
+
+`(这个纠正了我刚开始时的认识)`
+
+
+- Creating promises 
+`这篇说到很多之前疑惑的点`
+
+As stated above, callbacks are not interchangeable with Promises. `This means that callback-based APIs cannot be used as Promises. `The main difference with callback-based APIs is it does not return a value, it just executes the callback with the result. A Promise-based API, on the other hand, immediately returns a Promise that wraps the asynchronous operation, and then the caller uses the returned Promise object and calls .then() and .catch() on it to declare what will happen when the operations has finished.
+
+
+The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed two callbacks: one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). It is a good idea to make sure that you always pass Error objects when calling reject.`如何建造 promise`
+
+```js
+function getAsyncData(someValue){
+    return new Promise(function(resolve, reject){
+        getData(someValue, function(error, result){
+            if(error){
+                reject(error);
+            }
+            else{
+                resolve(result);
+            }
+        })
+    });
+}
+```
+
+Note that it is within the function being passed to the Promise constructor that we start the asynchronous operation. That function is then responsible for calling resolve(success) when it’s done or reject(error) if there are errors.
+
+
+This means that we can use the function “getAsyncData” like this:
+
+```js
+getAsyncData(“someValue”)
+// Calling resolve in the Promise will get us here, to the first then(…)
+.then(function(result){
+    // Do stuff
+})
+// Calling reject in the Promise will get us here, to the catch(…)
+// Also if there is an error in any then(..) it will end up here
+.catch(function(error){
+    // Handle error
+});
+```
+
+The process of wrapping a callback based asynchronous function inside a Promise and return that promise instead is called “promisification”. We are “promisifying” a callback-based function. There are lots of modules that let you do this in a nice way but since version 8 NodeJs has a built in a helper called “util.promisify” for doing exactly that.`(专业名词)`
+
+This means that our whole Promise wrapper above could instead be written like this:
+
+```js
+const { promisify } = require(‘util’);
+const getAsyncData = promisify(getData);
+getAsyncData(“someValue”)
+.then(function(result){
+    // Do stuff
+})
+.catch(function(error){
+    // Handle error
+});
+```
+
+- Async/Await
+
+You don’t have to use it if you don’t want to. You will be fine with just using Promises.
+
+`Async/Await is the next step in the evolution of handling asynchronous operations in JavaScript. It gives you two new keywords to use in your code: “async” and “await”.` Async is for declaring that a function will handle asynchronous operations and `await is used to declare that we want to “await” the result of an asynchronous operation inside a function that has the async keyword.`
+
+The following is not a legal use of the await keyword since it can only be utilized inside a function with the async keyword in front of it:
+
+A function call can only have the await keyword if the function being called is “awaitable”. A function is “awaitable” if it has the async keyword or if it returns a Promise. Remember when I said that callbacks and Promises are not interchangeable and you have to wrap a callback based function inside a Promise and return that Promise? Well, functions with the async keyword are interchangeable with functions that returns Promises which is why I stated that a function that returns a Promise is “awaitable”.`这个解释很好`
+
+```js
+function fetchTheData(someValue){
+    return new Promise(function(resolve, reject){
+        getData(someValue, function(error, result){
+            if(error){
+                reject(error);
+            }
+            else{
+                resolve(resutl);
+            }
+        })
+    });
+}
+async function getSomeAsyncData(value){
+    const result = await fetchTheData(value);
+    return result;
+}
+```
+
+Also this will work:
+
+```js
+async function getSomeData(value){
+    const result = await fetchTheData(value);
+    return result;
+}
+getSomeData(‘someValue’)
+.then(function(result){
+    // Do something with the result
+})
+.catch(function (error){
+    // Handle error
+});
+```
+
+`An important consideration regarding async/await`
+
+Async/await may make your asynchronous calls look more synchronous but it is still executed the same way as if it were using a callback or promise based API. The asynchronous I/O operations will still be processed in parallel and the code handling the responses in the async functions will not be executed until that asynchronous operation has a result. Also, even though you are using async/await you have to sooner or later resolve it as a Promise in the top level of your program. This is because async and await are just syntactical sugar for automatically creating, returning and resolving Promises.
+
+
+
+
+
+
 
 
 
