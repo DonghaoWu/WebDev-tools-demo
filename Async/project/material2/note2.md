@@ -44,9 +44,9 @@
 
 - promise 是怎样运作的？
 
-    1. `Promise is used to overcome issues with multiple callbacks and provide better way to manage success and error conditions.` Promise looks little complex in the beginning but its very simple and effective to deal with. `Promise is an object which is returned by the async function like ajax.`
+    (要删) 1. `Promise is used to overcome issues with multiple callbacks and provide better way to manage success and error conditions.` Promise looks little complex in the beginning but its very simple and effective to deal with. `Promise is an object which is returned by the async function like ajax.`
 
-    2. There are two parts using a promise object. Inside async function (Part1) and where its called (Part2).
+    (要删) 2. There are two parts using a promise object. Inside async function (Part1) and where its called (Part2).
     Part1 — Inside Async function,
     - Promise object is created.
     - Async function returns the promise object
@@ -541,6 +541,8 @@
 
 - 关于 promise.all 和 promise.race
 
+    - `promise.race 例子`
+
     ```js
     const a = () => new Promise( resolve => {
         setTimeout( () => resolve( 'result of a()' ), 1000 ); 
@@ -565,7 +567,6 @@
     ```
 
     - `promise.all 例子`
-
 
     ```js
     const a = () => new Promise( resolve => {
@@ -1017,8 +1018,6 @@
     5. One thing to note here is the first argument in every callback function will contain an error if something went wrong, or will be empty if all went well. `This pattern is called “error first callbacks” and is very common.` It is the standard pattern for callback-based APIs in NodeJs. `This means that for every callback declared we need to check if there is an error and that just adds to the mess when dealing with nested callbacks.`
 
     6. This is the anti-pattern that has been named “callback hell”.
-
-    7. 
 
 - 使用 async / await 的好处：
 
