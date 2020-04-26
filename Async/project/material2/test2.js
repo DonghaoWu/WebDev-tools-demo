@@ -1,18 +1,43 @@
-const promiseA = new Promise((resolve, reject) => {
-    console.log(`inside promise`)
+
+
+// const a = () => {
+//     setTimeout(() => console.log('result of a()'), 1000);
+// }
+// const b = () => {
+//     setTimeout(() => console.log('result of b()'), 1000);
+// }
+// const c = () => {
+//     setTimeout(() => console.log('result of c()'), 1000);
+// }
+
+// a();
+// b();
+// c();
+const a = (callback) => {
     setTimeout(() => {
-        resolve('result of a()')
-    }, 1000)
-    console.log(`end promise`)
-});
-console.log(`outside promise`)
-promiseA
-    .then((res) => {
-        console.log(res);
+        console.log('result of a()');
+        callback();
+    }, 1000);
+}
+const b = (callback) => {
+    setTimeout(() => {
+        console.log('result of b()');
+        callback();
+    }, 1000);
+}
+const c = (callback) => {
+    setTimeout(() => {
+        console.log('result of c()');
+        callback();
+    }, 1000);
+}
+
+a(() => {
+    console.log(`a() is done!`);
+    b(() => {
+        console.log(`b() is done!`);
+        c(() => {
+            console.log(`c() is done!`);
+        })
     })
-    .catch(err => {
-        console.log('promiseA error:', error)
-    })
-    .finally(() => {
-        console.log(`a() is done!`);
-    })
+})

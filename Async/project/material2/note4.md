@@ -15,7 +15,6 @@
 - A Promise is an object representing the eventual completion or failure of an asynchronous operation…Essentially, `a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.`
 
 - 什么是 Web APIs：
-
     1. `JavaScript executes code in a single thread, which makes it blocking. `
 
     2. `Web APIs are APIs that extends JavaScript functionality to perform asynchronous tasks.` For example, setTimeout is a Web API that performs some action after a given delay. 以上，setTimeout 也是 Web APIs 之一。most Web APIs are callback based. They need a callback function to notify when an asynchronous operation is done.
@@ -399,8 +398,8 @@
     执行顺序：
     sync --->
     1. console.log(`start`);
-    2. setTimeout  ---》 已经开始计时
-    3. Promise.rsolve('Promise')
+    2. setTimeout  ---> 开始计时
+    3. Promise.resolve('Promise')
     4. console.log(`End!`);
 
     queue --->
@@ -411,10 +410,34 @@
     */
     ```
 
+    - 作为对比的代码：
+    ```js
+    console.log(`start`);
+
+    setTimeout(() => {
+        console.log('Timeout!')
+    }, 0);
+
+    Promise.resolve(console.log('Promise'))
+
+    console.log(`End!`);
+    /*
+    执行顺序：
+    sync --->
+    1. console.log(`start`);
+    2. setTimeout  ---> 开始计时
+    3. console.log('Promise')
+    4. console.log(`End!`);
+
+    queue --->
+    5. console.log('Timeout!'); >>>`(macro)task queue`
+    */
+    ```
+
     B、event loop 里面的执行顺序：
     ```js
     setTimeout(() => {
-    console.log(`setTimeout callback`)
+        console.log(`setTimeout callback`)
     }, 0);
 
     const promiseA = new Promise((resolve) => {
@@ -429,16 +452,20 @@
     })
     console.log(`I am sync job 2!`);
     console.log(`I am sync job 3!`);
-
     /*
-    执行顺序：理解这个可以理解执行器的执行顺序。
+    执行顺序：理解这个可以理解 event loop 的执行顺序。
+    sync --->
+    1.setTimeout开始计时，---> 同时把 console.log(`setTimeout callback`) 放进 queue
+    2.promiseA 里的 console.log(`in the function!`);
+    3.console.log(`I am sync job 1!`);
+    4.promiseA ---> 同时把 console.log('PromiseA success!'); 放进 queue
+    5.console.log(`I am sync job 2!`);
+    6.console.log(`I am sync job 3!`);
 
-    setTimeout开始计时，---> 同时把 console.log(`setTimeout callback`) 放进 queue
-    promiseA 定义里的 console.log
-    console.log(`I am sync job 1!`);
-    promiseA ---> 同时把 console.log('PromiseA success!'); 放进 queue
-    console.log(`I am sync job 2!`);
-    console.log(`I am sync job 3!`);
+    queue --->
+    7. console.log('PromiseA success!');
+    8. console.log(`setTimeout callback`)
+    console.log('Timeout!'); >>>`(macro)task queue`
     优先调用 queue 中的 promise callback
     最后调用 另外一个 queue 中的 setTimeout 的 callback。
     */
@@ -464,6 +491,17 @@
 
     console.log(`I am sync job 2!`);
     console.log(`I am sync job 3!`);
+
+    /*
+    执行顺序：
+    sync --->
+    1.promiseA
+    2.console.log(`I am sync job 1!`);
+    3.console.log(`I am sync job 2!`);
+    4.console.log(`I am sync job 3!`);
+    4.promiseA 的 .then callback -----> console.log('PromiseA success', result)
+    5.promiseA 的 .fanally callback -----> console.log(`a() is done!`);
+    */
     ```
 
     D、执行器的执行顺序：
@@ -479,7 +517,6 @@
         resolve( 'B' );
         console.log('ExecutorB: End!');
     } );
-
 
     // Promise: classical approach
 
@@ -503,48 +540,46 @@
         console.log('getPromiseAsync()');
 
         const resultA = await promiseA;
-            console.log('promiseAsync: A');
+        console.log('promiseAsync: A');
 
-            const resultB = await promiseB;
-                console.log('promiseAsync: B');
-                console.log( 'Async: Promises resolved: ', resultA, resultB );
+        const resultB = await promiseB;
+        console.log('promiseAsync: B');
+        console.log('Async: Promises resolved: ', resultA, resultB );
     };
     const promiseAsync = getPromiseAsync();
     ```
 
-
-
     6. 观点：`The biggest misconception about Promises in JavaScript is that they are asynchronous. Well, not everything of Promises is asynchronous. `
 
     ```js
-    const promiseA = new Promise((resolve, reject) =>{
+    const promiseA = new Promise((resolve, reject) => {
         console.log(`Creating promise`);
 
-        setTimeout(()=>{
+        setTimeout(() => {
             reject(`something bad happened in a()!`)
         }, 1000);
 
-        console.log(`Exiting promise executot.`)
+        console.log(`Exiting promise executor.`)
     })
 
     console.log(`I am sync job 1!`);
 
     promiseA
-    .then((res)=>{
-        console.log(`PromiseA success:`, res);
-    })
-    .catch(err =>{
-        console.log('promiseA error:',err)
-    })
-    .finally(()=>{
-        console.log(`a() is done!`);
-    });
+        .then((res) => {
+            console.log(`PromiseA success:`, res);
+        })
+        .catch(err => {
+            console.log('promiseA error:', err)
+        })
+        .finally(() => {
+            console.log(`a() is done!`);
+        });
 
     console.log(`I am sync job 2!`);
     console.log(`I am sync job 3!`);
     ```
 
-    - 以上例子说明：As you can see from the example above, our code from the start to finish is executing in a synchronous manner. `The executor function of a promise also runs in a synchronous manner. `Since we have a setTimeout call in the executor function which contains resolve call, it will execute when all asynchronous code is executed. `(当编译器从上到下执行时，遇到 promise 会先执行 promise 里面的 sync function，然后把 async function 放进 event loop 的对应 queue 中，这个是跟之前以为 promise 就全部放在 queue 的认识不一样)`
+    - 以上例子说明：`The executor function of a promise also runs in a synchronous manner. `Since we have a setTimeout call in the executor function which contains resolve call, it will execute when all asynchronous code is executed. `(当编译器从上到下执行时，遇到 promise 会先执行 promise 里面的 sync function，然后把 async function 放进 event loop 的对应 queue 中，这个是跟之前以为 promise 就全部放在 queue 的认识不一样)`
 
     7. 这里也发现了一个奇怪的行为，就是 promise 的定义过程会执行里面的函数：
 
@@ -569,75 +604,25 @@
     }
     ```
 
-    - 为了防止这种打乱顺序的情况，一般来说都把 promise 放在一个函数定义里面作为返回值，这个在第六篇里面有详细介绍。这个在参考第四点的代码。
+    - 这里说明 promise 的定义过程也是执行过程，如果要防止定义即执行，参考第四点 “promisification”
 
-    8. promise 里面的 catch 捕捉 系统错误。
+    8. promise 里面的 catch 捕捉系统错误。
     ```js
-    const promiseA = new Promise( ( resolve, reject ) => {
+    const promiseA = new Promise((resolve, reject) => {
         i++;
-
-        setTimeout( () => {
-            resolve( i );
-        }, 1000 ); // resolve after 1 second
-    } );
+        setTimeout(() => {
+            resolve(i);
+        }, 1000);
+    });
 
     promiseA
-    .then( ( result ) => {
-        console.log( 'promiseA success:', result );
-    } );
+        .then((result) => {
+            console.log('promiseA success:', result);
+        });
     ```
 
     9. 关于 promise.all 和 promise.race    
     - `promise.race 例子`
-
-    ```js
-    const a = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of a()' ), 1000 ); 
-    } );
-
-    const b = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of b()' ), 500 );
-    } );
-
-    const c = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of c()' ), 1100 );
-    } );
-
-
-    Promise.race( [ a(), b(), c() ] )
-    .then( ( data ) => {
-        console.log( 'success: ', data );
-    } )
-    .catch( ( error ) => {
-        console.log( 'error: ', error );
-    } );
-    ```
-
-    - `promise.all 例子`
-
-    ```js
-    const a = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of a()' ), 1000 ); 
-    } );
-
-    const b = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of b()' ), 500 ); 
-    } );
-
-    const c = () => new Promise( resolve => {
-        setTimeout( () => resolve( 'result of c()' ), 1100 ); 
-    } );
-
-    Promise.all( [ a(), b(), c(), { key: 'I am plain data!' } ] )
-    .then( ( data ) => {
-        console.log( 'success: ', data );
-    } )
-    .catch( ( error ) => {
-        console.log( 'error: ', error );
-    } );
-    ```
-
-    - 用 async 代替 promise.all 的例子
 
     ```js
     const a = () => new Promise(resolve => {
@@ -648,6 +633,50 @@
         setTimeout(() => resolve('result of b()'), 500);
     });
 
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    Promise.race([a(), b(), c()])
+        .then((data) => {
+            console.log('success: ', data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+    ```
+
+    - `promise.all 例子`
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    Promise.all([a(), b(), c(), { key: 'I am plain data!' }])
+        .then((data) => {
+            console.log('success: ', data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+    ```
+
+    - 用 async 代替 promise.all 的例子
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
     const c = () => new Promise(resolve => {
         setTimeout(() => resolve('result of c()'), 1100);
     });
@@ -671,7 +700,7 @@
     console.log('I am a sync operation!');
     ```
 
-    - 上面这个例子的分析，If any of the promises is rejected inside an async function, the promise it returns will reject as well with the error message. The returned promise is also rejected if any runtime error occurs inside the async function (similar behavior to a promise which rejects when a runtime error occurs in Promise constructors executor function). `(这个操作有崩溃风险，一个崩全部崩，需要增加 catch)`
+    - 上面这个例子的分析，If any of the promises is rejected inside an async function, the promise it returns will reject as well with the error message. The returned promise is also rejected if any runtime error occurs inside the async function (similar behavior to a promise which rejects when a runtime error occurs in Promise constructors executor function). `(这个操作有崩溃风险，一个崩全部崩，需要增加 catch，这里面的关键词是 捕捉 runtime error。)`
 
     - In the above example, promise returned by b() rejects which crashes the thread in which async function is running and it is handled by catch handler of the promise it returns. `To safely handle promise rejections, we should use try/catch method inside async functions.`
 
@@ -679,15 +708,13 @@
 
     ```js
     const a = () => new Promise(resolve => {
-        setTimeout(() => resolve('result of a()'), 1000); // 1s delay
+        setTimeout(() => resolve('result of a()'), 1000);
     });
-
     const b = () => new Promise((resolve, reject) => {
-        setTimeout(() => reject('result of b()'), 500); // 0.5s delay
+        setTimeout(() => reject('result of b()'), 500);
     });
-
     const c = () => new Promise(resolve => {
-        setTimeout(() => resolve('result of c()'), 1100); // 1.1s delay
+        setTimeout(() => resolve('result of c()'), 1100);
     });
 
 
@@ -703,7 +730,6 @@
         }
     };
 
-    // doJobs() returns a promise
     doJobs()
         .then((result) => {
             console.log('success:', result);
@@ -712,7 +738,6 @@
             console.log('error:', error);
         });
 
-    // normal flow
     console.log('I am a sync operation!');
     ```
 
@@ -739,11 +764,11 @@
     执行顺序：
     sync --->
     1. console.log('Before function!');
-    2. console.log('In function!');
-    3. console.log('After function!');
+    2. Promise.resolve('One!');
+    3. console.log('In function!');
+    4. console.log('After function!');
 
     queue --->
-    4. Promise.resolve('One!');
     5. console.log('One');
 
     这里例子证明了 myFunc 就算是 async 函数，但不一定里面的所有函数都是放在最后执行的，同时也看到了 await 的能力，在 await 开始，相当于进入了 promise 链条了，后面的函数都被打断和按顺序执行了，这个隐式的安排是初学者很难发现的。
@@ -761,15 +786,15 @@
         return fetch(url)
             .then(response => response.text())
             .then(text => {
-            console.log(text);
+                console.log(text);
             }).catch(err => {
-            console.error('fetch failed', err);
+                console.error('fetch failed', err);
             });
     }
     ```
 
     ```js
-    async function logFetch(url) {
+    async function logFetchAsync(url) {
         try {
             const response = await fetch(url);
             console.log(await response.text());
@@ -780,7 +805,7 @@
     }
     ```
 
-    12. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数`
+    12. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数，最后调用这个 async 函数去获得了一 promise。`
 
     ```js
     function fetchTheData(someValue){
@@ -795,6 +820,7 @@
             })
         });
     }
+
     async function getSomeAsyncData(value){
         const result = await fetchTheData(value);
         return result;
@@ -802,40 +828,31 @@
 
     getSomeAsyncData(‘someValue’)
         .then(function(result){
-
+            console.log(result);
         })
         .catch(function (error){
-
+            console.log(error);
         });
     ```
 
     13. 关于callback hell 的代码：
     ```js
-    function a() {
-	setTimeout( function() {
-        console.log( 'result of a()' );
-    }, 1000 ); // 1 second delay
+    const a = () => {
+        setTimeout(() => console.log('result of a()'), 1000);
     }
-
-    function b() {
-        setTimeout( function() {
-            console.log( 'result of b()' );
-        }, 500 ); // 0.5 second delay
-    }
-
-    function c() {
-        setTimeout( function() {
-            console.log( 'result of c()' );
-        }, 1200 ); // 1.1 second delay
+    const b = () => {
+        setTimeout(() => console.log('result of b()'), 1000);
+    }   
+    const c = () => {
+        setTimeout(() => console.log('result of c()'), 1000);
     }
 
     // call in sequence
+
     a();
     console.log('a() is done!');
-
     b();
     console.log('b() is done!');
-
     c();
     console.log('c() is done!');
     ```
@@ -843,25 +860,23 @@
     改成：
 
     ```js
-    function a( callback ) {
-        setTimeout( () => {
-            console.log( 'result of a()' );
+    const a = (callback) => {
+        setTimeout(() => {
+            console.log('result of a()');
             callback();
-        }, 1000 ); 
+        }, 1000);
     }
-
-    function b( callback ) {
-        setTimeout( () => {
-            console.log( 'result of b()' );
+    const b = (callback) => {
+        setTimeout(() => {
+            console.log('result of b()');
             callback();
-        }, 500 );
+        }, 1000);
     }
-
-    function c( callback ) {
-        setTimeout( () => {
-            console.log( 'result of c()' );
+    const c = (callback) => {
+        setTimeout(() => {
+            console.log('result of c()');
             callback();
-        }, 1200 ); 
+        }, 1000);
     }
 
     a( () => console.log('a() is done!') );
@@ -885,36 +900,35 @@
     - 进一步改进的版本： Callback hell
 
     ```js
-    function a( callback ) {
-        setTimeout( () => {
-            console.log( 'result of a()' );
+    const a = (callback) => {
+        setTimeout(() => {
+            console.log('result of a()');
             callback();
-        }, 1000 ); 
+        }, 1000);
     }
-
-    function b( callback ) {
-        setTimeout( () => {
-            console.log( 'result of b()' );
+    const b = (callback) => {
+        setTimeout(() => {
+            console.log('result of b()');
             callback();
-        }, 500 );
+        }, 1000);
     }
-
-    function c( callback ) {
-        setTimeout( () => {
-            console.log( 'result of c()' );
+    const c = (callback) => {
+        setTimeout(() => {
+            console.log('result of c()');
             callback();
-        }, 1200 ); 
+        }, 1000);
     }
 
     a(() => {
-    console.log(`a() is done!`);
-    b(() => {
-        console.log(`b() is done!`);
-        c(() => {
-            console.log(`c() is done!`);
+        console.log(`a() is done!`);
+        b(() => {
+            console.log(`b() is done!`);
+            c(() => {
+                console.log(`c() is done!`);
+            })
         })
     })
-
+    // 这个结构维护起来确实有点困难。
     // 这里介绍使用 callback hell 设计固定执行顺序。
     // 这个理念相当于按设计主动清空栈，从而把异步保证了顺序
     // 把原来异步执行的动作安排成同步顺序操作，且可以保证了延时的准确。
