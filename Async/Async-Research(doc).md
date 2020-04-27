@@ -79,21 +79,19 @@
 
 - #### Click here: [BACK TO CONTENT](#8.0)
 
-    1. Why callback？
+    1. How does callback work with 'asynchronous non-blocking I/O model'?
         1. That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an `“asynchronous non-blocking I/O model”.` What that means is that while the execution of JavaScript is blocking, `I/O operations are not. `I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.`（介绍 asynchronous non-blocking I/O model ）`
 
-        2. `asynchronous non-blocking I/O model`就是相当于另一条生产线，另外 event loop 不属于这里面。For example, The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(当 JS 执行到一些 asynchronous operation 的时候，就会转向 underlying I/O operation 运行这个函数，但主线程序会继续运行而不受打断，而对应的 callback 会被放在一个叫做 event loop 的地方。)`Callbacks are a good way to declare what will happen once an I/O operation has a result.
+        2. `asynchronous non-blocking I/O model`就是相当于另一条生产线，另外 event loop 不属于这里面。For example, The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.Callbacks are a good way to declare what will happen once an I/O operation has a result.`(当 JS 执行到一些 asynchronous operation 的时候，就会转向 underlying I/O operation 运行这个函数，但主线程序会继续运行而不受打断，而对应的 callback 会被放在一个叫做 event loop 的地方。)`
 
         3. `As you can see, “request” takes a function as its last argument. This function is not executed together with the code above. It is saved to be executed later once the underlying I/O operation of fetching data over HTTP(s) is done. The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(这一段解释了整个运作过程，request 在另外的生产线执行，不打断当前生产线，对应的 callback 就暂时放在 event loop 等候返回 call stack 执行。)
-
-        4. One thing to note here is the first argument in every callback function will contain an error if something went wrong, or will be empty if all went well. `This pattern is called “error first callbacks” and is very common.` It is the standard pattern for callback-based APIs in NodeJs. `This means that for every callback declared we need to check if there is an error and that just adds to the mess when dealing with nested callbacks.`
 
     2. What is the cons about callback?
         1. But unfortunately, it becomes very difficult to handle callback when we do series of ajax calls where one call is dependent on previous call. We might encounter difficulty in maintaining multiple callback references and handling multiple success and error` conditions. 
 
         2. We end up with many nested callback functions that are dependent on the previous callback function. This is often referred to as a callback hell, as we end up with tons of nested callback functions that make the code quite difficult to read!
 
-        3. 
+        3. One thing to note here is the first argument in every callback function will contain an error if something went wrong, or will be empty if all went well. `This pattern is called “error first callbacks” and is very common.` It is the standard pattern for callback-based APIs in NodeJs. `This means that for every callback declared we need to check if there is an error and that just adds to the mess when dealing with nested callbacks.`
 
 #### `Comment:`
 1. 
