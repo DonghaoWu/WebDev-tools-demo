@@ -26,8 +26,7 @@
 - [8.5 About event loop.](#8.5)
 - [8.6 Things you should know before using Promise.](#8.6)
 - [8.7 About async/await.](#8.7)
-
-
+- [8.8 More about async function.](#8.8)
 
 ------------------------------------------------------------
 
@@ -77,6 +76,8 @@
     8. `这里有一个很重要的认识，promise 就是一个 object，一个函数返回 promise，外部函数是无法使用 promise 里面生成的数据的，所以如果要使用 promise 链中的数据，只能在 .then 中运用。`
 
     9. 关于 then 和 catch 的执行时机的进一步说明，看上去 then 是马上执行，实际上是需要一定的条件才调用的，因为它们依然是在 event loop 里面的 callback。
+
+    10. Async/await may make your asynchronous calls look more synchronous but it is still executed the same way as if it were using a callback or promise based API. `The asynchronous I/O operations will still be processed in parallel and the code handling the responses in the async functions will not be executed until that asynchronous operation has a result.` Also, `even though you are using async/await you have to sooner or later resolve it as a Promise in the top level of your program.` This is because async and await are just syntactical sugar for automatically creating, returning and resolving Promises.(这个解释很全面。)
 
 #### `Comment:`
 1. 
@@ -287,7 +288,7 @@
 
         2. Is async/await blocks the main thread？
 
-        - From await syntax keyword looks like that it blocks the execution of the thread until the promise it is awaiting on resolves. `But that’s is not the case.` The while async/await pattern is still based on classical Promise syntax.`（强化 从第一个 await 就开始 promise 链的概念。)` The await keyword is like a then callback that wraps all the statements below it.`(继续强化第三点观点)`
+            - From await syntax keyword looks like that it blocks the execution of the thread until the promise it is awaiting on resolves. `But that’s is not the case.` The while async/await pattern is still based on classical Promise syntax. The await keyword is like a then callback that wraps all the statements below it.`（强化 从第一个 await 就开始 promise 链的概念。)`
 
         3. Async/await may make your asynchronous calls look more synchronous but it is still executed the same way as if it were using a callback or promise based API. `The asynchronous I/O operations will still be processed in parallel and the code handling the responses in the async functions will not be executed until that asynchronous operation has a result.` Also, `even though you are using async/await you have to sooner or later resolve it as a Promise in the top level of your program.` This is because async and await are just syntactical sugar for automatically creating, returning and resolving Promises.
 
@@ -312,10 +313,10 @@
 #### `Comment:`
 1. 
 
-### <span id="8.7">`Step7: More about async function.`</span>
+### <span id="8.8">`Step8: More about async function.`</span>
 
 - #### Click here: [BACK TO CONTENT](#8.0)
-- #### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
+- #### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
 
 - #### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
 
