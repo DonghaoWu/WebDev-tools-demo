@@ -71,7 +71,7 @@
 
     2. Promise handler returns a new promise ？ `（对这个说法比较疑惑,现在的认识是 promise 就是一个 object，但显示出来的是一个 promise，promise 在定义的时候就已经在运行了，使用 then 和 catch 相当于加入 callback，但是作为 handler 的 then 是否一定返回 promise 这个说法是不对的，只有在 then 内运行 “return + promise / 数值” 才能是返回 promise，也只有这样才能接着使用 下一个 then。）`可以是 一个 promise，也可以是一个数字或者其他变量，但只有是 promise 的时候才能继续使用 then 和 catch。
 
-    3. `（除了返回带值的 promise 之外，还可以返回一个新的 promise/ 或者以返回值为参数的 promise，当这个新 promise 完成之后，就进入 then 或者 catch）`
+    3. `（除了返回带值的 promise 之外，还可以返回一个新的 promise/ 或者以返回值为参数的 promise，当这个新 promise 完成之后，就进入 then 或者 catch.）`
 
     例子：
     ```js
@@ -92,7 +92,7 @@
 
     4. When a promise is returned from a handler, we don’t need to handle promise rejection on it. It will be cascaded to parent until it finds the catch handler.`(这个是更高阶的设定，当上一层返回的 promise 是 reject 结果时，下一层接的接口直接是 catch。)`
 
-    例子：(运行任何例子之前想象一下结果，以下是一个很好的学习 promise 的代码材料。)
+    例子：(运行任何例子之前预测一下结果，以下是一个很好的学习 promise 的代码材料。)
     ```js
     Promise.resolve('Fulfill DATA!')
         .then((result) => {
