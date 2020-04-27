@@ -101,25 +101,23 @@
 - #### Click here: [BACK TO CONTENT](#8.0)
 
     1. Why Promise?
-        1. A promise is an object that wraps an asynchronous operation and notifies when it’s done. This sounds exactly like callbacks, but the important differences are in the usage of Promises. `Instead of providing a callback, a promise has its own methods`（这里的意思是无论是 callback 还是 promise 的形式，目的都是为了使一连串的 asynchronous operation 串联起来，比如说将一些有延迟或者需要等候的动作分先后顺序地执行。）上面提到的事实上 promise 自带的 method 跟 callback 是差不多的。
+        1. A promise is an `object` that wraps an asynchronous operation and notifies when it’s done. This sounds exactly like callbacks, but the important differences are in the usage of Promises. `Instead of providing a callback, a promise has its own methods`（这里的意思是无论是 callback 还是 promise 的形式，目的都是为了使一连串的 asynchronous operation 串联起来，比如说将一些有延迟或者需要等候的动作分先后顺序地执行。）上面提到的事实上 promise 自带的 method 跟 callback 是差不多的。
 
-        2. `Promise is used to overcome issues with multiple callbacks and provide better way to manage success and error conditions.`  `Promise is an object.`
+        2. Promises solve a fundamental flaw with the callback pyramid of doom, by catching all errors, even thrown exceptions and programming errors. This is essential for functional composition of asynchronous operations.`(简化 callback 的 “error first callbacks” ，简化了代码，同时增强代码的可支持力，最后还可以捕捉系统错误。)`
 
-        3. `A promise is an object which has then and catch methods on it.` One of this method gets called when the promise returns a value or an error.then 和 catch 都是 promise 的 build-in method，可以把它们看成是 callback， promise 本质上是一个 object，只有 promise 才能使用 then 和 catch。
+        3. `A promise is an object which has then and catch methods on it.` One of this method gets called when the promise returns a value or an error.`(then 和 catch 都是 promise 的 build-in method，可以把它们看成是 callback， promise 本质上是一个 object，只有 promise 才能使用 then 和 catch。)`
 
         4. It’s possible to chain events together after a failure, i.e. a catch, which is useful to accomplish new actions even after an action failed in the chain.`（这个是值得注意的一个点，catch 不一定是结束，它可以继续返回 promise，从而延长 promise 链，正如 sync 中的 if/else statement）`
 
         5. Promise.all() returns a single Promise that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. `Callbacks can’t do that.`
 
-        6. Promises solve a fundamental flaw with the callback pyramid of doom, by catching all errors, even thrown exceptions and programming errors. This is essential for functional composition of asynchronous operations.`(简化 callback 的 “error first callbacks” ，简化了代码，同时增强代码的可支持力，最后还可以捕捉系统错误。)`
-
-        7. resolve maps to then and reject maps to catch for all practical purposes.
-        8. Make sure to write both .catch and .then methods for all the promises. It is a good idea to make sure that you always pass Error objects when calling reject.
-        9. If something needs to be done in both cases use .finally.
-        10. The return type of all the methods in the Promise object, regardless of whether they are static methods or prototype methods, is again a Promise.
-        11. In Promise.all, the order of the promises are maintained in the values variable, irrespective of which promise was first resolved.
-        12. Promise object can be resolved or rejected only one time. We can add multiple success and error handlers on the promise object.
-        13. Use promises whenever you are using asynchronous or blocking code.
+        6. resolve maps to then and reject maps to catch for all practical purposes.
+        7. Make sure to write both .catch and .then methods for all the promises. It is a good idea to make sure that you always pass Error objects when calling reject.
+        8. If something needs to be done in both cases use .finally.
+        9. The return type of all the methods`(resolve() & reject())` in the Promise object, regardless of whether they are static methods or prototype methods, is again a Promise.
+        10. In Promise.all, the order of the promises are maintained in the values variable, irrespective of which promise was first resolved.
+        11. Promise object can be resolved or rejected only one time. We can add multiple success and error handlers on the promise object.
+        12. Use promises whenever you are using asynchronous or blocking code.
 
     2. How does promise work?
         1. The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed `two callbacks:` one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). `如何建造 promise`
