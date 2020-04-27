@@ -72,6 +72,8 @@
 
     6. 整个构造版图： `call stack + event loop + asynchronous non-blocking I/O model`
 
+    7. .then 和 .catch 都属于 promise callback，都会放在 microtask queue 中, promise callback 放进 event loop 的时机是在 `promise 的 resolve 或者 reject 的时候。`
+
 #### `Comment:`
 1. 
 
@@ -180,21 +182,21 @@
 - #### Click here: [BACK TO CONTENT](#8.0)
 
     1. What type of queue are in event loop?
-        - within the Event Loop, there are actually two types of queues: the (macro)task queue (or just called the task queue), and the microtask queue. The (macro)task queue is for (macro)tasks and the microtask queue is for microtasks.
+        - Within the Event Loop, there are actually two types of queues: the (macro)task queue (or just called the task queue), and the microtask queue. The (macro)task queue is for (macro)tasks and the microtask queue is for microtasks.
 
         `(Macro)task: `setTimeout | setInterval
-        
+
         `Microtask: `process.nextTick | `Promise callback` | queueMicrotask 
 
     2. What is the queue priority?
 
-        1. `The event loop is endlessly running single-threaded loop that runs on the main JavaScript thread and listens for the different events. Its job is to accept callback functions and execute them on the main thread. `Since event loop runs on the main thread, if the main thread is busy, event loop is basically dead for that time.`(这句话又颠覆了前面的认识，这里确实是两条流水线，但是在 asynchronous non-blocking I/O model 生产线完成后，接下来的 callback 还是要返回主线执行，在这期间 callback 都被安排在 event loop，而我们的 callback 或者 promise 方案就是为了能人工编排 event loop 的输出顺序，同时也是 callback 的执行顺序。)`
+        1. `The event loop is endlessly running single-threaded loop that runs on the main JavaScript thread and listens for the different events. Its job is to accept callback functions and execute them on the main thread. `Since event loop runs on the main thread, if the main thread is busy, event loop is basically dead for that time.`(event loop 的作用就是存储 callback并在适当的条件下把 callback 放回 call stack 执行，而我们的 callback 或者 promise 方案就是为了能人工编排 event loop 的输出顺序。)`
 
-        2. The macrotask queue is a queue of the callback function waiting to be executed. `The event loop pushes oldest queued callback functions (FIFO) from macrotask queue on to the main call stack one at the time where they are executed synchronously. Event loop only pushes a callback function to the stack when the stack is empty or when the main thread is not busy.`(这里解释了 event loop 的作用)
+        2. The macrotask queue is a queue of the callback function waiting to be executed. `The event loop pushes oldest queued callback functions (FIFO) from macrotask queue on to the main call stack one at the time where they are executed synchronously. Event loop only pushes a callback function to the stack when the stack is empty or when the main thread is not busy.`(event loop 执行先进先出顺序，但也要看是否有 多个 async 动作并行的情况。)
 
         3. `The call stack will become empty when all synchronous function calls are executed. `（先执行 sync function）
 
-        4. then and catch as well as finally methods of a promise register the callback functions passed to them and these callbacks are provided to the event loop when the promise is resolved or rejected. These callbacks are added to the microtask queue which has `higher` priority than macrotask queue.` Hence event loop will prefer to execute them first.` `（then 和 catch 都属于 callback， 都会被放在 queue 中，当栈空了之后才会调用。）`
+        4. `.then` and `.catch` as well as `.finally` methods of a promise register the callback functions passed to them and these callbacks are provided to the event loop when the promise is resolved or rejected. These callbacks are added to the microtask queue which has `higher` priority than macrotask queue.` Hence event loop will prefer to execute them first.` `（then 和 catch 都属于 promise callback， 都会被放在 microtask queue 中，这里还提到 promise callback 放进 event loop 的时机是在 promise 的 resolve 或者 reject 的时候。）`
 
     3. How does event loop work?
         1. So when is a then(), catch() or finally() callback executed? The event loop gives a different priority to the tasks:
