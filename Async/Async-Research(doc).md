@@ -296,19 +296,15 @@
 
         1. The async function returns a promise. The converse is also true. `Every function that returns a promise can be considered as async function.`(都会在 sync 之后执行。)
 
-        2. await blocks the execution of the code within the async function in which it is located.
+        2. If two functions can be run in parallel, create two different async functions and then run them in parallel.
 
-        3. If the output of function2 is dependent on the output of function1, I use await.
+        3. To run promises in parallel, create an array of promises and then use Promise.all(promisesArray).
 
-        4. If two functions can be run in parallel, create two different async functions and then run them in parallel.
+        4. __`Every time you use await remember that you are writing blocking code. Over time we tend to neglect this.`__
 
-        5. To run promises in parallel, create an array of promises and then use Promise.all(promisesArray).
+        5. Instead of creating huge async functions with many await asyncFunction() in it, it is better to create smaller async functions. This way, we will be aware of not writing too much blocking code.
 
-        6. `Every time you use await remember that you are writing blocking code. Over time we tend to neglect this.`
-
-        8. Instead of creating huge async functions with many await asyncFunction() in it, it is better to create smaller async functions. This way, we will be aware of not writing too much blocking code.
-
-        9. Another advantage of using smaller async functions is that you force yourself to think of which async functions can be run in parallel.
+        6. Another advantage of using smaller async functions is that you force yourself to think of which async functions can be run in parallel.
 
 #### `Comment:`
 1. 
