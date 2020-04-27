@@ -64,13 +64,13 @@
 
     2. `Web APIs are APIs that extends JavaScript functionality to perform asynchronous tasks.` For example, setTimeout is a Web API that performs some action after a given delay. 以上，setTimeout 也是 Web APIs 之一。most Web APIs are callback based. They need a callback function to notify when an asynchronous operation is done.
 
-    3. 可以把主线程看成是一条流水线，当运行到 setTimeout 时，直接开始计时，然后把对应的 callback 放在另外一条流水线上面，`当主流水线空出来了，堆栈里面比 setTimeout callback 优先级的都执行完了，然后 setTimeout 的计时也结束了，这个 callback 就调回去主流水线开始执行。`从这个角度看应该是需要符合3个条件才能执行，所以对应的计时是不准确的。
+    3. 可以把主线程看成是一条流水线，当运行到 setTimeout 时，直接开始计时，然后把对应的 callback 放在 event loop，`当主流水线空出来了，堆栈里面比 setTimeout callback 优先级的都执行完了，然后 setTimeout 的计时也结束了，这个 callback 就调回去主流水线开始执行。`从这个角度看应该是需要符合3个条件才能执行，所以对应的计时是不准确的。
 
     4. 当你在代码中使用 async operation 时，你要想好这个动作是有延迟的，对当前的流程没有提供值的能力，且工作是在另外一条流水线上执行。
 
     5. 很重要的认识是，event loop 里面的 callback 一定是在主流水线 sync 函数完成之后才执行的，至于如果有多个并行的 async 如何决定它们的顺序这是后面补充更新。
 
-    6. 整个构造版图： call stack + event loop + asynchronous non-blocking I/O model 
+    6. 整个构造版图： `call stack + event loop + asynchronous non-blocking I/O model`
 
 #### `Comment:`
 1. 
@@ -80,9 +80,9 @@
 - #### Click here: [BACK TO CONTENT](#8.0)
 
     1. Why callback？
-        1. That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an `“asynchronous non-blocking I/O model”.` What that means is that while the execution of JavaScript is blocking, `I/O operations are not. `I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.（重要）
+        1. That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an `“asynchronous non-blocking I/O model”.` What that means is that while the execution of JavaScript is blocking, `I/O operations are not. `I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.`（介绍 asynchronous non-blocking I/O model ）`
 
-        2. `asynchronous non-blocking I/O model`就是相当于另一条生产线，它里面包括堆栈，堆栈优先级还有先进先出的排队机制。For example, The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(当 JS 执行到一些 asynchronous operation 的时候，就会转向 underlying I/O operation 运行这个函数，但主线程序会继续运行而不受打断，而对应的 callback 会被放在一个叫做 event loop 的地方。)`Callbacks are a good way to declare what will happen once an I/O operation has a result.
+        2. `asynchronous non-blocking I/O model`就是相当于另一条生产线，另外 event loop 不属于这里面。For example, The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(当 JS 执行到一些 asynchronous operation 的时候，就会转向 underlying I/O operation 运行这个函数，但主线程序会继续运行而不受打断，而对应的 callback 会被放在一个叫做 event loop 的地方。)`Callbacks are a good way to declare what will happen once an I/O operation has a result.
 
         3. `As you can see, “request” takes a function as its last argument. This function is not executed together with the code above. It is saved to be executed later once the underlying I/O operation of fetching data over HTTP(s) is done. The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(这一段解释了整个运作过程，request 在另外的生产线执行，不打断当前生产线，对应的 callback 就暂时放在 event loop 等候返回 call stack 执行。)
 
