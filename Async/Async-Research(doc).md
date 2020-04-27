@@ -46,7 +46,8 @@
 + promisification
 + AJAX, which stands for Asynchronous JavaScript And XML and callbacks were an OG way of handling asynchronous calls in JavaScript.
 
-+ A Promise is an object representing the eventual 
++ Promise
+    - A Promise is an object representing the eventual 
     completion or failure of an asynchronous operation…Essentially, `a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.`
 ```
 
