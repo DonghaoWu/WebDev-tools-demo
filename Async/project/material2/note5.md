@@ -21,13 +21,15 @@
 
     3. 可以把主线程看成是一条流水线，当运行到 setTimeout 时，直接开始计时，然后把对应的 callback 放在另外一条流水线上面，`当主流水线空出来了，堆栈里面比 setTimeout callback 优先级的都执行完了，然后 setTimeout 的计时也结束了，这个 callback 就调回去主流水线开始执行。`从这个角度看应该是需要符合3个条件才能执行，所以对应的计时是不准确的。
 
+    4. 当你在代码中使用 async operation 时，你要想好这个动作是有延迟的，对当前的流程没有提供值的能力，且工作是在另外一条流水线上执行。
+
 - 为什么使用 callback？
 
     1. That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an `“asynchronous non-blocking I/O model”.` What that means is that while the execution of JavaScript is blocking, `I/O operations are not. `I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.（重要）
 
     2.  `asynchronous non-blocking I/O model`就是相当于另一条生产线，它里面包括堆栈，堆栈优先级还有先进先出的排队机制。For example, The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(当 JS 执行到一些 asynchronous operation 的时候，就会转向 underlying I/O operation 运行这个函数，但主线程序会继续运行而不受打断，而对应的 callback 会被放在一个叫做 event loop 的地方。)`Callbacks are a good way to declare what will happen once an I/O operation has a result.
 
-    3. `As you can see, “request” takes a function as its last argument. This function is not executed together with the code above. It is saved to be executed later once the underlying I/O operation of fetching data over HTTP(s) is done. The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(这一段解释了整个运作过程)
+    3. `As you can see, “request” takes a function as its last argument. This function is not executed together with the code above. It is saved to be executed later once the underlying I/O operation of fetching data over HTTP(s) is done. The underlying HTTP(s) request is an asynchronous operation and does not block the execution of the rest of the JavaScript code. The callback function is put on a sort of queue called the “event loop” until it will be executed with a result from the request.`(这一段解释了整个运作过程，request 在另外的生产线执行，不打断当前生产线，对应的 callback 就暂时放在 event loop。)
 
     4. One thing to note here is the first argument in every callback function will contain an error if something went wrong, or will be empty if all went well. `This pattern is called “error first callbacks” and is very common.` It is the standard pattern for callback-based APIs in NodeJs. `This means that for every callback declared we need to check if there is an error and that just adds to the mess when dealing with nested callbacks.`
 
@@ -61,9 +63,7 @@
 
 - promise 是怎样运作的？
 
-    1. A promise object is created from Promise constructor/class which needs a callback function AKA executor function ( either in ES5 syntax or a fat arrow function). `This callback function receives the resolve and reject function arguments, either of which we must envoke with an optional payload.`
-
-    2. The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed `two callbacks:` one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). `如何建造 promise`
+    1. The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed `two callbacks:` one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). `如何建造 promise`
 
 - 关于 promise 的返回值。
 
@@ -168,28 +168,26 @@
 
     12. Another thing about promises is, they are not replayable or retriable. Once a promise is resolved and handled, `you can not invoke it again to do the same task. This is one of the frustrating drawbacks of promise.`
 
-- 如何使用 async 创造 async function ？
+- 使用 async 的好处和注意事项：
 
     1. We can create async functions that implicitly return a promise. `这是个很重要的认识，所有用 async 定义的函数都是返回一个 promise`
-
-- 使用 async 的好处和注意事项：
     
-    1. With the await keyword, `we can suspend the asynchronous function while we wait for the awaited value return a resolved promise. If we want to get the value of this resolved promise, like we previously did with the then() callback, we can assign variables to the awaited promise value!` （这个过程就是 promise 完成了 resolve 然后 调用 then 的过程压缩了，只不过这里更直观更好处理，可以把值放在自定义变量上。）
+    2. With the await keyword, `we can suspend the asynchronous function while we wait for the awaited value return a resolved promise. If we want to get the value of this resolved promise, like we previously did with the then() callback, we can assign variables to the awaited promise value!` （这个过程就是 promise 完成了 resolve 然后 调用 then 的过程压缩了，只不过这里更直观更好处理，可以把值放在自定义变量上。）
 
-    2. `The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`（async function 的定义，就是内部运行 promise 的功能集合，同时 在 await 开始，之后的代码都进入了 promise链，这个人是很重要。）
+    3. `The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`（async function 的定义，就是内部运行 promise 的功能集合，同时 在 await 开始，之后的代码都进入了 promise链，这个人是很重要。）
 
     4. `Promises and async/await accomplish the same thing. They make retrieving and handling asynchronous data easier. They eliminate the need for callbacks, they simplify error handling, they cut down on extraneous code, they make waiting for multiple concurrent calls to return easy, and they make adding additional code in between calls a snap.`（详细解释了好处。）
 
     5. A function call can only have the await keyword `if the function being called is “awaitable”.`shi A function is “awaitable” if it has the async keyword or if it returns a Promise. Remember when I said that callbacks and Promises are not interchangeable and you have to wrap a callback based function inside a Promise and return that Promise? Well, functions with the async keyword are interchangeable with functions that returns Promises which is why I stated that a function that returns a Promise is “awaitable”.`这个解释很好`
 
-    7. async functions return a promise.
-    8. async functions use an implicit Promise to return results. Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise.
-    10. There can be multiple await statements within a single async function.
-    11. When using async await, make sure you use try catch for error handling.
-    12. Be extra careful when using await within loops and iterators. You might fall into the trap of writing sequentially-executing code when it could have been easily done in parallel.
-    13. await is always for a single Promise.
-    14. Promise creation starts the execution of asynchronous functionality.
-    15. await only blocks the code execution within the async function. It only makes sure that the next line is executed when the promise resolves. So, if an asynchronous activity has already started, await will not have any effect on it.
+    6. async functions return a promise.
+    7. async functions use an implicit Promise to return results. Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise.
+    8. There can be multiple await statements within a single async function.
+    9. When using async await, make sure you use try catch for error handling.
+    10. Be extra careful when using await within loops and iterators. You might fall into the trap of writing sequentially-executing code when it could have been easily done in parallel.
+    11. await is always for a single Promise.
+    12. Promise creation starts the execution of asynchronous functionality.
+    13. await only blocks the code execution within the async function. It only makes sure that the next line is executed when the promise resolves. So, if an asynchronous activity has already started, await will not have any effect on it.
 
 - async 定义函数的返回值是什么？
 

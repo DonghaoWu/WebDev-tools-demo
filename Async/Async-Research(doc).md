@@ -4,7 +4,7 @@
 
 ## `Section: Front-end`(Async - Research)
 
-### `Summary`: In this documentation, we deep dive in JS async.
+### `Summary`: In this documentation, we deep dive in JS async, documentation part.
 
 ### `Check Dependencies:`
 
@@ -15,33 +15,38 @@
 #### `本章背景：`
 - 
 
-### <span id="7.0">`Brief Contents & codes position`</span>
+### <span id="8.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [7.1 Async function with callback.](#7.1)
-- [7.2 Promise an async function.](#7.2)
-- [7.3 What do async function and promise return?](#7.3)
-- [7.4 Callback hell.](#7.4)
-- [7.5 Promise a callback hell.](#7.5)
-- [7.6 Consume Promise in async mode.](#7.6)
-- [7.7 Deep dive in async function.](#7.7)
+- [8.1 Terminologies.](#8.1)
+- [8.2 My understanding about async.](#8.2)
+- [8.3 About callback?](#8.3)
+- [8.4 About Promise.](#8.4)
+- [8.5 About event loop.](#8.5)
+- [8.6 About async/await.](#8.6)
+- [8.7 Deep dive in async function.](#8.7)
 
 
 ------------------------------------------------------------
 
-### <span id="7.1">`Step1: Async function with callback.`</span>
+### <span id="8.1">`Step1: Terminologies.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
-```js
-const fs = require("fs");
+```diff
++ Ajax
++ async programming
+    - AJAX Call
+    - setTimeout or setInterval
+    - Reading a file
+    - Events
++ async activity
++ Web APIs
++ promisification
++ AJAX, which stands for Asynchronous JavaScript And XML and callbacks were an OG way of handling asynchronous calls in JavaScript.
 
-const readFile = (file) => {
-    fs.readFile(file, (err, data) => {
-        console.log(`Breed:${data}`);
-    })
-}
++ A Promise is an object representing the eventual completion or failure of an asynchronous operation…Essentially, `a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.`
 ```
 
 #### `Comment:`
