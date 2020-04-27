@@ -16,4 +16,4 @@
 
 - [Part7 - Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
 
-- [Part8 - Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research.md) 
+- [Part8 - Async-Research](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md) 
