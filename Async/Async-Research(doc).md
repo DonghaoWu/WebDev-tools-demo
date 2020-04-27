@@ -74,6 +74,10 @@
 
     7. .then 和 .catch 都属于 promise callback，都会放在 microtask queue 中, promise callback 放进 event loop 的时机是在 `promise 的 resolve 或者 reject 的时候。`
 
+    8. `这里有一个很重要的认识，promise 就是一个 object，一个函数返回 promise，外部函数是无法使用 promise 里面生成的数据的，所以如果要使用 promise 链中的数据，只能在 .then 中运用。`
+
+    9. 关于 then 和 catch 的执行时机的进一步说明，看上去 then 是马上执行，实际上是需要一定的条件才调用的，因为它们依然是在 event loop 里面的 callback。
+
 #### `Comment:`
 1. 
 
@@ -228,25 +232,23 @@
 
     1. One important side note here is that “someAsyncOperation(someParams)” is not a Promise itself but a function that returns a Promise.`(这个纠正了我刚开始时的认识)`
 
-    2. `just like with callback based APIs, this is still asynchronous operations.` The code that is executed when the request has finished — that is, the subsequent .then() calls — `is put on the event loop just like a callback function would be. This means you cannot access any variables passed to or declared in the Promise chain outside the Promise.` The same goes for errors thrown in the Promise chain. You must also have at least one .catch() at the end of your Promise chain for you to be able to handle errors that occur. If you do not have a .catch(), any errors will silently pass and fade away and you will have no idea why your Promise does not behave as expected.`(这个纠正了我刚开始时的认识，因为 asynchronous operations 的 call back 都是在 sync operation 全部结束后才运行的，所以对 sync 不能传输任何价值变量。)`
+    2. `just like with callback based APIs, this is still asynchronous operations.` The code that is executed when the request has finished — that is, the subsequent .then() calls — `is put on the event loop just like a callback function would be. This means you cannot access any variables passed to or declared in the Promise chain outside the Promise.` The same goes for errors thrown in the Promise chain. You must also have at least one .catch() at the end of your Promise chain for you to be able to handle errors that occur. If you do not have a .catch(), any errors will silently pass and fade away and you will have no idea why your Promise does not behave as expected.`(这个纠正了我刚开始时的认识，因为 asynchronous operations 的 call back 都是在 sync operation 全部结束后才运行的，所以对 sync 不能传输任何变量。)`
 
-    3. 在 promise 定义的 resolve 函数包含的结果可以用 promise object 自带的 then 方法引导出来。但还是那一句，引导出来的值都只能在 promise 链内使用。
+    3. `这里有一个很重要的认识，promise 就是一个 object，一个函数返回 promise，外部函数是无法使用 promise 里面生成的数据的，所以如果要使用 promise 链中的数据，只能在 .then 中运用。`
 
-    4. `这里有一个很重要的认识，promise 就是一个 object，一个函数返回 promise，外部函数是无法使用 promise 里面生成的数据的，所以如果要使用 promise 链中的数据，只能在 .then 中运用。`
+    4. `一个比较隐蔽的情况是，在定义 resolve 和 reject 时，对接数据的是 then 和 catch 内建函数，具体后面详细解释。`
 
-    6. `一个比较隐蔽的情况是，在定义 resolve 和 reject 时，对接数据的是 then 和 catch 内建函数，具体后面详细解释。`
+    5. As stated above, callbacks are not interchangeable with Promises. `This means that callback-based APIs cannot be used as Promises. `（无法直接嫁接使用，但可以尝试从一套方案转换到另一套方案。）
 
-    7. As stated above, callbacks are not interchangeable with Promises. `This means that callback-based APIs cannot be used as Promises. `（无法直接嫁接使用，但可以尝试从一套方案转换到另一套方案。）
+    6. But an important thing to remember about promises is that even when we are calling resolve or reject immediately, i.e., `without an async function, its callback handlers will be called only when the main JavaScript execution has done all pending work. That means, once the stack is empty, our promise handlers will get executed. `(这里是关于 then 和 catch 的执行时机的进一步说明，看上去 then 是马上执行，实际上是需要一定的条件才调用的，因为它们依然是在 event loop 里面的 callback。）
 
-    8. But an important thing to remember about promises is that even when we are calling resolve or reject immediately, i.e., `without an async function, its callback handlers will be called only when the main JavaScript execution has done all pending work. That means, once the stack is empty, our promise handlers will get executed. `(这里是关于 then 和 catch 的执行时机的进一步说明，看上去 then 是马上执行，实际上是需要一定的条件才调用的，因为它们依然是在 event loop 里面的 callback。）
+    7. Another important thing to remember is, catch handler will be invoked by the promise not only when we reject the promise `but even when JavaScript encounter runtime error in the executor function of the promise.`（这里讨论 catch 也可以自动捕捉系统错误。）
 
-    9. Another important thing to remember is, catch handler will be invoked by the promise not only when we reject the promise `but even when JavaScript encounter runtime error in the executor function of the promise.`（这里讨论 catch 也可以自动捕捉系统错误。）
+    8. Both catch and finally handlers are optional. But it is not safe to eliminate catch handler completely. `This is because even though we are calling resolve from inside the promise executor function, there might be hidden bugs which throw the runtime error.` Since we haven’t registered a callback function to handle the promise failure in catch handler method, `the error will be thrown in our main execution context which might crash our program.`(不捕捉处理错误会导致程序崩溃。)
 
-    10. Both catch and finally handlers are optional. But it is not safe to eliminate catch handler completely. `This is because even though we are calling resolve from inside the promise executor function, there might be hidden bugs which throw the runtime error.` Since we haven’t registered a callback function to handle the promise failure in catch handler method, `the error will be thrown in our main execution context which might crash our program.`
+    9. Even though promises are cool, there are certain limitations with them. `For example, they are not cancellable. Once a promise is created, it can not be terminated. This means, its handlers will invoke sometime in the future, no matter what.`（安全性问题。）
 
-    11. Even though promises are cool, there are certain limitations with them. `For example, they are not cancellable. Once a promise is created, it can not be terminated. This means, its handlers will invoke sometime in the future, no matter what.`（安全性问题。）
-
-    12. Another thing about promises is, they are not replayable or retriable. Once a promise is resolved and handled, `you can not invoke it again to do the same task. This is one of the frustrating drawbacks of promise.`
+    10. Another thing about promises is, they are not replayable or retriable. Once a promise is resolved and handled, `you can not invoke it again to do the same task. This is one of the frustrating drawbacks of promise.`
 
 #### `Comment:`
 1. 
@@ -260,30 +262,28 @@
 
         2. With the await keyword, `we can suspend the asynchronous function while we wait for the awaited value return a resolved promise. If we want to get the value of this resolved promise, like we previously did with the then() callback, we can assign variables to the awaited promise value!` （这个过程就是 promise 完成了 resolve 然后 调用 then 的过程压缩了，只不过这里更直观更好处理，可以把值放在自定义变量上。）
 
-        3. `The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`（async function 的定义，就是内部运行 promise 的功能集合，同时 在 await 开始，之后的代码都进入了 promise链，这个人是很重要。）
+        3. `The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`（async function 的定义，就是内部运行 promise 的功能集合，同时`在 await 开始，之后的代码都进入了 promise链，这个很重要。`）
 
-        4. `Promises and async/await accomplish the same thing. They make retrieving and handling asynchronous data easier. They eliminate the need for callbacks, they simplify error handling, they cut down on extraneous code, they make waiting for multiple concurrent calls to return easy, and they make adding additional code in between calls a snap.`（详细解释了好处。）
+        4. Promises and async/await accomplish the same thing. 
 
-        5. A function call can only have the await keyword `if the function being called is “awaitable”.`shi A function is “awaitable” if it has the async keyword or if it returns a Promise. Remember when I said that callbacks and Promises are not interchangeable and you have to wrap a callback based function inside a Promise and return that Promise? Well, functions with the async keyword are interchangeable with functions that returns Promises which is why I stated that a function that returns a Promise is “awaitable”.`这个解释很好`
+        5. A function call can only have the await keyword `if the function being called is “awaitable”.` A function is “awaitable” if it has the async keyword or if it returns a Promise. Functions with the async keyword are interchangeable with functions that returns Promises which is why I stated that a function that returns a Promise is “awaitable”.`这个解释很好`
 
         6. async functions return a promise.
 
-        7. async functions use an implicit Promise to return results. Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise.
+        7. await is always for a single Promise.
 
-        8. There can be multiple await statements within a single async function.
+        8. async functions use an implicit Promise to return results. Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise.`(意味着可以接着这个 function 使用 .then 或者 .catch)`
 
-        9. When using async await, make sure you use try catch for error handling.
+        9. There can be multiple await statements within a single async function.
 
-        10. Be extra careful when using await within loops and iterators. You might fall into the trap of writing sequentially-executing code when it could have been easily done in parallel.
+        10. When using async await, make sure you use `try catch for error handling.`
 
-        11. await is always for a single Promise.
+        11. Be extra careful when using await within loops and iterators. You might fall into the trap of writing sequentially-executing code when it could have been easily done in parallel.
 
-        12. Promise creation starts the execution of asynchronous functionality.
-
-        13. await only blocks the code execution within the async function. It only makes sure that the next line is executed when the promise resolves. So, if an asynchronous activity has already started, await will not have any effect on it.
+        12. await only blocks the code execution within the async function. It only makes sure that the next line is executed when the promise resolves. So, if an asynchronous activity has already started, await will not have any effect on it.
 
     2. What does async function return?
-        1. One major advantage that async/await syntax `brings is the ability to create async generators. By making generator function async,` we can use `await` keyword with each yield statement which returns a value when the corresponding promise is resolved.`（强化 await 开始 promise 链的概念，同时 await 也解决了把 promise 分段的功能。）`
+        1. One major advantage that async/await syntax brings is the ability to create async generators. `By making generator function async, we can use `__await__` keyword with each yield statement which returns a value when the corresponding promise is resolved.`（强化 await 开始 promise 链的概念，同时 await 也解决了把 promise 分段的功能。）`
 
         2. Is async/await blocks the main thread？
 
