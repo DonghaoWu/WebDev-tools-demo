@@ -111,23 +111,26 @@
 
         5. Promise.all() returns a single Promise that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. `Callbacks can’t do that.`
 
-        6. resolve maps to then and reject maps to catch for all practical purposes.
-        7. Make sure to write both .catch and .then methods for all the promises. It is a good idea to make sure that you always pass Error objects when calling reject.
-        8. If something needs to be done in both cases use .finally.
-        9. The return type of all the methods`(resolve() & reject())` in the Promise object, regardless of whether they are static methods or prototype methods, is again a Promise.
-        10. In Promise.all, the order of the promises are maintained in the values variable, irrespective of which promise was first resolved.
+        6. In Promise.all, the order of the promises are maintained in the values variable, irrespective of which promise was first resolved.
+
+        7. resolve maps to then and reject maps to catch for all practical purposes.
+        8. Make sure to write both .catch and .then methods for all the promises. It is a good idea to make sure that you always pass Error objects when calling reject.
+        9. If something needs to be done in both cases use .finally.
+        10. The return type of all the methods`(resolve() & reject())` in the Promise object, regardless of whether they are static methods or prototype methods, is again a Promise.
+
         11. Promise object can be resolved or rejected only one time. We can add multiple success and error handlers on the promise object.
         12. Use promises whenever you are using asynchronous or blocking code.
 
     2. How does promise work?
-        1. The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed `two callbacks:` one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). `如何建造 promise`
+        1. The creation of a Promise object is done via the Promise constructor by calling “new Promise()”. It takes a function as an argument and that function gets passed `two callbacks:` one for notifying when the operation is successful (resolve) and one for notifying when the operation has failed (reject). What you pass as an argument when calling resolve will be passed to the next then() in the promise chain. The argument passed when calling reject will end up in the next catch(). `如何建造 promise，还有内外接口设定`
 
     3. What does a promise return?
         1. Instead of nesting callbacks inside callbacks inside callbacks, you chain .then() calls together making it more readable and easier to follow. `Every .then() should either return a new Promise or just a value or object which will be passed to the next .then() in the chain.` Another important thing to notice is that even though we are doing two different asynchronous requests we only have one .catch() where we handle our errors.` That’s because any error that occurs in the Promise chain will stop further execution and an error will end up in the next .catch() in the chain.`(这里提到的是返回值还有运行规律，有时候一个 catch 就足够，不过这也要从实际情况出发。)
 
-        2. Promise handler returns a new promise ？ `（对这个说法比较疑惑,现在的认识是 promise 就是一个 object，但显示出来的是一个 promise，promise 在定义的时候就已经在运行了，使用 then 和 catch 相当于加入 callback，但是作为 handler 的 then 是否一定返回 promise 这个说法是不对的，只有在 then 内运行 “return + promise / 数值” 才能是返回 promise，也只有这样才能接着使用 下一个 then。）`可以是 一个 promise，也可以是一个数字或者其他变量，但只有是 promise 的时候才能继续使用 then 和 catch。
+        2. Promise handler returns a new promise ？ `（promise定义时就返回一个 promise，使用 then 和 catch 相当于加入 callback，但是作为 handler 的 then 或者 catch 不一定返回 promise，只有在 then 内运行 “return + promise” 才能是返回 promise，只有这样才能接着使用下一个 then 或 catch。）`handler 返回的可以是 一个 promise，也可以是一个变量。
 
         3. `（除了返回带值的 promise 之外，还可以返回一个新的 promise/ 或者以返回值为参数的 promise，当这个新 promise 完成之后，就进入 then 或者 catch.）`
+
         - 例子：
         ```js
         Promise.resolve( 'Fulfill DATA!' )
@@ -147,8 +150,7 @@
 
         4. When a promise is returned from a handler, we don’t need to handle promise rejection on it. It will be cascaded to parent until it finds the catch handler.`(这个是更高阶的设定，当上一层返回的 promise 是 reject 结果时，下一层接的接口直接是 catch。)`
 
-        例子：(运行任何例子之前预测一下结果，以下是一个很好的学习 promise 的代码材料。)
-
+        - 例子：(运行任何例子之前预测一下结果，以下是一个很好的学习 promise 的代码材料。)
         ```js
         Promise.resolve('Fulfill DATA!')
             .then((result) => {
@@ -181,6 +183,7 @@
         - within the Event Loop, there are actually two types of queues: the (macro)task queue (or just called the task queue), and the microtask queue. The (macro)task queue is for (macro)tasks and the microtask queue is for microtasks.
 
         `(Macro)task: `setTimeout | setInterval
+        
         `Microtask: `process.nextTick | `Promise callback` | queueMicrotask 
 
     2. What is the queue priority?

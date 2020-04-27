@@ -275,7 +275,7 @@
     } );
     ```
 
-    版本三：`（ promise + return promise chain）`
+    版本三：`（ promise + return promise chain ）`
     ```js
     const a = () => new Promise( resolve => {
         setTimeout( () => resolve( 'result of a()' ), 1000 ); 
