@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Front-end`(Async - Research)
+## `Section: Front-end`(Async - Research "doc")
 
 ### `Summary`: In this documentation, we deep dive in JS async, documentation part.
 

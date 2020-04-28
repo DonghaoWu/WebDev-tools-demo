@@ -42,17 +42,17 @@
 //     })
 // })
 
-const promiseA = new Promise( ( resolve ) => {
+const promiseA = new Promise((resolve) => {
     console.log('ExecutorA: Begin!');
-    resolve( 'A' );
+    resolve('A');
     console.log('ExecutorA: End!');
-} );
+});
 
-const promiseB = new Promise( ( resolve ) => {
+const promiseB = new Promise((resolve) => {
     console.log('ExecutorB: Begin!');
-    resolve( 'B' );
+    resolve('B');
     console.log('ExecutorB: End!');
-} );
+});
 
 // Promise: classical approach
 
@@ -61,7 +61,7 @@ const promiseB = new Promise( ( resolve ) => {
 
 //     return promiseA.then( ( resultA ) => {
 //         console.log('promiseClassical: A');
-    
+
 //         return promiseB.then( ( resultB ) => {
 //             console.log('promiseClassical: B');
 //             console.log( 'Classical: Promises resolved: ', resultA, resultB );
@@ -72,14 +72,24 @@ const promiseB = new Promise( ( resolve ) => {
 
 // Promise: async/await
 
-const getPromiseAsync = async () => {
-    console.log('getPromiseAsync()');
+// const getPromiseAsync = async () => {
+//     console.log('getPromiseAsync()');
 
-    const resultA = await promiseA;
-    console.log('promiseAsync: A');
+//     const resultA = await promiseA;
+//     console.log('promiseAsync: A');
 
-    const resultB = await promiseB;
-    console.log('promiseAsync: B');
-    console.log('Async: Promises resolved: ', resultA, resultB );
-};
-const promiseAsync = getPromiseAsync();
+//     const resultB = await promiseB;
+//     console.log('promiseAsync: B');
+//     console.log('Async: Promises resolved: ', resultA, resultB );
+// };
+// const promiseAsync = getPromiseAsync();
+
+console.log(`start`);
+
+setTimeout(() => {
+    console.log('Timeout!')
+}, 0);
+
+Promise.resolve(console.log('Promise'))
+
+console.log(`End!`);
