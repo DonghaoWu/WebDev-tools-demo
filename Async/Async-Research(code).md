@@ -23,8 +23,10 @@
 - [9.2 Promise.](#9.2)
 - [9.3 From callback to Promise.](#9.3)
 - [9.4 Executing order in event loop.](#9.4)
-- [9.5 Async / Await.](#9.5)
-- [9.5 callback -> Promise -> async / await](#9.5)
+- [9.5 From Promise to async / await.](#9.5)
+- [9.6 Async / Await.](#9.6)
+- [9.7 callback -> Promise -> async / await](#9.7)
+
 - [9.6 Things you should know before using Promise.](#9.6)
 - [9.7 About async/await.](#9.7)
 - [9.8 More about async function.](#9.8)
@@ -137,9 +139,9 @@
 #### `Comment:`
 1. 
 
-### <span id="8.2">`Step2: Promise.`</span>
+### <span id="9.2">`Step2: Promise.`</span>
 
-- #### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#9.0)
 
 1. 定义方式：
 
@@ -189,6 +191,130 @@
     2. Note that it is within the function being passed to the Promise constructor that we start the asynchronous operation. That function is then responsible for calling resolve(success) when it’s done or reject(error) if there are errors.`（high-order function）`
 
     3. The process of wrapping a callback based asynchronous function inside a Promise and return that promise instead is called “promisification”. We are “promisifying” a callback-based function. There are lots of modules that let you do this in a nice way but since version 8 NodeJs has a built in a helper called “util.promisify” for doing exactly that.`(专业名词)`
+
+3. promise 的定义过程会执行里面的函数：
+
+    ```js
+    const promiseA = new Promise((resolve, reject) =>{
+        console.log(`Creating promise`);
+
+        setTimeout(()=>{
+            reject(`something bad happened in a()!`)
+        }, 1000);
+
+        console.log(`Exiting promise executot.`)
+    })
+    ```
+
+    #### `Comment:`
+    1. 在执行这个代码的过程中，两个 console.log 在定义过程中竟然调用了, 这个定义函数的过程不一样，如
+
+    ```js
+    function myFunc(){
+        console.log(`haha`);
+        return 1;
+    }
+    ```
+
+    2. 这里说明 promise 的定义过程也是执行过程，如果要防止定义即执行，参考 step 2 -- “promisification”。
+
+4. promise 里面的 catch 捕捉系统错误 / runtime error。
+
+    ```js
+    const promiseA = new Promise((resolve, reject) => {
+        i++;
+        setTimeout(() => {
+            resolve(i);
+        }, 1000);
+    });
+
+    promiseA
+        .then((result) => {
+            console.log('promiseA success:', result);
+        });
+    ```
+
+5. 关于 promise.all 和 promise.race
+
+    1. `promise.race 例子`
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
+
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    Promise.race([a(), b(), c()])
+        .then((data) => {
+            console.log('success: ', data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+    ```
+
+    2. `promise.all 例子`
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    Promise.all([a(), b(), c(), { key: 'I am plain data!' }])
+        .then((data) => {
+            console.log('success: ', data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+    ```
+
+    - 使用 async 代替 promise.all
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    const doJobs = async () => {
+        var resultA = await a();
+        var resultB = await b();
+        var resultC = await c();
+
+        return [resultA, resultB, resultC];
+    };
+
+    doJobs()
+        .then((result) => {
+            console.log('success:', result);
+        })
+        .catch((error) => {
+            console.log('error:', error);
+        });
+
+    console.log('I am a sync operation!');
+    ```
+
+    #### `Comment:`
+    1. 
 
 ### <span id="9.3">`Step3: From callback to Promise.`</span>
 
@@ -295,81 +421,430 @@
     优先调用 queue 中的 promise callback
     最后调用 另外一个 queue 中的 setTimeout 的 callback。
     */
-    ```    
+    ``` 
 
-3. 
+    - example 3:
+    ```js
+    const promiseA = new Promise((resolve, reject) => {
+        console.log(`Creating promise`);
 
-### <span id="8.5">`Step5: About event loop.`</span>
+        setTimeout(() => {
+            reject(`something bad happened in a()!`)
+        }, 1000);
 
-- #### Click here: [BACK TO CONTENT](#8.0)
+        console.log(`Exiting promise executor.`)
+    })
 
-    1. What type of queue are in event loop?
-        - Within the Event Loop, there are actually two types of queues: the (macro)task queue (or just called the task queue), and the microtask queue. The (macro)task queue is for (macro)tasks and the microtask queue is for microtasks.
+    console.log(`I am sync job 1!`);
 
-        `(Macro)task: `setTimeout | setInterval
+    promiseA
+        .then((res) => {
+            console.log(`PromiseA success:`, res);
+        })
+        .catch(err => {
+            console.log('promiseA error:', err)
+        })
+        .finally(() => {
+            console.log(`a() is done!`);
+        });
 
-        `Microtask: `process.nextTick | `Promise callback` | queueMicrotask 
+    console.log(`I am sync job 2!`);
+    console.log(`I am sync job 3!`);
+    ```
 
-    2. What is the queue priority?
+    #### `Comment:`
+    1. `The biggest misconception about Promises in JavaScript is that they are asynchronous. Well, not everything of Promises is asynchronous. `
 
-        1. `The event loop is endlessly running single-threaded loop that runs on the main JavaScript thread and listens for the different events. Its job is to accept callback functions and execute them on the main thread. `Since event loop runs on the main thread, if the main thread is busy, event loop is basically dead for that time.`(event loop 的作用就是存储 callback并在适当的条件下把 callback 放回 call stack 执行，而我们的 callback 或者 promise 方案就是为了能人工编排 event loop 的输出顺序。)`
+    2. 以上例子说明：`The executor function of a promise also runs in a synchronous manner. `Since we have a setTimeout call in the executor function which contains resolve call, it will execute when all asynchronous code is executed. `(当编译器从上到下执行时，遇到 promise 会先执行 promise 里面的 sync function，然后把 async function 放进 event loop 的对应 queue 中，这个是跟之前以为 promise 就全部放在 queue 的认识不一样)`
 
-        2. The macrotask queue is a queue of the callback function waiting to be executed. `The event loop pushes oldest queued callback functions (FIFO) from macrotask queue on to the main call stack one at the time where they are executed synchronously. Event loop only pushes a callback function to the stack when the stack is empty or when the main thread is not busy.`(event loop 执行先进先出顺序，但也要看是否有 多个 async 动作并行的情况。)
+3. Promise 在 event loop 中的执行顺序。
+    ```js
+    const promiseA = Promise.resolve(`result of a().`);
 
-        3. `The call stack will become empty when all synchronous function calls are executed. `（先执行 sync function）
+    console.log(`I am sync job 1!`);
 
-        4. `.then` and `.catch` as well as `.finally` methods of a promise register the callback functions passed to them and these callbacks are provided to the event loop when the promise is resolved or rejected. These callbacks are added to the microtask queue which has `higher` priority than macrotask queue.` Hence event loop will prefer to execute them first.` `（then 和 catch 都属于 promise callback， 都会被放在 microtask queue 中，这里还提到 promise callback 放进 event loop 的时机是在 promise 的 resolve 或者 reject 的时候。）`
+    promiseA
+        .then((result) => {
+            console.log('PromiseA success', result)
+        })
+        .catch(err => {
+            console.log('Promise error:', err)
+        })
+        .finally(() => {
+            console.log(`a() is done!`);
+        })
 
-    3. How does event loop work?
-        1. So when is a then(), catch() or finally() callback executed? The event loop gives a different priority to the tasks:
+    console.log(`I am sync job 2!`);
+    console.log(`I am sync job 3!`);
 
-            1. All functions in that are currently in the `call stack` get executed. When they returned a value, they get popped off the stack.
-            2. When the call stack is empty, all queued up microtasks are popped onto the callstack one by one, and get executed! (Microtasks themselves can also return new microtasks, effectively creating an infinite microtask loop 😬)
-            3. If both the call stack and microtask queue are empty, the event loop checks if there are tasks left on the (macro)task queue. The tasks get popped onto the callstack, executed, and popped off!
+    /*
+    执行顺序：
+    sync --->
+    1.promiseA
+    2.console.log(`I am sync job 1!`);
+    3.console.log(`I am sync job 2!`);
+    4.console.log(`I am sync job 3!`);
 
-            翻译成中文，就是：
-            1. 所有在 call stack 中的函数，一旦遇到关键词 return 或者其他 关键词，都会从 call stack 中撤出。
-            2. 只有当 call stack 清空之后，在 `microtasks(Promise所在群组)`中的函数会优先一个一个放进 call stack 并逐个执行
-            3. 只有所有 call stack 和 microtasks 都清空之后，最后 event loop 才会去查看`(macro)task queue`.
+    5.promiseA 的 .then callback -----> console.log('PromiseA success', result)
+    6.promiseA 的 .fanally callback -----> console.log(`a() is done!`);
+    */
+    ```      
 
-        2. call stack + event loop + asynchronous non-blocking I/O model
-            1. `The event loop is endlessly running single-threaded loop that runs on the main JavaScript thread and listens for the different events. Its job is to accept callback functions and execute them on the main thread. `Since event loop runs on the main thread, if the main thread is busy, event loop is basically dead for that time.`(这句话又颠覆了前面的认识，这里确实是两条流水线，但是在 asynchronous non-blocking I/O model 生产线完成后，接下来的 callback 还是要返回主线执行，在这期间 callback 都被安排在 event loop，而我们的 callback 或者 promise 方案就是为了能人工编排 event loop 的输出顺序，同时也是 callback 的执行顺序。)`
+### <span id="9.5">`Step5: From Promise to async / await.`</span>
 
-            2. The macrotask queue is a queue of the callback function waiting to be executed. `The event loop pushes oldest queued callback functions (FIFO) from macrotask queue on to the main call stack one at the time where they are executed synchronously. Event loop only pushes a callback function to the stack when the stack is empty or when the main thread is not busy.`(这里解释了 event loop 的作用)
+- #### Click here: [BACK TO CONTENT](#9.0)
 
-            3. `The call stack will become empty when all synchronous function calls are executed. `（先执行 sync function）
+1. Promise 原生处理与 async/await 处理方式。
 
-            4. then and catch as well as finally methods of a promise register the callback functions passed to them and these callbacks are provided to the event loop when the promise is resolved or rejected. These callbacks are added to the microtask queue which has `higher` priority than macrotask queue.` Hence event loop will prefer to execute them first.` `（then 和 catch 都属于 callback， 都会被放在 queue 中，当栈空了之后才会调用。）`
+    ```js
+    const promiseA = new Promise( ( resolve ) => {
+        console.log('ExecutorA: Begin!');
+        resolve( 'A' );
+        console.log('ExecutorA: End!');
+    } );
 
-#### `Comment:`
-1. 
+    const promiseB = new Promise( ( resolve ) => {
+        console.log('ExecutorB: Begin!');
+        resolve( 'B' );
+        console.log('ExecutorB: End!');
+    } );
 
-### <span id="8.6">`Step6: Things you should know before using promise.`</span>
+    // Promise: classical approach
 
-- #### Click here: [BACK TO CONTENT](#8.0)
+    const getPromiseClassical = () => {
+        console.log('getPromiseClassical()');
 
-    1. One important side note here is that “someAsyncOperation(someParams)” is not a Promise itself but a function that returns a Promise.`(这个纠正了我刚开始时的认识)`
+        return promiseA.then( ( resultA ) => {
+            console.log('promiseClassical: A');
+        
+            return promiseB.then( ( resultB ) => {
+                console.log('promiseClassical: B');
+                console.log( 'Classical: Promises resolved: ', resultA, resultB );
+            } );
+        } );
+    };
+    const promiseClassical = getPromiseClassical();
 
-    2. `just like with callback based APIs, this is still asynchronous operations.` The code that is executed when the request has finished — that is, the subsequent .then() calls — `is put on the event loop just like a callback function would be. This means you cannot access any variables passed to or declared in the Promise chain outside the Promise.` The same goes for errors thrown in the Promise chain. You must also have at least one .catch() at the end of your Promise chain for you to be able to handle errors that occur. If you do not have a .catch(), any errors will silently pass and fade away and you will have no idea why your Promise does not behave as expected.`(这个纠正了我刚开始时的认识，因为 asynchronous operations 的 call back 都是在 sync operation 全部结束后才运行的，所以对 sync 不能传输任何变量。)`
+    // Promise: async/await
 
-    3. `这里有一个很重要的认识，promise 就是一个 object，一个函数返回 promise，外部函数是无法使用 promise 里面生成的数据的，所以如果要使用 promise 链中的数据，只能在 .then 中运用。`
+    const getPromiseAsync = async () => {
+        console.log('getPromiseAsync()');
 
-    4. `一个比较隐蔽的情况是，在定义 resolve 和 reject 时，对接数据的是 then 和 catch 内建函数，具体后面详细解释。`
+        const resultA = await promiseA;
+        console.log('promiseAsync: A');
 
-    5. As stated above, callbacks are not interchangeable with Promises. `This means that callback-based APIs cannot be used as Promises. `（无法直接嫁接使用，但可以尝试从一套方案转换到另一套方案。）
+        const resultB = await promiseB;
+        console.log('promiseAsync: B');
+        console.log('Async: Promises resolved: ', resultA, resultB );
+    };
+    const promiseAsync = getPromiseAsync();
+    ```
 
-    6. But an important thing to remember about promises is that even when we are calling resolve or reject immediately, i.e., `without an async function, its callback handlers will be called only when the main JavaScript execution has done all pending work. That means, once the stack is empty, our promise handlers will get executed. `(这里是关于 then 和 catch 的执行时机的进一步说明，看上去 then 是马上执行，实际上是需要一定的条件才调用的，因为它们依然是在 event loop 里面的 callback。）
+    #### `Comment:`
+    1. 这里需要思考的是 .then 和 await 之间会不会产生竞争关系，也就是并行的 promise 在 event loop 中的执行顺序，`这是目前剩下的很大疑问`。
 
-    7. Another important thing to remember is, catch handler will be invoked by the promise not only when we reject the promise `but even when JavaScript encounter runtime error in the executor function of the promise.`（这里讨论 catch 也可以自动捕捉系统错误。）
+2. 使用 promise 原生方式包装一个 promise 函数，对比使用 async/await 方式包装一个 promise。
 
-    8. Both catch and finally handlers are optional. But it is not safe to eliminate catch handler completely. `This is because even though we are calling resolve from inside the promise executor function, there might be hidden bugs which throw the runtime error.` Since we haven’t registered a callback function to handle the promise failure in catch handler method, `the error will be thrown in our main execution context which might crash our program.`(不捕捉处理错误会导致程序崩溃。)
+    ```js
+    function logFetch(url) {
+        return fetch(url)
+            .then(response => response.text())
+            .then(text => {
+                console.log(text);
+            }).catch(err => {
+                console.error('fetch failed', err);
+            });
+    }
+    ```
 
-    9. Even though promises are cool, there are certain limitations with them. `For example, they are not cancellable. Once a promise is created, it can not be terminated. This means, its handlers will invoke sometime in the future, no matter what.`（安全性问题。）
+    ```js
+    async function logFetchAsync(url) {
+        try {
+            const response = await fetch(url);
+            console.log(await response.text());
+        }
+        catch (err) {
+            console.log('fetch failed', err);
+        }
+    }
+    ```
 
-    10. Another thing about promises is, they are not replayable or retriable. Once a promise is resolved and handled, `you can not invoke it again to do the same task. This is one of the frustrating drawbacks of promise.`
+3. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数，最后调用这个 async 函数去获得了新的 promise。`
 
-#### `Comment:`
-1. 
+    ```js
+    function fetchTheData(someValue){
+        return new Promise(function(resolve, reject){
+            getData(someValue, function(error, result){
+                if(error){
+                    reject(error);
+                }
+                else{
+                    resolve(resutl);
+                }
+            })
+        });
+    }
+
+    async function getSomeAsyncData(value){
+        const result = await fetchTheData(value);
+        return result;
+    }
+
+    getSomeAsyncData(‘someValue’)
+        .then(function(result){
+            console.log(result);
+        })
+        .catch(function (error){
+            console.log(error);
+        });
+    ```
+
+3. 用 async 代替 promise.all 的例子。
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of b()'), 500);
+    });
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    const doJobs = async () => {
+        var resultA = await a();
+        var resultB = await b();
+        var resultC = await c();
+
+        return [resultA, resultB, resultC];
+    };
+
+    doJobs()
+        .then((result) => {
+            console.log('success:', result);
+        })
+        .catch((error) => {
+            console.log('error:', error);
+        });
+
+    console.log('I am a sync operation!');
+    ```
+
+    #### `Comment:`
+    1. 上面这个例子的分析，If any of the promises is rejected inside an async function, the promise it returns will reject as well with the error message. The returned promise is also rejected if any runtime error occurs inside the async function (similar behavior to a promise which rejects when a runtime error occurs in Promise constructors executor function). `(这个操作有崩溃风险，一个崩全部崩，需要增加 catch，这里面的关键词是 捕捉 runtime error。)`
+
+    2. In the above example, promise returned by b() rejects which crashes the thread in which async function is running and it is handled by catch handler of the promise it returns. `To safely handle promise rejections, we should use try/catch method inside async functions.`
+
+4. 把上一段代码添加 `try/catch`。
+
+    ```js
+    const a = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of a()'), 1000);
+    });
+    const b = () => new Promise((resolve, reject) => {
+        setTimeout(() => reject('result of b()'), 500);
+    });
+    const c = () => new Promise(resolve => {
+        setTimeout(() => resolve('result of c()'), 1100);
+    });
+
+    const doJobs = async () => {
+        try {
+            var resultA = await a();
+            var resultB = await b();
+            var resultC = await c();
+
+            return [resultA, resultB, resultC];
+        } catch (error) {
+            return [null, null, null];
+        }
+    };
+
+    doJobs()
+        .then((result) => {
+            console.log('success:', result);
+        })
+        .catch((error) => {
+            console.log('error:', error);
+        });
+
+    console.log('I am a sync operation!');
+    ```
+
+### <span id="9.6">`Step6: Async / Await.`</span>
+
+- #### Click here: [BACK TO CONTENT](#9.0)
+
+1. 调用 async 定义函数并分析执行顺序：
+
+    ```js
+    const one = () => Promise.resolve('One!');
+
+    async function myFunc(){
+        console.log('In function!');
+        const res = await one();
+        console.log(res);
+
+        //上两句相当于：
+        one()
+        .then(data => console.log(data));
+
+    }
+
+    console.log('Before function!');
+    myFunc();
+    console.log('After function!');
+
+    /*
+    执行顺序：
+    sync --->
+    1. console.log('Before function!');
+    2. Promise.resolve('One!');
+    3. console.log('In function!');
+    4. console.log('After function!');
+
+    queue --->
+    5. console.log('One');
+
+    这里例子证明了 myFunc 就算是 async 函数，但不一定里面的所有函数都是放在最后执行的，同时也看到了 await 的能力，在 await 开始，相当于进入了 promise 链条了，后面的函数都被打断和按顺序执行了，这个隐式的安排是初学者很难发现的。
+    */
+    ```
+
+    #### `Comment:`
+    1. In the above example, we have created a function myFunction which has async keyword on it. This keyword makes it asynchronous, `which means when this function is called, a promise is returned and normal code execution will commence as usual.`
+
+    2. We can say, await keyword `inside a async function blocks the execution of JavaScript in that function context` until the promise it is awaiting is settled. This gives us cleaner syntax to work with promises in a synchronous fashion.`（ 从 await 开始 后面的代码就相当于进入了一条 promise 链条。）`
+
+
+### <span id="9.7">`Step7: callback -> Promise -> async / await.`</span>
+
+- #### Click here: [BACK TO CONTENT](#9.0)
+
+    1.  promise nesting 的进化： 
+
+    - Edition 1: `（ promise + callback + 多个 catch）`
+
+    ```js
+    const a = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of a()' ), 1000 );
+    } );
+    const b = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of b()' ), 500 );
+    } );
+    const c = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of c()' ), 1100 );
+    } );
+
+    a()
+    .then( ( result ) => {
+        console.log( 'a() success:', result );
+        b()
+        .then( ( result ) => {
+            console.log( 'b() success:', result );
+            c()
+            .then( ( result ) => {
+                console.log( 'c() success:', result );
+            } )
+            .catch( ( error ) => {
+                console.log( 'c() error:', error );
+            } );
+            
+        } )
+        .catch( ( error ) => {
+            console.log( 'b() error:', error );
+        } );
+    } )
+    .catch( ( error ) => {
+        console.log( 'a() error:', error );
+    } );
+    ```
+
+    - Edition 2: `（promise + callback + 合并 catch）`
+    ```js
+    const a = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of a()' ), 1000 ); 
+    } );
+    const b = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of b()' ), 500 ); 
+    } );
+    const c = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of c()' ), 1100 ); 
+    } );
+
+    a().then( ( result ) => {
+        console.log( 'a() success:', result );
+        b().then( ( result ) => {
+            console.log( 'b() success:', result );
+            c().then( ( result ) => {
+                console.log( 'c() success:', result );
+            } );
+        } );
+    } )
+    .catch( ( error ) => {
+        console.log( 'a() error:', error );
+    } );
+    ```
+
+    - Edition 3:`（ promise + return promise chain ）`
+    ```js
+    const a = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of a()' ), 1000 ); 
+    } );
+    const b = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of b()' ), 500 ); 
+    } );
+    const c = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of c()' ), 1100 ); 
+    } );
+
+    a()
+        .then(res => {
+            console.log('a() success:', res);
+            return b();
+        })
+        .then(res => {
+            console.log('b() success:', res);
+            return c();
+        })
+        .then(res => {
+            console.log('c() success:', res);
+        })
+        .catch(err => {
+            console.log( 'a() error:', err );
+        })
+    ```
+
+    - Edition 4:`（async + promise）`
+
+    ```js
+    const a = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of a()' ), 1000 ); 
+    } );
+    const b = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of b()' ), 500 ); 
+    } );
+    const c = () => new Promise( resolve => {
+        setTimeout( () => resolve( 'result of c()' ), 1100 ); 
+    } );
+
+    const myFunc = async () => {
+        try {
+            const res1 = await a();
+            console.log('a() success:', res1);
+            const res2 = await b();
+            console.log('b() success:', res2);
+            const res3 = await c();
+            console.log('c() success:', res3);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    myFunc();
+    ```
+    #### `Comment:`
+    1. (版本4 的注释) When we put async keyword before a function declaration, `it will return a promise and we can use await keyword inside it which blocks the code until promise it awaits resolves or rejects.`(整个 async function 无论怎样都返回 promise。)
 
 ### <span id="8.7">`Step7: About async/await.`</span>
 
