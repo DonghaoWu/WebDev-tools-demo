@@ -26,7 +26,7 @@
 - [7.4 Callback hell.](#7.4)
 - [7.5 Promise a callback hell.](#7.5)
 - [7.6 Consume Promise in async mode.](#7.6)
-- [7.7 Deep dive in async function.](#7.7)
+- [7.7 More about async function.](#7.7)
 
 
 ------------------------------------------------------------
