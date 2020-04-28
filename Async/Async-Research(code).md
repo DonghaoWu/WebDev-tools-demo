@@ -565,7 +565,7 @@
     }
     ```
 
-3. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数，最后调用这个 async 函数去获得了新的 promise。`
+3. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数，最后调用这个 async 函数去获得了新的 promise。`__（这是一个很全面使用的例子。）__
 
     ```js
     function fetchTheData(someValue){
@@ -842,67 +842,11 @@
     #### `Comment:`
     1. (版本4 的注释) When we put async keyword before a function declaration, `it will return a promise and we can use await keyword inside it which blocks the code until promise it awaits resolves or rejects.`(整个 async function 无论怎样都返回 promise。)
 
-### <span id="8.7">`Step7: About async/await.`</span>
+### <span id="9.8">`Step8: More about async function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#8.0)
-
-    1. What is the pros to use async/await?
-        1. We can create async functions that implicitly return a promise. `这是个很重要的认识，所有用 async 定义的函数都是返回一个 promise`
-
-        2. With the await keyword, `we can suspend the asynchronous function while we wait for the awaited value return a resolved promise. If we want to get the value of this resolved promise, like we previously did with the then() callback, we can assign variables to the awaited promise value!` （这个过程就是 promise 完成了 resolve 然后 调用 then 的过程压缩了，只不过这里更直观更好处理，可以把值放在自定义变量上。）
-
-        3. `The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. But the syntax and structure of your code using async functions is much more like using standard synchronous functions`（async function 的定义，就是内部运行 promise 的功能集合，同时`在 await 开始，之后的代码都进入了 promise链，这个很重要。`）
-
-        4. Promises and async/await accomplish the same thing. 
-
-        5. A function call can only have the await keyword `if the function being called is “awaitable”.` A function is “awaitable” if it has the async keyword or if it returns a Promise. Functions with the async keyword are interchangeable with functions that returns Promises which is why I stated that a function that returns a Promise is “awaitable”.`这个解释很好`
-
-        6. async functions return a promise.
-
-        7. await is always for a single Promise.
-
-        8. async functions use an implicit Promise to return results. Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise.`(意味着可以接着这个 function 使用 .then 或者 .catch)`
-
-        9. There can be multiple await statements within a single async function.
-
-        10. When using async await, make sure you use `try catch for error handling.`
-
-        11. Be extra careful when using await within loops and iterators. You might fall into the trap of writing sequentially-executing code when it could have been easily done in parallel.
-
-        12. await only blocks the code execution within the async function. It only makes sure that the next line is executed when the promise resolves. So, if an asynchronous activity has already started, await will not have any effect on it.
-
-    2. What does async function return?
-        1. One major advantage that async/await syntax brings is the ability to create async generators. `By making generator function async, we can use `__await__` keyword with each yield statement which returns a value when the corresponding promise is resolved.`（强化 await 开始 promise 链的概念，同时 await 也解决了把 promise 分段的功能。）`
-
-        2. Is async/await blocks the main thread？
-
-            - From await syntax keyword looks like that it blocks the execution of the thread until the promise it is awaiting on resolves. `But that’s is not the case.` The while async/await pattern is still based on classical Promise syntax. The await keyword is like a then callback that wraps all the statements below it.`（强化 从第一个 await 就开始 promise 链的概念。)`
-
-        3. Async/await may make your asynchronous calls look more synchronous but it is still executed the same way as if it were using a callback or promise based API. `The asynchronous I/O operations will still be processed in parallel and the code handling the responses in the async functions will not be executed until that asynchronous operation has a result.` Also, `even though you are using async/await you have to sooner or later resolve it as a Promise in the top level of your program.` This is because async and await are just syntactical sugar for automatically creating, returning and resolving Promises.
-
-    3. Promise or async/await?  (关键判断 ：parallel --- 平行)
-
-        1. The async function returns a promise. The converse is also true. `Every function that returns a promise can be considered as async function.`(都会在 sync 之后执行。)
-
-        2. If two functions can be run in parallel, create two different async functions and then run them in parallel.
-
-        3. To run promises in parallel, create an array of promises and then use Promise.all(promisesArray).
-
-        4. __`Every time you use await remember that you are writing blocking code. Over time we tend to neglect this.`__
-
-        5. Instead of creating huge async functions with many await asyncFunction() in it, it is better to create smaller async functions. This way, we will be aware of not writing too much blocking code.
-
-        6. Another advantage of using smaller async functions is that you force yourself to think of which async functions can be run in parallel.
-
-#### `Comment:`
-1. 
-
-### <span id="8.8">`Step8: More about async function.`</span>
-
-- #### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#9.0)
 - #### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
 
-- #### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
-
+- #### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
