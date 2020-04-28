@@ -27,10 +27,6 @@
 - [9.6 Async / Await.](#9.6)
 - [9.7 callback -> Promise -> async / await](#9.7)
 
-- [9.6 Things you should know before using Promise.](#9.6)
-- [9.7 About async/await.](#9.7)
-- [9.8 More about async function.](#9.8)
-
 ------------------------------------------------------------
 
 ### <span id="9.1">`Step1: Callback hell.`</span>
