@@ -6,7 +6,7 @@ import MessagesList from './MessagesList';
 
 export default class Main extends Component {
 
-  render () {
+  render() {
     return (
       <div>
         <Sidebar />
