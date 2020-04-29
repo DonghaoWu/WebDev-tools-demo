@@ -19,6 +19,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
+- 本章代码来自项目：`my-stackchat`，目前这个项目没完成的是 proxy 跟 socket.io 的处理。（4月29日）
 - 本章主要介绍如何使用 dispatch & Thunk:
     - 下面我们通过一张图来介绍 thunk 的工作原理：
 
@@ -28,8 +29,11 @@
 
 - 本章最重要的几个观点：
   1. `actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
+
   2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
+
   3. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats. __`(Important)`__
+
   4. 大胆的想象，在一个 thunk 里面引用的 `dispatch` 的参数也是一个 `function` ，这就成为了嵌套的 `thunk` 。
 
 ### <span id="6.0">`Brief Contents & codes position`</span>
@@ -392,7 +396,7 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 ```
 1. 主要变化是原来的 `dispatch` 只能以 `object` 为参数，引进 `thunkMiddleware` 之后 `dispatch` 可以以 `function` 为参数了，执行过程是如果 `dispatch` 的参数是 `function` 时，它会马上执行这个 `function` ，而由于这个函数是一个 `async function`，它会一直等着整个 `promise` 完成之后然后再调用 `dispatch` 一个结果（`object`）到 `reducer`。
 
-2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` 完全可以不使用，且只使用在 `redux` 中，`react` 用不到。
+2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` __完全可以不使用__，且只使用在 `redux` 中，`react` 用不到。
 
 3. Thunk 的英文资料整理在 `step5`。
 
@@ -419,9 +423,38 @@ export const fetchMessages = () => {
 
 3. 后续跟进，需要补充 `promise` 和 `async function` 之后，估计可以使用 `promise` 的方法来实现。
 
+4. 4月29日，后续跟进，这个方法是行不通的，因为这个函数里面 axio.get 是一个 async operation，也是一个 promise。原本的想法是想使用 dispatch 这个 promise 的返回 object。这里面有几个原因说明不能实现：
 
-#### `Comment:`
-1. 
+  - dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch。
+
+  - 另外一个理由是 async operation 里面的值是无法给 sync 提供任何帮助的，sync 执行时用不到里面任何一个值。当然这个理由也是基于理由一得出的，详细了解 event loop 的运作顺序。
+
+5. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
+
+  - 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
+
+  ```js
+  const fetchMessages = () => {
+    return (dispatch) => {
+        axios.get('/api/messages')
+            .then(res => res.data)
+            .then(messages => dispatch(gotMessagesFromServer(messages)));
+    }
+  }
+  ```
+
+  - 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
+  ```js
+  export const fetchMessages = () => {
+      return async (dispatch) => {
+          const res = await axios.get('/api/messages');
+          const messages = res.data;
+          dispatch(gotMessagesFromServer(messages));
+      }
+  }
+  ```
+
+6. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
 
 ### <span id="6.5">`Step5: More materials.`</span>
 
