@@ -388,6 +388,7 @@ return Component ? <Component {...this.props} /> : null
 ```
 
 4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
+5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
 
 ### <span id="10.4">`Step4: Solution3.`</span>
 
