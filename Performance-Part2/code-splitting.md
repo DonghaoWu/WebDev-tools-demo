@@ -28,7 +28,7 @@
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [10.1 Optimize target project.](#10.1)
-- [10.2 Solution1: .](#10.2)
+- [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
 - [10.3 Solution2:](#10.3)
 - [10.4 Solution3:](#10.4)
 - [10.5 Solution4:](#10.5)
@@ -184,15 +184,94 @@ export default App;
 </p>
 
 #### `Comment:`
-1. 
+1. All js file have been loaded in bundle.js
+2. 
 
-### <span id="10.2">`Step2: Solution1.`</span>
+### <span id="10.2">`Step2: Solution1: Import file when is needed and put it into state.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
+- `Location: ./example1/code-splitting/src/App.js`
+
+```js
+import React, { Component } from 'react'
+import './App.css';
+
+import Page1 from './Components/Page1';
+
+export class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      route: 'page1',
+      component: null,
+    }
+  }
+
+  onRouteChange = (route) => {
+    if (route === 'page1') {
+      this.setState({ route: route })
+    } else if (route === 'page2') {
+      import('./Components/Page2').then((Page2) => {
+        this.setState({ route: route, component: Page2.default })
+      })
+    } else if (route === 'page3') {
+      import('./Components/Page3').then((Page3) => {
+        this.setState({ route: route, component: Page3.default })
+      })
+    }
+  }
+
+  render() {
+    const { route } = this.state;
+    if (route === 'page1') {
+      return <Page1 onRouteChange={this.onRouteChange} />
+    }
+    else {
+      return <this.state.component onRouteChange={this.onRouteChange} />
+    }
+  }
+}
+
+export default App;
+```
+
+- result:
+
+<p align="center">
+<img src="../assets/p10-3.png" width=90%>
+</p>
+
+<p align="center">
+<img src="../assets/p10-4.png" width=90%>
+</p>
+
+<p align="center">
+<img src="../assets/p10-5.png" width=90%>
+</p>
+
 
 #### `Comment:`
-1. 
+1. 在上面的方案中，Page1 是必须加载的 Home page，必须跟主页一起下载，Page2 和 Page3 在设计过程中设计者认为是次要的，所以用到的时候才加载。
+2. `这个方案相当于把 js file 转变成为 state 的一部分，是一个新颖的做法。`
+3. 这样子做可以加快主页的加载，副作用是加载次页的时候会有屏闪一次（5/16 根据浏览器而定,后面更新）。
+4. 关键语句：
+
+```js
+  constructor() {
+    super();
+    this.state = {
+      route: 'page1',
+      component: null,
+    }
+  }
+//...
+      import('./Components/Page2').then((Page2) => {
+        this.setState({ route: route, component: Page2.default })
+      })
+//...
+      return <this.state.component onRouteChange={this.onRouteChange} />
+```
 
 ----------------------------------------------------------------------------
 
