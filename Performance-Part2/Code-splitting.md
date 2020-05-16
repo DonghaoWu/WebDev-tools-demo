@@ -8,7 +8,9 @@
 
 ### `Check Dependencies:`
 
-- None
+1. Tools for code-splitting：
+  - React-Router
+  - React Loadable
 
 ------------------------------------------------------------
 
@@ -30,7 +32,7 @@
 - [10.1 Optimize target project.](#10.1)
 - [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
 - [10.3 Solution2: Using high order function to generate async Component.](#10.3)
-- [10.4 Solution3:](#10.4)
+- [10.4 Solution3: React new feature - React.lazy](#10.4)
 - [10.5 Solution4:](#10.5)
 
 ------------------------------------------------------------
@@ -39,7 +41,7 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- `Location: ./example1/code-splitting/src/Components/Page1.js`
+- __`Location: ./example1/code-splitting/src/Components/Page1.js`__
 
 ```js
 import React from 'react'
@@ -72,7 +74,7 @@ function Page1({ onRouteChange }) {
 export default Page1;
 ```
 
-`Location: ./example1/code-splitting/src/Components/Page2.js`
+- __`Location: ./example1/code-splitting/src/Components/Page2.js`__
 
 ```js
 import React from 'react';
@@ -105,7 +107,7 @@ function Page2({ onRouteChange }) {
 export default Page2;
 ```
 
-- `Location: ./example1/code-splitting/src/Components/Page3.js`
+- __`Location: ./example1/code-splitting/src/Components/Page3.js`__
 
 ```js
 import React from 'react';
@@ -138,7 +140,7 @@ function Page3({ onRouteChange }) {
 export default Page3;
 ```
 
-- `Location: ./example1/code-splitting/src/App.js`
+- __`Location: ./example1/code-splitting/src/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -191,7 +193,7 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- `Location: ./example1/code-splitting/src/App.js`
+- __`Location: ./example1/code-splitting/src/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -284,7 +286,7 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- `Location: ./example1/code-splitting/src/Components/AsyncComponent.js`
+- __`Location: ./example1/code-splitting/src/Components/AsyncComponent.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -314,7 +316,7 @@ export default function asyncComponent(importComponent) {
 }
 ```
 
-- `Location: ./example1/code-splitting/src/App.js`
+- __`Location: ./example1/code-splitting/src/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -328,7 +330,6 @@ export class App extends Component {
     super();
     this.state = {
       route: 'page1',
-      component: null,
     }
   }
 
@@ -390,13 +391,80 @@ return Component ? <Component {...this.props} /> : null
 4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
 5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
 
-### <span id="10.4">`Step4: Solution3.`</span>
+### <span id="10.4">`Step4: Solution3: React new feature - React.lazy.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
+#### `注意：这个方案需要至少 react 版本：16.10.2`
+
+- __`Location: ./example1/code-splitting/src/App.js`__
+
+```js
+import React, { Component, Suspense } from 'react'
+import './App.css';
+
+import Page1 from './Components/Page1';
+const LazyPage2 = React.lazy(() => import('./Components/Page2'));
+const LazyPage3 = React.lazy(() => import('./Components/Page3'));
+
+export class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      route: 'page1',
+    }
+  }
+
+  onRouteChange = (route) => {
+    this.setState({ route: route })
+  }
+
+  render() {
+    const { route } = this.state;
+    if (route === 'page1') {
+      return <Page1 onRouteChange={this.onRouteChange} />
+    }
+    else if (route === 'page2') {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyPage2 onRouteChange={this.onRouteChange} />
+        </Suspense>)
+    }
+    else if (route === 'page3') {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyPage3 onRouteChange={this.onRouteChange} />
+        </Suspense>)
+    }
+  }
+}
+
+export default App;
+```
+- result:
+
+<p align="center">
+<img src="../assets/p10-6.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p10-7.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p10-8.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
 
 #### `Comment:`
 1.
+
+
 
 
 ### <span id="10.5">`Step5 Solution4.`</span>
