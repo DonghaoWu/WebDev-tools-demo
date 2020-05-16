@@ -20,4 +20,4 @@
 
 - [Part9 - Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md) 
 
-- [Part10 - Code-splitting](https://github.com/DonghaoWu/WebDev-tools-demo/tree/master/Performance-Part2) 
+- [Part10 - Code-splitting](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/code-splitting.md) 
