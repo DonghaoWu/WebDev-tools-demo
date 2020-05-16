@@ -16,8 +16,9 @@
 
 #### `本章背景：`
 - code splitting 的概念是使 JS file 读取需要读取的优先。
-- 当加载一个网站时如果一次过加载 bundle.js，相当于加载很多 js file，而 js file 里面的 fetch 或者其他代码会拖慢整个进程，如果有些网站，主要浏览区域和时长都是主页，那么其他副业的加载可以先不加载。
+- 当加载一个网站时如果一次过加载 bundle.js，相当于加载很多 js file，而 js file 里面的 fetch 或者其他代码会拖慢整个进程，如果有些网站，主要浏览区域和时长都是主页，那么其他副业的可以先不加载。
 - 这个概念就是从整合返回到分散，从以前的分散 html 整合到 webpack 的 bundle.js，然后从 bundle.js 发展到按需分散加载(比如按需分配 component 所在的 js file)。
+- 次要的 js 文件可以等到应用时才下载并加载。
 
 <p align="center">
 <img src="../assets/p10-1.png" width=90%>
@@ -187,7 +188,6 @@ export default App;
 
 #### `Comment:`
 1. All js file have been loaded in bundle.js
-2. 
 
 ### <span id="10.2">`Step2: Solution1: Import file when is needed and put it into state.`</span>
 
@@ -462,7 +462,8 @@ export default App;
 ----------------------------------------------------------------------------
 
 #### `Comment:`
-1.
+1. 这个方案会带来屏闪，也只屏闪一次。
+2. 详细查看 [React code splitting](https://reactjs.org/docs/code-splitting.html)
 
 
 
