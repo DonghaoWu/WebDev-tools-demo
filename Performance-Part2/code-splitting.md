@@ -39,7 +39,7 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-`Location: ./example1/code-splitting/src/Components/Page1.js`
+- `Location: ./example1/code-splitting/src/Components/Page1.js`
 
 ```js
 import React from 'react'
@@ -105,7 +105,7 @@ function Page2({ onRouteChange }) {
 export default Page2;
 ```
 
-`Location: ./example1/code-splitting/src/Components/Page3.js`
+- `Location: ./example1/code-splitting/src/Components/Page3.js`
 
 ```js
 import React from 'react';
@@ -138,7 +138,7 @@ function Page3({ onRouteChange }) {
 export default Page3;
 ```
 
-`Location: ./example1/code-splitting/src/App.js`
+- `Location: ./example1/code-splitting/src/App.js`
 
 ```js
 import React, { Component } from 'react'
@@ -186,7 +186,7 @@ export default App;
 #### `Comment:`
 1. 
 
-### <span id="10.2">`Step2: Optimize css file.`</span>
+### <span id="10.2">`Step2: Solution1.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
@@ -197,7 +197,7 @@ export default App;
 ----------------------------------------------------------------------------
 
 
-### <span id="10.3">`Step3: Optimize js file.`</span>
+### <span id="10.3">`Step3: Solution2.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
@@ -205,7 +205,7 @@ export default App;
 #### `Comment:`
 1. 
 
-### <span id="10.4">`Step4: Tools to check website performance.`</span>
+### <span id="10.4">`Step4: Solution3.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
@@ -214,9 +214,22 @@ export default App;
 1.
 
 
-### <span id="10.5">`Step5 Concept questions.`</span>
+### <span id="10.5">`Step5 Solution4.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
+
+
+#### `Comment:`
+1.
+
+
+### <span id="10.6">`Step6: Solution5.`</span>
+
+- #### Click here: [BACK TO CONTENT](#10.0)
+
+
+#### `Comment:`
+1.
 
 
 ------------------------------------------------------------
