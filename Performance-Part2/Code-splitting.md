@@ -390,6 +390,7 @@ return Component ? <Component {...this.props} /> : null
 
 4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
 5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
+6. 详细查看 [React High-Order Components](https://reactjs.org/docs/higher-order-components.html).
 
 ### <span id="10.4">`Step4: Solution3: React new feature - React.lazy.`</span>
 
@@ -463,7 +464,7 @@ export default App;
 
 #### `Comment:`
 1. 这个方案会带来屏闪，也只屏闪一次。
-2. 详细查看 [React code splitting](https://reactjs.org/docs/code-splitting.html)
+2. 详细查看 [React Code-Splitting](https://reactjs.org/docs/code-splitting.html).
 
 
 
