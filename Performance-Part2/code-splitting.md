@@ -272,7 +272,6 @@ export default App;
 //...
       return <this.state.component onRouteChange={this.onRouteChange} />
 ```
-
 ----------------------------------------------------------------------------
 
 
