@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 
 import Page1 from './Components/Page1';
+import asyncComponent from './Components/AsyncComponent';
 
 export class App extends Component {
   constructor() {
@@ -13,17 +14,7 @@ export class App extends Component {
   }
 
   onRouteChange = (route) => {
-    if (route === 'page1') {
-      this.setState({ route: route })
-    } else if (route === 'page2') {
-      import('./Components/Page2').then((Page2) => {
-        this.setState({ route: route, component: Page2.default })
-      })
-    } else if (route === 'page3') {
-      import('./Components/Page3').then((Page3) => {
-        this.setState({ route: route, component: Page3.default })
-      })
-    }
+    this.setState({ route: route })
   }
 
   render() {
@@ -31,8 +22,13 @@ export class App extends Component {
     if (route === 'page1') {
       return <Page1 onRouteChange={this.onRouteChange} />
     }
-    else {
-      return <this.state.component onRouteChange={this.onRouteChange} />
+    else if (route === 'page2') {
+      const AsyncPage2 = asyncComponent(() => import('./Components/Page2'));
+      return <AsyncPage2 onRouteChange={this.onRouteChange} />
+    }
+    else if (route === 'page3') {
+      const AsyncPage3 = asyncComponent(() => import('./Components/Page3'));
+      return <AsyncPage3 onRouteChange={this.onRouteChange} />
     }
   }
 }

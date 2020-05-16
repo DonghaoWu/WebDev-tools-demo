@@ -29,7 +29,7 @@
 
 - [10.1 Optimize target project.](#10.1)
 - [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
-- [10.3 Solution2:](#10.3)
+- [10.3 Solution2: Using high order function to generate async Component.](#10.3)
 - [10.4 Solution3:](#10.4)
 - [10.5 Solution4:](#10.5)
 
@@ -259,7 +259,7 @@ export default App;
 #### `Comment:`
 1. 在上面的方案中，Page1 是必须加载的 Home page，必须跟主页一起下载，Page2 和 Page3 在设计过程中设计者认为是次要的，所以用到的时候才加载。
 2. `这个方案相当于把 js file 转变成为 state 的一部分，是一个新颖的做法。`
-3. 这样子做可以加快主页的加载，副作用是加载次页的时候会有屏闪一次（5/16 根据浏览器而定,后面更新）。
+3. 这样子做可以加快主页的加载，暂时没有发现屏闪（5/16 更新）。
 4. 关键语句：
 
 ```js
@@ -280,13 +280,114 @@ export default App;
 ----------------------------------------------------------------------------
 
 
-### <span id="10.3">`Step3: Solution2.`</span>
+### <span id="10.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
+- `Location: ./example1/code-splitting/src/Components/AsyncComponent.js`
+
+```js
+import React, { Component } from 'react';
+
+export default function asyncComponent(importComponent) {
+    class AsyncComponent extends Component {
+        constructor() {
+            super();
+            this.state = {
+                component: null,
+            }
+        }
+
+        async componentDidMount() {
+            const component = await importComponent();
+            this.setState({
+                component: component.default,
+            })
+        }
+
+        render() {
+            const Component = this.state.component;
+            return Component ? <Component {...this.props} /> : null
+        }
+    }
+    return AsyncComponent;
+}
+```
+
+- `Location: ./example1/code-splitting/src/App.js`
+
+```js
+import React, { Component } from 'react'
+import './App.css';
+
+import Page1 from './Components/Page1';
+import asyncComponent from './Components/AsyncComponent';
+
+export class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      route: 'page1',
+      component: null,
+    }
+  }
+
+  onRouteChange = (route) => {
+    this.setState({ route: route })
+  }
+
+  render() {
+    const { route } = this.state;
+    if (route === 'page1') {
+      return <Page1 onRouteChange={this.onRouteChange} />
+    }
+    else if (route === 'page2') {
+      const AsyncPage2 = asyncComponent(() => import('./Components/Page2'));
+      return <AsyncPage2 onRouteChange={this.onRouteChange} />
+    }
+    else if (route === 'page3') {
+      const AsyncPage3 = asyncComponent(() => import('./Components/Page3'));
+      return <AsyncPage3 onRouteChange={this.onRouteChange} />
+    }
+  }
+}
+
+export default App;
+```
+
+- result:
+
+<p align="center">
+<img src="../assets/p10-6.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p10-7.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p10-8.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. 这个方案会带来屏闪，也只屏闪一次。
+2. 5月16日记录：目前来看，方案二是对方案一的函数功能打包。
+3. 难点语句 - `可镶嵌组件`
+
+```js
+//返回一个可接受 props 的组件。
+return Component ? <Component {...this.props} /> : null
+// 应用
+<AsyncPage3 onRouteChange={this.onRouteChange} />
+```
+
+4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
 
 ### <span id="10.4">`Step4: Solution3.`</span>
 
