@@ -444,19 +444,19 @@ export default App;
 - result:
 
 <p align="center">
-<img src="../assets/p10-6.png" width=90%>
+<img src="../assets/p10-9.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-7.png" width=90%>
+<img src="../assets/p10-10.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-8.png" width=90%>
+<img src="../assets/p10-11.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
