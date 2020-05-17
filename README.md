@@ -12,12 +12,14 @@
 
 - [Part5 - Redux](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Redux-Readme.md) 
 
-- [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) 
+- [Part6 - Dispatch & Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) 
 
-- [Part7 - Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
+- [Part7 - Async & Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
 
-- [Part8 - Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md) 
+- [Part8 - Async & Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md) 
 
-- [Part9 - Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md) 
+- [Part9 - Async & Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md) 
 
-- [Part10 - Code-splitting](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/Code-splitting.md) 
+- [Part10 - Performance Part 1.1 Code-splitting](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/Code-splitting.md) 
+
+- [Part11 - Performance Part 2.1 React Performance](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/React-Performance.md) 
