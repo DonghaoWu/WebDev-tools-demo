@@ -10,7 +10,6 @@
 
 - Chrome extension: React Developer Tools
 - localhost:3000/?react_perf + Inspect + Performance tag
-- 
 
 ------------------------------------------------------------
 
@@ -154,6 +153,7 @@ class CounterButton extends Component {
     }
 
     render() {
+        console.log('CounterButton');
         return (
             <button color={this.props.color} onClick={this.handleClick}>
                 Count:{this.state.count}
