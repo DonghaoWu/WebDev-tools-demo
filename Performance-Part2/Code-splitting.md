@@ -8,9 +8,8 @@
 
 ### `Check Dependencies & Tools:`
 
-1. Tools for code-splitting：
-  - React-Router
-  - React Loadable
+- React-Router
+- React Loadable
 
 ------------------------------------------------------------
 
@@ -179,7 +178,7 @@ export class App extends Component {
 export default App;
 ```
 
-- result:
+- __`Result`__:
 
 <p align="center">
 <img src="../assets/p10-2.png" width=90%>
@@ -237,7 +236,7 @@ export class App extends Component {
 export default App;
 ```
 
-- result:
+- __`Result`__:
 
 <p align="center">
 <img src="../assets/p10-3.png" width=90%>
@@ -355,7 +354,7 @@ export class App extends Component {
 export default App;
 ```
 
-- result:
+- __`Result`__:
 
 <p align="center">
 <img src="../assets/p10-6.png" width=90%>
@@ -441,7 +440,7 @@ export class App extends Component {
 
 export default App;
 ```
-- result:
+- __`Result`__:
 
 <p align="center">
 <img src="../assets/p10-9.png" width=90%>
