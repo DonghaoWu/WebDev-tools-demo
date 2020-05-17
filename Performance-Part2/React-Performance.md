@@ -8,32 +8,33 @@
 
 ### `Check Dependencies & Tools:`
 
+- 
 
 ------------------------------------------------------------
 
 #### `本章背景：`
-- React 的工作原理是全部
+- React 的工作原理是 state 或者 props 变化就全部重加载 `rerender`，但是有时候的实际使用情况是有些部件不需要跟着重加载，这时候就需要一些优化或设定提高 React 的效率。
 
 <p align="center">
-<img src="../assets/p10-1.png" width=90%>
+<img src="../assets/p11-1.png" width=90%>
 </p>
 
 ------------------------------------------------------------
 
-### <span id="10.0">`Brief Contents & codes position`</span>
+### <span id="11.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [10.1 Optimize target project.](#10.1)
-- [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
-- [10.3 Solution2: Using high order function to generate async Component.](#10.3)
-- [10.4 Solution3: React new feature - React.lazy](#10.4)
+- [11.1 Optimize target project.](#11.1)
+- [11.2 Solution1: Import file when is needed and put it into state.](#11.2)
+- [11.3 Solution2: Using high order function to generate async Component.](#11.3)
+- [11.4 Solution3: React new feature - React.lazy](#11.4)
 
 ------------------------------------------------------------
 
-### <span id="10.1">`Step1: Optimize target project`</span>
+### <span id="11.1">`Step1: Optimize target project`</span>
 
-- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
 
@@ -176,15 +177,15 @@ export default App;
 - result:
 
 <p align="center">
-<img src="../assets/p10-2.png" width=90%>
+<img src="../assets/p11-2.png" width=90%>
 </p>
 
 #### `Comment:`
 1. All js file have been loaded in bundle.js
 
-### <span id="10.2">`Step2: Solution1: Import file when is needed and put it into state.`</span>
+### <span id="11.2">`Step2: Solution1: Import file when is needed and put it into state.`</span>
 
-- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./example1/code-splitting/editon2/App.js`__
 
@@ -234,19 +235,19 @@ export default App;
 - result:
 
 <p align="center">
-<img src="../assets/p10-3.png" width=90%>
+<img src="../assets/p11-3.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-4.png" width=90%>
+<img src="../assets/p11-4.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-5.png" width=90%>
+<img src="../assets/p11-5.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -275,9 +276,9 @@ export default App;
 ----------------------------------------------------------------------------
 
 
-### <span id="10.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
+### <span id="11.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
 
-- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
 
@@ -352,19 +353,19 @@ export default App;
 - result:
 
 <p align="center">
-<img src="../assets/p10-6.png" width=90%>
+<img src="../assets/p11-6.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-7.png" width=90%>
+<img src="../assets/p11-7.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-8.png" width=90%>
+<img src="../assets/p11-8.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -385,11 +386,11 @@ return Component ? <Component {...this.props} /> : null
 5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
 6. 详细查看 [React High-Order Components](https://reactjs.org/docs/higher-order-components.html).
 
-### <span id="10.4">`Step4: Solution3: React new feature - React.lazy.`</span>
+### <span id="11.4">`Step4: Solution3: React new feature - React.lazy.`</span>
 
-- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#11.0)
 
-#### `注意：这个方案需要至少 react 版本：16.10.2`
+#### `注意：这个方案需要至少 react 版本：16.11.2`
 
 - __`Location: ./example1/code-splitting/edtion3/App.js`__
 
@@ -438,19 +439,19 @@ export default App;
 - result:
 
 <p align="center">
-<img src="../assets/p10-9.png" width=90%>
+<img src="../assets/p11-9.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-10.png" width=90%>
+<img src="../assets/p11-11.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p10-11.png" width=90%>
+<img src="../assets/p11-11.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -461,7 +462,7 @@ export default App;
 
 ------------------------------------------------------------
 
-- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#11.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
