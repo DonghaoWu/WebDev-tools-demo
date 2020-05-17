@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we improve website performance by analycing the critical render path.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - None
 

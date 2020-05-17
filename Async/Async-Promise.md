@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we learn Async & Promise.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - nodemon
 - superagent

@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we deep dive in JS async, code example part.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - 
 

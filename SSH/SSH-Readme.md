@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we set up SSH on github account.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - None
 

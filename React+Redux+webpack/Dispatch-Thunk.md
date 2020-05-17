@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we learn dispatch & Thunk.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - react
 - tachyons

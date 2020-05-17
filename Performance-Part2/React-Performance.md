@@ -1,24 +1,18 @@
-# Web development tools (Part 10)
+# Web development tools (Part 11)
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Performance`(Performance-Part2.1)
+## `Section: Performance`(Performance-Part2.2)
 
-### `Summary`: In this documentation, we improve website performance by code-splitting.
+### `Summary`: In this documentation, we improve website performance by optimizing React performance.
 
 ### `Check Dependencies & Tools:`
 
-1. Tools for code-splitting：
-  - React-Router
-  - React Loadable
 
 ------------------------------------------------------------
 
 #### `本章背景：`
-- code splitting 的概念是使 JS file 读取需要读取的优先。
-- 当加载一个网站时如果一次过加载 bundle.js，相当于加载很多 js file，而 js file 里面的 fetch 或者其他代码会拖慢整个进程，如果有些网站，主要浏览区域和时长都是主页，那么其他副业的可以先不加载。
-- 这个概念就是从整合返回到分散，从以前的分散 html 整合到 webpack 的 bundle.js，然后从 bundle.js 发展到按需分散加载(比如按需分配 component 所在的 js file)。
-- 次要的 js 文件可以等到应用时才下载并加载。
+- React 的工作原理是全部
 
 <p align="center">
 <img src="../assets/p10-1.png" width=90%>

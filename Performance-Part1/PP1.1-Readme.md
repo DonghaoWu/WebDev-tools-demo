@@ -6,7 +6,7 @@
 
 ### `Summary`: In this documentation, we improve website performance in some simple ways.
 
-### `Check Dependencies:`
+### `Check Dependencies & Tools:`
 
 - None
 
