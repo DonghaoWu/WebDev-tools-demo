@@ -20,6 +20,8 @@
 
 - 本章里面主要分析 `shouldComponentUpdate` 应用在不同父子组件的嵌套关系来实现一些组件是否应该 rerender 。
 
+- `shouldComponentUpdate` 的作用是在特定条件下阻断 rerender 在当前组件和该组件的子组件上执行。
+
 ------------------------------------------------------------
 
 ### <span id="11.0">`Brief Contents & codes position`</span>
@@ -29,7 +31,7 @@
 - [11.1 Create a Header component.](#11.1)
 - [11.2 Create a CounterButton component.](#11.2)
 - [11.3 Add 'shouldComponentUpdate' into Header.](#11.3)
-- [11.4 Add 'shouldComponentUpdate' into CounterButton.](#11.4)
+- [11.4 Delete 'shouldComponentUpdate' in Header & add 'shouldComponentUpdate' into CounterButton.](#11.4)
 
 ------------------------------------------------------------
 
@@ -243,19 +245,84 @@ export default Header;
 
 
 
-### <span id="11.4">`Step4: Solution3: React new feature - React.lazy.`</span>
+### <span id="11.4">`Step4: Delete 'shouldComponentUpdate' in Header & add 'shouldComponentUpdate' into CounterButton.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./example1/code-splitting/edtion3/App.js`__
+- __`Location: ./Performance2.2/edition2/Header.js`__
 
 ```js
+import React, { Component } from 'react';
+import CounterButton from './CounterButton'
 
+class Header extends Component {
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return false;
+    // }
+
+    render() {
+        console.log('Header');
+        return (
+            <div>
+                <h1 className='f1'>RoboFriends</h1>
+                <CounterButton />
+            </div>
+        )
+    }
+}
+
+export default Header;
 ```
+
+- __`Location: ./Performance2.2/edition2/CounterButton.js`__
+
+```js
+import React, { Component } from 'react';
+
+class CounterButton extends Component {
+    constructor() {
+        super();
+        this.state = {
+            count: 0,
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.count !== nextState.count) {
+            return true;
+        }
+        return false;
+    }
+
+    handleClick = () => {
+        this.setState(state => {
+            return { count: state.count + 1 }
+        });
+    }
+
+    render() {
+        console.log('CounterButton');
+        return (
+            <button color={this.props.color} onClick={this.handleClick}>
+                Count:{this.state.count}
+            </button>
+        )
+    }
+}
+
+export default CounterButton;
+```
+
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p11-9.png" width=90%>
+<img src="../assets/p11-5.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p11-6.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------

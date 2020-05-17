@@ -8,12 +8,12 @@ class CounterButton extends Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (this.state.count !== nextState.count) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.count !== nextState.count) {
+            return true;
+        }
+        return false;
+    }
 
     handleClick = () => {
         this.setState(state => {
