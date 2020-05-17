@@ -31,7 +31,7 @@
 - [11.1 Create a Header component.](#11.1)
 - [11.2 Create a CounterButton component.](#11.2)
 - [11.3 Add 'shouldComponentUpdate' into Header.](#11.3)
-- [11.4 Delete 'shouldComponentUpdate' in Header & add 'shouldComponentUpdate' into CounterButton.](#11.4)
+- [11.4 Delete 'shouldComponentUpdate' in Header & add it into CounterButton.](#11.4)
 
 ------------------------------------------------------------
 
