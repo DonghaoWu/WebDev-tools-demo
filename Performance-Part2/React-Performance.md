@@ -241,11 +241,10 @@ export default Header;
 ----------------------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. `shouldComponentUpdate` 在这里阻断了 `Header` 以及它的子组件 `CounterButton` 的 `rerender`。
 
 
-
-### <span id="11.4">`Step4: Delete 'shouldComponentUpdate' in Header & add 'shouldComponentUpdate' into CounterButton.`</span>
+### <span id="11.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
@@ -329,7 +328,7 @@ export default CounterButton;
 
 
 #### `Comment:`
-1. 
+1. `shouldComponentUpdate` 在这里只阻断了 `CounterButton` 的 `rerender`。
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
