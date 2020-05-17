@@ -42,7 +42,7 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/src/Components/Page1.js`__
+- __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
 
 ```js
 import React from 'react'
@@ -75,7 +75,7 @@ function Page1({ onRouteChange }) {
 export default Page1;
 ```
 
-- __`Location: ./example1/code-splitting/src/Components/Page2.js`__
+- __`Location: ./example1/code-splitting/src/edition1/Page2.js`__
 
 ```js
 import React from 'react';
@@ -108,7 +108,7 @@ function Page2({ onRouteChange }) {
 export default Page2;
 ```
 
-- __`Location: ./example1/code-splitting/src/Components/Page3.js`__
+- __`Location: ./example1/code-splitting/src/edition1/Page3.js`__
 
 ```js
 import React from 'react';
@@ -141,7 +141,7 @@ function Page3({ onRouteChange }) {
 export default Page3;
 ```
 
-- __`Location: ./example1/code-splitting/src/App.js`__
+- __`Location: ./example1/code-splitting/editon1/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -193,7 +193,7 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/src/App.js`__
+- __`Location: ./example1/code-splitting/editon2/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -286,7 +286,7 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/src/Components/AsyncComponent.js`__
+- __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -316,7 +316,7 @@ export default function asyncComponent(importComponent) {
 }
 ```
 
-- __`Location: ./example1/code-splitting/src/App.js`__
+- __`Location: ./example1/code-splitting/edtion2/App.js`__
 
 ```js
 import React, { Component } from 'react'
@@ -398,7 +398,7 @@ return Component ? <Component {...this.props} /> : null
 
 #### `注意：这个方案需要至少 react 版本：16.10.2`
 
-- __`Location: ./example1/code-splitting/src/App.js`__
+- __`Location: ./example1/code-splitting/edtion3/App.js`__
 
 ```js
 import React, { Component, Suspense } from 'react'
@@ -465,27 +465,6 @@ export default App;
 #### `Comment:`
 1. 这个方案会带来屏闪，也只屏闪一次。
 2. 详细查看 [React Code-Splitting](https://reactjs.org/docs/code-splitting.html).
-
-
-
-
-### <span id="10.5">`Step5 Solution4.`</span>
-
-- #### Click here: [BACK TO CONTENT](#10.0)
-
-
-#### `Comment:`
-1.
-
-
-### <span id="10.6">`Step6: Solution5.`</span>
-
-- #### Click here: [BACK TO CONTENT](#10.0)
-
-
-#### `Comment:`
-1.
-
 
 ------------------------------------------------------------
 
