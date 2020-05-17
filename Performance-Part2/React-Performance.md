@@ -166,8 +166,23 @@ export default CounterButton;
 ```
 ----------------------------------------------------------------------------
 
+- __`Result`__:
+
+<p align="center">
+<img src="../assets/p11-1.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p11-2.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
 #### `Comment:`
 1. 这里有一个小知识点，setState 是一个 async 动作，所以建议：
+
 ```diff
 -    handleClick = () => {
 -        this.setState({ count: this.state.count + 1 });
@@ -181,8 +196,6 @@ export default CounterButton;
 +        });
 +    }
 ```
-
-
 
 ### <span id="11.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
 
