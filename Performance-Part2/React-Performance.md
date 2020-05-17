@@ -148,18 +148,12 @@ class CounterButton extends Component {
     }
 
     handleClick = () => {
-        this.setState({ count: this.state.count + 1 });
-    }
-
-    setState is an async action, it may have some side effect.
-    handleClick = () => {
         this.setState(state => {
             return { count: state.count + 1 }
         });
     }
 
     render() {
-        console.log('CounterButton',this.props.color);
         return (
             <button color={this.props.color} onClick={this.handleClick}>
                 Count:{this.state.count}
@@ -171,7 +165,6 @@ class CounterButton extends Component {
 export default CounterButton;
 ```
 ----------------------------------------------------------------------------
-
 
 #### `Comment:`
 1. 这里有一个小知识点，setState 是一个 async 动作，所以建议：
