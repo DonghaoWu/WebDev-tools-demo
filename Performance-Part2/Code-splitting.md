@@ -34,7 +34,6 @@
 - [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
 - [10.3 Solution2: Using high order function to generate async Component.](#10.3)
 - [10.4 Solution3: React new feature - React.lazy](#10.4)
-- [10.5 Solution4:](#10.5)
 
 ------------------------------------------------------------
 
