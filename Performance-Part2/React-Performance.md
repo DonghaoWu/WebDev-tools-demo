@@ -37,7 +37,7 @@
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ../React-Redux+webpack/robotFriends-redux/Performance2.2/edition2/App.js`__
+- __`Location: ./Performance2.2/edition2/App.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 ```
 
-- __`Location: ../React-Redux+webpack/robotFriends-redux/Performance2.2/edition2/Header.js`__
+- __`Location: ./Performance2.2/edition2/Header.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -127,13 +127,11 @@ export default Header;
 1. 
 
 
-
-
 ### <span id="11.2">`Step2: Create a CounterButton component.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./example1/code-splitting/editon2/App.js`__
+- __`Location: ./Performance2.2/edition2/CounterButton.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -197,20 +195,45 @@ export default CounterButton;
 +    }
 ```
 
-### <span id="11.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
+### <span id="11.3">`Step3: Add 'shouldComponentUpdate' into Header.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
+- __`Location: ./Performance2.2/edition2/Header.js`__
 
 ```js
+import React, { Component } from 'react';
+import CounterButton from './CounterButton'
 
+class Header extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return false;
+    }
+
+    render() {
+        console.log('Header');
+        return (
+            <div>
+                <h1 className='f1'>RoboFriends</h1>
+                <CounterButton />
+            </div>
+        )
+    }
+}
+
+export default Header;
 ```
 
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p11-6.png" width=90%>
+<img src="../assets/p11-3.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p11-4.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
