@@ -45,6 +45,7 @@ light house
     - 对旧版的更新：删除旧版的 registerServiceWorker.js，用serviceWorker.js取代， 然后在 ./src/index.js 中更新 import 的文件名字。
     - 最后在 ./src/index.js 末段使用新版的调用语句：
     ```js
+    import * as serviceWorker from './serviceWorker';
     serviceWorker.unregister();
     ```
 
