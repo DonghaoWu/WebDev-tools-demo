@@ -54,7 +54,7 @@ light house
     serviceWorker.register();
     ```
 
-- Solution part1:
+- `Solution part1:`
     - swap: ./src/App.css
     @font-face{
         font-display: swap;
@@ -71,7 +71,7 @@ light house
 
     - npm run deploy
 
--    Solution part2:
+- `Solution part2:`
     - Manifext does not have icons at least 512px.
 
         - Favicon generator
