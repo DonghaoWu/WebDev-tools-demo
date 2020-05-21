@@ -158,6 +158,108 @@ $ npm run deploy
 
 ----------------------------------------------------------------------------
 
+<p align="center">
+<img src="../assets/p12-8.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+
+#### `Comment:`
+1. 
+
+### <span id="12.5">`Step5: PWA part 1.`</span>
+
+- #### Click here: [BACK TO CONTENT](#12.0)
+
+1. `HTTPS:`github deploy build in https.
+
+<p align="center">
+<img src="../assets/p12-9.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+2. Accessibilities:
+
+__`Location: ./robotFriends-redux/src/components/SearchBox.js`__
+```js
+import React from 'react';
+
+const SearchBox = ({ searchfield, searchChange }) => {
+  console.log('SearchBox');
+  return (
+    <div className='pa2'>
+      <input
+        aria-label='Search Robots'
+        className='pa3 ba b--green bg-lightest-blue'
+        type='search'
+        placeholder='search robots'
+        onChange={searchChange}
+      />
+    </div>
+  );
+}
+
+export default SearchBox;
+```
+
+```diff
++ aria-label='Search Robots'
+```
+
+3. SEO:
+
+__`Location: ./robotFriends-redux/public/index.html`__
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="Description" content="Where robots make friends">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <title>React App</title>
+  </head>
+
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+  </body>
+
+</html>
+```
+
+```diff
++ <meta name="Description" content="Where robots make friends">
+```
+
+5. Deploy again:
+
+```bash
+$ npm run deploy
+```
+
+6. Test the Website:
+
+<p align="center">
+<img src="../assets/p12-10.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+#### `Comment:`
+1. 
+
+
+### <span id="12.6">`Step5: PWA part 2.`</span>
+
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 #### `Comment:`
 1. 
