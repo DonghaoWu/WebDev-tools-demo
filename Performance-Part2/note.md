@@ -61,13 +61,13 @@ light house
         font-display: swap;
     }
 
-    - Accessibilities
+    - Accessibilities `./SearchBox.js`
         - <input aria-label='Search Robots'>
 
-    - SEO
+    - SEO `./index.html`
         - <meta name="Description" content="Where robots make friends">
 
-    - set up the images size:
+    - set up the images size: `./Card.js`
         - <img alt='robots' src={`https://robohash.org/${id}?size=200X200`} />
 
     - npm run deploy

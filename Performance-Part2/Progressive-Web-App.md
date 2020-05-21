@@ -101,7 +101,60 @@
 
 - #### Click here: [BACK TO CONTENT](#12.0)
 
+1. Install gh-pages
 
+```bash
+$ npm install gh-pages
+```
+
+2. Add new scripts into `package.json`:
+
+<p align="center">
+<img src="../assets/p12-3.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+```js
+"homepage":"https://...github.io/<repoName>",
+
+"predeploy":"npm run build",
+"deploy": "gh-pages -d build",
+```
+
+3. Run command:
+
+```bash
+$ npm run deploy
+```
+
+4. Github setting:
+
+<p align="center">
+<img src="../assets/p12-4.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p12-5.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+5. Check the website:
+
+<p align="center">
+<img src="../assets/p12-6.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+6. Test the website in lighthouse:
+
+<p align="center">
+<img src="../assets/p12-7.png" width=90%>
+</p>
 
 ----------------------------------------------------------------------------
 
