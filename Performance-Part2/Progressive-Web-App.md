@@ -6,6 +6,9 @@
 
 ### `Summary`: In this documentation, we improve website performance by making a progressive web application.
 
+### Github Repo : [RobotFriends](https://github.com/DonghaoWu/PWA-robotFriends-redux)
+### Deployed:[RobotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-redux/)
+
 ### `Check Dependencies & Tools:`
 
 - [web.dev](https://web.dev/)
