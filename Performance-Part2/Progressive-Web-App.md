@@ -13,6 +13,7 @@
 
 - [Lighthouse](https://web.dev/)
 - [Favicon generator](https://realfavicongenerator.net/)
+- `Create-react-app` 这个工具内建了很多 PWA 需要的设置。
 
 ------------------------------------------------------------
 
