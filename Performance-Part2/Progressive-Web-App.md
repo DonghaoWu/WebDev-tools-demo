@@ -35,8 +35,8 @@
 - [12.2 App manifest.](#12.2)
 - [12.3 Service worker.](#12.3)
 - [12.4 Deploy & update](#12.4)
-- [12.5 PWA part 1](#12.5)
-- [12.6 PWA part 2](#12.6)
+- [12.5 PWA Part 1 - HTTPS, SEO & Accessibility](#12.5)
+- [12.6 PWA Part 2 - Favicon](#12.6)
 
 ------------------------------------------------------------
 
@@ -203,7 +203,7 @@
 #### `Comment:`
 1. 
 
-### <span id="12.5">`Step5: PWA part 1.`</span>
+### <span id="12.5">`Step5: PWA Part 1 - HTTPS, SEO & Accessibility.`</span>
 
 - #### Click here: [BACK TO CONTENT](#12.0)
 
@@ -215,7 +215,7 @@
 
     ----------------------------------------------------------------------------
 
-2. Accessibilities:
+2. Accessibility:
 
     __`Location: ./robotFriends-redux/src/components/SearchBox.js`__
     ```js
@@ -292,7 +292,7 @@
 1. 
 
 
-### <span id="12.6">`Step5: PWA part 2.`</span>
+### <span id="12.6">`Step5: PWA Part 2 - Favicon.`</span>
 
 - #### Click here: [BACK TO CONTENT](#12.0)
 
