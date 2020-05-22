@@ -180,9 +180,9 @@ $ npm run deploy
 
 8. 关于新版的 serviceWorker.js 与 旧版 registerServiceWorker.js 的更新：
 
-    a. 如果要在旧版本 react 中使用 `serviceWorker.js`，需要先删除 `registerServiceWorker.js`，复制黏贴 `serviceWorker.js` 到`registerServiceWorker.js`所在的文件位置。
+    1. 如果要在旧版本 react 中使用 `serviceWorker.js`，需要先删除 `registerServiceWorker.js`，复制黏贴 `serviceWorker.js` 到`registerServiceWorker.js`所在的文件位置。
 
-    b. 在 `./src/index.js`中修改：
+    2. 在 `./src/index.js`中修改：
 
     ```diff
     - import registerServiceWorker from './registerServiceWorker';
@@ -192,14 +192,13 @@ $ npm run deploy
     + serviceWorker.unregister();
     ```
 
-    c. 记得在 Deploy 之前修改：
+    3. 记得在 Deploy 之前修改：
 
     ```diff
     - serviceWorker.unregister();
     + serviceWorker.register();
     ```
-
-
+    
 #### `Comment:`
 1. 
 
