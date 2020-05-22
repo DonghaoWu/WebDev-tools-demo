@@ -11,7 +11,8 @@
 
 ### `Check Dependencies & Tools:`
 
-- [web.dev](https://web.dev/)
+- [Lighthouse](https://web.dev/)
+- [Favicon generator](https://realfavicongenerator.net/)
 
 ------------------------------------------------------------
 
@@ -198,7 +199,7 @@ $ npm run deploy
     - serviceWorker.unregister();
     + serviceWorker.register();
     ```
-    
+
 #### `Comment:`
 1. 
 
@@ -294,6 +295,105 @@ $ npm run deploy
 ### <span id="12.6">`Step5: PWA part 2.`</span>
 
 - #### Click here: [BACK TO CONTENT](#12.0)
+
+1. Generate a favicon.
+
+- [Favicon generator](https://realfavicongenerator.net/)
+
+<p align="center">
+<img src="../assets/p12-11.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p12-12.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+2. Download the package and unzip it, paste the images to `./public` folder.
+
+<p align="center">
+<img src="../assets/p12-13.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+3. Add code in `./public/index.html`
+
+<p align="center">
+<img src="../assets/p12-13.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p12-14.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+```html
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
+  <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
+  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+```
+
+4. Add code in `./public/manifest.json`
+
+<p align="center">
+<img src="../assets/p12-15.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+```json
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "./android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./android-chrome-192x192.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+```
+
+5. Deploy again.
+
+```bash
+$ npm run deploy
+```
+
+6. Test it in Lighthouse.
+
+<p align="center">
+<img src="../assets/p12-16.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
 
 #### `Comment:`
 1. 
