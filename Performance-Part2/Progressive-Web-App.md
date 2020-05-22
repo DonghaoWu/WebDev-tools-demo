@@ -323,12 +323,6 @@
 3. Add code in `./public/index.html`
 
     <p align="center">
-    <img src="../assets/p12-13.png" width=90%>
-    </p>
-
-    ----------------------------------------------------------------------------
-
-    <p align="center">
     <img src="../assets/p12-14.png" width=90%>
     </p>
 
