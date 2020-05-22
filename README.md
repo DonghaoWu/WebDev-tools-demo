@@ -23,3 +23,5 @@
 - [Part10 - Performance Part 2.1 Code-splitting](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/Code-splitting.md) 
 
 - [Part11 - Performance Part 2.2 React Performance](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/React-Performance.md) 
+
+- [Part12 - Performance Part 2.3 Progressive Web App](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/Progressive-Web-App.md) 
