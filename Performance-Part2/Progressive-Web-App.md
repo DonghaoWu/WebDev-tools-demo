@@ -110,74 +110,74 @@
 
 1. Install gh-pages
 
-```bash
-$ npm install gh-pages
-```
+    ```bash
+    $ npm install gh-pages
+    ```
 
 2. Add new scripts into `package.json`:
 
-<p align="center">
-<img src="../assets/p12-3.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-3.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-```js
-"homepage":"https://...github.io/<repoName>",
+    ```js
+    "homepage":"https://...github.io/<repoName>",
 
-"predeploy":"npm run build",
-"deploy": "gh-pages -d build",
-```
+    "predeploy":"npm run build",
+    "deploy": "gh-pages -d build",
+    ```
 
 3. Run command:
 
-```bash
-$ npm run deploy
-```
+    ```bash
+    $ npm run deploy
+    ```
 
 4. Github setting:
 
-<p align="center">
-<img src="../assets/p12-4.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-4.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p12-5.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-5.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
 5. Check the website:
 
-<p align="center">
-<img src="../assets/p12-6.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-6.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
 6. Check the service worker:
 
-<p align="center">
-<img src="../assets/p12-6-2.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-6-2.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
 7. Test the website in lighthouse:
 
-<p align="center">
-<img src="../assets/p12-7.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-7.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p12-8-2.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-8-2.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
 8. 关于新版的 serviceWorker.js 与 旧版 registerServiceWorker.js 的更新：
 
@@ -209,11 +209,11 @@ $ npm run deploy
 
 1. `HTTPS:`github deploy build in https.
 
-<p align="center">
-<img src="../assets/p12-9.png" width=90%>
-</p>
+    <p align="center">
+    <img src="../assets/p12-9.png" width=90%>
+    </p>
 
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
 2. Accessibilities:
 
