@@ -7,7 +7,7 @@
 ### `Summary`: In this documentation, we improve website performance by making a progressive web application.
 
 ### Github Repo : [RobotFriends](https://github.com/DonghaoWu/PWA-robotFriends-redux)
-### Deployed:[RobotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-redux/)
+### Deployed : [RobotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-redux/)
 
 ### `Check Dependencies & Tools:`
 
@@ -87,7 +87,7 @@
     - ./src/registerServiceWorker.js 或者 ./src/serviceWorker.js
     - ./build/service-worker.js
     - another worker
-    - application tag -> service worker ->
+    - application tag -> service worker
     - Web API: Cache API, in browser
     - Cache API: Application tag -> Cache -> Cache Storage
 
@@ -180,26 +180,24 @@ $ npm run deploy
 
 8. 关于新版的 serviceWorker.js 与 旧版 registerServiceWorker.js 的更新：
 
-a. 如果要在旧版本 react 中使用 `serviceWorker.js`，需要先删除 `registerServiceWorker.js`，复制黏贴 `serviceWorker.js` 到`registerServiceWorker.js`所在的文件位置。
+    a. 如果要在旧版本 react 中使用 `serviceWorker.js`，需要先删除 `registerServiceWorker.js`，复制黏贴 `serviceWorker.js` 到`registerServiceWorker.js`所在的文件位置。
 
-b. 在 `./src/index.js`中修改：
+    b. 在 `./src/index.js`中修改：
 
-```diff
-- import registerServiceWorker from './registerServiceWorker';
-- registerServiceWorker();
+    ```diff
+    - import registerServiceWorker from './registerServiceWorker';
+    - registerServiceWorker();
 
-+ import * as serviceWorker from './serviceWorker';
-+ serviceWorker.unregister();
-```
+    + import * as serviceWorker from './serviceWorker';
+    + serviceWorker.unregister();
+    ```
 
+    c. 记得在 Deploy 之前修改：
 
-c. 记得在 Deploy 之前修改：
-
-
-```diff
-- serviceWorker.unregister();
-+ serviceWorker.register();
-```
+    ```diff
+    - serviceWorker.unregister();
+    + serviceWorker.register();
+    ```
 
 
 #### `Comment:`
