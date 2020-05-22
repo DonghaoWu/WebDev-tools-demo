@@ -63,6 +63,9 @@
 - Why `App manifest`:
     - web app icon
     - include a viewport tag in .public/index.html
+    ```html
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    ```
     - ./public/manifest.json, set up the icon,so a user can add an icon in a phone.(比如说一个移动端用户可以在收藏一个 web app 之后在桌面看到一个新的 icon。)
     - 在加载时，在移动端可以看到加载背景和 icon 。
 
@@ -78,7 +81,7 @@
 
 - Why `Service Worker`:
     - background worker, offline experierce.
-    - ./src/registerServiceWorker.js
+    - ./src/registerServiceWorker.js 或者 ./src/serviceWorker.js
     - ./build/service-worker.js
     - another worker
     - application tag -> service worker ->
@@ -150,7 +153,15 @@ $ npm run deploy
 
 ----------------------------------------------------------------------------
 
-6. Test the website in lighthouse:
+6. Check the service worker:
+
+<p align="center">
+<img src="../assets/p12-6-2.png" width=90%>
+</p>
+
+----------------------------------------------------------------------------
+
+7. Test the website in lighthouse:
 
 <p align="center">
 <img src="../assets/p12-7.png" width=90%>
@@ -164,7 +175,7 @@ $ npm run deploy
 
 ----------------------------------------------------------------------------
 
-7. 关于新版的 serviceWorker.js 与 旧版 registerServiceWorker.js 的更新：
+8. 关于新版的 serviceWorker.js 与 旧版 registerServiceWorker.js 的更新：
 
 a. 如果要在旧版本 react 中使用 `serviceWorker.js`，需要先删除 `registerServiceWorker.js`，复制黏贴 `serviceWorker.js` 到`registerServiceWorker.js`所在的文件位置。
 
