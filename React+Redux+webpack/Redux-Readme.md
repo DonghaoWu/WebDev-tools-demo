@@ -162,13 +162,8 @@
   }
   ```
 
-#### `Comment:`
-1. 在这里需要说明一个事情，第一个函数 `setSearchField` 实际是一个返回 `Object` 的函数，所以在后面调用的时候直接使用 `dispatch` 就可以将 `Object` 派发到对应的 `reducer` 中。这里的函数相当于是一个 `同步函数`。可以实际调用中认为 `dispatch` 是用来派发 `Object` 的。
-
-2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
-
   3. Reducers
-  
+
   __`Location: ./robotfriends-redux/src/actions.js`__
 
   ```jsx
@@ -211,6 +206,11 @@
     }
   }
   ```
+
+#### `Comment:`
+1. 在这里需要说明一个事情，第一个函数 `setSearchField` 实际是一个返回 `Object` 的函数，所以在后面调用的时候直接使用 `dispatch` 就可以将 `Object` 派发到对应的 `reducer` 中。这里的函数相当于是一个 `同步函数`。可以实际调用中认为 `dispatch` 是用来派发 `Object` 的。
+
+2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
 
 ### <span id="5.4">`Step4: Connect state and method to components and use the props and methods.`</span>
 
