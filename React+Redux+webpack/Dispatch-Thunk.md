@@ -408,18 +408,18 @@
 
 1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
-  ```jsx
-  export const fetchMessages = () => {
-      axios.get('/api/messages')
-          .then(res => res.data)
-          .then(messages => {
-              return {
-                  action: GOT_MESSAGES_FROM_SERVER,
-                  payload: messages,
-              }
-          });
-  }
-  ```
+    ```jsx
+    export const fetchMessages = () => {
+        axios.get('/api/messages')
+            .then(res => res.data)
+            .then(messages => {
+                return {
+                    action: GOT_MESSAGES_FROM_SERVER,
+                    payload: messages,
+                }
+            });
+    }
+    ```
 
 2. 以上结果是行不通的，具体原因未明。应该是跟 `promise` 是 `async action` 而不能返回 `object` 有关，实际使用中，上面这个 `fetchMessages()` 返回的是 `undefined`。
 
