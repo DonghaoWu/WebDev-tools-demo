@@ -1,6 +1,6 @@
 # Web development tools (Part 3)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part1.2)
 
@@ -32,7 +32,7 @@
 
 ### <span id="3.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [3.1 Optimize html file.](#3.1)
 - [3.2 Optimize css file.](#3.2)
@@ -51,7 +51,7 @@
 
 ### <span id="3.1">`Step1: Optimize html file`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO CONTENT](#3.0)
 
 A. 正常相对静态的网页的优化规则是使用`普通型`或者`defer型`，如果使用`普通型`则把 js 文件放在最后，css 文件放在前面；如果使用`defer型`，则 js 文件的位置不需要讲究。
 
@@ -368,7 +368,7 @@ __`Location: ./example1.2/index.html`__
 
 ### <span id="3.2">`Step2: Optimize css file.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO CONTENT](#3.0)
 
 1. Above the fold loading. (把次要的 css 文件放在后台下载执行)。
 
@@ -424,7 +424,7 @@ __`Location: ./example1.2/index.html`__
 
 ### <span id="3.3">`Step3: Optimize js file.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO CONTENT](#3.0)
 
 ```html
 <script></script>
@@ -442,7 +442,7 @@ __`Location: ./example1.2/index.html`__
 
 ### <span id="3.4">`Step4: Tools to check website performance.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO CONTENT](#3.0)
 
 - PageSpeed Insights
   [https://developers.google.com/speed/pagespeed/insights/](https://developers.google.com/speed/pagespeed/insights/)
@@ -456,7 +456,7 @@ __`Location: ./example1.2/index.html`__
 
 ### <span id="3.5">`Step5 Concept questions.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO CONTENT](#3.0)
 
 #### `A. What is critical render path?`
 
@@ -524,8 +524,8 @@ In order to render content the browser has to go through a series of steps:
 <img src="../assets/w15.png" width=90%>
 </p>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO CONTENT](#3.0)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

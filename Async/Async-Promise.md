@@ -1,6 +1,6 @@
 # Web development tools (Part 7)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Async - Promise)
 
@@ -18,7 +18,7 @@
 
 ### <span id="7.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [7.1 Async function with callback.](#7.1)
 - [7.2 Promise an async function.](#7.2)
@@ -33,7 +33,7 @@
 
 ### <span id="7.1">`Step1: Async function with callback.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const fs = require("fs");
@@ -50,7 +50,7 @@ const readFile = (file) => {
 
 ### <span id="7.2">`Step2: Promise an async function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const fs = require("fs");
@@ -112,7 +112,7 @@ const writeFilePro = (file, data) => {
 
 ### <span id="7.3">`Step3: What do async function and promise return?`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const fs = require("fs");
@@ -148,7 +148,7 @@ console.log(y); //---------> promise
 
 ### <span id="7.4">`Step4: Callback hell.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const superagent = require("superagent");
@@ -186,7 +186,7 @@ example1();
 
 ### <span id="7.5">`Step5: Promise a callback hell.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const fs = require("fs");
@@ -244,7 +244,7 @@ example2();
 
 ### <span id="7.6">`Step6: Consume Promise in async mode.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO CONTENT](#7.0)
 
 ```js
 const fs = require("fs");
@@ -298,10 +298,10 @@ example3();
 
 ### <span id="7.7">`Step7: More about async function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
-- #### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
+#### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
 
-- #### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
+#### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
 
 #### `Comment:`
 1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。（这个观点是不正确的，async 里面的同步动作还是会直接执行的，4月28日。）
@@ -309,5 +309,5 @@ example3();
 
 3. 待补充材料：`throw` & `promise.all`
 
-- #### Click here: [BACK TO CONTENT](#7.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO CONTENT](#7.0)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

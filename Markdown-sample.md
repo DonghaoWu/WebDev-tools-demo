@@ -1,6 +1,6 @@
 # Web development tools (Part ####)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(####)
 
@@ -23,7 +23,7 @@
 
 ### <span id="####.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [####.1 ####.](#####.1)
 - [####.2 ####.](#####.2)
@@ -36,7 +36,7 @@
 
 ### <span id="####.1">`Step1: ####`</span>
 
-- #### Click here: [BACK TO CONTENT](####.0)
+#### Click here: [BACK TO CONTENT](####.0)
 
 - __`Location: ####`__
 
@@ -58,7 +58,7 @@
 
 ### <span id="####.2">`Step2: ####`</span>
 
-- #### Click here: [BACK TO CONTENT](#####.0)
+#### Click here: [BACK TO CONTENT](#####.0)
 
 - __`Location: ####`__
 
@@ -82,7 +82,7 @@
 
 ### <span id="####.3">`Step3: ####`</span>
 
-- #### Click here: [BACK TO CONTENT](#####.0)
+#### Click here: [BACK TO CONTENT](#####.0)
 
 - __`Location: ####`__
 
@@ -106,7 +106,7 @@
 
 ### <span id="####.4">`Step4: ####`</span>
 
-- #### Click here: [BACK TO CONTENT](#####.0)
+#### Click here: [BACK TO CONTENT](#####.0)
 
 - __`Location: ####`__
 
@@ -125,8 +125,8 @@
 #### `Comment:`
 1. 
 
-- #### Click here: [BACK TO CONTENT](#####.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO CONTENT](#####.0)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

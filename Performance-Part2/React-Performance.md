@@ -1,6 +1,6 @@
 # Web development tools (Part 11)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.2)
 
@@ -26,7 +26,7 @@
 
 ### <span id="11.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [11.1 Create a Header component.](#11.1)
 - [11.2 Create a CounterButton component.](#11.2)
@@ -37,7 +37,7 @@
 
 ### <span id="11.1">`Step1: Create a Header component`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+#### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./Performance2.2/edition2/App.js`__
 
@@ -131,7 +131,7 @@ export default Header;
 
 ### <span id="11.2">`Step2: Create a CounterButton component.`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+#### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./Performance2.2/edition2/CounterButton.js`__
 
@@ -199,7 +199,7 @@ export default CounterButton;
 
 ### <span id="11.3">`Step3: Add 'shouldComponentUpdate' into Header.`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+#### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./Performance2.2/edition2/Header.js`__
 
@@ -246,7 +246,7 @@ export default Header;
 
 ### <span id="11.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+#### Click here: [BACK TO CONTENT](#11.0)
 
 - __`Location: ./Performance2.2/edition2/Header.js`__
 
@@ -330,8 +330,8 @@ export default CounterButton;
 #### `Comment:`
 1. `shouldComponentUpdate` 在这里只阻断了 `CounterButton` 的 `rerender`。
 
-- #### Click here: [BACK TO CONTENT](#11.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO CONTENT](#11.0)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

@@ -1,6 +1,6 @@
 # Web development tools (Part 9)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Async - Research "code" )
 
@@ -17,7 +17,7 @@
 
 ### <span id="9.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [9.1 Callback hell.](#9.1)
 - [9.2 Promise.](#9.2)
@@ -32,7 +32,7 @@
 
 ### <span id="9.1">`Step1: Callback hell.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
     - Edition 1:
     ```js
@@ -138,7 +138,7 @@
 
 ### <span id="9.2">`Step2: Promise.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
 1. 定义方式：
 
@@ -315,7 +315,7 @@
 
 ### <span id="9.3">`Step3: From callback to Promise.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
 
 #### `Comment:`
@@ -323,7 +323,7 @@
 
 ### <span id="9.4">`Step4: Executing order in event loop.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
 1. event loop 的优先级：
 
@@ -489,7 +489,7 @@
 
 ### <span id="9.5">`Step5: From Promise to async / await.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
 1. Promise 原生处理与 async/await 处理方式。
 
@@ -671,7 +671,7 @@
 
 ### <span id="9.6">`Step6: Async / Await.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
 1. 调用 async 定义函数并分析执行顺序：
 
@@ -716,7 +716,7 @@
 
 ### <span id="9.7">`Step7: callback -> Promise -> async / await.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [BACK TO CONTENT](#9.0)
 
     1.  promise nesting 的进化： 
 
@@ -845,9 +845,9 @@
 
 ### <span id="9.8">`Step8: More about async function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#9.0)
-- #### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
+#### Click here: [BACK TO CONTENT](#9.0)
+#### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
 
-- #### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
+#### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
