@@ -297,51 +297,51 @@ render(){
     1. 如果你想要：
 
         ```jsx
-            <table>
-                <tr>
-                    <td>Hello</td>
-                    <td>World</td>
-                </tr>
-            </table>
+        <table>
+            <tr>
+                <td>Hello</td>
+                <td>World</td>
+            </tr>
+        </table>
         ```
 
     2. 但按照以前写的方法：
 
         ```jsx
-            class Table extends React.Component {
-                render() {
-                    return (
-                        <table>
-                            <tr>
-                                <Columns />
-                            </tr>
-                        </table>
-                    );
-                }
+        class Table extends React.Component {
+            render() {
+                return (
+                    <table>
+                        <tr>
+                            <Columns />
+                        </tr>
+                    </table>
+                );
             }
+        }
 
-            class Columns extends React.Component {
-                render() {
-                    return (
-                        <div>
-                            <td>Hello</td>
-                            <td>World</td>
-                        </div>
-                    );
-                }
-            }
-        ```
-
-    3. 将会得到：
-        ```jsx
-            <table>
-                <tr>
+        class Columns extends React.Component {
+            render() {
+                return (
                     <div>
                         <td>Hello</td>
                         <td>World</td>
                     </div>
-                </tr>
-            </table>
+                );
+            }
+        }
+        ```
+
+    3. 将会得到：
+        ```jsx
+        <table>
+            <tr>
+                <div>
+                    <td>Hello</td>
+                    <td>World</td>
+                </div>
+            </tr>
+        </table>
         ```
 
     4. 这不是我们想要的，所以使用 Fragment 改写：
