@@ -72,11 +72,11 @@
 
 - #### Click here: [BACK TO CONTENT](#1.0)
 
-- If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
+    - If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
 
-- Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
+    - Using an HTTPS remote URL has some advantages compared with using SSH. It's easier to set up than SSH, and usually works through strict firewalls and proxies. However, it also prompts you to enter your GitHub credentials every time you pull or push a repository.
 
-- You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
+    - You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
 
     1. __`Solution 1: GitHub HTTPS Caching.`__
 
