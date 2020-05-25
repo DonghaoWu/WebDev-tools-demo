@@ -136,11 +136,11 @@
 
 #### `Comment:`
 1. Other ssh comands:
-```bash
-(local) $ ssh-add -l
-(local) $ ssh-add -D
-(local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
-```
+    ```bash
+    (local) $ ssh-add -l
+    (local) $ ssh-add -D
+    (local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
+    ```
 
 ### <span id="1.3">`Step3. Using SSH to connect remote server.`</span>
 
