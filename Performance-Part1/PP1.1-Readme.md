@@ -158,36 +158,35 @@
 
 #### `Comment:`
 1. Previous code:
+    ```html
+    <!-- #1 Minimize all text -->
+    <!-- #2 Minimize images -->
+    <!-- #3 Media Queries -->
+    <!-- #4 Minimize # of files -->
 
-  ```html
-  <!-- #1 Minimize all text -->
-  <!-- #2 Minimize images -->
-  <!-- #3 Media Queries -->
-  <!-- #4 Minimize # of files -->
 
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Network Performance</title>
+      <!-- CSS -->
+      <link rel="stylesheet" type="text/css" href="./style.css">
+      <link rel="stylesheet" type="text/css" href="./style2.css">
 
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>Network Performance</title>
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <link rel="stylesheet" type="text/css" href="./style2.css">
+    </head>
+    <body>
+      <h1>Helloooo</h1>
 
-  </head>
-  <body>
-    <h1>Helloooo</h1>
+      <!-- Large Image -->
+      <img src="./puppy.jpg" width="300px" height="200px">
 
-    <!-- Large Image -->
-    <img src="./puppy.jpg" width="300px" height="200px">
-
-    <!-- javascript -->
-    <script type="text/javascript" src="./script.js"></script>
-    <script type="text/javascript" src="./script2.js"></script>
-    <script type="text/javascript" src="./script3.js"></script>
-  </body>
-  </html>
-  ```
+      <!-- javascript -->
+      <script type="text/javascript" src="./script.js"></script>
+      <script type="text/javascript" src="./script2.js"></script>
+      <script type="text/javascript" src="./script3.js"></script>
+    </body>
+    </html>
+    ```
 
 2. 取消了 style2.css, script2.js, script3.js 的连接，把 script2.js, script3.js 的内容合并到 script.js 中。
 
@@ -201,11 +200,11 @@
 
 -------------------------------------------------------------
 
-- After.
+  - After.
 
-  <p align="center">
-  <img src="../assets/w12.png" width=90%>
-  </p>
+    <p align="center">
+    <img src="../assets/w12.png" width=90%>
+    </p>
 
 ### <span id="2.5">`Step5. Content-delivery api.`</span>
 
