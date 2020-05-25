@@ -159,25 +159,26 @@
   onChange={this.handleChange}
   ```
 2. 解说：
-  1. 用户输入，引发 `onChange` 对应的函数 `handleChange`;
-  2. `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
 
-  3. 执行：
+    1. 用户输入，引发 `onChange` 对应的函数 `handleChange`;
+    2. `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
 
-  ```jsx
-  store.dispatch(writeMessage(evt.target.value));
-  ```
-  先执行：
-  ```jsx
-  writeMessage(evt.target.value);
-  ```
-  实际得到：
-  ```jsx
-  store.dispatch({
-    type: WRITE_MESSAGE,
-    payload: evt.target.value,
-  });
-  ```
+    3. 执行：
+
+    ```jsx
+    store.dispatch(writeMessage(evt.target.value));
+    ```
+    先执行：
+    ```jsx
+    writeMessage(evt.target.value);
+    ```
+    实际得到：
+    ```jsx
+    store.dispatch({
+      type: WRITE_MESSAGE,
+      payload: evt.target.value,
+    });
+    ```
   
 3. dispatch:
   1. 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
