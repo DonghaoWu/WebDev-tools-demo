@@ -143,21 +143,21 @@
 
 #### `Comment:`
 1. 核心代码：
-```jsx
-export const writeMessage = (inputContent) => {
-    return {
-        type: WRITE_MESSAGE,
-        payload: inputContent,
-    };
-}
+  ```jsx
+  export const writeMessage = (inputContent) => {
+      return {
+          type: WRITE_MESSAGE,
+          payload: inputContent,
+      };
+  }
 
-handleChange = (evt) => {
-    store.dispatch(writeMessage(evt.target.value))
-}
+  handleChange = (evt) => {
+      store.dispatch(writeMessage(evt.target.value))
+  }
 
-// ...
-onChange={this.handleChange}
-```
+  // ...
+  onChange={this.handleChange}
+  ```
 2. 解说：
   - 用户输入，引发 `onChange` 对应的函数 `handleChange`;
   - `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
@@ -228,7 +228,8 @@ onChange={this.handleChange}
     }
   }
   ```
-2. Execute the async action by using `dispatch`.
+
+  2. Execute the async action by using `dispatch`.
 
     ```jsx
     import React, { Component } from 'react';
@@ -276,20 +277,21 @@ onChange={this.handleChange}
 
 #### `Comment:`
 1. 核心代码：
-```jsx
-componentDidMount() {
-  axios.get('/api/messages')
-    .then(res => res.data)
-    .then(messages => store.dispatch(gotMessagesFromServer(messages)));
+  ```jsx
+  componentDidMount() {
+    axios.get('/api/messages')
+      .then(res => res.data)
+      .then(messages => store.dispatch(gotMessagesFromServer(messages)));
 
-  this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-}
-```
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+  }
+  ```
 
 2. 解说：
   - 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。
 
   - `4月18日更新，这里感觉不是使用一个 promise，而是一个异步函数加一个同步函数，同步函数先完成，异步函数后完成，顺序是先连接 state 后改变 state。例如，如果把代码写成这样：`
+
   ```jsx
   componentDidMount() {
     console.log('1=>');
@@ -334,12 +336,12 @@ componentDidMount() {
 - #### Click here: [BACK TO CONTENT](#6.0)
 
 - Import and apply the middleware.
-```jsx
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+  ```jsx
+  import { createStore, applyMiddleware } from 'redux';
+  import thunkMiddleware from 'redux-thunk';
 
-export default createStore(reducer, applyMiddleware(thunkMiddleware));
-```
+  export default createStore(reducer, applyMiddleware(thunkMiddleware));
+  ```
 
 - Conver the old code.
 
@@ -406,18 +408,18 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 
 1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
-```jsx
-export const fetchMessages = () => {
-    axios.get('/api/messages')
-        .then(res => res.data)
-        .then(messages => {
-            return {
-                action: GOT_MESSAGES_FROM_SERVER,
-                payload: messages,
-            }
-        });
-}
-```
+  ```jsx
+  export const fetchMessages = () => {
+      axios.get('/api/messages')
+          .then(res => res.data)
+          .then(messages => {
+              return {
+                  action: GOT_MESSAGES_FROM_SERVER,
+                  payload: messages,
+              }
+          });
+  }
+  ```
 
 2. 以上结果是行不通的，具体原因未明。应该是跟 `promise` 是 `async action` 而不能返回 `object` 有关，实际使用中，上面这个 `fetchMessages()` 返回的是 `undefined`。
 
@@ -433,26 +435,27 @@ export const fetchMessages = () => {
 
   - 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
 
-  ```js
-  const fetchMessages = () => {
-    return (dispatch) => {
-        axios.get('/api/messages')
-            .then(res => res.data)
-            .then(messages => dispatch(gotMessagesFromServer(messages)));
+    ```js
+    const fetchMessages = () => {
+      return (dispatch) => {
+          axios.get('/api/messages')
+              .then(res => res.data)
+              .then(messages => dispatch(gotMessagesFromServer(messages)));
+      }
     }
-  }
-  ```
+    ```
 
   - 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
-  ```js
-  export const fetchMessages = () => {
-      return async (dispatch) => {
-          const res = await axios.get('/api/messages');
-          const messages = res.data;
-          dispatch(gotMessagesFromServer(messages));
-      }
-  }
-  ```
+
+    ```js
+    export const fetchMessages = () => {
+        return async (dispatch) => {
+            const res = await axios.get('/api/messages');
+            const messages = res.data;
+            dispatch(gotMessagesFromServer(messages));
+        }
+    }
+    ```
 
 6. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
 
