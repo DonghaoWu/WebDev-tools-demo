@@ -276,34 +276,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 - 例子一：dispatch 同步函数/ `object`。
 
-```jsx
-// 定义一个同步函数，作为一个 action ，返回一个 object。
-const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text });
+  ```jsx
+  // 定义一个同步函数，作为一个 action ，返回一个 object。
+  const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text });
 
-// onSearchChange 是一个函数，它的运作顺序是接收变量，执行 setSearchField 后返回一个 object，最后调用 dispatch 进行派发 object。
-const mapDispatchToProps = (dispatch) => {
-  return {
-          onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+  // onSearchChange 是一个函数，它的运作顺序是接收变量，执行 setSearchField 后返回一个 object，最后调用 dispatch 进行派发 object。
+  const mapDispatchToProps = (dispatch) => {
+    return {
+            onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    }
   }
-}
 
-// 父组件的函数向下传递
-<SearchBox searchChange={this.props.onSearchChange} />
+  // 父组件的函数向下传递
+  <SearchBox searchChange={this.props.onSearchChange} />
 
-// 在这里有点特殊，当用户输入时，onChange 触发，同时 searchChange 触发，同时自动捕捉输入时产生的 event 变量并自动放到 searchChange 中作为变量。
-const SearchBox = ({ searchfield, searchChange }) => {
-  return (
-    <div className='pa2'>
-      <input
-        className='pa3 ba b--green bg-lightest-blue'
-        type='search'
-        placeholder='search robots'
-        onChange={searchChange}
-      />
-    </div>
-  );
-}
-```
+  // 在这里有点特殊，当用户输入时，onChange 触发，同时 searchChange 触发，同时自动捕捉输入时产生的 event 变量并自动放到 searchChange 中作为变量。
+  const SearchBox = ({ searchfield, searchChange }) => {
+    return (
+      <div className='pa2'>
+        <input
+          className='pa3 ba b--green bg-lightest-blue'
+          type='search'
+          placeholder='search robots'
+          onChange={searchChange}
+        />
+      </div>
+    );
+  }
+  ```
 
 #### `Comment:`
 1. 运行顺序：
@@ -317,29 +317,29 @@ const SearchBox = ({ searchfield, searchChange }) => {
 
 - 例子二：dispatch 异步函数。
 
-```jsx
-// 定义一个函数，作为一个 action ，返回一个 function。
-export const requestRobots = () => {
-  return fucntion(dispatch){
-    dispatch({ type: REQUEST_ROBOTS_PENDING })
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-      .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+  ```jsx
+  // 定义一个函数，作为一个 action ，返回一个 function。
+  export const requestRobots = () => {
+    return fucntion(dispatch){
+      dispatch({ type: REQUEST_ROBOTS_PENDING })
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+        .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+    }
   }
-}
 
-// onRequestRobots 是一个函数，跟上一个例子不一样，这里是执行了 requestRobots 之后返回一个函数，上一个例子执行了函数之后返回一个对象。
-//这是第一个最大的不同，当返回的是一个 object 时是不用到 thunkMiddleware 的，只有返回函数的时候，才需要用到这个中间件。
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onRequestRobots: () => dispatch(requestRobots())
+  // onRequestRobots 是一个函数，跟上一个例子不一样，这里是执行了 requestRobots 之后返回一个函数，上一个例子执行了函数之后返回一个对象。
+  //这是第一个最大的不同，当返回的是一个 object 时是不用到 thunkMiddleware 的，只有返回函数的时候，才需要用到这个中间件。
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      onRequestRobots: () => dispatch(requestRobots())
+    }
   }
-}
 
-componentDidMount() {
-    this.props.onRequestRobots();
-}
-```
+  componentDidMount() {
+      this.props.onRequestRobots();
+  }
+  ```
 
 #### `Comment:`
 1. 运行顺序：
