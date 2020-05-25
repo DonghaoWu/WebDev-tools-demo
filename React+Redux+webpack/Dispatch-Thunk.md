@@ -168,11 +168,13 @@
     ```jsx
     store.dispatch(writeMessage(evt.target.value));
     ```
-    先执行：
+
+    4. 先执行：
     ```jsx
     writeMessage(evt.target.value);
     ```
-    实际得到：
+
+    5. 实际得到：
     ```jsx
     store.dispatch({
       type: WRITE_MESSAGE,
@@ -280,59 +282,60 @@
 
 #### `Comment:`
 1. 核心代码：
-  ```jsx
-  componentDidMount() {
-    axios.get('/api/messages')
-      .then(res => res.data)
-      .then(messages => store.dispatch(gotMessagesFromServer(messages)));
-
-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-  }
-  ```
-
-2. 解说：
-  - 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。
-
-  - `4月18日更新，这里感觉不是使用一个 promise，而是一个异步函数加一个同步函数，同步函数先完成，异步函数后完成，顺序是先连接 state 后改变 state。例如，如果把代码写成这样：`
-
-  ```jsx
-  componentDidMount() {
-    console.log('1=>');
-
-    axios.get('/api/messages')
-      .then(res => res.data)
-      .then(messages => {
-        console.log('2=>');
-        store.dispatch(gotMessagesFromServer(messages))
-      });
-
-    console.log('3=>');
-
-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-
-    console.log('4=>');
-  }
-  ```
-
-  #### 这样在 console 显示的结果是，`1=>3=>4=>2`。
-
-  - 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
-
-  - 4月18日更新，以上讲法是不完全成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。（以下例子证明 `thunkMiddleware` 不成立。）
-
-  - 以下代码验证：
 
     ```jsx
     componentDidMount() {
-        console.log('1');
-        store.dispatch(fetchMessages());
-        console.log('3');
-        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-        console.log('4');
+      axios.get('/api/messages')
+        .then(res => res.data)
+        .then(messages => store.dispatch(gotMessagesFromServer(messages)));
+
+      this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
     }
     ```
 
- - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async & promise` 的内容。
+2. 解说：
+    1. 这里代码的意思是使用一个 promise，当完成 `axios` 的请求后，调用 `dispatch` 对获取的数据作为 `actionCreator` 的一个参数生成一个 `object`，然后用 `dispatch` 把它派发到 `reducer` 中去。
+
+    2. `4月18日更新，这里感觉不是使用一个 promise，而是一个异步函数加一个同步函数，同步函数先完成，异步函数后完成，顺序是先连接 state 后改变 state。例如，如果把代码写成这样：`
+
+    ```jsx
+    componentDidMount() {
+      console.log('1=>');
+
+      axios.get('/api/messages')
+        .then(res => res.data)
+        .then(messages => {
+          console.log('2=>');
+          store.dispatch(gotMessagesFromServer(messages))
+        });
+
+      console.log('3=>');
+
+      this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+
+      console.log('4=>');
+    }
+    ```
+
+    #### 这样在 console 显示的结果是，`1=>3=>4=>2`。
+
+    3. 这里说明就算不用 `middleware` ，也可以完成 `async action`，然后至于为什么引入`thunkMiddleware` 是因为想把 `component` 中的函数部分简化成一个名字，然后把具体的函数代码放到一个文件统一管理。
+
+    4. 4月18日更新，以上讲法是不完全成立的，`async function` 带来的 `side effect`是不可控的，所以不用`middleware`完成`async action`的观点不成立，解决方案目前想到的是 `thunkMiddleware` 或者 `promise`。（以下例子证明 `thunkMiddleware` 不成立。）
+
+    - 以下代码验证：
+
+      ```jsx
+      componentDidMount() {
+          console.log('1');
+          store.dispatch(fetchMessages());
+          console.log('3');
+          this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+          console.log('4');
+      }
+      ```
+
+    - 结果仍然是 `1=>3=>4=>2`，所以这个方法还是没能实现最开始的`顺序执行，1，2，3，4`的设想，解决这个设想需要学习 `async & promise` 的内容。
 
 ### <span id="6.3">`Step3: How to set up thunk middleware?`</span>
 
