@@ -638,7 +638,7 @@ render(){
 
 14. 在子组件引用父组件的函数：
 
-__`Location: ./robotfriends/src/components/SearchBox.js`__
+    __`Location: ./robotfriends/src/components/SearchBox.js`__
 
     ```jsx
     import React from 'react';
