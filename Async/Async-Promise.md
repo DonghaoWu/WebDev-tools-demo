@@ -73,7 +73,7 @@
     console.log(x);
     ```
 
-- 你会得到
+    - 你会得到
     ```diff
     + Promise {<pending>}
     ```
