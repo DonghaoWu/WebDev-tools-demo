@@ -488,18 +488,18 @@ render(){
         if (true) throw new Error('This is a test from CardList component.');
         return (
             <div>
-            {
-                robots.map((user, i) => {
-                return (
-                    <Card
-                    key={i}
-                    id={robots[i].id}
-                    name={robots[i].name}
-                    email={robots[i].email}
-                    />
-                );
-                })
-            }
+                {
+                    robots.map((user, i) => {
+                        return (
+                            <Card
+                            key={i}
+                            id={robots[i].id}
+                            name={robots[i].name}
+                            email={robots[i].email}
+                            />
+                        );
+                    })
+                }
             </div>
         );
     }
