@@ -427,13 +427,13 @@
 
 4. 4月29日，后续跟进，这个方法是行不通的，因为这个函数里面 axio.get 是一个 async operation，也是一个 promise。原本的想法是想使用 dispatch 这个 promise 的返回 object。这里面有几个原因说明不能实现：
 
-  - dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch。
+  1. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch。
 
-  - 另外一个理由是 async operation 里面的值是无法给 sync 提供任何帮助的，sync 执行时用不到里面任何一个值。当然这个理由也是基于理由一得出的，详细了解 event loop 的运作顺序。
+  2. 另外一个理由是 async operation 里面的值是无法给 sync 提供任何帮助的，sync 执行时用不到里面任何一个值。当然这个理由也是基于理由一得出的，详细了解 event loop 的运作顺序。
 
 5. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
 
-  - 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
+  1. 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
 
     ```js
     const fetchMessages = () => {
@@ -445,7 +445,7 @@
     }
     ```
 
-  - 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
+  2. 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
 
     ```js
     export const fetchMessages = () => {
