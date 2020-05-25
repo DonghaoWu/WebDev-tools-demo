@@ -471,16 +471,16 @@
 
 1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process:
 
-  1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
-    a. If it's a function, the store invokes that function immediately and passes the `dispatch` and `getState` methods to it as arguments. Do not move on to step 2.
-    b. If it's a regular object, move on to step 2.
-  2. The store invokes our reducer with the action and the previous state, and sets the return value 
-    as the new state.
-  3. The store invokes all listeners that have been registered with it (via `store.subscribe`).
+    1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
+      a. If it's a function, the store invokes that function immediately and passes the `dispatch` and `getState` methods to it as arguments. Do not move on to step 2.
+      b. If it's a regular object, move on to step 2.
+    2. The store invokes our reducer with the action and the previous state, and sets the return value 
+      as the new state.
+    3. The store invokes all listeners that have been registered with it (via `store.subscribe`).
 
 2. Before, our reducer expected an action to be a plain JavaScript object with some identifying type field. However, thunk middleware will give us a powerful new ability: instead of dispatching an action object, we can dispatch a function! When thunkMiddleware sees that we've dispatched a function instead of a regular object, it will say,
 
-  - Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要，middlware 里面继续处理 async function，外面依然处理同步函数！)
+    1. Hey! This isn't a regular action! It's a function! I can't give this to the reducer, `so instead I'll invoke it and pass the store's dispatch method to it, so that whenever that side effect completes or the async action resolves, they can use it to dispatch a new action with whatever data they get.` (这句很重要，middlware 里面继续处理 async function，外面依然处理同步函数！)
 
 3. `Thunk`: a function that we can pass to "store.dispatch" if we configure our store with "thunkMiddleware". If we dispatch a thunk, the thunk middleware will invoke the function and pass the store's "dispatch" and "getState" methods to it. Thunks are a desirable place to perform side effects (like AJAX requests) because it de-clutters our components, and because `they make it easy to eventually dispatch other actions when some asynchronous behavior resolves.`(这句很重要！)
 
