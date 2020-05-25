@@ -84,6 +84,7 @@
   ```
 
   2. rootReducer
+
   __`Location: ./robotfriends-redux/src/rootReducer.js`__
 
   ```jsx
@@ -96,6 +97,7 @@
   ```
 
   3. Apply redux to application.
+
   __`Location: ./robotfriends-redux/src/index.js`__
 
   ```jsx
@@ -125,6 +127,7 @@
 - #### Click here: [BACK TO CONTENT](#5.0)
 
   1. TYPES
+
   __`Location: ./robotfriends-redux/src/constants.js`__
 
   ```jsx
@@ -136,6 +139,7 @@
   ```
 
   2. ACTIONS
+
   __`Location: ./robotfriends-redux/src/actions.js`__
 
   ```jsx
@@ -164,6 +168,7 @@
 2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
 
   3. Reducers
+  
   __`Location: ./robotfriends-redux/src/actions.js`__
 
   ```jsx
