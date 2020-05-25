@@ -35,15 +35,15 @@
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-const readFile = (file) => {
-    fs.readFile(file, (err, data) => {
-        console.log(`Breed:${data}`);
-    })
-}
-```
+    const readFile = (file) => {
+        fs.readFile(file, (err, data) => {
+            console.log(`Breed:${data}`);
+        })
+    }
+    ```
 
 #### `Comment:`
 1. `fs.readFile`就是简单的 `async function with callback function` 的例子。`fs.readFile`也是 `Node` 内置的异步读取函数。
@@ -52,61 +52,63 @@ const readFile = (file) => {
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-const readFilePro = file => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(file, (err, data) => {
-            if (err) reject('I could not find the file.');
-            resolve(data);
+    const readFilePro = file => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(file, (err, data) => {
+                if (err) reject('I could not find the file.');
+                resolve(data);
+            })
         })
-    })
-}
-```
+    }
+    ```
 
 #### `Comment:`
 1. 这就是把一个 `async function` 的 `Promise化`，如果这样写：
 
-```js
-const x = readFilePro(`${__dirname}/dog.txt`);
-console.log(x);
-```
+    ```js
+    const x = readFilePro(`${__dirname}/dog.txt`);
+    console.log(x);
+    ```
 
 - 你会得到
-```diff
-+ Promise {<pending>}
-```
+    ```diff
+    + Promise {<pending>}
+    ```
 
 2. 这里有一个很重要的认识，readFilePro 是一个生成 promise 的函数，而 Promise 是一个特定 object。之所以会出现 `pending` 的情况是因为这是一个同步执行的顺序它只检测到这是一个 promise 而没有等它结束就执行下一行代码。当然也有不是 pending 的情况，但是它必须是一个 promise。
 
 3. 其他例子：
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-// 普通定义，high order function 包住一个异步函数。
-const writeFile = (file, message) => {
-    fs.writeFile(file, message, err => {
-        if (err) return console.log(err.message);
-        console.log('Random dog image saved to file!');
-    })
-}
+    // 普通定义，high order function 包住一个异步函数。
 
-// 异步函数 Promise 化。
-const writeFilePro = (file, data) => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(file, data, err => {
-            if (err) reject('I could not write the file.');
-            resolve('success');
+    const writeFile = (file, message) => {
+        fs.writeFile(file, message, err => {
+            if (err) return console.log(err.message);
+            console.log('Random dog image saved to file!');
         })
-    })
-}
-```
+    }
 
-- 为什么要 `Promise` 化，不进行可不可以？
-    1. Promise 化是因为使 callback 方案的代码更容易懂和更容易维护。
-    2. `Promise` 精简代码的最好例子是转化 `Callback hell`，在第三步介绍 `Callback hell`。
-    3. 只有 `async function` 才需要 `Promise化`。
+    // 异步函数 Promise 化。
+
+    const writeFilePro = (file, data) => {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(file, data, err => {
+                if (err) reject('I could not write the file.');
+                resolve('success');
+            })
+        })
+    }
+    ```
+
+    - 为什么要 `Promise` 化，不进行可不可以？
+        1. Promise 化是因为使 callback 方案的代码更容易懂和更容易维护。
+        2. `Promise` 精简代码的最好例子是转化 `Callback hell`，在第三步介绍 `Callback hell`。
+        3. 只有 `async function` 才需要 `Promise化`。
 
 4. 学习 `Promise` 的写法需要清楚语法，需要产出什么，还有包含一个异步动作。
 
@@ -114,34 +116,34 @@ const writeFilePro = (file, data) => {
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-const readFile = (file) => {
-    return fs.readFile(file, (err, data) => {
-        console.log(`Breed:${data}`);
-    })
-}
-
-const x = readFile(`${__dirname}/dog.txt`);
-console.log(x); //---------> undefined，因为 fs.readFile 不返回任何值。
-```
-
-```js
-const fs = require("fs");
-
-const readFilePro = file => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(file, (err, data) => {
-            if (err) reject('I could not find the file.');
-            resolve(data);
+    const readFile = (file) => {
+        return fs.readFile(file, (err, data) => {
+            console.log(`Breed:${data}`);
         })
-    })
-}
+    }
 
-const y = readFilePro(`${__dirname}/dog.txt`);
-console.log(y); //---------> promise
-```
+    const x = readFile(`${__dirname}/dog.txt`);
+    console.log(x); //---------> undefined，因为 fs.readFile 不返回任何值。
+    ```
+
+    ```js
+    const fs = require("fs");
+
+    const readFilePro = file => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(file, (err, data) => {
+                if (err) reject('I could not find the file.');
+                resolve(data);
+            })
+        })
+    }
+
+    const y = readFilePro(`${__dirname}/dog.txt`);
+    console.log(y); //---------> promise
+    ```
 
 #### `Comment:`
 1. 目前而言 async function 在同步模式下是没有返回值，Promise 在同步模式下返回 `Promise {<pending>}`，async function 里面就算是 callback 最后返回的值也不会使用在同步函数之中，因为 callback 是在所有同步函数结束之后才执行的。
@@ -150,27 +152,27 @@ console.log(y); //---------> promise
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const superagent = require("superagent");
+    ```js
+    const superagent = require("superagent");
 
-const example1 = () => {
-    fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
-        console.log(`Breed:${data}`);
+    const example1 = () => {
+        fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
+            console.log(`Breed:${data}`);
 
-        superagent.get(`https://dog.ceo/api/breed/${data}/images/random`).end((err, res) => {
-            if (err) return console.log(err.message);
-            console.log(res.body.message);
-
-            fs.writeFile('dog-img.txt', res.body.message, err => {
+            superagent.get(`https://dog.ceo/api/breed/${data}/images/random`).end((err, res) => {
                 if (err) return console.log(err.message);
-                console.log('Random dog image saved to file!');
+                console.log(res.body.message);
+
+                fs.writeFile('dog-img.txt', res.body.message, err => {
+                    if (err) return console.log(err.message);
+                    console.log('Random dog image saved to file!');
+                })
             })
         })
-    })
-};
+    };
 
-example1();
-```
+    example1();
+    ```
 
 #### `Comment:`
 1. 在 `example1` 中，一共运行了3个异步动作，其中：
@@ -188,47 +190,47 @@ example1();
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const fs = require("fs");
-const superagent = require("superagent");
+    ```js
+    const fs = require("fs");
+    const superagent = require("superagent");
 
-const readFilePro = file => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(file, (err, data) => {
-            if (err) reject({ message: 'I could not find the file.' });
-            resolve(data);
+    const readFilePro = file => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(file, (err, data) => {
+                if (err) reject({ message: 'I could not find the file.' });
+                resolve(data);
+            })
         })
-    })
-}
+    }
 
-const writeFilePro = (file, data) => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(file, data, err => {
-            if (err) reject({ message: 'I could not write the file.' });
-            resolve('success');
+    const writeFilePro = (file, data) => {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(file, data, err => {
+                if (err) reject({ message: 'I could not write the file.' });
+                resolve('success');
+            })
         })
-    })
-}
+    }
 
-const example2 = () => {
-    readFilePro(`${__dirname}/dog.txt`)
-        .then(data => {
-            console.log(`Breed:${data}`);
-            return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`)
-        }).then(res => {
-            console.log(res.body.message);
-            return writeFilePro('dog-img.txt', res.body.message);
-        })
-        .then(() => {
-            console.log('Random dog image saved to file!')
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
-};
+    const example2 = () => {
+        readFilePro(`${__dirname}/dog.txt`)
+            .then(data => {
+                console.log(`Breed:${data}`);
+                return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`)
+            }).then(res => {
+                console.log(res.body.message);
+                return writeFilePro('dog-img.txt', res.body.message);
+            })
+            .then(() => {
+                console.log('Random dog image saved to file!')
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+    };
 
-example2();
-```
+    example2();
+    ```
 
 #### `Comment:`
 1. 在 `example2` 中，一共运行了3个异步动作，其中：
@@ -246,44 +248,46 @@ example2();
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-```js
-const fs = require("fs");
-const superagent = require("superagent");
+    ```js
+    const fs = require("fs");
+    const superagent = require("superagent");
 
-const readFilePro = file => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(file, (err, data) => {
-            if (err) reject({ message: 'I could not find the file.' });
-            resolve(data);
+    const readFilePro = file => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(file, (err, data) => {
+                if (err) reject({ message: 'I could not find the file.' });
+                resolve(data);
+            })
         })
-    })
-}
-
-const writeFilePro = (file, data) => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(file, data, err => {
-            if (err) reject({ message: 'I could not write the file.' });
-            resolve('success');
-        })
-    })
-}
-
-const example3 = async () => {
-    try {
-        // stop the code here and wait for the promise finish. stop ... until
-        const data = await readFilePro(`${__dirname}/dog.txt`); //await 后面跟 promise，之后的代码相当于从这里开始进入了 promise 链。
-        console.log(`Breed:${data}`);
-        const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
-        console.log(res.body.message);
-        await writeFilePro('dog-img.txt', res.body.message);
-        console.log('Random dog image saved to file!');
-    } catch (error) {
-        console.log(error.message);
     }
-};
 
-example3();
-```
+    const writeFilePro = (file, data) => {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(file, data, err => {
+                if (err) reject({ message: 'I could not write the file.' });
+                resolve('success');
+            })
+        })
+    }
+
+    const example3 = async () => {
+        try {
+            // stop the code here and wait for the promise finish. stop ... until
+
+            const data = await readFilePro(`${__dirname}/dog.txt`); //await 后面跟 promise，之后的代码相当于从这里开始进入了 promise 链。
+            console.log(`Breed:${data}`);
+
+            const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+            console.log(res.body.message);
+            await writeFilePro('dog-img.txt', res.body.message);
+            console.log('Random dog image saved to file!');
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    example3();
+    ```
 
 #### `Comment:`
 1. 第一个必须注明的是，这只是一种新的形式去处理`async action/ promise`。`example3`写法更好理解和维护，但是后台执行的原理跟`example1`和`example2`一模一样。其实这里使用的还是处理 promise 的方法，只是形式改变了，底下执行的原理跟原生 promise 一样。
