@@ -162,7 +162,7 @@
   }
   ```
 
-  3. Reducers
+  3. REDUCERS
 
   __`Location: ./robotfriends-redux/src/actions.js`__
 
