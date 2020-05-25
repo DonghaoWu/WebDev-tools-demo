@@ -159,27 +159,28 @@
   onChange={this.handleChange}
   ```
 2. 解说：
-  - 用户输入，引发 `onChange` 对应的函数 `handleChange`;
-  - `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
+  1. 用户输入，引发 `onChange` 对应的函数 `handleChange`;
+  2. `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
 
-  - 执行：
-    ```jsx
-    store.dispatch(writeMessage(evt.target.value));
-    ```
-    先执行：
-    ```jsx
-    writeMessage(evt.target.value);
-    ```
-    实际得到：
-    ```jsx
-    store.dispatch({
-      type: WRITE_MESSAGE,
-      payload: evt.target.value,
-    });
-    ```
+  3. 执行：
+
+  ```jsx
+  store.dispatch(writeMessage(evt.target.value));
+  ```
+  先执行：
+  ```jsx
+  writeMessage(evt.target.value);
+  ```
+  实际得到：
+  ```jsx
+  store.dispatch({
+    type: WRITE_MESSAGE,
+    payload: evt.target.value,
+  });
+  ```
   
 3. dispatch:
-  - 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
+  1. 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
 
   ```jsx
   handleChange = (evt) => {
@@ -190,11 +191,11 @@
   }
   ```
 
-  - 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
+  2. 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
 
-  - 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
+  3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
 
-  - 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
+  4. 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 
@@ -463,7 +464,8 @@
 
 - #### Click here: [BACK TO CONTENT](#6.0)
 
-1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
+1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process:
+
   1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
     a. If it's a function, the store invokes that function immediately and passes the `dispatch` and `getState` methods to it as arguments. Do not move on to step 2.
     b. If it's a regular object, move on to step 2.
