@@ -158,7 +158,7 @@
   // ...
   onChange={this.handleChange}
   ```
-2. 解说：
+2. 解说:
 
     1. 用户输入，引发 `onChange` 对应的函数 `handleChange`;
     2. `onChange` 引发时会产生一个变量，可以命名为 `evt` 或 `event`，这个变量自动注入 `handleChange` 需要的第一个参数中，输入的变量值为 `evt.target.value`。
@@ -181,22 +181,23 @@
     ```
   
 3. dispatch:
-  1. 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
 
-  ```jsx
-  handleChange = (evt) => {
-    store.dispatch({
-      type: WRITE_MESSAGE,
-      payload: evt.target.value,
-    });
-  }
-  ```
+    1. 在这里，`dispatch` 的参数其实是一个 `object`，所以最原始的方法是不用定义 action，而是写成：
 
-  2. 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
+    ```jsx
+    handleChange = (evt) => {
+      store.dispatch({
+        type: WRITE_MESSAGE,
+        payload: evt.target.value,
+      });
+    }
+    ```
 
-  3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
+    2. 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`，这个认识很重要。
 
-  4. 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
+    3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
+
+    4. 在没有 `thunkMiddleware` 的情况下，`dispatch` 的作用只是用来传递一个 `object` 到 `reducer`.
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 
