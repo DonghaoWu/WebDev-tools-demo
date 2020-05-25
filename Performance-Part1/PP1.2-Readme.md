@@ -57,7 +57,7 @@
 
   2. 当然这种情况只对于相对静态的网页而言，相对动态一点的需要马上执行 js 文件的话就可以考虑`普通型`或者`async型`。
 
-  __`Location: ./example1.2/index.html`__
+    __`Location: ./example1.2/index.html`__
 
   ```html
   <!DOCTYPE html>
@@ -372,7 +372,7 @@
 
   1. Above the fold loading. (把次要的 css 文件放在后台下载执行)。
 
-  __`Location: ./example1.2/index.html`__
+    __`Location: ./example1.2/index.html`__
 
   ```html
   <body>
