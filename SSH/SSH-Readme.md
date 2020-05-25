@@ -35,38 +35,38 @@
 
 - #### Click here: [BACK TO CONTENT](#1.0)
 
-A. __`Connect command.`__
+    1. __`Connect command.`__
 
-```bash
-(local) $ ssh root@167.99.146.57  # ip address is from remote server 
+    ```bash
+    (local) $ ssh root@167.99.146.57  # ip address is from remote server 
 
-(remote) $ ls # now you can control the remote server.
-(remote) $ mkdir test
-(remote) $ ls
-```
+    (remote) $ ls # now you can control the remote server.
+    (remote) $ mkdir test
+    (remote) $ ls
+    ```
 
-B. __`Install git in remote server.`__
+    2. __`Install git in remote server.`__
 
-```bash
-(remote) $ sudo apt-get install git
-(remote) $ git clone `ssh-url`  # failed, have not configured ssh public key
-(remote) $ git clone `https-url` # success, but it will always ask you for username and password if you don't finish configure on the remote server.
-```
+    ```bash
+    (remote) $ sudo apt-get install git
+    (remote) $ git clone `ssh-url`  # failed, have not configured ssh public key
+    (remote) $ git clone `https-url` # success, but it will always ask you for username and password if you don't finish configure on the remote server.
+    ```
 
-C. __`Copy some local files and paste them on remote server.`__
+    3. __`Copy some local files and paste them on remote server.`__
 
-```bash
-(local) $ cd ..
-(local) $ mkdir test_folder
-(local) $ cd test_folder 
-(local) $ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
+    ```bash
+    (local) $ cd ..
+    (local) $ mkdir test_folder
+    (local) $ cd test_folder 
+    (local) $ rsync -av . root@167.99.146.57:~/test_folder # (在本地复制文件夹 test_folder 到远程server)
 
-(local) $ ssh root@167.99.146.57
-(remote)$ ls # Check if it is successful
-```
+    (local) $ ssh root@167.99.146.57
+    (remote)$ ls # Check if it is successful
+    ```
 
-#### `Comment:`
-1. 
+    #### `Comment:`
+    1. 
 
 ### <span id="1.2">`Step2: Why is Git always asking for my password?.`</span>
 
@@ -78,100 +78,100 @@ C. __`Copy some local files and paste them on remote server.`__
 
 - You can avoid being prompted for your password by configuring Git to store it for you. There are two ways to do it.
 
-A. __`Solution 1: GitHub HTTPS Caching.`__
+    1. __`Solution 1: GitHub HTTPS Caching.`__
 
-1. Install `osxkeychain`
+        1. Install `osxkeychain`
 
-```bash
-(local) $ git credential-osxkeychain  # Check if the helper is already installed
+        ```bash
+        (local) $ git credential-osxkeychain  # Check if the helper is already installed
 
-(local) $ curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain # Download the helper
+        (local) $ curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain # Download the helper
 
-(local) $ chmod u+x git-credential-osxkeychain # Fix the permissions on the file so it can be run
+        (local) $ chmod u+x git-credential-osxkeychain # Fix the permissions on the file so it can be run
 
-(local) $ sudo mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain" # Move the helper to the path where git is installed
+        (local) $ sudo mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain" # Move the helper to the path where git is installed
 
-(local) $ git config --global credential.helper osxkeychain # Set git to use the osxkeychain credential helper
-```
+        (local) $ git config --global credential.helper osxkeychain # Set git to use the osxkeychain credential helper
+        ```
 
-2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
+        2. Now, any time you do a git push to a GitHub remote configured using an HTTPS link, git will automatically use the password stored in your OS X keychain app.
 
-B. __`Solution 2: GitHub SSH keys.`__
+    2. __`Solution 2: GitHub SSH keys.`__
 
-1. Generate key pairs and copy the content of public key.
+        1. Generate key pairs and copy the content of public key.
 
-```bash
-(local) $ cd .ssh
-(local) $ ls
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub
-(local) $ ssh-add ~/ .ssh/id_rsa
-```
+        ```bash
+        (local) $ cd .ssh
+        (local) $ ls
+        (local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+        (local) $ pbcopy < ~/ .ssh/id_rsa.pub
+        (local) $ ssh-add ~/ .ssh/id_rsa
+        ```
 
-2. Paste the public key in github ssh key setting.
+        2. Paste the public key in github ssh key setting.
 
-<p align="center">
-<img src="../assets/w1.png" width=90%>
-</p>
+        <p align="center">
+        <img src="../assets/w1.png" width=90%>
+        </p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w2.png" width=90%>
-</p>
+        -----------------------------------------------------------------
+        <p align="center">
+        <img src="../assets/w2.png" width=90%>
+        </p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w3.png" width=90%>
-</p>
+        -----------------------------------------------------------------
+        <p align="center">
+        <img src="../assets/w3.png" width=90%>
+        </p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w4.png" width=90%>
-</p>
+        -----------------------------------------------------------------
+        <p align="center">
+        <img src="../assets/w4.png" width=90%>
+        </p>
 
------------------------------------------------------------------
-<p align="center">
-<img src="../assets/w5.png" width=90%>
-</p>
+        -----------------------------------------------------------------
+        <p align="center">
+        <img src="../assets/w5.png" width=90%>
+        </p>
 
-#### `Comment:`
-1. Other ssh comands:
-```bash
-(local) $ ssh-add -l
-(local) $ ssh-add -D
-(local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
-```
+    #### `Comment:`
+    1. Other ssh comands:
+    ```bash
+    (local) $ ssh-add -l
+    (local) $ ssh-add -D
+    (local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
+    ```
 
 ### <span id="1.3">`Step3. Using SSH to connect remote server.`</span>
 
 - #### Click here: [BACK TO CONTENT](#1.0)
 
-1. Generate key pairs locally.
+    1. Generate key pairs locally.
 
-```bash
-(local) $ cd ～/.ssh
-(local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-(local) $ ls   ## (这时就有两个新的文件： id_rsa 和 id_rsa.pub）
-(local) $ pbcopy < ~/ .ssh/id_rsa.pub ## 本地复制一份 public key 的内容
-```
+    ```bash
+    (local) $ cd ～/.ssh
+    (local) $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+    (local) $ ls   ## (这时就有两个新的文件： id_rsa 和 id_rsa.pub）
+    (local) $ pbcopy < ~/ .ssh/id_rsa.pub ## 本地复制一份 public key 的内容
+    ```
 
-2. Paste the content to remote server.
+    2. Paste the content to remote server.
 
-```bash
-(local) $ ssh root@167.99.146.57
-(remote) $ mkdir .ssh
-(remote) $ cd /.ssh
-(remote) $ nano authorized_keys 
-## 输入这个命令之后，进入编辑文件界面， 在编辑文件界面， 先 command + c 
-## 把 public key放到文件里面，然后 command + x 退出编辑界面。
-(remote) $ exit ## 退出远程命令 terminal， logout
-```
+    ```bash
+    (local) $ ssh root@167.99.146.57
+    (remote) $ mkdir .ssh
+    (remote) $ cd /.ssh
+    (remote) $ nano authorized_keys 
+    ## 输入这个命令之后，进入编辑文件界面， 在编辑文件界面， 先 command + c 
+    ## 把 public key放到文件里面，然后 command + x 退出编辑界面。
+    (remote) $ exit ## 退出远程命令 terminal， logout
+    ```
 
-3. Set up the local private key.
+    3. Set up the local private key.
 
-```bash
-(local) $ ssh-add ~/ .ssh/id_rsa ## 设定本地目前生效的唯一 private key。
-```
+    ```bash
+    (local) $ ssh-add ~/ .ssh/id_rsa ## 设定本地目前生效的唯一 private key。
+    ```
 
 ### `Step4 Concept questions.`
 
