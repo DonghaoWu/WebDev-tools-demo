@@ -1,6 +1,6 @@
 # Web development tools (Part 2)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part1.1)
 
@@ -25,7 +25,7 @@
 
 ### <span id="2.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [2.1 Minimize text.](#2.1)
 - [2.2 Minimize images.](#2.2)
@@ -37,7 +37,7 @@
 
 ### <span id="2.1">`Step1: Minimize text`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 A. Tool: Minify.js
 - [https://www.minifier.org/](https://www.minifier.org/)
@@ -57,7 +57,7 @@ A. Tool: Minify.js
 
 ### <span id="2.2">`Step2: Minimize images.`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
 <img src="../assets/w8.png" width=90%>
@@ -98,7 +98,7 @@ __`Location: ./example1.1/index.html`__
 
 ### <span id="2.3">`Step3. Media queries.`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 __`Location: ./example1.1/style.css`__
 
@@ -131,7 +131,7 @@ h1 {
 
 ### <span id="2.4">`Step4. Less trips.`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 __`Location: ./example1.1/index.html`__
 
@@ -209,7 +209,7 @@ __`Location: ./example1.1/index.html`__
 
 ### <span id="2.5">`Step5. Content-delivery api.`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 A. Tool: imgix 
 - [https://www.imgix.com/](https://www.imgix.com/)
@@ -220,11 +220,11 @@ A. Tool: imgix
 
 ### <span id="2.6">`Step6 Concept questions.`</span>
 
-#### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#2.0)
 
 #### `A. `
 
 
-#### Click here: [BACK TO CONTENT](#2.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 

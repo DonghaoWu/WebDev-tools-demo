@@ -1,6 +1,6 @@
 # Web development tools (Part 6)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Thunk)
 
@@ -38,7 +38,7 @@
 
 ### <span id="6.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [6.1 How to use `dispatch`?](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
@@ -50,7 +50,7 @@
 
 ### <span id="6.1">`Step1: How to use "dispatch"?`</span>
 
-#### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#6.0)
 
 - Edition 1:
   1. Set up:
@@ -198,7 +198,7 @@ onChange={this.handleChange}
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 
-#### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#6.0)
 
 - Edition 2:
   1. Set up:
@@ -331,7 +331,7 @@ componentDidMount() {
 
 ### <span id="6.3">`Step3: How to set up thunk middleware?`</span>
 
-#### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#6.0)
 
 - Import and apply the middleware.
 ```jsx
@@ -402,7 +402,7 @@ export default createStore(reducer, applyMiddleware(thunkMiddleware));
 
 ### <span id="6.4">`Step4: My understanding.`</span>
 
-#### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#6.0)
 
 1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
@@ -458,7 +458,7 @@ export const fetchMessages = () => {
 
 ### <span id="6.5">`Step5: More materials.`</span>
 
-#### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO CONTENT](#6.0)
 
 1. With thunkMiddleware, whenever we use store.dispatch, it will be a three-step process
   1. The store checks to see if the thing we passed to `dispatch` is a regular object or a function. 
@@ -477,5 +477,5 @@ export const fetchMessages = () => {
 4. Within our thunk function, we can perform all the side effects and AJAX we want. When we're done performing side effects, it is very likely that we will end up dispatching another action (or even another thunk), and the process repeats.
 
 
-#### Click here: [BACK TO CONTENT](#6.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#6.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

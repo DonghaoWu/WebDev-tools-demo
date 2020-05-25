@@ -1,6 +1,6 @@
 # Web development tools (Part 10)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.1)
 
@@ -27,7 +27,7 @@
 
 ### <span id="10.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [10.1 Optimize target project.](#10.1)
 - [10.2 Solution1: Import file when is needed and put it into state.](#10.2)
@@ -38,7 +38,7 @@
 
 ### <span id="10.1">`Step1: Optimize target project`</span>
 
-#### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#10.0)
 
 - __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
 
@@ -189,7 +189,7 @@ export default App;
 
 ### <span id="10.2">`Step2: Solution1: Import file when is needed and put it into state.`</span>
 
-#### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#10.0)
 
 - __`Location: ./example1/code-splitting/editon2/App.js`__
 
@@ -282,7 +282,7 @@ export default App;
 
 ### <span id="10.3">`Step3: Solution2: Using high order function to generate async Component.`</span>
 
-#### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#10.0)
 
 - __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
 
@@ -392,7 +392,7 @@ return Component ? <Component {...this.props} /> : null
 
 ### <span id="10.4">`Step4: Solution3: React new feature - React.lazy.`</span>
 
-#### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO CONTENT](#10.0)
 
 #### `注意：这个方案需要至少 react 版本：16.10.2`
 
@@ -466,8 +466,8 @@ export default App;
 
 ------------------------------------------------------------
 
-#### Click here: [BACK TO CONTENT](#10.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#10.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

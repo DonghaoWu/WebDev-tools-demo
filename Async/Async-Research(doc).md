@@ -1,6 +1,6 @@
 # Web development tools (Part 8)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Async - Research "doc")
 
@@ -17,7 +17,7 @@
 
 ### <span id="8.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [8.1 Terminologies.](#8.1)
 - [8.2 My understanding about async.](#8.2)
@@ -32,7 +32,7 @@
 
 ### <span id="8.1">`Step1: Terminologies.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
 ```diff
 + Ajax
@@ -57,7 +57,7 @@
 
 ### <span id="8.2">`Step2: My understanding about async.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. `JavaScript executes code in a single thread, which makes it blocking. `
 
@@ -84,7 +84,7 @@
 
 ### <span id="8.3">`Step3: About callback.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. How does callback work with 'asynchronous non-blocking I/O model'?
         1. That is because a JavaScript program is single threaded and all code is executed in a sequence, not in parallel. In JavaScript this is handled by using what is called an `“asynchronous non-blocking I/O model”.` What that means is that while the execution of JavaScript is blocking, `I/O operations are not. `I/O operations can be fetching data over the internet with Ajax or over WebSocket connections, querying data from a database such as MongoDB or accessing the filesystem with the NodeJs “fs” module. All these kind of operations are done in parallel to the execution of your code and it is not JavaScript that does these operations; to put it simply, the underlying engine does it.`（介绍 asynchronous non-blocking I/O model ）`
@@ -105,7 +105,7 @@
 
 ### <span id="8.4">`Step4: About Promise.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. Why Promise?
         1. A promise is an `object` that wraps an asynchronous operation and notifies when it’s done. This sounds exactly like callbacks, but the important differences are in the usage of Promises. `Instead of providing a callback, a promise has its own methods`（这里的意思是无论是 callback 还是 promise 的形式，目的都是为了使一连串的 asynchronous operation 串联起来，比如说将一些有延迟或者需要等候的动作分先后顺序地执行。）上面提到的事实上 promise 自带的 method 跟 callback 是差不多的。
@@ -184,7 +184,7 @@
 
 ### <span id="8.5">`Step5: About event loop.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. What type of queue are in event loop?
         - Within the Event Loop, there are actually two types of queues: the (macro)task queue (or just called the task queue), and the microtask queue. The (macro)task queue is for (macro)tasks and the microtask queue is for microtasks.
@@ -229,7 +229,7 @@
 
 ### <span id="8.6">`Step6: Things you should know before using promise.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. One important side note here is that “someAsyncOperation(someParams)” is not a Promise itself but a function that returns a Promise.`(这个纠正了我刚开始时的认识)`
 
@@ -256,7 +256,7 @@
 
 ### <span id="8.7">`Step7: About async/await.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [BACK TO CONTENT](#8.0)
 
     1. What is the pros to use async/await?
         1. We can create async functions that implicitly return a promise. `这是个很重要的认识，所有用 async 定义的函数都是返回一个 promise`
@@ -311,10 +311,10 @@
 
 ### <span id="8.8">`Step8: More about async function.`</span>
 
-#### Click here: [BACK TO CONTENT](#8.0)
-#### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
+- #### Click here: [BACK TO CONTENT](#8.0)
+- #### Click here: [Part7: Async-Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md)
 
-#### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
+- #### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
 
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

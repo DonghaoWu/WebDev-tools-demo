@@ -1,6 +1,6 @@
 # Web development tools (Part 4)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(React)
 
@@ -84,7 +84,7 @@ export default App;
 
 ### <span id="4.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [4.1 About `create-react-app` command.](#4.1)
 - [4.2 Class component & Functional component.](#4.2)
@@ -99,7 +99,7 @@ export default App;
 
 ### <span id="4.1">`Step1: About create-react-app command.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 - 旧版操作
 ```bash
@@ -145,7 +145,7 @@ $ npx create-react-app YOUR-APP-NAME
 
 ### <span id="4.2">`Step2: Class component & Functional component.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 __`Location: ./robotfriends/src/App.js`__
 
@@ -229,7 +229,7 @@ render(){
 
 ### <span id="4.3">`Step3: Props & state.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 - 从 parent component 向 child component 传递数据。
 
@@ -289,7 +289,7 @@ ReactDOM.render(<Hello greeting={'Hello'} />, document.getElementById('root'))
 
 ### <span id="4.4">`Step4: <Fragment> & Wrap component.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 A. __为什么要使用 `<Fragment>`？__
 
@@ -401,7 +401,7 @@ export default Scroll;
 
 ### <span id="4.5">`Step5: life-cycle.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 __`Location: ./robotfriends/src/containers/App.js`__
 
@@ -432,7 +432,7 @@ componentDidMount = async () => {
 
 ### <span id="4.6">`Step6: React error boundary.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 __`Location: ./robotfriends/src/components/ErrorBoundary.js`__
 
@@ -520,7 +520,7 @@ export default CardList;
 
 ### <span id="4.7">`Step7: React syntax.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 1. 必须要写 `import React from 'react';`才能使用 JSX 语句。
 
@@ -661,7 +661,7 @@ export default SearchBox;
 
 ### <span id="4.8">`Step8: Deploy React app in Github.`</span>
 
-#### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 - Link: [https://create-react-app.dev/docs/deployment/](https://create-react-app.dev/docs/deployment/)
 
@@ -673,5 +673,5 @@ export default SearchBox;
 <img src="../assets/w22.jpeg" width=90%>
 </p>
 
-#### Click here: [BACK TO CONTENT](#4.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#4.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

@@ -1,6 +1,6 @@
 # Web development tools (Part 12)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.3)
 
@@ -30,7 +30,7 @@
 
 ### <span id="12.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [12.1 HTTPS.](#12.1)
 - [12.2 App manifest.](#12.2)
@@ -45,7 +45,7 @@
 
 ### <span id="12.1">`Step1: HTTPS.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 - Why `Https`:
     - secure and encryption
@@ -63,7 +63,7 @@
 
 ### <span id="12.2">`Step2: App manifest.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 - Why `App manifest`:
     - web app icon
@@ -82,7 +82,7 @@
 
 ### <span id="12.3">`Step3: Service Worker.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 - Why `Service Worker`:
     - background worker, offline experierce.
@@ -107,7 +107,7 @@
 
 ### <span id="12.4">`Step4: Deploy & update.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 1. Install gh-pages
 
@@ -206,7 +206,7 @@
 
 ### <span id="12.5">`Step5: PWA Part 1 - HTTPS, SEO & Accessibility.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 1. `HTTPS:`github deploy build in https.
 
@@ -295,7 +295,7 @@
 
 ### <span id="12.6">`Step5: PWA Part 2 - Favicon.`</span>
 
-#### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO CONTENT](#12.0)
 
 1. Generate a favicon.
 
@@ -393,8 +393,8 @@
 #### `Comment:`
 1. 
 
-#### Click here: [BACK TO CONTENT](#12.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#12.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
 

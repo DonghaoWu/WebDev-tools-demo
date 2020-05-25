@@ -1,6 +1,6 @@
 # Web development tools (Part 5)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Redux)
 
@@ -38,7 +38,7 @@
 
 ### <span id="5.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [5.1 Install the dependencies.](#5.1)
 - [5.2 Set up store, combineReducers and redux middleware.](#5.2)
@@ -50,7 +50,7 @@
 
 ### <span id="5.1">`Step1: Install the dependencies.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 ```bash
 $ npm i redux
@@ -64,7 +64,7 @@ $ npm i redux-thunk
 
 ### <span id="5.2">`Step2: Set up store, combineReducers and redux-middleware.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 - store and redux middleware.
 
@@ -122,7 +122,7 @@ registerServiceWorker();
 
 ### <span id="5.3">`Step3: Set up types, actions, reducers.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 - TYPES
 __`Location: ./robotfriends-redux/src/constants.js`__
@@ -209,7 +209,7 @@ export const requestRobotsReducer = (state = initialStateRobots, action = {}) =>
 
 ### <span id="5.4">`Step4: Connect state and method to components and use the props and methods.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 - 主要代码：
 ```jsx
@@ -265,7 +265,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 ### <span id="5.5">`Step5: Create redux async fucntion.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 - 下面具体来分析 `dispatch` 的使用。
 
@@ -363,7 +363,7 @@ componentDidMount() {
 
 ### <span id="5.6">`Step6: More materials.`</span>
 
-#### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO CONTENT](#5.0)
 
 1. GLOSSARY OF TERMS
     1. Action: an object that has `at least a "type" field`, and any other fields needed to calculate the change to the state
@@ -383,5 +383,5 @@ componentDidMount() {
 <img src="../assets/w24.png" width=90%>
 </p>
 
-#### Click here: [BACK TO CONTENT](#5.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#5.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

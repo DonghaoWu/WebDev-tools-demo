@@ -1,6 +1,6 @@
 # Web development tools (Part 1)
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Github`(SSH)
 
@@ -23,7 +23,7 @@
 
 ### <span id="1.0">`Brief Contents & codes position`</span>
 
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [1.1 How to connect remote server?](#1.1)
 - [1.2 Why is Git always asking for my password?](#1.2)
@@ -33,7 +33,7 @@
 
 ### <span id="1.1">`Step1: How to connect remote server?`</span>
 
-#### Click here: [BACK TO CONTENT](#1.0)
+- #### Click here: [BACK TO CONTENT](#1.0)
 
     1. __`Connect command.`__
 
@@ -65,12 +65,12 @@
     (remote)$ ls # Check if it is successful
     ```
 
-    #### `Comment:`
-    1. 
+#### `Comment:`
+1. 
 
 ### <span id="1.2">`Step2: Why is Git always asking for my password?.`</span>
 
-#### Click here: [BACK TO CONTENT](#1.0)
+- #### Click here: [BACK TO CONTENT](#1.0)
 
     - If Git prompts you for a username and password every time you try to interact with GitHub, you're probably using the HTTPS clone URL for your repository.
 
@@ -134,17 +134,17 @@
         <img src="../assets/w5.png" width=90%>
         </p>
 
-    #### `Comment:`
-    1. Other ssh comands:
-    ```bash
-    (local) $ ssh-add -l
-    (local) $ ssh-add -D
-    (local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
-    ```
+#### `Comment:`
+1. Other ssh comands:
+```bash
+(local) $ ssh-add -l
+(local) $ ssh-add -D
+(local) $ ssh-add ~/ .ssh/id_rsa  ## 本地操作 private key 命令
+```
 
 ### <span id="1.3">`Step3. Using SSH to connect remote server.`</span>
 
-#### Click here: [BACK TO CONTENT](#1.0)
+- #### Click here: [BACK TO CONTENT](#1.0)
 
     1. Generate key pairs locally.
 
@@ -216,6 +216,6 @@
 
 #### `D. 把本地 public key 放在 remote server的动作，可以保证每当 remote 传送文件到本地的时候都能通过，那么时候也需要在 remote 生成一个 public key，保证本地可以传送文件到 remote?`
 
-#### Click here: [BACK TO CONTENT](#1.0)
-#### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO CONTENT](#1.0)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
