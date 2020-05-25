@@ -435,7 +435,7 @@
   ```
 
 #### `Comment:`
-1. Load Scripts asynchronously. 具体使用规则参考 `Step6`。
+1. Load Scripts asynchronously. 具体使用规则参考 [STEP5](#3.5)。
 2. Defer Loading of Scripts.
 3. Minimize DOM manipulation.
 4. Avoid long running JavaScript. (举例，有些 JS 按钮功能会阻止整个加载过程。)
