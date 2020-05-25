@@ -439,7 +439,7 @@
 
 5. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
 
-  1. 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
+    1. 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
 
     ```js
     const fetchMessages = () => {
@@ -451,7 +451,7 @@
     }
     ```
 
-  2. 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
+    2. 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
 
     ```js
     export const fetchMessages = () => {
