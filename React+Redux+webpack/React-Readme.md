@@ -99,18 +99,18 @@
 - #### Click here: [BACK TO CONTENT](#4.0)
 
 - 旧版操作
-```bash
-$ sudo npm install -g create-react-app # only run once.
+    ```bash
+    $ sudo npm install -g create-react-app # only run once.
 
-$ create-react-app YOUR-APP-NAME
-$ cd YOUR-APP-NAME
-$ npm start
-```
+    $ create-react-app YOUR-APP-NAME
+    $ cd YOUR-APP-NAME
+    $ npm start
+    ```
 
 - 新版操作
-```bash
-$ npx create-react-app YOUR-APP-NAME
-```
+    ```bash
+    $ npx create-react-app YOUR-APP-NAME
+    ```
 
 - 升级 `create-react-app` 方法：
     1. 手动修改：
@@ -239,9 +239,9 @@ render(){
 - 在 child component 接收数据。
 
     ```jsx
-        { this.props.greeting } // class component
+    { this.props.greeting } // class component
 
-        { props.greeting } // functional component
+    { props.greeting } // functional component
     ```
 
 - 例子：
@@ -366,29 +366,29 @@ render(){
 
     __`Location: ./robotfriends/src/containers/App.js`__
 
-        ```jsx
-        import Scroll from 'Scroll';
+    ```jsx
+    import Scroll from 'Scroll';
 
-        <Scroll>
-            <CardList robots={filterdRobots} />
-        </Scroll>
-        ```
+    <Scroll>
+        <CardList robots={filterdRobots} />
+    </Scroll>
+    ```
 
     __`Location: ./robotfriends/src/components/Scoll.js`__
 
-        ```jsx
-        import React from 'react';
+    ```jsx
+    import React from 'react';
 
-        const Scroll = (props) => {
-            return (
-                <div style={{ overflow: 'scroll', border: '5px solid black', height: '800px' }}>
-                {props.children}
-                </div>
-            );
-        };
+    const Scroll = (props) => {
+        return (
+            <div style={{ overflow: 'scroll', border: '5px solid black', height: '800px' }}>
+            {props.children}
+            </div>
+        );
+    };
 
-        export default Scroll;
-        ```
+    export default Scroll;
+    ```
 
     - 效果展示：
 
