@@ -85,15 +85,16 @@
   -------------------------------------------------------------
 
 #### `Comment:`
-1.  - JPG: photos,complex and useful colors
+1. 分类：
+    - JPG: photos,complex and useful colors
     - SVG: logo, 但可放大缩小而不影响清晰度
     - PNG: logo
     - Gif: 小动图
 
-- free tools: 1. JPEG-optimizer website
+2. free tools: 1. JPEG-optimizer website
             2. TinyPNG
 
-- Always lower jpeg quality 30-60%
+3. Always lower jpeg quality 30-60%
 
 
 ### <span id="2.3">`Step3. Media queries.`</span>
