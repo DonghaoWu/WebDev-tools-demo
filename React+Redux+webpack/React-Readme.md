@@ -39,11 +39,12 @@
 
         componentDidMount = async () => {
             try {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-            const robots = response.data;
-            this.setState(this.setState({ robots: robots }));
-            } catch (error) {
-            console.log(error);
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+                const robots = response.data;
+                this.setState(this.setState({ robots: robots }));
+            }
+            catch (error) {
+                console.log(error);
             }
             // fetch('https://jsonplaceholder.typicode.com/users')
             //   .then(response => response.json())
