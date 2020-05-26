@@ -379,12 +379,14 @@
 2. 5月16日记录：目前来看，方案二是对方案一的函数功能打包。
 3. 难点语句 - `可镶嵌组件`
 
-  ```js
-  //返回一个可接受 props 的组件。
-  return Component ? <Component {...this.props} /> : null
-  // 应用
-  <AsyncPage3 onRouteChange={this.onRouteChange} />
-  ```
+    ```js
+    //返回一个可接受 props 的组件。
+
+    return Component ? <Component {...this.props} /> : null
+    // 应用
+
+    <AsyncPage3 onRouteChange={this.onRouteChange} />
+    ```
 
 4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
 5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
