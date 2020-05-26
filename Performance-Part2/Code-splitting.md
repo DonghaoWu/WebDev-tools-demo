@@ -191,68 +191,68 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/editon2/App.js`__
+  - __`Location: ./example1/code-splitting/editon2/App.js`__
 
-```js
-import React, { Component } from 'react'
-import './App.css';
+  ```js
+  import React, { Component } from 'react'
+  import './App.css';
 
-import Page1 from './Components/Page1';
+  import Page1 from './Components/Page1';
 
-export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      route: 'page1',
-      component: null,
+  export class App extends Component {
+    constructor() {
+      super();
+      this.state = {
+        route: 'page1',
+        component: null,
+      }
+    }
+
+    onRouteChange = (route) => {
+      if (route === 'page1') {
+        this.setState({ route: route })
+      } else if (route === 'page2') {
+        import('./Components/Page2').then((Page2) => {
+          this.setState({ route: route, component: Page2.default })
+        })
+      } else if (route === 'page3') {
+        import('./Components/Page3').then((Page3) => {
+          this.setState({ route: route, component: Page3.default })
+        })
+      }
+    }
+
+    render() {
+      const { route } = this.state;
+      if (route === 'page1') {
+        return <Page1 onRouteChange={this.onRouteChange} />
+      }
+      else {
+        return <this.state.component onRouteChange={this.onRouteChange} />
+      }
     }
   }
 
-  onRouteChange = (route) => {
-    if (route === 'page1') {
-      this.setState({ route: route })
-    } else if (route === 'page2') {
-      import('./Components/Page2').then((Page2) => {
-        this.setState({ route: route, component: Page2.default })
-      })
-    } else if (route === 'page3') {
-      import('./Components/Page3').then((Page3) => {
-        this.setState({ route: route, component: Page3.default })
-      })
-    }
-  }
+  export default App;
+  ```
 
-  render() {
-    const { route } = this.state;
-    if (route === 'page1') {
-      return <Page1 onRouteChange={this.onRouteChange} />
-    }
-    else {
-      return <this.state.component onRouteChange={this.onRouteChange} />
-    }
-  }
-}
+  - __`Result`__:
 
-export default App;
-```
-
-- __`Result`__:
-
-<p align="center">
-<img src="../assets/p10-3.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-3.png" width=90%>
+  </p>
 
 ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p10-4.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-4.png" width=90%>
+  </p>
 
 ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p10-5.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-5.png" width=90%>
+  </p>
 
 ----------------------------------------------------------------------------
 
@@ -262,21 +262,21 @@ export default App;
 3. 这样子做可以加快主页的加载，暂时没有发现屏闪（5/16 更新）。
 4. 关键语句：
 
-```js
-  constructor() {
-    super();
-    this.state = {
-      route: 'page1',
-      component: null,
+  ```js
+    constructor() {
+      super();
+      this.state = {
+        route: 'page1',
+        component: null,
+      }
     }
-  }
-//...
-      import('./Components/Page2').then((Page2) => {
-        this.setState({ route: route, component: Page2.default })
-      })
-//...
-      return <this.state.component onRouteChange={this.onRouteChange} />
-```
+  //...
+        import('./Components/Page2').then((Page2) => {
+          this.setState({ route: route, component: Page2.default })
+        })
+  //...
+        return <this.state.component onRouteChange={this.onRouteChange} />
+  ```
 ----------------------------------------------------------------------------
 
 
@@ -284,107 +284,107 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
+  - __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
 
-```js
-import React, { Component } from 'react';
+  ```js
+  import React, { Component } from 'react';
 
-export default function asyncComponent(importComponent) {
-    class AsyncComponent extends Component {
-        constructor() {
-            super();
-            this.state = {
-                component: null,
-            }
-        }
+  export default function asyncComponent(importComponent) {
+      class AsyncComponent extends Component {
+          constructor() {
+              super();
+              this.state = {
+                  component: null,
+              }
+          }
 
-        async componentDidMount() {
-            const component = await importComponent();
-            this.setState({
-                component: component.default,
-            })
-        }
+          async componentDidMount() {
+              const component = await importComponent();
+              this.setState({
+                  component: component.default,
+              })
+          }
 
-        render() {
-            const Component = this.state.component;
-            return Component ? <Component {...this.props} /> : null
-        }
+          render() {
+              const Component = this.state.component;
+              return Component ? <Component {...this.props} /> : null
+          }
+      }
+      return AsyncComponent;
+  }
+  ```
+
+  - __`Location: ./example1/code-splitting/edtion2/App.js`__
+
+  ```js
+  import React, { Component } from 'react'
+  import './App.css';
+
+  import Page1 from './Components/Page1';
+  import asyncComponent from './Components/AsyncComponent';
+
+  export class App extends Component {
+    constructor() {
+      super();
+      this.state = {
+        route: 'page1',
+      }
     }
-    return AsyncComponent;
-}
-```
 
-- __`Location: ./example1/code-splitting/edtion2/App.js`__
+    onRouteChange = (route) => {
+      this.setState({ route: route })
+    }
 
-```js
-import React, { Component } from 'react'
-import './App.css';
-
-import Page1 from './Components/Page1';
-import asyncComponent from './Components/AsyncComponent';
-
-export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      route: 'page1',
+    render() {
+      const { route } = this.state;
+      if (route === 'page1') {
+        return <Page1 onRouteChange={this.onRouteChange} />
+      }
+      else if (route === 'page2') {
+        const AsyncPage2 = asyncComponent(() => import('./Components/Page2'));
+        return <AsyncPage2 onRouteChange={this.onRouteChange} />
+      }
+      else if (route === 'page3') {
+        const AsyncPage3 = asyncComponent(() => import('./Components/Page3'));
+        return <AsyncPage3 onRouteChange={this.onRouteChange} />
+      }
     }
   }
 
-  onRouteChange = (route) => {
-    this.setState({ route: route })
-  }
+  export default App;
+  ```
 
-  render() {
-    const { route } = this.state;
-    if (route === 'page1') {
-      return <Page1 onRouteChange={this.onRouteChange} />
-    }
-    else if (route === 'page2') {
-      const AsyncPage2 = asyncComponent(() => import('./Components/Page2'));
-      return <AsyncPage2 onRouteChange={this.onRouteChange} />
-    }
-    else if (route === 'page3') {
-      const AsyncPage3 = asyncComponent(() => import('./Components/Page3'));
-      return <AsyncPage3 onRouteChange={this.onRouteChange} />
-    }
-  }
-}
+  - __`Result`__:
 
-export default App;
-```
+  <p align="center">
+  <img src="../assets/p10-6.png" width=90%>
+  </p>
 
-- __`Result`__:
+  ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p10-6.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-7.png" width=90%>
+  </p>
 
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
-<p align="center">
-<img src="../assets/p10-7.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-8.png" width=90%>
+  </p>
 
-----------------------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/p10-8.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
 
 #### `Comment:`
 1. 这个方案会带来屏闪，也只屏闪一次。
 2. 5月16日记录：目前来看，方案二是对方案一的函数功能打包。
 3. 难点语句 - `可镶嵌组件`
 
-```js
-//返回一个可接受 props 的组件。
-return Component ? <Component {...this.props} /> : null
-// 应用
-<AsyncPage3 onRouteChange={this.onRouteChange} />
-```
+  ```js
+  //返回一个可接受 props 的组件。
+  return Component ? <Component {...this.props} /> : null
+  // 应用
+  <AsyncPage3 onRouteChange={this.onRouteChange} />
+  ```
 
 4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
 5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
@@ -396,55 +396,55 @@ return Component ? <Component {...this.props} /> : null
 
 #### `注意：这个方案需要至少 react 版本：16.10.2`
 
-- __`Location: ./example1/code-splitting/edtion3/App.js`__
+  - __`Location: ./example1/code-splitting/edtion3/App.js`__
 
-```js
-import React, { Component, Suspense } from 'react'
-import './App.css';
+  ```js
+  import React, { Component, Suspense } from 'react'
+  import './App.css';
 
-import Page1 from './Components/Page1';
-const LazyPage2 = React.lazy(() => import('./Components/Page2'));
-const LazyPage3 = React.lazy(() => import('./Components/Page3'));
+  import Page1 from './Components/Page1';
+  const LazyPage2 = React.lazy(() => import('./Components/Page2'));
+  const LazyPage3 = React.lazy(() => import('./Components/Page3'));
 
-export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      route: 'page1',
+  export class App extends Component {
+    constructor() {
+      super();
+      this.state = {
+        route: 'page1',
+      }
+    }
+
+    onRouteChange = (route) => {
+      this.setState({ route: route })
+    }
+
+    render() {
+      const { route } = this.state;
+      if (route === 'page1') {
+        return <Page1 onRouteChange={this.onRouteChange} />
+      }
+      else if (route === 'page2') {
+        return (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyPage2 onRouteChange={this.onRouteChange} />
+          </Suspense>)
+      }
+      else if (route === 'page3') {
+        return (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyPage3 onRouteChange={this.onRouteChange} />
+          </Suspense>)
+      }
     }
   }
 
-  onRouteChange = (route) => {
-    this.setState({ route: route })
-  }
+  export default App;
+  ```
+  - __`Result`__:
 
-  render() {
-    const { route } = this.state;
-    if (route === 'page1') {
-      return <Page1 onRouteChange={this.onRouteChange} />
-    }
-    else if (route === 'page2') {
-      return (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LazyPage2 onRouteChange={this.onRouteChange} />
-        </Suspense>)
-    }
-    else if (route === 'page3') {
-      return (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LazyPage3 onRouteChange={this.onRouteChange} />
-        </Suspense>)
-    }
-  }
-}
-
-export default App;
-```
-- __`Result`__:
-
-<p align="center">
-<img src="../assets/p10-9.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-9.png" width=90%>
+  </p>
 
 ----------------------------------------------------------------------------
 
