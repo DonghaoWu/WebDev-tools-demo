@@ -40,149 +40,149 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-- __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
+  - __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
 
-```js
-import React from 'react'
-import logo from '../logo.svg';
+  ```js
+  import React from 'react'
+  import logo from '../logo.svg';
 
-function Page1({ onRouteChange }) {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-        </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-        </a>
-            </header>
-            <button className='disable'>Page1</button>
-            <button onClick={() => onRouteChange('page2')}>Page2</button>
-            <button onClick={() => onRouteChange('page3')}>Page3</button>
-        </div>
-    )
-}
+  function Page1({ onRouteChange }) {
+      return (
+          <div className="App">
+              <header className="App-header">
+                  <img src={logo} className="App-logo" alt="logo" />
+                  <p>
+                      Edit <code>src/App.js</code> and save to reload.
+          </p>
+                  <a
+                      className="App-link"
+                      href="https://reactjs.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                      Learn React
+          </a>
+              </header>
+              <button className='disable'>Page1</button>
+              <button onClick={() => onRouteChange('page2')}>Page2</button>
+              <button onClick={() => onRouteChange('page3')}>Page3</button>
+          </div>
+      )
+  }
 
-export default Page1;
-```
+  export default Page1;
+  ```
 
-- __`Location: ./example1/code-splitting/src/edition1/Page2.js`__
+  - __`Location: ./example1/code-splitting/src/edition1/Page2.js`__
 
-```js
-import React from 'react';
-import logo from '../logo.svg';
+  ```js
+  import React from 'react';
+  import logo from '../logo.svg';
 
-function Page2({ onRouteChange }) {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-        </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-        </a>
-            </header>
-            <button onClick={() => onRouteChange('page1')}>Page1</button>
-            <button className='disable'>Page2</button>
-            <button onClick={() => onRouteChange('page3')}>Page3</button>
-        </div>
-    )
-}
+  function Page2({ onRouteChange }) {
+      return (
+          <div className="App">
+              <header className="App-header">
+                  <img src={logo} className="App-logo" alt="logo" />
+                  <p>
+                      Edit <code>src/App.js</code> and save to reload.
+          </p>
+                  <a
+                      className="App-link"
+                      href="https://reactjs.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                      Learn React
+          </a>
+              </header>
+              <button onClick={() => onRouteChange('page1')}>Page1</button>
+              <button className='disable'>Page2</button>
+              <button onClick={() => onRouteChange('page3')}>Page3</button>
+          </div>
+      )
+  }
 
-export default Page2;
-```
+  export default Page2;
+  ```
 
-- __`Location: ./example1/code-splitting/src/edition1/Page3.js`__
+  - __`Location: ./example1/code-splitting/src/edition1/Page3.js`__
 
-```js
-import React from 'react';
-import logo from '../logo.svg';
+  ```js
+  import React from 'react';
+  import logo from '../logo.svg';
 
-function Page3({ onRouteChange }) {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-        </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-        </a>
-            </header>
-            <button onClick={() => onRouteChange('page1')}>Page1</button>
-            <button onClick={() => onRouteChange('page2')}>Page2</button>
-            <button className='disable'>Page3</button>
-        </div>
-    )
-}
+  function Page3({ onRouteChange }) {
+      return (
+          <div className="App">
+              <header className="App-header">
+                  <img src={logo} className="App-logo" alt="logo" />
+                  <p>
+                      Edit <code>src/App.js</code> and save to reload.
+          </p>
+                  <a
+                      className="App-link"
+                      href="https://reactjs.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                      Learn React
+          </a>
+              </header>
+              <button onClick={() => onRouteChange('page1')}>Page1</button>
+              <button onClick={() => onRouteChange('page2')}>Page2</button>
+              <button className='disable'>Page3</button>
+          </div>
+      )
+  }
 
-export default Page3;
-```
+  export default Page3;
+  ```
 
-- __`Location: ./example1/code-splitting/editon1/App.js`__
+  - __`Location: ./example1/code-splitting/editon1/App.js`__
 
-```js
-import React, { Component } from 'react'
-import './App.css';
+  ```js
+  import React, { Component } from 'react'
+  import './App.css';
 
-import Page1 from './Components/Page1';
-import Page2 from './Components/Page2';
-import Page3 from './Components/Page3';
+  import Page1 from './Components/Page1';
+  import Page2 from './Components/Page2';
+  import Page3 from './Components/Page3';
 
-export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      route: 'page1',
+  export class App extends Component {
+    constructor() {
+      super();
+      this.state = {
+        route: 'page1',
+      }
+    }
+
+    onRouteChange = (route) => {
+      this.setState({ route: route })
+    }
+
+    render() {
+      const { route } = this.state;
+      if (route === 'page1') {
+        return <Page1 onRouteChange={this.onRouteChange} />
+      }
+      else if (route === 'page2') {
+        return <Page2 onRouteChange={this.onRouteChange} />
+      }
+      else if (route === 'page3') {
+        return <Page3 onRouteChange={this.onRouteChange} />
+      }
     }
   }
 
-  onRouteChange = (route) => {
-    this.setState({ route: route })
-  }
+  export default App;
+  ```
 
-  render() {
-    const { route } = this.state;
-    if (route === 'page1') {
-      return <Page1 onRouteChange={this.onRouteChange} />
-    }
-    else if (route === 'page2') {
-      return <Page2 onRouteChange={this.onRouteChange} />
-    }
-    else if (route === 'page3') {
-      return <Page3 onRouteChange={this.onRouteChange} />
-    }
-  }
-}
+  - __`Result`__:
 
-export default App;
-```
-
-- __`Result`__:
-
-<p align="center">
-<img src="../assets/p10-2.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p10-2.png" width=90%>
+  </p>
 
 #### `Comment:`
 1. All js file have been loaded in bundle.js
