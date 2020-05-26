@@ -39,89 +39,91 @@
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./Performance2.2/edition2/App.js`__
+    - __`Location: ./Performance2.2/edition2/App.js`__
 
-```js
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { setSearchField, requestRobots } from '../actions';
+    ```js
+    import React, { Component } from 'react';
+    import { connect } from 'react-redux';
+    import { setSearchField, requestRobots } from '../actions';
 
-import CardList from '../components/CardList';
-import SearchBox from '../components/SearchBox';
-import Scroll from '../components/Scroll';
-import ErrorBoundry from '../components/ErrorBoundry';
-import Header from '../components/Header';
+    import CardList from '../components/CardList';
+    import SearchBox from '../components/SearchBox';
+    import Scroll from '../components/Scroll';
+    import ErrorBoundry from '../components/ErrorBoundry';
+    import Header from '../components/Header';
 
-import './App.css';
+    import './App.css';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onRequestRobots();
-  }
-
-  render() {
-    const { robots, searchField, onSearchChange, isPending } = this.props;
-    const filteredRobots = robots.filter(robot => {
-      return robot.name.toLowerCase().includes(searchField.toLowerCase());
-    })
-    return (
-      <div className='tc'>
-        <Header />
-        <SearchBox searchChange={onSearchChange} />
-        <Scroll>
-          {isPending ? <h1>Loading</h1> :
-            <ErrorBoundry>
-              <CardList robots={filteredRobots} />
-            </ErrorBoundry>
-          }
-        </Scroll>
-      </div>
-    );
-  }
-}
-
-// parameter state comes from index.js provider store state(rootReducers)
-const mapStateToProps = (state) => {
-  return {
-    searchField: state.searchRobotsReducer.searchField,
-    robots: state.requestRobotsReducer.robots,
-    isPending: state.requestRobotsReducer.isPending
-  }
-}
-
-// dispatch the DOM changes to call an action. note mapStateToProps returns object, mapDispatchToProps returns function
-// the function returns an object then uses connect to change the data from redecers.
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-    onRequestRobots: () => dispatch(requestRobots())
-  }
-}
-
-// action done from mapDispatchToProps will channge state from mapStateToProps
-export default connect(mapStateToProps, mapDispatchToProps)(App)
-```
-
-- __`Location: ./Performance2.2/edition2/Header.js`__
-
-```js
-import React, { Component } from 'react';
-import CounterButton from './CounterButton'
-
-class Header extends Component {
-    render() {
-        console.log('Header');
-        return (
-            <div>
-                <h1 className='f1'>RoboFriends</h1>
-                <CounterButton />
-            </div>
-        )
+    class App extends Component {
+    componentDidMount() {
+        this.props.onRequestRobots();
     }
-}
 
-export default Header;
-```
+    render() {
+        const { robots, searchField, onSearchChange, isPending } = this.props;
+        const filteredRobots = robots.filter(robot => {
+        return robot.name.toLowerCase().includes(searchField.toLowerCase());
+        })
+        return (
+        <div className='tc'>
+            <Header />
+            <SearchBox searchChange={onSearchChange} />
+            <Scroll>
+            {isPending ? <h1>Loading</h1> :
+                <ErrorBoundry>
+                <CardList robots={filteredRobots} />
+                </ErrorBoundry>
+            }
+            </Scroll>
+        </div>
+        );
+    }
+    }
+
+    // parameter state comes from index.js provider store state(rootReducers)
+
+    const mapStateToProps = (state) => {
+        return {
+            searchField: state.searchRobotsReducer.searchField,
+            robots: state.requestRobotsReducer.robots,
+            isPending: state.requestRobotsReducer.isPending
+        }
+    }
+
+    // dispatch the DOM changes to call an action. note mapStateToProps returns object, mapDispatchToProps returns function
+    // the function returns an object then uses connect to change the data from redecers.
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+            onRequestRobots: () => dispatch(requestRobots())
+        }
+    }
+
+    // action done from mapDispatchToProps will channge state from mapStateToProps
+    export default connect(mapStateToProps, mapDispatchToProps)(App)
+    ```
+
+    - __`Location: ./Performance2.2/edition2/Header.js`__
+
+    ```js
+    import React, { Component } from 'react';
+    import CounterButton from './CounterButton'
+
+    class Header extends Component {
+        render() {
+            console.log('Header');
+            return (
+                <div>
+                    <h1 className='f1'>RoboFriends</h1>
+                    <CounterButton />
+                </div>
+            )
+        }
+    }
+
+    export default Header;
+    ```
 
 ----------------------------------------------------------------------------
 
@@ -133,37 +135,37 @@ export default Header;
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./Performance2.2/edition2/CounterButton.js`__
+    - __`Location: ./Performance2.2/edition2/CounterButton.js`__
 
-```js
-import React, { Component } from 'react';
+    ```js
+    import React, { Component } from 'react';
 
-class CounterButton extends Component {
-    constructor() {
-        super();
-        this.state = {
-            count: 0,
+    class CounterButton extends Component {
+        constructor() {
+            super();
+            this.state = {
+                count: 0,
+            }
+        }
+
+        handleClick = () => {
+            this.setState(state => {
+                return { count: state.count + 1 }
+            });
+        }
+
+        render() {
+            console.log('CounterButton');
+            return (
+                <button color={this.props.color} onClick={this.handleClick}>
+                    Count:{this.state.count}
+                </button>
+            )
         }
     }
 
-    handleClick = () => {
-        this.setState(state => {
-            return { count: state.count + 1 }
-        });
-    }
-
-    render() {
-        console.log('CounterButton');
-        return (
-            <button color={this.props.color} onClick={this.handleClick}>
-                Count:{this.state.count}
-            </button>
-        )
-    }
-}
-
-export default CounterButton;
-```
+    export default CounterButton;
+    ```
 ----------------------------------------------------------------------------
 
 - __`Result`__:
@@ -183,48 +185,48 @@ export default CounterButton;
 #### `Comment:`
 1. 这里有一个小知识点，setState 是一个 async 动作，所以建议：
 
-```diff
--    handleClick = () => {
--        this.setState({ count: this.state.count + 1 });
--    }
+    ```diff
+    -    handleClick = () => {
+    -        this.setState({ count: this.state.count + 1 });
+    -    }
 
-//    setState is an async action, it may have some side effect.
+    //    setState is an async action, it may have some side effect.
 
-+    handleClick = () => {
-+        this.setState(state => {
-+            return { count: state.count + 1 }
-+        });
-+    }
-```
+    +    handleClick = () => {
+    +        this.setState(state => {
+    +            return { count: state.count + 1 }
+    +        });
+    +    }
+    ```
 
 ### <span id="11.3">`Step3: Add 'shouldComponentUpdate' into Header.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./Performance2.2/edition2/Header.js`__
+    - __`Location: ./Performance2.2/edition2/Header.js`__
 
-```js
-import React, { Component } from 'react';
-import CounterButton from './CounterButton'
+    ```js
+    import React, { Component } from 'react';
+    import CounterButton from './CounterButton'
 
-class Header extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        return false;
+    class Header extends Component {
+        shouldComponentUpdate(nextProps, nextState) {
+            return false;
+        }
+
+        render() {
+            console.log('Header');
+            return (
+                <div>
+                    <h1 className='f1'>RoboFriends</h1>
+                    <CounterButton />
+                </div>
+            )
+        }
     }
 
-    render() {
-        console.log('Header');
-        return (
-            <div>
-                <h1 className='f1'>RoboFriends</h1>
-                <CounterButton />
-            </div>
-        )
-    }
-}
-
-export default Header;
-```
+    export default Header;
+    ```
 
 - __`Result`__:
 
@@ -248,69 +250,69 @@ export default Header;
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
-- __`Location: ./Performance2.2/edition2/Header.js`__
+    - __`Location: ./Performance2.2/edition2/Header.js`__
 
-```js
-import React, { Component } from 'react';
-import CounterButton from './CounterButton'
+    ```js
+    import React, { Component } from 'react';
+    import CounterButton from './CounterButton'
 
-class Header extends Component {
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return false;
-    // }
+    class Header extends Component {
+        // shouldComponentUpdate(nextProps, nextState) {
+        //     return false;
+        // }
 
-    render() {
-        console.log('Header');
-        return (
-            <div>
-                <h1 className='f1'>RoboFriends</h1>
-                <CounterButton />
-            </div>
-        )
-    }
-}
-
-export default Header;
-```
-
-- __`Location: ./Performance2.2/edition2/CounterButton.js`__
-
-```js
-import React, { Component } from 'react';
-
-class CounterButton extends Component {
-    constructor() {
-        super();
-        this.state = {
-            count: 0,
+        render() {
+            console.log('Header');
+            return (
+                <div>
+                    <h1 className='f1'>RoboFriends</h1>
+                    <CounterButton />
+                </div>
+            )
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.count !== nextState.count) {
-            return true;
+    export default Header;
+    ```
+
+    - __`Location: ./Performance2.2/edition2/CounterButton.js`__
+
+    ```js
+    import React, { Component } from 'react';
+
+    class CounterButton extends Component {
+        constructor() {
+            super();
+            this.state = {
+                count: 0,
+            }
         }
-        return false;
+
+        shouldComponentUpdate(nextProps, nextState) {
+            if (this.state.count !== nextState.count) {
+                return true;
+            }
+            return false;
+        }
+
+        handleClick = () => {
+            this.setState(state => {
+                return { count: state.count + 1 }
+            });
+        }
+
+        render() {
+            console.log('CounterButton');
+            return (
+                <button color={this.props.color} onClick={this.handleClick}>
+                    Count:{this.state.count}
+                </button>
+            )
+        }
     }
 
-    handleClick = () => {
-        this.setState(state => {
-            return { count: state.count + 1 }
-        });
-    }
-
-    render() {
-        console.log('CounterButton');
-        return (
-            <button color={this.props.color} onClick={this.handleClick}>
-                Count:{this.state.count}
-            </button>
-        )
-    }
-}
-
-export default CounterButton;
-```
+    export default CounterButton;
+    ```
 
 - __`Result`__:
 
