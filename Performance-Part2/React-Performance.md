@@ -55,29 +55,31 @@
     import './App.css';
 
     class App extends Component {
-    componentDidMount() {
-        this.props.onRequestRobots();
-    }
+        componentDidMount() {
+            this.props.onRequestRobots();
+        }
 
-    render() {
-        const { robots, searchField, onSearchChange, isPending } = this.props;
-        const filteredRobots = robots.filter(robot => {
-        return robot.name.toLowerCase().includes(searchField.toLowerCase());
-        })
-        return (
-        <div className='tc'>
-            <Header />
-            <SearchBox searchChange={onSearchChange} />
-            <Scroll>
-            {isPending ? <h1>Loading</h1> :
-                <ErrorBoundry>
-                <CardList robots={filteredRobots} />
-                </ErrorBoundry>
-            }
-            </Scroll>
-        </div>
-        );
-    }
+        render() {
+            const { robots, searchField, onSearchChange, isPending } = this.props;
+            const filteredRobots = robots.filter(robot => {
+            return robot.name.toLowerCase().includes(searchField.toLowerCase());
+            })
+            return (
+                <div className='tc'>
+                    <Header />
+                    <SearchBox searchChange={onSearchChange} />
+                    <Scroll>
+                    {
+                        isPending ? <h1>Loading</h1>
+                         :
+                        <ErrorBoundry>
+                        <CardList robots={filteredRobots} />
+                        </ErrorBoundry>
+                    }
+                    </Scroll>
+                </div>
+            );
+        }
     }
 
     // parameter state comes from index.js provider store state(rootReducers)
