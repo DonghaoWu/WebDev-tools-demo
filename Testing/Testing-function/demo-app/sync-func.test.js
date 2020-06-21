@@ -1,4 +1,4 @@
-const googleSearch = require('./script')
+const googleSearch = require('./sync-func')
 
 const dbMock = [
     'dog.com',
