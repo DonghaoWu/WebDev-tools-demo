@@ -224,77 +224,63 @@ __`Location: ./package.json`__
 
     :star: return
 
-### <span id="13.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
+2. 其中 `done` 和 `return` 的用法差不多，可以了解上面代码。
+3. 有时候大型的测试需要进行多个 api call，比较耗时，所以可以使用 mocks 来模拟返回的数据，详细看 `step4`.
+
+### <span id="13.4">`Step4: Build mocks to test async function.`</span>
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./Performance2.2/edition2/Header.js`__
+    - __`Location: ./async-func.js`__
 
     ```js
-    import React, { Component } from 'react';
-    import CounterButton from './CounterButton'
+    const fetch = require('node-fetch');
 
-    class Header extends Component {
-        // shouldComponentUpdate(nextProps, nextState) {
-        //     return false;
-        // }
-
-        render() {
-            console.log('Header');
-            return (
-                <div>
-                    <h1 className='f1'>RoboFriends</h1>
-                    <CounterButton />
-                </div>
-            )
+    const getPeopleAsync = async (callback) => {
+        try {
+            const res = await callback('https://swapi.dev/api/people');
+            const data = await res.json();
+            return {
+                count: data.count,
+                results: data.results
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    export default Header;
+    module.exports = {
+        getPeopleAsync
+    }
     ```
 
-    - __`Location: ./Performance2.2/edition2/CounterButton.js`__
+    - __`Location: ./async-func.test.js`__
 
     ```js
-    import React, { Component } from 'react';
+    const asyncFunc = require('./async-func');
 
-    class CounterButton extends Component {
-        constructor() {
-            super();
-            this.state = {
-                count: 0,
-            }
-        }
-
-        shouldComponentUpdate(nextProps, nextState) {
-            if (this.state.count !== nextState.count) {
-                return true;
-            }
-            return false;
-        }
-
-        handleClick = () => {
-            this.setState(state => {
-                return { count: state.count + 1 }
-            });
-        }
-
-        render() {
-            console.log('CounterButton');
-            return (
-                <button color={this.props.color} onClick={this.handleClick}>
-                    Count:{this.state.count}
-                </button>
-            )
-        }
-    }
-
-    export default CounterButton;
+    it('getPeople returns count and results', () => {
+        const mockFetch = jest.fn().mockReturnValue(Promise.resolve({
+            json: () => Promise.resolve({
+                count: 100,
+                results: [0, 1, 2, 3, 4, 5]
+            })
+        }))
+        
+        expect.assertions(4);
+        return asyncFunc.getPeopleAsync(mockFetch).then(data => {
+            expect(mockFetch.mock.calls.length).toBe(1);
+            expect(mockFetch).toBeCalledWith('https://swapi.dev/api/people');
+            expect(data.count).toEqual(100);
+            expect(data.results.length).toBeGreaterThan(3);
+        })
+    })
     ```
 
 
 #### `Comment:`
-1. `shouldComponentUpdate` 在这里只阻断了 `CounterButton` 的 `rerender`。
+1. mocks，虚拟一个 API call 的回传数据， mockFetch 是一个模拟远程 API 回送数据， API endpoint 参数仍可以多变，但是回送数据定制，__`且没有对 endpoint 进行实际调用。`__
+2. 以上可以看出，在 test 文件中没有调用任何实际 fetch 动作，且它这里相当于自我设定一个远程数据，然后写测试文件。
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
