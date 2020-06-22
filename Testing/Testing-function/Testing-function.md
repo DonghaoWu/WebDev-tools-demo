@@ -219,7 +219,9 @@ __`Location: ./package.json`__
 1. 在测试 async fucntion 时，必须注意的几个关键词：
 
 :star: expect.assertions();
+
 :star: done
+
 :star: return
 
 ### <span id="13.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
