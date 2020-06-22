@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Testing`(Part3.1 Function)
+## `Section: Testing` (Part 1: Function)
 
 ### `Summary`: In this documentation, we learn testing function.
 
@@ -218,11 +218,11 @@ __`Location: ./package.json`__
 #### `Comment:`
 1. 在测试 async fucntion 时，必须注意的几个关键词：
 
-:star: expect.assertions();
+    :star: expect.assertions();
 
-:star: done
+    :star: done
 
-:star: return
+    :star: return
 
 ### <span id="13.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
 
@@ -291,20 +291,6 @@ __`Location: ./package.json`__
 
     export default CounterButton;
     ```
-
-- __`Result`__:
-
-<p align="center">
-<img src="../assets/p13-5.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/p13-6.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
 
 
 #### `Comment:`
