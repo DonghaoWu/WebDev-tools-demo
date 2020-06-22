@@ -1,256 +1,230 @@
-# Web development tools (Part 12)
+# Web development tools (Part 13)
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Performance`(Performance-Part2.2)
+## `Section: Testing`(Part3.1 Function)
 
-### `Summary`: In this documentation, we improve website performance by optimizing React performance.
+### `Summary`: In this documentation, we learn testing function.
 
 ### `Check Dependencies & Tools:`
 
-- Chrome extension: React Developer Tools
-- localhost:3000/?react_perf + Inspect + Performance tag
+- jest
 
 ------------------------------------------------------------
 
 #### `本章背景：`
-- React 的工作原理是 state 或者 props 变化就全部重加载 `rerender`，但是有时候的实际使用情况是有些部件不需要跟着重加载，这时候就需要一些优化或设定提高 React 的效率。
-
-- Avoid unnecessary DOM manipulation.
-
-- 本章里面主要分析 `shouldComponentUpdate` 应用在不同父子组件的嵌套关系来实现一些组件是否应该 rerender 。
-
-- `shouldComponentUpdate` 的作用是在特定条件下阻断 rerender 在当前组件和该组件的子组件上执行。
+- 本章分三部分，分别是：
+    1. Testing function :white_check_mark:
+    2. Testing React
+    3. Testing Redux
 
 ------------------------------------------------------------
 
-### <span id="11.0">`Brief Contents & codes position`</span>
+### <span id="13.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [11.1 Create a Header component.](#11.1)
-- [11.2 Create a CounterButton component.](#11.2)
-- [11.3 Add 'shouldComponentUpdate' into Header.](#11.3)
-- [11.4 Delete 'shouldComponentUpdate' in Header & add it into CounterButton.](#11.4)
+- [13.1 Setup.](#13.1)
+- [13.2 Test sync function.](#13.2)
+- [13.3 Test async function.](#13.3)
+- [13.4 Build mocks to test async function.](#13.4)
 
 ------------------------------------------------------------
 
-### <span id="11.1">`Step1: Create a Header component`</span>
+### <span id="13.1">`Step1: Setup.`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+- #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./Performance2.2/edition2/App.js`__
+```bash
+$ npm init -y
+$ npm i --save-dev jest
+```
+
+__`Location: ./package.json`__
+
+```json
+{
+  "name": "demo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch *.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
+```
+
+----------------------------------------------------------------------------
+
+#### `Comment:`
+1. 这里主要是修改了一条 script
+```diff
++ "test": "jest --watch *.js"
+```
+
+
+### <span id="13.2">`Step2: Test sync function.`</span>
+
+- #### Click here: [BACK TO CONTENT](#13.0)
+
+    - __`Location: ./sync-func.js`__
 
     ```js
-    import React, { Component } from 'react';
-    import { connect } from 'react-redux';
-    import { setSearchField, requestRobots } from '../actions';
+    const googleDatabase = [
+        'cat.com',
+        'souprecipes.com',
+        'flowers.com',
+        'animals.com',
+        'catpictures.com',
+        'myfavouritecats.com'
+    ]
 
-    import CardList from '../components/CardList';
-    import SearchBox from '../components/SearchBox';
-    import Scroll from '../components/Scroll';
-    import ErrorBoundry from '../components/ErrorBoundry';
-    import Header from '../components/Header';
+    const googleSearch = (searchInput, db) => {
+        const matches = db.filter(website => {
+            return website.includes(searchInput);
+        })
+        return matches.length > 3 ? matches.slice(0, 3) : matches;
+    }
 
-    import './App.css';
+    module.exports = googleSearch;
+    ```
 
-    class App extends Component {
-        componentDidMount() {
-            this.props.onRequestRobots();
-        }
+    - __`Location: ./sync-func.test.js`__
 
-        render() {
-            const { robots, searchField, onSearchChange, isPending } = this.props;
-            const filteredRobots = robots.filter(robot => {
-            return robot.name.toLowerCase().includes(searchField.toLowerCase());
+    ```js
+    const googleSearch = require('./sync-func')
+
+    const dbMock = [
+        'dog.com',
+        'cheesepuff.com',
+        'nike.com',
+        'dogpictures.com',
+        'myfavouritedogs.com'
+    ]
+
+    describe('googleSearch', () => {
+        it('is searching google', () => {
+            expect(googleSearch('testtest', dbMock)).toEqual([]);
+            expect(googleSearch('dog', dbMock)).toEqual(['dog.com', 'dogpictures.com', 'myfavouritedogs.com'])
+        })
+
+        it('work with undefined and null input', () => {
+            expect(googleSearch(undefined, dbMock)).toEqual([]);
+            expect(googleSearch(null, dbMock)).toEqual([])
+        })
+
+        it('does not return more than 3 matches', () => {
+            expect(googleSearch('.com', dbMock).length).toEqual(3);
+        })
+    })
+    ```
+----------------------------------------------------------------------------
+
+#### `Comment:`
+1. 测试文件第一段名称要跟被测文件相同。
+2. 常用关键词：
+
+```diff
++ it
++ describe
++ expect
++ toEqual
+```
+
+### <span id="13.3">`Step3: Test async function.`</span>
+
+- #### Click here: [BACK TO CONTENT](#13.0)
+
+
+    - __`Location: ./async-func.js`__
+
+    ```js
+    const fetch = require('node-fetch');
+
+    const getPeople = (callback) => {
+        return callback('https://swapi.dev/api/people')
+            .then(response => response.json())
+            .then(data => {
+                return {
+                    count: data.count,
+                    results: data.results
+                }
             })
-            return (
-                <div className='tc'>
-                    <Header />
-                    <SearchBox searchChange={onSearchChange} />
-                    <Scroll>
-                    {
-                        isPending ? <h1>Loading</h1>
-                         :
-                        <ErrorBoundry>
-                        <CardList robots={filteredRobots} />
-                        </ErrorBoundry>
-                    }
-                    </Scroll>
-                </div>
-            );
-        }
+            .catch(error => {
+                console.log(error);
+            })
     }
 
-    // parameter state comes from index.js provider store state(rootReducers)
-
-    const mapStateToProps = (state) => {
-        return {
-            searchField: state.searchRobotsReducer.searchField,
-            robots: state.requestRobotsReducer.robots,
-            isPending: state.requestRobotsReducer.isPending
-        }
-    }
-
-    // dispatch the DOM changes to call an action. note mapStateToProps returns object, mapDispatchToProps returns function
-    // the function returns an object then uses connect to change the data from redecers.
-
-    const mapDispatchToProps = (dispatch) => {
-        return {
-            onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-            onRequestRobots: () => dispatch(requestRobots())
-        }
-    }
-
-    // action done from mapDispatchToProps will channge state from mapStateToProps
-    export default connect(mapStateToProps, mapDispatchToProps)(App)
-    ```
-
-    - __`Location: ./Performance2.2/edition2/Header.js`__
-
-    ```js
-    import React, { Component } from 'react';
-    import CounterButton from './CounterButton'
-
-    class Header extends Component {
-        render() {
-            console.log('Header');
-            return (
-                <div>
-                    <h1 className='f1'>RoboFriends</h1>
-                    <CounterButton />
-                </div>
-            )
-        }
-    }
-
-    export default Header;
-    ```
-
-----------------------------------------------------------------------------
-
-#### `Comment:`
-1. 
-
-
-### <span id="11.2">`Step2: Create a CounterButton component.`</span>
-
-- #### Click here: [BACK TO CONTENT](#11.0)
-
-    - __`Location: ./Performance2.2/edition2/CounterButton.js`__
-
-    ```js
-    import React, { Component } from 'react';
-
-    class CounterButton extends Component {
-        constructor() {
-            super();
-            this.state = {
-                count: 0,
+    const getPeopleAsync = async (callback) => {
+        try {
+            const res = await callback('https://swapi.dev/api/people');
+            const data = await res.json();
+            return {
+                count: data.count,
+                results: data.results
             }
-        }
-
-        handleClick = () => {
-            this.setState(state => {
-                return { count: state.count + 1 }
-            });
-        }
-
-        render() {
-            console.log('CounterButton');
-            return (
-                <button color={this.props.color} onClick={this.handleClick}>
-                    Count:{this.state.count}
-                </button>
-            )
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    export default CounterButton;
-    ```
-----------------------------------------------------------------------------
+    module.exports = {
+        getPeople,
+        getPeopleAsync
+    }
 
-- __`Result`__:
+    // module.exports = {
+    //     getPeople:getPeople,
+    //     getPeopleAsync:getPeopleAsync
+    // }
 
-<p align="center">
-<img src="../assets/p11-1.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/p11-2.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
-
-#### `Comment:`
-1. 这里有一个小知识点，setState 是一个 async 动作，所以建议：
-
-    ```diff
-    -    handleClick = () => {
-    -        this.setState({ count: this.state.count + 1 });
-    -    }
-
-    //    setState is an async action, it may have some side effect.
-
-    +    handleClick = () => {
-    +        this.setState(state => {
-    +            return { count: state.count + 1 }
-    +        });
-    +    }
+    // getPeople(fetch);
+    // getPeopleAsync(fetch);
     ```
 
-### <span id="11.3">`Step3: Add 'shouldComponentUpdate' into Header.`</span>
-
-- #### Click here: [BACK TO CONTENT](#11.0)
-
-    - __`Location: ./Performance2.2/edition2/Header.js`__
+    - __`Location: ./async-func.test.js`__
 
     ```js
-    import React, { Component } from 'react';
-    import CounterButton from './CounterButton'
+    const fetch = require('node-fetch');
+    const asyncFunc = require('./async-func');
 
-    class Header extends Component {
-        shouldComponentUpdate(nextProps, nextState) {
-            return false;
-        }
+    it('calls asyncFunc to get people', (done) => {
+        expect.assertions(1);
+        asyncFunc.getPeople(fetch).then(data => {
+            expect(data.count).toEqual(82);
+            done();
+        })
+    })
 
-        render() {
-            console.log('Header');
-            return (
-                <div>
-                    <h1 className='f1'>RoboFriends</h1>
-                    <CounterButton />
-                </div>
-            )
-        }
-    }
-
-    export default Header;
+    it('calls asyncFunc to get people with async', () => {
+        expect.assertions(2);
+        return asyncFunc.getPeopleAsync(fetch).then(data => {
+            expect(data.count).toEqual(82);
+            expect(data.results.length).toBeGreaterThan(5);
+        })
+    })
     ```
-
-- __`Result`__:
-
-<p align="center">
-<img src="../assets/p11-3.png" width=90%>
-</p>
-
-----------------------------------------------------------------------------
-
-<p align="center">
-<img src="../assets/p11-4.png" width=90%>
-</p>
-
 ----------------------------------------------------------------------------
 
 #### `Comment:`
-1. `shouldComponentUpdate` 在这里阻断了 `Header` 以及它的子组件 `CounterButton` 的 `rerender`。
+1. 在测试 async fucntion 时，必须注意的几个关键词：
 
+:star: expect.assertions();
+:star: done
+:star: return
 
-### <span id="11.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
+### <span id="13.4">`Step4: Delete 'shouldComponentUpdate' in Header & add it into CounterButton.`</span>
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+- #### Click here: [BACK TO CONTENT](#13.0)
 
     - __`Location: ./Performance2.2/edition2/Header.js`__
 
@@ -319,13 +293,13 @@
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p11-5.png" width=90%>
+<img src="../assets/p13-5.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p11-6.png" width=90%>
+<img src="../assets/p13-6.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -334,7 +308,7 @@
 #### `Comment:`
 1. `shouldComponentUpdate` 在这里只阻断了 `CounterButton` 的 `rerender`。
 
-- #### Click here: [BACK TO CONTENT](#11.0)
+- #### Click here: [BACK TO CONTENT](#13.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 
