@@ -40,7 +40,7 @@ $ npm init -y
 $ npm i --save-dev jest
 ```
 
-__`Location: ./package.json`__
+__`Location: ./demo-app-functions/package.json`__
 
 ```json
 {
@@ -76,7 +76,7 @@ __`Location: ./package.json`__
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./sync-func.js`__
+    - __`Location: ./demo-app-functions/sync-func.js`__
 
     ```js
     const googleDatabase = [
@@ -98,7 +98,7 @@ __`Location: ./package.json`__
     module.exports = googleSearch;
     ```
 
-    - __`Location: ./sync-func.test.js`__
+    - __`Location: ./demo-app-functions/sync-func.test.js`__
 
     ```js
     const googleSearch = require('./sync-func')
@@ -145,7 +145,7 @@ __`Location: ./package.json`__
 - #### Click here: [BACK TO CONTENT](#13.0)
 
 
-    - __`Location: ./async-func.js`__
+    - __`Location: ./demo-app-functions/async-func.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -191,7 +191,7 @@ __`Location: ./package.json`__
     // getPeopleAsync(fetch);
     ```
 
-    - __`Location: ./async-func.test.js`__
+    - __`Location: ./demo-app-functions/async-func.test.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -231,7 +231,7 @@ __`Location: ./package.json`__
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./async-func.js`__
+    - __`Location: ./demo-app-functions/async-func.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -254,7 +254,7 @@ __`Location: ./package.json`__
     }
     ```
 
-    - __`Location: ./async-func.test.js`__
+    - __`Location: ./demo-app-functions/async-func.test.js`__
 
     ```js
     const asyncFunc = require('./async-func');
