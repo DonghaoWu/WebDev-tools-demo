@@ -28,4 +28,4 @@
 
 - [Part13 - Testing Part 1 Functions](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-function/Testing-function.md)
 
-- [Part14 - Testing Part 2 React](https://github.com/DonghaoWu/WebDev-tools-demo/tree/master/Testing/Testing-React)
+- [Part14 - Testing Part 2 React](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-React/Testing-React.md)
