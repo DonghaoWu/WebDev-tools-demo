@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Testing` (Part 2: Redux)
+## `Section: Testing` (Part 3: Redux)
 
 ### `Summary`: In this documentation, we learn testing Redux.
 
