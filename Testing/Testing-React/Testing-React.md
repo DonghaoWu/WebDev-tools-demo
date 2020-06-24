@@ -25,9 +25,9 @@
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [14.1 Setup.](#14.1)
-- [14.2 Test sync function.](#14.2)
-- [14.3 Test async function.](#14.3)
-- [14.4 Build mocks to test async function.](#14.4)
+- [14.2 Snapshot testing.](#14.2)
+- [14.3 Code coverage.](#14.3)
+- [14.4 Stateful component testing.](#14.4)
 
 ------------------------------------------------------------
 
@@ -35,252 +35,145 @@
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
+- Working with React 16 [Documentation](https://enzymejs.github.io/enzyme/docs/installation/index.html)
+
 ```bash
-$ npm init -y
-$ npm i --save-dev jest
+$ npm i --save react@16 react-dom@16
+$ npm i --save-dev enzyme enzyme-adapter-react-16
 ```
 
-__`Location: ./package.json`__
+__`Location: ./src/setupTests.js`__
 
-```json
-{
-  "name": "demo-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest --watch *.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "jest": "^26.0.1"
-  },
-  "dependencies": {
-    "node-fetch": "^2.6.0"
-  }
-}
+```js
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 ```
 
 ----------------------------------------------------------------------------
 
 #### `Comment:`
-1. 这里主要是修改了一条 script
-```diff
-+ "test": "jest --watch *.js"
-```
+1. 在 create-react-app 中，可以直接把 `setupTests.js` 放进 `src` 文件夹中它就可以直接自动调用。
 
-
-### <span id="14.2">`Step2: Test sync function.`</span>
+### <span id="14.2">`Step2: Snapshot testing.`</span>
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
-    - __`Location: ./sync-func.js`__
+    1. Build a testing component snapshot.
+
+     - __`Location: ./src/Card.test.js`__
 
     ```js
-    const googleDatabase = [
-        'cat.com',
-        'souprecipes.com',
-        'flowers.com',
-        'animals.com',
-        'catpictures.com',
-        'myfavouritecats.com'
-    ]
+    import { shallow } from 'enzyme';
+    import React from 'react';
+    import Card from './Card';
+    import '../setupTests'
 
-    const googleSearch = (searchInput, db) => {
-        const matches = db.filter(website => {
-            return website.includes(searchInput);
-        })
-        return matches.length > 3 ? matches.slice(0, 3) : matches;
-    }
+    it('expect to render Card component', () => {
+        expect(shallow(<Card />).length).toEqual(1);
+    })
 
-    module.exports = googleSearch;
-    ```
-
-    - __`Location: ./sync-func.test.js`__
-
-    ```js
-    const googleSearch = require('./sync-func')
-
-    const dbMock = [
-        'dog.com',
-        'cheesepuff.com',
-        'nike.com',
-        'dogpictures.com',
-        'myfavouritedogs.com'
-    ]
-
-    describe('googleSearch', () => {
-        it('is searching google', () => {
-            expect(googleSearch('testtest', dbMock)).toEqual([]);
-            expect(googleSearch('dog', dbMock)).toEqual(['dog.com', 'dogpictures.com', 'myfavouritedogs.com'])
-        })
-
-        it('work with undefined and null input', () => {
-            expect(googleSearch(undefined, dbMock)).toEqual([]);
-            expect(googleSearch(null, dbMock)).toEqual([])
-        })
-
-        it('does not return more than 3 matches', () => {
-            expect(googleSearch('.com', dbMock).length).toEqual(3);
-        })
+    it('expect to render Card component', () => {
+        expect(shallow(<Card />)).toMatchSnapshot();
     })
     ```
-----------------------------------------------------------------------------
 
-#### `Comment:`
-1. 测试文件第一段名称要跟被测文件相同。
-2. 常用关键词：
+    2. Handle compnents snapshot with map method.
 
-```diff
-+ it
-+ describe
-+ expect
-+ toEqual
-```
-
-### <span id="14.3">`Step3: Test async function.`</span>
-
-- #### Click here: [BACK TO CONTENT](#14.0)
-
-
-    - __`Location: ./async-func.js`__
+    - __`Location: ./src/CardList.test.js`__
 
     ```js
-    const fetch = require('node-fetch');
+    import { shallow } from 'enzyme';
+    import React from 'react';
+    import CardList from './CardList';
+    import '../setupTests'
 
-    const getPeople = (callback) => {
-        return callback('https://swapi.dev/api/people')
-            .then(response => response.json())
-            .then(data => {
-                return {
-                    count: data.count,
-                    results: data.results
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    const getPeopleAsync = async (callback) => {
-        try {
-            const res = await callback('https://swapi.dev/api/people');
-            const data = await res.json();
-            return {
-                count: data.count,
-                results: data.results
+    it('expect to render CardList component', () => {
+        const mockRobots = [
+            {
+                id: 1,
+                name: 'John Snow',
+                username: "JohnJohn",
+                email: 'john@test.com'
+            },
+            {
+                id: 2,
+                name: 'Simon King',
+                username: "Sisi",
+                email: 'si@test.com'
             }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+        ];
 
-    module.exports = {
-        getPeople,
-        getPeopleAsync
-    }
-
-    // module.exports = {
-    //     getPeople:getPeople,
-    //     getPeopleAsync:getPeopleAsync
-    // }
-
-    // getPeople(fetch);
-    // getPeopleAsync(fetch);
-    ```
-
-    - __`Location: ./async-func.test.js`__
-
-    ```js
-    const fetch = require('node-fetch');
-    const asyncFunc = require('./async-func');
-
-    it('calls asyncFunc to get people', (done) => {
-        expect.assertions(1);
-        asyncFunc.getPeople(fetch).then(data => {
-            expect(data.count).toEqual(82);
-            done();
-        })
-    })
-
-    it('calls asyncFunc to get people with async', () => {
-        expect.assertions(2);
-        return asyncFunc.getPeopleAsync(fetch).then(data => {
-            expect(data.count).toEqual(82);
-            expect(data.results.length).toBeGreaterThan(5);
-        })
+        expect(shallow(<CardList robots={mockRobots} />)).toMatchSnapshot();
     })
     ```
 ----------------------------------------------------------------------------
 
 #### `Comment:`
-1. 在测试 async fucntion 时，必须注意的几个关键词：
+1. shallow 建造的是一个虚拟的跟原 component 一样结构的组件。
+2. toMatchSnapshot() 第一次的命令是建立一个全新 snapshot，第二次命令就是对比原组件和 snapshot 的区别。
+3. 对于有 map method 的组件群，测试的方法是建立模拟数据，然后向虚拟 component 传递参数。
 
-    :star: expect.assertions();
-
-    :star: done
-
-    :star: return
-
-2. 其中 `done` 和 `return` 的用法差不多，可以了解上面代码。
-3. 有时候大型的测试需要进行多个 api call，比较耗时，所以可以使用 mocks 来模拟返回的数据，详细看 `step4`.
-
-### <span id="14.4">`Step4: Build mocks to test async function.`</span>
+### <span id="14.3">`Step3: Code coverage.`</span>
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
-    - __`Location: ./async-func.js`__
-
-    ```js
-    const fetch = require('node-fetch');
-
-    const getPeopleAsync = async (callback) => {
-        try {
-            const res = await callback('https://swapi.dev/api/people');
-            const data = await res.json();
-            return {
-                count: data.count,
-                results: data.results
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    module.exports = {
-        getPeopleAsync
-    }
+    1. 显示测试覆盖率
+    ```bash
+    $ npm test -- --coverage
     ```
+----------------------------------------------------------------------------
 
-    - __`Location: ./async-func.test.js`__
+#### `Comment:`
+1. 
+
+### <span id="14.4">`Step4: Stateful component testing.`</span>
+
+- #### Click here: [BACK TO CONTENT](#14.0)
+
+    - __`Location: ./src/CounterButton.test.js`__
 
     ```js
-    const asyncFunc = require('./async-func');
+    import { shallow } from 'enzyme';
+    import React from 'react';
+    import CounterButton from './CounterButton';
+    import '../setupTests';
 
-    it('getPeople returns count and results', () => {
-        const mockFetch = jest.fn().mockReturnValue(Promise.resolve({
-            json: () => Promise.resolve({
-                count: 100,
-                results: [0, 1, 2, 3, 4, 5]
-            })
-        }))
-        
-        expect.assertions(4);
-        return asyncFunc.getPeopleAsync(mockFetch).then(data => {
-            expect(mockFetch.mock.calls.length).toBe(1);
-            expect(mockFetch).toBeCalledWith('https://swapi.dev/api/people');
-            expect(data.count).toEqual(100);
-            expect(data.results.length).toBeGreaterThan(3);
-        })
+    it('expect to render CounterButton component', () => {
+        const mockColor = 'red';
+        expect(shallow(<CounterButton color={mockColor} />)).toMatchSnapshot();
+    })
+
+    it('correctly increments the counter', () => {
+        const mockColor = 'red';
+        const wrapper = shallow(<CounterButton color={mockColor} />);
+
+        wrapper.find('[id="counter"]').simulate("click");
+        expect(wrapper.state()).toEqual({ count: 2 });
+        wrapper.find('[id="counter"]').simulate("click");
+        expect(wrapper.state()).toEqual({ count: 3 });
+        wrapper.find('[id="counter"]').simulate("keypress");
+        expect(wrapper.state()).toEqual({ count: 3 });
+
+        expect(wrapper.props().color).toEqual('red');
     })
     ```
 
 
 #### `Comment:`
-1. mocks，虚拟一个 API call 的回传数据， mockFetch 是一个模拟远程 API 回送数据， API endpoint 参数仍可以多变，但是回送数据定制，__`且没有对 endpoint 进行实际调用。`__
-2. 以上可以看出，在 test 文件中没有调用任何实际 fetch 动作，且它这里相当于自我设定一个远程数据，然后写测试文件。
+1. 以上代码包括三部分：
+```js
+//向虚拟组件传递 props：
+<CounterButton color={mockColor} />
+
+//模拟一个动作，检验 state 的变化：
+wrapper.find('[id="counter"]').simulate("click");
+expect(wrapper.state()).toEqual({ count: 2 });
+
+//检验虚拟组件得到的 props：
+expect(wrapper.props().color).toEqual('red');
+```
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
