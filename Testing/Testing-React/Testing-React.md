@@ -35,21 +35,21 @@
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
-- Working with React 16 [Documentation](https://enzymejs.github.io/enzyme/docs/installation/index.html)
+- Enzyme working with React 16. [[Documentation here](https://enzymejs.github.io/enzyme/docs/installation/index.html)]
 
-```bash
-$ npm i --save react@16 react-dom@16
-$ npm i --save-dev enzyme enzyme-adapter-react-16
-```
+    ```bash
+    $ npm i --save react@16 react-dom@16
+    $ npm i --save-dev enzyme enzyme-adapter-react-16
+    ```
 
-__`Location: ./src/setupTests.js`__
+    __`Location: ./src/setupTests.js`__
 
-```js
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+    ```js
+    import { configure } from 'enzyme';
+    import Adapter from 'enzyme-adapter-react-16';
 
-configure({ adapter: new Adapter() });
-```
+    configure({ adapter: new Adapter() });
+    ```
 
 ----------------------------------------------------------------------------
 
