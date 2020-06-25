@@ -450,6 +450,7 @@
 
 - #### Click here: [BACK TO CONTENT](#6.0)
 
+:white_check_mark:以下为部分关键代码，详细查看 __代码来源: `robot-friends-pwa (Testing part demo app.)`__
 1. 引入 thunkMIddleware
 ```js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
