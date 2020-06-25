@@ -9,6 +9,7 @@
 ### `Check Dependencies & Tools:`
 
 - Enzyme
+- __[Enzyme Documentation here]__(https://enzymejs.github.io/enzyme/docs/installation/index.html)
 
 ------------------------------------------------------------
 
