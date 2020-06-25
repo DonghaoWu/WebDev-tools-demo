@@ -14,7 +14,7 @@ describe('searchRobots reducer', () => {
     it('should return the initial state', () => {
         expect(reducers.searchRobots(initialStateSearch, {})).toEqual({ searchField: '' })
     })
-    it('should should handel CHANGE_SEARCHFIELD action', () => {
+    it('should handle CHANGE_SEARCHFIELD action', () => {
         expect(reducers.searchRobots(initialStateSearch, {
             type: CHANGE_SEARCHFIELD,
             payload: 'abc'
@@ -34,7 +34,7 @@ describe('requestRobots reducer', () => {
         expect(reducers.requestRobots(initialStateRobots, {})).toEqual(initialStateRobots)
     })
 
-    it('should should handel REQUEST_ROBOTS_PENDING action', () => {
+    it('should handle REQUEST_ROBOTS_PENDING action', () => {
         expect(reducers.requestRobots(initialStateRobots, {
             type: REQUEST_ROBOTS_PENDING,
         })).toEqual({
@@ -43,7 +43,7 @@ describe('requestRobots reducer', () => {
         })
     })
 
-    it('should should handel REQUEST_ROBOTS_SUCCESS action', () => {
+    it('should handle REQUEST_ROBOTS_SUCCESS action', () => {
         expect(reducers.requestRobots(initialStateRobots, {
             type: REQUEST_ROBOTS_SUCCESS,
             payload: [{
@@ -61,7 +61,7 @@ describe('requestRobots reducer', () => {
         })
     })
 
-    it('should should handel REQUEST_ROBOTS_FAILED action', () => {
+    it('should handle REQUEST_ROBOTS_FAILED action', () => {
         expect(reducers.requestRobots(initialStateRobots, {
             type: REQUEST_ROBOTS_FAILED,
             payload: 'This is an error message.'
