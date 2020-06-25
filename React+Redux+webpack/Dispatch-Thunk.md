@@ -389,17 +389,11 @@
     }
     ```
 
-2. 以上结果是行不通的，具体原因未明。应该是跟 `promise` 是 `async action` 而不能返回 `object` 有关，实际使用中，上面这个 `fetchMessages()` 返回的是 `undefined`。
+2. 以上结果是行不通的，具体原因是 sync function 会马上返回 `object`，async function 是没有 `return` 的概念，async function 的返回值只能是 `undefined`，在 `sync thread` 下不能使用 `async thread` 的结果。上面这个 `fetchMessages()` 返回的是 `undefined`。
 
-3. 后续跟进，需要补充 `promise` 和 `async function` 之后，估计可以使用 `promise` 的方法来实现。
+3. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch，而不能把 dispatch 放在 promise 的头端。
 
-4. 4月29日，后续跟进，这个方法是行不通的，因为这个函数里面 axio.get 是一个 async operation，也是一个 promise。原本的想法是想使用 dispatch 这个 promise 的返回 object。这里面有几个原因说明不能实现：
-
-    1. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch。
-
-    2. 另外一个理由是 async operation 里面的值是无法给 sync 提供任何帮助的，sync 执行时用不到里面任何一个值。当然这个理由也是基于理由一得出的，详细了解 event loop 的运作顺序。
-
-5. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
+4. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
 
     1. 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
 
@@ -425,7 +419,11 @@
     }
     ```
 
-6. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
+5. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
+
+6. :star::star::star:6/25:
+  - dispatch an object: 派发一个 object 到 reducer
+  - dispatch a function（典型例子：thunkMiddleware + async + dispatch 为参数）:运行该 function
 
 ### <span id="6.5">`Step5: More materials.`</span>
 
