@@ -425,6 +425,18 @@
   - dispatch an object: 派发一个 object 到 reducer。
   - dispatch a function（典型例子：thunkMiddleware + async + dispatch 为参数）:运行 function。
 
+:star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数就是一个 thunk:
+
+```js
+const fetchMessages = () => {
+  return (dispatch) => {
+      axios.get('/api/messages')
+          .then(res => res.data)
+          .then(messages => dispatch(gotMessagesFromServer(messages)));
+  }
+}
+```
+
 ### <span id="6.5">`Step5: More materials.`</span>
 
 - #### Click here: [BACK TO CONTENT](#6.0)
