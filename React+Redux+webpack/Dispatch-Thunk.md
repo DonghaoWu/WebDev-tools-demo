@@ -412,7 +412,7 @@
 
 2. 上面结果的具体分析是:
 
-  - 版本一：
+  - :star2: 版本一：
     :bulb: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
 
     :bulb: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
