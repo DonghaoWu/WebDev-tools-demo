@@ -411,12 +411,13 @@
     ```
 
 2. 上面结果的具体分析是:
+    :star: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
 
-  :star: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
-  :star: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
+    :star: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
 
-  :star: 有 middleware 的情况下，dispatch 一个 sync function，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
-  :star: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
+    :star: 有 middleware 的情况下，dispatch 一个 sync function，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
+    
+    :star: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
 
 :key: 弄清楚第一和第二点很重要，需要弄清楚 sync 和 async 运行的知识基础:
   - [Part7 - Async & Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
