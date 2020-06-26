@@ -508,95 +508,95 @@
 
 :white_check_mark:以下为部分关键代码，详细查看 __代码来源: `robot-friends-pwa (Testing part demo app.)`__
 1. 引入 thunkMIddleware
-```js
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-const rootReducers = combineReducers({<YOUR REDUCERS>});
-const store = createStore(rootReducers, applyMiddleware(thunkMiddleware))
-```
+  ```js
+  import { createStore, combineReducers, applyMiddleware } from 'redux';
+  import thunkMiddleware from 'redux-thunk';
+  const rootReducers = combineReducers({<YOUR REDUCERS>});
+  const store = createStore(rootReducers, applyMiddleware(thunkMiddleware))
+  ```
 
 2. 定义 action
-```js
-import { apiCall } from './api/api'
-import {
-  CHANGE_SEARCHFIELD,
-  REQUEST_ROBOTS_PENDING,
-  REQUEST_ROBOTS_SUCCESS,
-  REQUEST_ROBOTS_FAILED
-} from './constants'
+  ```js
+  import { apiCall } from './api/api'
+  import {
+    CHANGE_SEARCHFIELD,
+    REQUEST_ROBOTS_PENDING,
+    REQUEST_ROBOTS_SUCCESS,
+    REQUEST_ROBOTS_FAILED
+  } from './constants'
 
-// sync action
-export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text })
+  // sync action
+  export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text })
 
-// async action
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  apiCall('https://jsonplaceholder.typicode.com/users')
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-}
-```
+  // async action
+  export const requestRobots = () => (dispatch) => {
+    dispatch({ type: REQUEST_ROBOTS_PENDING })
+    apiCall('https://jsonplaceholder.typicode.com/users')
+      .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+  }
+  ```
 
 3. Connect the actions to component.
-```js
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // dispatch a sync action
-    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-    // dispatch an async action
-    onRequestRobots: () => dispatch(requestRobots())
+  ```js
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      // dispatch an object: setSearchField(event.target.value)
+      onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+      // dispatch a thunk: requestRobots()
+      onRequestRobots: () => dispatch(requestRobots())
+    }
   }
-}
 
-class App extends Component {
-  render() {
-    return <Mainpage {...this.props} />
+  class App extends Component {
+    render() {
+      return <Mainpage {...this.props} />
+    }
   }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-```
+  export default connect(mapStateToProps, mapDispatchToProps)(App);
+  ```
 
 4. 在 component 中调用 action。
 
-```js
-import SearchBox from '../components/SearchBox';
-import Scroll from '../components/Scroll';
-import ErrorBoundry from '../components/ErrorBoundry';
-import Header from '../components/Header';
+  ```js
+  import SearchBox from '../components/SearchBox';
+  import Scroll from '../components/Scroll';
+  import ErrorBoundry from '../components/ErrorBoundry';
+  import Header from '../components/Header';
 
-import './Mainpage.css';
+  import './Mainpage.css';
 
-class Mainpage extends Component {
-    componentDidMount() {
-        this.props.onRequestRobots();
-    }
+  class Mainpage extends Component {
+      componentDidMount() {
+          this.props.onRequestRobots();
+      }
 
-    filterRobots = () => {
-        return this.props.robots.filter(robot => {
-            return robot.name.toLowerCase().includes(this.props.searchField.toLowerCase());
-        })
-    }
+      filterRobots = () => {
+          return this.props.robots.filter(robot => {
+              return robot.name.toLowerCase().includes(this.props.searchField.toLowerCase());
+          })
+      }
 
-    render() {
-        const { robots, onSearchChange, isPending } = this.props;
-        return (
-            <div className='tc'>
-                <Header />
-                <SearchBox searchChange={onSearchChange} />
-                <Scroll>
-                    {
-                        isPending ? <h1>Loading</h1> :
-                        <ErrorBoundry>
-                            <CardList robots={this.filterRobots()} />
-                        </ErrorBoundry>
-                    }
-                </Scroll>
-            </div>
-        );
-    }
-}
-```
+      render() {
+          const { robots, onSearchChange, isPending } = this.props;
+          return (
+              <div className='tc'>
+                  <Header />
+                  <SearchBox searchChange={onSearchChange} />
+                  <Scroll>
+                      {
+                          isPending ? <h1>Loading</h1> :
+                          <ErrorBoundry>
+                              <CardList robots={this.filterRobots()} />
+                          </ErrorBoundry>
+                      }
+                  </Scroll>
+              </div>
+          );
+      }
+  }
+  ```
 
 - #### Click here: [BACK TO CONTENT](#6.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
