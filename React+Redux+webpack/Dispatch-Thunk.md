@@ -19,7 +19,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- :star: 本章在 6/25/2020 进行了大量修改，需要查看旧版本的可以查看以前的 commit 记录
+- :star: 本章在 6/25/2020 进行了大量修改，需要查看旧版本的可以查看以前的 commit 记录。
 - 下面我们通过一张图来介绍 thunk 的工作原理：
 
 <p align="center">
@@ -376,7 +376,7 @@
 1. 既然 `dispatch` 是用来派发 `actionCreator` 生成的对象，那么如果按照这个逻辑，如果我有一个 `async function` 返回一个对象，是不是可以通过直接 `dispatch` 这个对象从而完成任务，而不用使用 `thunk` 来实现？按照上面的想法，我写了这个：
 
     ```jsx
-    export const fetchMessages = () => {
+    export const fetchMessages1 = () => {
         axios.get('/api/messages')
             .then(res => res.data)
             .then(messages => {
@@ -388,8 +388,42 @@
     }
     ```
 
-2. 以上结果是行不通的，具体原因是 sync function 会马上返回 `object`，async function 是没有 `return` 的概念，async function 的返回值只能是 `undefined`，在 `sync thread` 下不能使用 `async thread` 的结果。上面这个 `fetchMessages()` 返回的是 `undefined`。
+    对比：
+    ```js
+    const fetchMessages2 = () => {
+      return (dispatch) => {
+          axios.get('/api/messages')
+              .then(res => res.data)
+              .then(messages => dispatch(gotMessagesFromServer(messages)));
+      }
+    }
+    ```
 
+    判断运行以下代码的结果：
+    ```js
+    //编写理由：认为 fetchMessages1 会返回 object，可以省去 thunkMIddleware。
+
+    dispatch(fetchMessages1());
+
+    //认为 fetchMessages2 会返回 function，运行需要 thunkMIddleware。
+
+    dispatch(fetchMessages2());
+    ```
+
+2. 上面结果的具体分析是:
+
+  :star: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
+  :star: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
+
+  :star: 有 middleware 的情况下，dispatch 一个 sync function，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
+  :star: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
+
+:key: 弄清楚第一和第二点很重要，需要弄清楚 sync 和 async 运行的知识基础:
+  - [Part7 - Async & Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
+
+  - [Part8 - Async & Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md) 
+
+  - [Part9 - Async & Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md) 
 3. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch，而不能把 dispatch 放在 promise 的头端。
 
 4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object，:key:`没有 thunkMiddleware使处理方法就是把dispatch 放在 promise 链末端。`
