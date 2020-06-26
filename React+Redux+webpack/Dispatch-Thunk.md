@@ -412,6 +412,7 @@
 
 2. 上面结果的具体分析是:
 
+  - 版本一：
     :bulb: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
 
     :bulb: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
@@ -420,18 +421,25 @@
 
     :bulb: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
 
+  - :star2: 版本二：
+    1. 没有 middleware，dispatch 的参数，如果是 object，就派送 object;
+    2. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 object，就派送 object;
+    3. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 是一个 async function，就派送 undefined;
+    4. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 functionB，就派送 functionB;
+    5. 有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 functionB，无论 functionB 是 async 或者 sync 都运行 , 这时候 functionA 也叫做 `thunk`.
+
   - :key: 弄清楚第一和第二点很重要，需要弄清楚 sync 和 async 运行的知识基础:
     - [Part7 - Async & Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
 
     - [Part8 - Async & Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
 
     - [Part9 - Async & Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md) 
-    
-3. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch，而不能把 dispatch 放在 promise 的头端。
 
-4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object，:key:`没有 thunkMiddleware使处理方法就是把dispatch 放在 promise 链末端。`
+3. dispatch （无 middleware） 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。
 
-5. 加入 thunkMiddleware 后，dispatch 就可以放在函数头部，形式是 `dispatch(thunk)`下面是 thunk 的例子
+4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object;因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object，:key:`没有 thunkMiddleware 使处理方法就是把 dispatch 放在 promise 链末端。`
+
+5. 加入 thunkMiddleware 后，调用时 dispatch 就可以放在函数头部，形式是 `dispatch(thunk)`，下面是 thunk 的例子
 
     ```js
     const fetchMessages = () => {
