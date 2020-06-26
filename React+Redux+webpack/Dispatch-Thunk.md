@@ -413,7 +413,7 @@
 2. 上面结果的具体分析是:
 
   - :star2: 版本一：
-  
+
     :bulb: 在没有 middleware 的情况下，dispatch 一个 sync fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
 
     :bulb: 在没有 middleware 的情况下，dispatch 一个 async fucntion，把它当作 sync function 操作，在 sync thread 中执行，得到 `undefined`。
@@ -422,7 +422,7 @@
 
     :bulb: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
 
-  - :star2: 版本二：
+  - :star2: 版本二（推荐）：
     1. 没有 middleware，dispatch 的参数，如果是 object，就派送 object;
     2. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 object，就派送 object;
     3. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 是一个 async function，就派送 undefined;
@@ -470,17 +470,17 @@
   - dispatch an object: 派发一个 object 到 reducer。
   - dispatch a function（典型例子：thunkMiddleware + async + dispatch 为参数）:运行 function。
 
-:star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数 `fetchMessages` 就是一个 thunk:
+  :star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数 `fetchMessages` 就是一个 thunk:
 
-```js
-const fetchMessages = () => {
-  return (dispatch) => {
-      axios.get('/api/messages')
-          .then(res => res.data)
-          .then(messages => dispatch(gotMessagesFromServer(messages)));
+  ```js
+  const fetchMessages = () => {
+    return (dispatch) => {
+        axios.get('/api/messages')
+            .then(res => res.data)
+            .then(messages => dispatch(gotMessagesFromServer(messages)));
+    }
   }
-}
-```
+  ```
 
 ### <span id="6.5">`Step5: More materials.`</span>
 
