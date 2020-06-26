@@ -464,13 +464,13 @@
     }
     ```
 
-5. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
+6. 最后再强调一下，thunk 的作用是将程序的函数部分跟 html 部分分割，让整起来看起来更容易维护。`但是没有使用 thunk 是完全没有问题的，一点也不会影响功能实现。`
 
-6. :star::star::star: 6/25/2020:
+7. :star::star::star: 6/25/2020:
   - dispatch an object: 派发一个 object 到 reducer。
   - dispatch a function（典型例子：thunkMiddleware + async + dispatch 为参数）:运行 function。
 
-  :star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数 `fetchMessages` 就是一个 thunk:
+  - :star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数 `fetchMessages` 就是一个 thunk:
 
   ```js
   const fetchMessages = () => {
