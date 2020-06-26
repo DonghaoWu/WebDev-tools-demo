@@ -543,7 +543,7 @@
     return {
       // dispatch an object: setSearchField(event.target.value)
       onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-      // dispatch a thunk: requestRobots()
+      // dispatch a function: requestRobots()
       onRequestRobots: () => dispatch(requestRobots())
     }
   }
