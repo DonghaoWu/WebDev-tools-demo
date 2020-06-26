@@ -20,7 +20,6 @@
 
 #### `本章背景：`
 - :star: 本章在 6/25/2020 进行了大量修改，需要查看旧版本的可以查看以前的 commit 记录
-- 本章代码来自项目：`my-stackchat`，目前这个项目没完成的是 proxy 跟 socket.io 的处理。（4月29日）
 - 下面我们通过一张图来介绍 thunk 的工作原理：
 
 <p align="center">
@@ -198,9 +197,9 @@
 
     2. 由以上可知，`actionCreator`实际上就是一个生成 `object` 的 `fucntion`，`action`实际上就是一个 `object`。
 
-    3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接受这个`object`，然后改变对应的 `state`。
+    3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接收这个`object`，然后改变对应的 `state`。
     
-    4. :star: 6/25 补充：目前在没有 `thunkMiddleware`的情况下，dispatch 只能以 `object` 或者 `生成 object 的 sync 函数为主`。
+    4. :star: 6/25 补充：目前在没有 `thunkMiddleware`的情况下，dispatch 只能以 `object` 或者 `生成 object 的 sync 函数`作为参数。
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 
@@ -393,9 +392,9 @@
 
 3. dispatch 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。所以在这个情况下，需要 thunk，把 dispatch 放进 promise 链内，等待对应 callback 执行有结果后再 dispatch，而不能把 dispatch 放在 promise 的头端。
 
-4. (4月29日) 为什么 thunk 适用于 async operation？ 一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
+4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object；因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object，:key:`没有 thunkMiddleware使处理方法就是把dispatch 放在 promise 链末端。`
 
-    1. 所以一个 thunk 应用的典型例子是 dispatch 一个函数（这里称为 A），A 是一个包含 dispatch 为参数的 promise，`当 thunk 运行时，就是运行 A，也就是运行 promise，且在 promise 链中把结果 dispatch 出去。`如本章里面的
+5. 加入 thunkMiddleware 后，dispatch 就可以放在函数头部，形式是 `dispatch(thunk)`下面是 thunk 的例子
 
     ```js
     const fetchMessages = () => {
@@ -425,7 +424,7 @@
   - dispatch an object: 派发一个 object 到 reducer。
   - dispatch a function（典型例子：thunkMiddleware + async + dispatch 为参数）:运行 function。
 
-:star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数就是一个 thunk:
+:star: thunk的解释：本质是一个 function，进一步解释是一个会返回函数的函数，这个子函数是以 dispatch 为参数的 async 函数。如下函数 `fetchMessages` 就是一个 thunk:
 
 ```js
 const fetchMessages = () => {
