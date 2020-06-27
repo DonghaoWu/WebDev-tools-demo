@@ -20,7 +20,7 @@ class Mainpage extends Component {
     }
 
     render() {
-        const { robots, onSearchChange, isPending } = this.props;
+        const { onSearchChange, isPending } = this.props;
         return (
             <div className='tc'>
                 <Header />
@@ -28,9 +28,9 @@ class Mainpage extends Component {
                 <Scroll>
                     {
                         isPending ? <h1>Loading</h1> :
-                        <ErrorBoundry>
-                            <CardList robots={this.filterRobots()} />
-                        </ErrorBoundry>
+                            <ErrorBoundry>
+                                <CardList robots={this.filterRobots()} />
+                            </ErrorBoundry>
                     }
                 </Scroll>
             </div>

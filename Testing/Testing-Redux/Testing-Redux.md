@@ -9,10 +9,13 @@
 ### `Check Dependencies & Tools:`
 
 - Enzyme
+- redux-store-mock
+- fetch-mock
 
 ------------------------------------------------------------
 
 #### `本章背景：`
+- __参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
 - 本章分三部分，分别是：
     1. Testing function 
     2. Testing React 
@@ -24,156 +27,532 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [15.1 Setup.](#15.1)
-- [15.2 Snapshot testing.](#15.2)
-- [15.3 Code coverage.](#15.3)
-- [15.4 Stateful component testing.](#15.4)
+- [15.1 Props and component function testing.](#15.1)
+- [15.2 Reducers testing.](#15.2)
+- [15.3 Sync action testing.](#15.3)
+- [15.4 Async action testing.](#15.4)
 
 ------------------------------------------------------------
 
-### <span id="15.1">`Step1: Setup.`</span>
+### <span id="15.1">`Step1: Testing props and component function.`</span>
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 
-- Enzyme working with React 16. [[Documentation here](https://enzymejs.github.io/enzyme/docs/installation/index.html)]
+1. Seperate App component to two parts.
 
-    ```bash
-    $ npm i --save react@16 react-dom@16
-    $ npm i --save-dev enzyme enzyme-adapter-react-16
-    ```
+__`Location: ./src/containers/App.js`__
 
-    __`Location: ./src/setupTests.js`__
+```js
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setSearchField, requestRobots } from '../actions';
 
-    ```js
-    import { configure } from 'enzyme';
-    import Adapter from 'enzyme-adapter-react-16';
+import Mainpage from '../components/Mainpage';
+import './App.css';
 
-    configure({ adapter: new Adapter() });
-    ```
 
+const mapStateToProps = (state) => {
+  return {
+    searchField: state.searchRobots.searchField,
+    robots: state.requestRobots.robots,
+    isPending: state.requestRobots.isPending
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+    onRequestRobots: () => dispatch(requestRobots())
+  }
+}
+
+class App extends Component {
+  render() {
+    return <Mainpage {...this.props} />
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+```
 ----------------------------------------------------------------------------
+__`Location: ./src/components/Mainpage.js`__
 
-#### `Comment:`
-1. 在 create-react-app 中，可以直接把 `setupTests.js` 放进 `src` 文件夹中它就可以直接自动调用。
+```js
+import React, { Component } from 'react';
 
-### <span id="15.2">`Step2: Snapshot testing.`</span>
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
+import ErrorBoundry from '../components/ErrorBoundry';
+import Header from '../components/Header';
 
-- #### Click here: [BACK TO CONTENT](#15.0)
+import './Mainpage.css';
 
-    1. Build a testing component snapshot.
+class Mainpage extends Component {
+    componentDidMount() {
+        this.props.onRequestRobots();
+    }
 
-     - __`Location: ./src/Card.test.js`__
+    filterRobots = () => {
+        return this.props.robots.filter(robot => {
+            return robot.name.toLowerCase().includes(this.props.searchField.toLowerCase());
+        })
+    }
 
-    ```js
-    import { shallow } from 'enzyme';
-    import React from 'react';
-    import Card from './Card';
-    import '../setupTests'
+    render() {
+        const { robots, onSearchChange, isPending } = this.props;
+        return (
+            <div className='tc'>
+                <Header />
+                <SearchBox searchChange={onSearchChange} />
+                <Scroll>
+                    {isPending ? <h1>Loading</h1> :
+                        <ErrorBoundry>
+                            <CardList robots={this.filterRobots()} />
+                        </ErrorBoundry>
+                    }
+                </Scroll>
+            </div>
+        );
+    }
+}
 
-    it('expect to render Card component', () => {
-        expect(shallow(<Card />).length).toEqual(1);
-    })
+export default Mainpage;
+```
 
-    it('expect to render Card component', () => {
-        expect(shallow(<Card />)).toMatchSnapshot();
-    })
-    ```
+2. Snapshot tesing, props testing, self function testing.
 
-    2. Handle compnents snapshot with map method.
+__`Location: ./src/components/Mainpage.test.js`__
 
-    - __`Location: ./src/CardList.test.js`__
+```js
+import { shallow, mount, render } from 'enzyme';
+import React from 'react';
+import Mainpage from './Mainpage';
+import '../setupTests'
 
-    ```js
-    import { shallow } from 'enzyme';
-    import React from 'react';
-    import CardList from './CardList';
-    import '../setupTests'
+let wrapper;
+beforeEach(() => {
+    const mockProps = {
+        onRequestRobots: jest.fn(),
+        robots: [],
+        searchField: '',
+        isPending: false,
+    }
+    wrapper = shallow(<Mainpage {...mockProps} />);
+})
 
-    it('expect to render CardList component', () => {
-        const mockRobots = [
+//snapshot testing
+it('renders Mainpage without crashing', () => {
+    expect(wrapper).toMatchSnapshot();
+})
+
+//props testing
+it('render h1 tag when isPending is true', () => {
+    const mockProps = {
+        onRequestRobots: jest.fn(),
+        robots: [],
+        searchField: '',
+        isPending: true,
+    }
+    wrapper = shallow(<Mainpage {...mockProps} />);
+    expect(wrapper.contains(<h1>Loading</h1>)).toBe(true);
+})
+
+//self function testing
+it('filters robots correctly', () => {
+    const mockProps = {
+        onRequestRobots: jest.fn(),
+        robots: [{
+            id: 1,
+            name: 'John',
+            email: 'john@test.email',
+        }],
+        searchField: 'john',
+        isPending: false,
+    }
+
+    wrapper = shallow(<Mainpage {...mockProps} />);
+    expect(wrapper.instance().filterRobots()).toEqual(
+        [
             {
                 id: 1,
-                name: 'John Snow',
-                username: "JohnJohn",
-                email: 'john@test.com'
-            },
-            {
-                id: 2,
-                name: 'Simon King',
-                username: "Sisi",
-                email: 'si@test.com'
+                name: 'John',
+                email: 'john@test.email',
             }
-        ];
-
-        expect(shallow(<CardList robots={mockRobots} />)).toMatchSnapshot();
-    })
-    ```
-----------------------------------------------------------------------------
+        ]
+    )
+})
+```
 
 #### `Comment:`
-1. shallow 建造的是一个虚拟的跟原 component 一样结构的组件。
-2. toMatchSnapshot() 第一次的命令是建立一个全新 snapshot，第二次命令就是对比原组件和 snapshot 的区别。
-3. 对于有 map method 的组件群，测试的方法是建立模拟数据，然后向虚拟 component 传递参数。
+1. 在这里要标记一个小 enzyme 用法：
+    - 引用 stateful component 接收的 props 或者自定义 function：
+    ```diff
+    + wrapper.props().robots
+    + wrapper.props().filterRobots()
+    ```
+    - 引用 stateless component 接收的 props：
+    ```diff
+    + wrapper.instance().robots
+    + wrapper.instance().filterRobots()
+    ```
 
-### <span id="15.3">`Step3: Code coverage.`</span>
+### <span id="15.2">`Step2: Reducers testing.`</span>
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 
-    1. 显示测试覆盖率
-    ```bash
-    $ npm test -- --coverage
-    ```
+__`Location: ./src/reducers.test.js`__
+```js
+import {
+    CHANGE_SEARCHFIELD,
+    REQUEST_ROBOTS_PENDING,
+    REQUEST_ROBOTS_SUCCESS,
+    REQUEST_ROBOTS_FAILED
+} from './constants';
+
+import * as reducers from './reducers';
+
+describe('searchRobots reducer', () => {
+    const initialStateSearch = {
+        searchField: ''
+    }
+    it('should return the initial state', () => {
+        expect(reducers.searchRobots(initialStateSearch, {})).toEqual({ searchField: '' })
+    })
+    it('should handle CHANGE_SEARCHFIELD action', () => {
+        expect(reducers.searchRobots(initialStateSearch, {
+            type: CHANGE_SEARCHFIELD,
+            payload: 'abc'
+        })).toEqual({
+            searchField: 'abc'
+        })
+    })
+})
+
+describe('requestRobots reducer', () => {
+    const initialStateRobots = {
+        robots: [],
+        isPending: false
+    }
+
+    it('should return the initial state', () => {
+        expect(reducers.requestRobots(initialStateRobots, {})).toEqual(initialStateRobots)
+    })
+
+    it('should handle REQUEST_ROBOTS_PENDING action', () => {
+        expect(reducers.requestRobots(initialStateRobots, {
+            type: REQUEST_ROBOTS_PENDING,
+        })).toEqual({
+            robots: [],
+            isPending: true,
+        })
+    })
+
+    it('should handle REQUEST_ROBOTS_SUCCESS action', () => {
+        expect(reducers.requestRobots(initialStateRobots, {
+            type: REQUEST_ROBOTS_SUCCESS,
+            payload: [{
+                id: 123,
+                name: 'John',
+                email: 'john@test.com'
+            }]
+        })).toEqual({
+            robots: [{
+                id: 123,
+                name: 'John',
+                email: 'john@test.com'
+            }],
+            isPending: false,
+        })
+    })
+
+    it('should handle REQUEST_ROBOTS_FAILED action', () => {
+        expect(reducers.requestRobots(initialStateRobots, {
+            type: REQUEST_ROBOTS_FAILED,
+            payload: 'This is an error message.'
+        })).toEqual({
+            error: 'This is an error message.',
+            isPending: false,
+            robots: [],
+        })
+    })
+})
+```
+----------------------------------------------------------------------------
+
+#### `Comment:`
+1. reducer 的测试主要是测试一个 switch 函数的功能。
+
+### <span id="15.3">`Step3: Sync action testing.`</span>
+
+- #### Click here: [BACK TO CONTENT](#15.0)
+
+1. Install dependecy:
+```bash
+$ npm i redux-mock-store --save-dev
+```
+
+2. Configure.
+```js
+import configureMockStore from 'redux-mock-store';
+import thunkMiddleware from 'redux-thunk';
+
+const mockStore = configureMockStore([thunkMiddleware]);
+```
+
+3. 被测试的 sync action。
+
+```js
+// sync action
+export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text })
+```
+
+4. Sync action testing.
+
+__`Location: ./src/actions.test.js`__
+
+```js
+import * as actions from './actions';
+import {
+    CHANGE_SEARCHFIELD,
+    REQUEST_ROBOTS_PENDING,
+    REQUEST_ROBOTS_SUCCESS,
+    REQUEST_ROBOTS_FAILED
+} from './constants';
+
+import configureMockStore from 'redux-mock-store';
+import thunkMiddleware from 'redux-thunk';
+
+const mockStore = configureMockStore([thunkMiddleware]);
+
+// Sync action testing.
+it('should create an action to search robots', () => {
+    const text = 'wooo';
+    const expectedAction = {
+        type: CHANGE_SEARCHFIELD,
+        payload: text
+    }
+    expect(actions.setSearchField(text)).toEqual(expectedAction)
+})
+```
 ----------------------------------------------------------------------------
 
 #### `Comment:`
 1. 
 
-### <span id="15.4">`Step4: Stateful component testing.`</span>
+
+### <span id="15.4">`Step4: Async action testing.`</span>
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 
-    - __`Location: ./src/CounterButton.test.js`__
-
-    ```js
-    import { shallow } from 'enzyme';
-    import React from 'react';
-    import CounterButton from './CounterButton';
-    import '../setupTests';
-
-    it('expect to render CounterButton component', () => {
-        const mockColor = 'red';
-        expect(shallow(<CounterButton color={mockColor} />)).toMatchSnapshot();
-    })
-
-    it('correctly increments the counter', () => {
-        const mockColor = 'red';
-        const wrapper = shallow(<CounterButton color={mockColor} />);
-
-        wrapper.find('[id="counter"]').simulate("click");
-        expect(wrapper.state()).toEqual({ count: 2 });
-        wrapper.find('[id="counter"]').simulate("click");
-        expect(wrapper.state()).toEqual({ count: 3 });
-        wrapper.find('[id="counter"]').simulate("keypress");
-        expect(wrapper.state()).toEqual({ count: 3 });
-
-        expect(wrapper.props().color).toEqual('red');
-    })
-    ```
-
-
-#### `Comment:`
-1. 以上代码包括三部分：
-```js
-//向虚拟组件传递 props：
-<CounterButton color={mockColor} />
-
-//模拟一个动作，检验 state 的变化：
-wrapper.find('[id="counter"]').simulate("click");
-expect(wrapper.state()).toEqual({ count: 2 });
-
-//检验虚拟组件得到的 props：
-expect(wrapper.props().color).toEqual('red');
+1. Install dependecy:
+```bash
+$ npm i fetch-mock --save-dev
 ```
+
+2. Configure.
+```js
+import fetchMock from 'fetch-mock'
+```
+
+3. 被测试的 async action。
+
+```js
+export const requestRobots = () => (dispatch) => {
+  dispatch({ type: REQUEST_ROBOTS_PENDING })
+  return fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+}
+```
+
+4. Async action testing.
+
+```js
+// Async action testing without fetch.
+it('should handles requesting robots API', () => {
+    const store = mockStore();
+    store.dispatch(actions.requestRobots());
+    const expectedAction = {
+        type: REQUEST_ROBOTS_PENDING
+    }
+
+    expect(store.getActions()[0]).toEqual(expectedAction)
+})
+
+// Async action testing with mockFetch.
+describe('async requestRobots action', () => {
+    afterEach(() => {
+        fetchMock.restore()
+    })
+
+    const mockData = [{
+        id: 1,
+        name: 'John',
+        email: 'john@test.email',
+    }]
+
+    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
+        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
+            body: mockData,
+            headers: { 'content-type': 'application/json' }
+        })
+
+        const expectedActions = [
+            {
+                type: REQUEST_ROBOTS_PENDING
+            },
+            {
+                type: REQUEST_ROBOTS_SUCCESS,
+                payload: mockData
+            }
+        ]
+        const store = mockStore({ robots: [] })
+
+        return store.dispatch(actions.requestRobots()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+        })
+    })
+})
+```
+#### `Comment:`
+1. 完整的 async testing 文件：
+
+__`Location: ./src/actions.test.js`__
+```js
+import * as actions from './actions';
+import {
+    CHANGE_SEARCHFIELD,
+    REQUEST_ROBOTS_PENDING,
+    REQUEST_ROBOTS_SUCCESS,
+    REQUEST_ROBOTS_FAILED
+} from './constants';
+
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import fetchMock from 'fetch-mock'
+
+const middlewares = [thunk]
+const mockStore = configureMockStore(middlewares)
+
+it('should create an action to search robots', () => {
+    const text = 'wooo';
+    const expectedAction = {
+        type: CHANGE_SEARCHFIELD,
+        payload: text
+    }
+    expect(actions.setSearchField(text)).toEqual(expectedAction)
+})
+
+it('should handles requesting robots API', () => {
+    const store = mockStore();
+    store.dispatch(actions.requestRobots());
+    const action = store.getActions();
+    // console.log(action);
+    const expectedAction = {
+        type: REQUEST_ROBOTS_PENDING
+    }
+
+    expect(action[0]).toEqual(expectedAction)
+})
+
+describe('async requestRobots action', () => {
+    afterEach(() => {
+        fetchMock.restore()
+    })
+
+    const mockData = [{
+        id: 1,
+        name: 'John',
+        email: 'john@test.email',
+    }]
+
+    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
+        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
+            body: mockData,
+            headers: { 'content-type': 'application/json' }
+        })
+
+        const expectedActions = [
+            {
+                type: REQUEST_ROBOTS_PENDING
+            },
+            {
+                type: REQUEST_ROBOTS_SUCCESS,
+                payload: mockData
+            }
+        ]
+        const store = mockStore({ robots: [] })
+
+        return store.dispatch(actions.requestRobots()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+        })
+    })
+})
+```
+
+2. 对于测试的一个疑惑：
+
+- 之前的测试 async action 是：
+```js
+const apiCall = (link) => {
+  fetch(link).then(
+    response => {
+      return response.json();
+    })
+}
+
+export const requestRobots = () => (dispatch) => {
+  dispatch({ type: REQUEST_ROBOTS_PENDING })
+  apiCall('https://jsonplaceholder.typicode.com/users')
+    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+}
+```
+
+- 得到：
+<p align="center">
+<img src="../assets/p15-1.png" width=90%>
+</p>
+
+- 改成：
+```js
+const apiCall = (link) =>
+  fetch(link).then(response => response.json())
+
+export const requestRobots = () => (dispatch) => {
+  dispatch({ type: REQUEST_ROBOTS_PENDING })
+  apiCall('https://jsonplaceholder.typicode.com/users')
+    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+}
+```
+
+- 得到：
+<p align="center">
+<img src="../assets/p15-2.png" width=90%>
+</p>
+
+- 改成：
+```js
+export const requestRobots = () => (dispatch) => {
+  dispatch({ type: REQUEST_ROBOTS_PENDING })
+  return fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+}
+```
+
+- 得到：
+<p align="center">
+<img src="../assets/p15-3.png" width=90%>
+</p>
+
+__参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

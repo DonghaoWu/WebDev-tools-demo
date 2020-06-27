@@ -13,6 +13,46 @@ import fetchMock from 'fetch-mock'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
+describe('async requestRobots action', () => {
+    afterEach(() => {
+        fetchMock.restore()
+    })
+
+    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
+        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
+            body: [{
+                id: 1,
+                name: 'John',
+                email: 'john@test.email',
+            }],
+            headers: { 'content-type': 'application/json' }
+        })
+
+        const expectedActions = [
+            {
+                type: REQUEST_ROBOTS_PENDING
+            },
+            {
+                type: REQUEST_ROBOTS_SUCCESS,
+                payload:
+                    [
+                        {
+                            id: 1,
+                            name: 'John',
+                            email: 'john@test.email',
+                        }
+                    ]
+            }
+        ]
+        const store = mockStore({ robots: [] })
+
+        return store.dispatch(actions.requestRobots()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+        })
+    })
+})
+
 it('should create an action to search robots', () => {
     const text = 'wooo';
     const expectedAction = {
@@ -32,39 +72,4 @@ it('should handles requesting robots API', () => {
     }
 
     expect(action[0]).toEqual(expectedAction)
-})
-
-describe('async requestRobots action', () => {
-    afterEach(() => {
-        fetchMock.restore()
-    })
-
-    const mockData = [{
-        id: 1,
-        name: 'John',
-        email: 'john@test.email',
-    }]
-
-    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
-        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
-            body: mockData,
-            headers: { 'content-type': 'application/json' }
-        })
-
-        const expectedActions = [
-            {
-                type: REQUEST_ROBOTS_PENDING
-            },
-            {
-                type: REQUEST_ROBOTS_SUCCESS,
-                payload: mockData
-            }
-        ]
-        const store = mockStore({ robots: [] })
-
-        return store.dispatch(actions.requestRobots()).then(() => {
-            // return of async actions
-            expect(store.getActions()).toEqual(expectedActions)
-        })
-    })
 })
