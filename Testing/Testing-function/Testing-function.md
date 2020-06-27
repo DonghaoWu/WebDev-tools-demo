@@ -4,7 +4,7 @@
 
 ## `Section: Testing` (Part 1: Function)
 
-### `Summary`: In this documentation, we learn testing function.
+### `Summary`: In this documentation, we learn Function testing.
 
 ### `Check Dependencies & Tools:`
 
@@ -14,9 +14,9 @@
 
 #### `本章背景：`
 - 本章分三部分，分别是：
-    1. Testing function :white_check_mark:
-    2. Testing React
-    3. Testing Redux
+    1. Function testing :white_check_mark:
+    2. React testing
+    3. Redux testing
 
 ------------------------------------------------------------
 

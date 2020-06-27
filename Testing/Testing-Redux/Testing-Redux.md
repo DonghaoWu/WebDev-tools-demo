@@ -4,7 +4,7 @@
 
 ## `Section: Testing` (Part 3: Redux)
 
-### `Summary`: In this documentation, we learn testing Redux.
+### `Summary`: In this documentation, we learn Redux testing.
 
 ### `Check Dependencies & Tools:`
 
@@ -17,9 +17,9 @@
 #### `本章背景：`
 - __参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
 - 本章分三部分，分别是：
-    1. Testing function 
-    2. Testing React 
-    3. Testing Redux :white_check_mark:
+    1. Function testing 
+    2. React testing 
+    3. Redux testing :white_check_mark:
 
 ------------------------------------------------------------
 
