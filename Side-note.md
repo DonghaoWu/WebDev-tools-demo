@@ -22,6 +22,31 @@ export const apiCall = (link) => {
       return response.json();
     })
 }
+
+// 还有
+let elements = [
+  'Hydrogen',
+  'Helium',
+  'Lithium',
+  'Beryllium'
+];
+
+elements.map(function(element) { 
+  return element.length; 
+}); // 返回数组：[8, 6, 7, 9]
+
+// 上面的普通函数可以改写成如下的箭头函数
+elements.map((element) => {
+  return element.length;
+}); // [8, 6, 7, 9]
+
+// 当箭头函数只有一个参数时，可以省略参数的圆括号
+elements.map(element => {
+ return element.length;
+}); // [8, 6, 7, 9]
+
+// 当箭头函数的函数体只有一个 `return` 语句时，可以省略 `return` 关键字和方法体的花括号
+elements.map(element => element.length); // [8, 6, 7, 9]
 ```
 
 3. 一种默认的条件：在写 async testing 时，发现在请求体中 body 键对应的值（通常是一个 object 或者其他类型数据），在接受时就是 data，即 `response.json()` 这个方法直接把 body 值取出来：
