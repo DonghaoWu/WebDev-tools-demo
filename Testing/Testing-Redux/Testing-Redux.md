@@ -541,7 +541,7 @@ export const requestRobots = () => (dispatch) => {
 <img src="../../assets/p15-3.png" width=90%>
 </p>
 
-__参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
+__参考材料： [Redux-testing](https://redux.js.org/recipes/writing-tests)__
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
