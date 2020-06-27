@@ -395,6 +395,7 @@ describe('async requestRobots action', () => {
                 payload: mockData
             }
         ]
+
         const store = mockStore({ robots: [] })
 
         return store.dispatch(actions.requestRobots()).then(() => {
@@ -471,6 +472,7 @@ describe('async requestRobots action', () => {
                 payload: mockData
             }
         ]
+        
         const store = mockStore({ robots: [] })
 
         return store.dispatch(actions.requestRobots()).then(() => {
