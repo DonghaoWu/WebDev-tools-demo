@@ -120,7 +120,7 @@ class Mainpage extends Component {
 export default Mainpage;
 ```
 
-2. Snapshot tesing, props testing, self function testing.
+2. Snapshot tesing, pasting props testing, self function testing.
 
 __`Location: ./src/components/Mainpage.test.js`__
 
@@ -186,12 +186,12 @@ it('filters robots correctly', () => {
 
 #### `Comment:`
 1. 在这里要标记一个小 enzyme 用法：
-    - 引用 stateful component 接收的 props 或者自定义 function：
+    - 引用 stateless component 接收的 props 或者自定义 function：
     ```diff
     + wrapper.props().robots
     + wrapper.props().filterRobots()
     ```
-    - 引用 stateless component 接收的 props：
+    - 引用 stateful component (Mainpage.js) 接收的 props 或者自定义 function：
     ```diff
     + wrapper.instance().robots
     + wrapper.instance().filterRobots()
@@ -312,19 +312,6 @@ export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: te
 __`Location: ./src/actions.test.js`__
 
 ```js
-import * as actions from './actions';
-import {
-    CHANGE_SEARCHFIELD,
-    REQUEST_ROBOTS_PENDING,
-    REQUEST_ROBOTS_SUCCESS,
-    REQUEST_ROBOTS_FAILED
-} from './constants';
-
-import configureMockStore from 'redux-mock-store';
-import thunkMiddleware from 'redux-thunk';
-
-const mockStore = configureMockStore([thunkMiddleware]);
-
 // Sync action testing.
 it('should create an action to search robots', () => {
     const text = 'wooo';
