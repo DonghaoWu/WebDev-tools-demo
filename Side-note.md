@@ -57,3 +57,13 @@ export const apiCall = (link) =>
       dispatch({type:..., payload: data})
   })
 ```
+
+4. 6/27/2020，目前发现以下两个语句在测试过程中不一样，后面解释:
+```js
+response => response.json()
+```
+```js
+response =>{
+  return response.json()
+}
+```
