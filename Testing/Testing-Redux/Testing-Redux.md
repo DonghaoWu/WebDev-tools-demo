@@ -15,7 +15,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- __参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
+- __参考材料 [https://redux.js.org/recipes/writing-tests](https://redux.js.org/recipes/writing-tests)__
 - 本章分三部分，分别是：
     1. Function testing 
     2. React testing 
@@ -38,7 +38,7 @@
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 
-1. Seperate App component to two parts.
+1. Seperate App.js component to two parts.
 
 __`Location: ./src/containers/App.js`__
 
