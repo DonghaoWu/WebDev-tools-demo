@@ -504,7 +504,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../assets/p15-1.png" width=90%>
+<img src="../../assets/p15-1.png" width=90%>
 </p>
 
 - 改成：
@@ -522,7 +522,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../assets/p15-2.png" width=90%>
+<img src="../../assets/p15-2.png" width=90%>
 </p>
 
 - 改成：
@@ -538,7 +538,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../assets/p15-3.png" width=90%>
+<img src="../../assets/p15-3.png" width=90%>
 </p>
 
 __参考材料 [Redux-testing](https://redux.js.org/recipes/writing-tests)__
