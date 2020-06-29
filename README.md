@@ -26,8 +26,8 @@
 
 - [Part12 - Performance Part 2.3 Progressive Web App](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part2/Progressive-Web-App.md) 
 
-- [Part13 - Testing Part 1 Functions](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-function/Testing-function.md)
+- [Part13 - Testing Part 1 Functions](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-function.md)
 
-- [Part14 - Testing Part 2 React](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-React/Testing-React.md)
+- [Part14 - Testing Part 2 React](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-React.md)
 
-- [Part15 - Testing Part 3 Redux](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-Redux/Testing-Redux.md)
+- [Part15 - Testing Part 3 Redux](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-Redux.md)
