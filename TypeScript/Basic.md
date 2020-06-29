@@ -112,44 +112,31 @@ $ tsc ty-demo.ts --watch
 2. 在这里提一个问题，编译好的 js 文件没有对 ts 中设定的数据类型敏感，所以 TypeScript 在这里的作用是什么，作为编译前的检测器，对编译行为进行规范并减少 bugs？
 
 
-### <span id="16.3">`Step3: Sync action testing.`</span>
+### <span id="16.3">`Step3: Basic data types.`</span>
 
 - #### Click here: [BACK TO CONTENT](#16.0)
 
-1. Install dependecy:
-```bash
-$ npm i redux-mock-store --save-dev
-```
-
-2. Configure.
+1. Basic types.
+     __`Location: ./demo-app/basic/ty-demo.ts`__
 ```js
-import configureMockStore from 'redux-mock-store';
-import thunkMiddleware from 'redux-thunk';
+// boolean
+let isCool: boolean = true;
 
-const mockStore = configureMockStore([thunkMiddleware]);
-```
+// string
+let color: string = 'black';
 
-3. 被测试的 sync action。
+// array
+let pets: string[] = ['cat', 'dog', 'pig'];
+let foods: Array<string> = ['apple', 'bread', 'noodle'];
 
-```js
-// sync action
-export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: text })
-```
+// object
+let wizard: object = {
+    a: 'John'
+}
 
-4. Sync action testing.
-
-__`Location: ./src/actions.test.js`__
-
-```js
-// Sync action testing.
-it('should create an action to search robots', () => {
-    const text = 'wooo';
-    const expectedAction = {
-        type: CHANGE_SEARCHFIELD,
-        payload: text
-    }
-    expect(actions.setSearchField(text)).toEqual(expectedAction)
-})
+// undefined & null
+let med: undefined = undefined;
+let noo: null = null;
 ```
 ----------------------------------------------------------------------------
 
@@ -157,220 +144,105 @@ it('should create an action to search robots', () => {
 1. 
 
 
-### <span id="16.4">`Step4: Async action testing.`</span>
+### <span id="16.4">`Step4: Advanced data types.`</span>
 
 - #### Click here: [BACK TO CONTENT](#16.0)
 
-1. Install dependecy:
-```bash
-$ npm i fetch-mock --save-dev
-```
-
-2. Configure.
-```js
-import fetchMock from 'fetch-mock'
-```
-
-3. 被测试的 async action。
+1. Advanced types.
+     __`Location: ./demo-app/basic/ty-demo.ts`__
 
 ```js
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  return fetch('https://jsonplaceholder.typicode.com/users')
-    .then(res => res.json())
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
+// tuple
+let basket: [string, string];
+basket = ['pet', 'food'];
+
+// enum
+enum size { Small = 1, Medium = 2, Large = 3 };
+let sizeName: string = size[2];
+let sizeNum: number = size.Small;
+
+// any
+let whatever: any = 'ahhhh';
+whatever = 5;
+
+// function without return & end point: never
+const error = (): never => {
+    throw Error('oooops!');
 }
-```
 
-4. Async action testing.
+// function only without return
+const sing = (): void => {
+    console.log('ha');
+}
 
-```js
-// Async action testing without fetch.
-it('should handles requesting robots API', () => {
-    const store = mockStore();
-    store.dispatch(actions.requestRobots());
-    const expectedAction = {
-        type: REQUEST_ROBOTS_PENDING
+// interface
+interface RobotArmy {
+    count: number,
+    type: string,
+    magic: string
+}
+
+let fightRobotArmy1 = (robots: RobotArmy) => {
+    console.log('Robot1');
+}
+
+let fightRobotArmy2 = (robots: { count: number, type: string, magic: string }) => {
+    console.log('Robot2');
+}
+
+// type，相当于 interface
+type CatArmy = {
+    count: number,
+    type: string,
+    magic: string
+}
+
+let fightCatArmy1 = (robots: CatArmy) => {
+    console.log('Cat1');
+}
+
+let fightCatArmy2 = (robots: { count: number, type: string, magic: string }) => {
+    console.log('Cat2');
+}
+
+// omit if statement，表示该键值可有可无。
+type DogArmy = {
+    count: number,
+    type: string,
+    magic?: string
+}
+
+// function
+const func2 = (): number => {
+    return 5;
+}
+
+// class
+class Animal {
+    private sing: string = 'lalala';
+    constructor(sound: string) {
+        this.sing = sound;
     }
+    greet() {
+        return `Hello ${this.sing}`;
+    }
+}
 
-    expect(store.getActions()[0]).toEqual(expectedAction)
-})
+let lion = new Animal('Rawwwwww');
+console.log(lion.greet());
 
-// Async action testing with mockFetch.
-describe('async requestRobots action', () => {
-    afterEach(() => {
-        fetchMock.restore()
-    })
+// Union
+let confused: string | number | boolean = true;
 
-    const mockData = [{
-        id: 1,
-        name: 'John',
-        email: 'john@test.email',
-    }]
-
-    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
-        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
-            body: mockData,
-            headers: { 'content-type': 'application/json' }
-        })
-
-        const expectedActions = [
-            {
-                type: REQUEST_ROBOTS_PENDING
-            },
-            {
-                type: REQUEST_ROBOTS_SUCCESS,
-                payload: mockData
-            }
-        ]
-
-        const store = mockStore({ robots: [] })
-
-        return store.dispatch(actions.requestRobots()).then(() => {
-            // return of async actions
-            expect(store.getActions()).toEqual(expectedActions)
-        })
-    })
-})
+// 默认模式，相当于 const 的作用。
+let x = 4;
+// x = 'hello' 
 ```
+
 #### `Comment:`
-1. 完整的 async testing 文件：
+1. 
 
-__`Location: ./src/actions.test.js`__
-```js
-import * as actions from './actions';
-import {
-    CHANGE_SEARCHFIELD,
-    REQUEST_ROBOTS_PENDING,
-    REQUEST_ROBOTS_SUCCESS,
-    REQUEST_ROBOTS_FAILED
-} from './constants';
-
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import fetchMock from 'fetch-mock'
-
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
-
-it('should create an action to search robots', () => {
-    const text = 'wooo';
-    const expectedAction = {
-        type: CHANGE_SEARCHFIELD,
-        payload: text
-    }
-    expect(actions.setSearchField(text)).toEqual(expectedAction)
-})
-
-it('should handles requesting robots API', () => {
-    const store = mockStore();
-    store.dispatch(actions.requestRobots());
-    const action = store.getActions();
-    // console.log(action);
-    const expectedAction = {
-        type: REQUEST_ROBOTS_PENDING
-    }
-
-    expect(action[0]).toEqual(expectedAction)
-})
-
-describe('async requestRobots action', () => {
-    afterEach(() => {
-        fetchMock.restore()
-    })
-
-    const mockData = [{
-        id: 1,
-        name: 'John',
-        email: 'john@test.email',
-    }]
-
-    it('creates REQUEST_ROBOTS_SUCCESS when fetching has been done', () => {
-        fetchMock.getOnce('https://jsonplaceholder.typicode.com/users', {
-            body: mockData,
-            headers: { 'content-type': 'application/json' }
-        })
-
-        const expectedActions = [
-            {
-                type: REQUEST_ROBOTS_PENDING
-            },
-            {
-                type: REQUEST_ROBOTS_SUCCESS,
-                payload: mockData
-            }
-        ]
-        
-        const store = mockStore({ robots: [] })
-
-        return store.dispatch(actions.requestRobots()).then(() => {
-            // return of async actions
-            expect(store.getActions()).toEqual(expectedActions)
-        })
-    })
-})
-```
-
-2. 对于测试的一个疑惑：
-
-- 之前的测试 async action 是：
-```js
-const apiCall = (link) => {
-  fetch(link).then(
-    response => {
-      return response.json();
-    })
-}
-
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  apiCall('https://jsonplaceholder.typicode.com/users')
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-}
-```
-
-- 得到：
-<p align="center">
-<img src="../../assets/p16-1.png" width=90%>
-</p>
-
-- 改成：
-```js
-const apiCall = (link) =>
-  fetch(link).then(response => response.json())
-
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  apiCall('https://jsonplaceholder.typicode.com/users')
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-}
-```
-
-- 得到：
-<p align="center">
-<img src="../../assets/p16-2.png" width=90%>
-</p>
-
-- 改成：
-```js
-export const requestRobots = () => (dispatch) => {
-  dispatch({ type: REQUEST_ROBOTS_PENDING })
-  return fetch('https://jsonplaceholder.typicode.com/users')
-    .then(res => res.json())
-    .then(data => dispatch({ type: REQUEST_ROBOTS_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ROBOTS_FAILED, payload: error }))
-}
-```
-
-- 得到：
-<p align="center">
-<img src="../../assets/p16-3.png" width=90%>
-</p>
-
-__参考材料： [Redux-testing](https://redux.js.org/recipes/writing-tests)__
+- __参考材料 ：[https://www.typescriptlang.org/](https://www.typescriptlang.org/)__
 
 - #### Click here: [BACK TO CONTENT](#16.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
