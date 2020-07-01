@@ -19,7 +19,7 @@ interface IAppState {
 }
 
 class App extends React.Component<IAppProps, IAppState> {
-  constructor(props) {
+  constructor(props: IAppProps) {
     super(props)
     this.state = {
       robots: [],
@@ -27,19 +27,19 @@ class App extends React.Component<IAppProps, IAppState> {
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response=> response.json())
-      .then(users => {this.setState({ robots: users})});
+      .then(response => response.json())
+      .then(users => { this.setState({ robots: users }) });
   }
 
-  onSearchChange = (event) => {
+  onSearchChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
     this.setState({ searchfield: event.currentTarget.value })
   }
 
-  render() {
+  render(): JSX.Element {
     const { robots, searchfield } = this.state;
-    const filteredRobots = robots.filter(robot =>{
+    const filteredRobots = robots.filter(robot => {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     })
     return !robots.length ?
@@ -47,7 +47,7 @@ class App extends React.Component<IAppProps, IAppState> {
       (
         <div className='tc'>
           <h1 className='f1'>RoboFriends</h1>
-          <SearchBox searchChange={this.onSearchChange}/>
+          <SearchBox searchChange={this.onSearchChange} />
           <Scroll>
             <CardList robots={filteredRobots} />
           </Scroll>

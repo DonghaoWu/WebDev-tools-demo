@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Card from './Card';
+import { IRobot } from '../containers/App'
 
-const CardList = ({ robots }) => {
+const CardList = ({ robots }: { robots: Array<IRobot> }) => {
   return (
     <div>
       {
@@ -12,7 +13,7 @@ const CardList = ({ robots }) => {
               id={robots[i].id}
               name={robots[i].name}
               email={robots[i].email}
-              />
+            />
           );
         })
       }
