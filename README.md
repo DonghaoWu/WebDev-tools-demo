@@ -34,4 +34,4 @@
 
 - [Part16 - TypeScript Part 1 Basic](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/TypeScript/Basic.md)
 
-- [Part17 - TypeScript Part 2 App](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Testing/Testing-Redux.md)
+- [Part17 - TypeScript Part 2 App](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/TypeScript/TypeScript%40App.md)
