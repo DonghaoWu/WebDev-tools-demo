@@ -178,7 +178,7 @@ interface IAppState {
 }
 
 class App extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
+  constructor() {
     super(props)
     this.state = {
       robots: [],
@@ -200,7 +200,8 @@ export default App;
 
 - #### Click here: [BACK TO CONTENT](#17.0)
 
-1. __`Location: ./robotfriends-typescript/src/containers/CardList.tsx`__
+1. 向下 component 的参数传递。
+- __`Location: ./robotfriends-typescript/src/containers/CardList.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -229,7 +230,8 @@ const CardList = ({ robots }: { robots: Array<IRobot> }) => {
 export default CardList;
 ```
 
-2. __`Location: ./robotfriends-typescript/src/containers/Card.tsx`__
+2. 从上 component 接收的参数为普通类型参数。
+- __`Location: ./robotfriends-typescript/src/containers/Card.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -255,7 +257,8 @@ const Card: React.SFC<CardStatelessProps> = ({ name, email, id }) => {
 export default Card;
 ```
 
-3. __`Location: ./robotfriends-typescript/src/containers/Scroll.tsx`__
+3. 从上 component 接收的参数为 component。
+- __`Location: ./robotfriends-typescript/src/containers/Scroll.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -275,7 +278,8 @@ const Scroll = (props: Props) => {
 export default Scroll;
 ```
 
-4. __`Location: ./robotfriends-typescript/src/containers/SearchBox.tsx`__
+4. 从上 component 接收的参数为 function，且函数参数为键盘输入。
+- __`Location: ./robotfriends-typescript/src/containers/SearchBox.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -300,7 +304,8 @@ const SearchBox = ({ searchChange }: ISearchBoxProps) => {
 export default SearchBox;
 ```
 
-5. __`Location: ./robotfriends-typescript/src/containers/App.tsx`__
+5. 在最上层 component 定义各函数的 type （同时需要在接收参数的地方进行对应定义）。
+- __`Location: ./robotfriends-typescript/src/containers/App.tsx`__
 
 ```js
 import * as React from 'react';

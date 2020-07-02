@@ -67,3 +67,69 @@ response =>{
   return response.json()
 }
 ```
+
+5. 对 React 定义函数区域的重新认识，render 内外都可以定义 function，但 render 外定义的是 instance 属性 function，可以传递。 render 内定义的不能传递。如：
+
+- 7/2/2020 修正，如下例子 render 外可以定义函数， render 一般内不定义函数，主要负责调用函数。
+
+```js
+import * as React from 'react';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
+import './App.css';
+
+export interface IRobot {
+  name: string;
+  id: number;
+  email: string;
+}
+
+interface IAppProps {
+}
+
+interface IAppState {
+  robots: Array<IRobot>;
+  searchfield: string;
+}
+
+class App extends React.Component<IAppProps, IAppState> {
+  constructor(props: IAppProps) {
+    super(props)
+    this.state = {
+      robots: [],
+      searchfield: ''
+    }
+  }
+
+  componentDidMount(): void {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(users => { this.setState({ robots: users }) });
+  }
+
+  onSearchChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
+    this.setState({ searchfield: event.currentTarget.value })
+  }
+
+  render(): JSX.Element {
+    const { robots, searchfield } = this.state;
+    const filteredRobots = robots.filter(robot => {
+      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+    })
+    return !robots.length ?
+      <h1>Loading</h1> :
+      (
+        <div className='tc'>
+          <h1 className='f1'>RoboFriends</h1>
+          <SearchBox searchChange={this.onSearchChange} />
+          <Scroll>
+            <CardList robots={filteredRobots} />
+          </Scroll>
+        </div>
+      );
+  }
+}
+
+export default App;
+```
