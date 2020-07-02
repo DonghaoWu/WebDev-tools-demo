@@ -17,6 +17,8 @@
 
 - 本节中用到的 demo app 是 `robotfriends-typescript`
 
+- 对 app 加入 TypeScript ，可以在编译的时候读懂 TypeScript 的定制变量，如加入 `react@type` 这样就可以在 react app 中加入 TypeScript 的变量去限定参数对 app 进行优化。
+
 - TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
 
 - 本章分两部分，分别是：
@@ -185,13 +187,14 @@ class App extends React.Component<IAppProps, IAppState> {
       searchfield: ''
     }
   }
-/*
-... code
-*/
+    /*
+    ... code
+    */
 }
 
 export default App;
 ```
+
 #### `Comment:`
 1. 
 
@@ -278,7 +281,7 @@ const Scroll = (props: Props) => {
 export default Scroll;
 ```
 
-4. 从上 component 接收的参数为 function，且函数参数为键盘输入。
+4. 从上 component 接收的参数为 function，且函数参数为HTML输入。
 - __`Location: ./robotfriends-typescript/src/containers/SearchBox.tsx`__
 
 ```tsx
@@ -369,6 +372,8 @@ class App extends React.Component<IAppProps, IAppState> {
 export default App;
 ```
 
+#### `Comment:`
+1. 本章里面提及的 TypeScript 大多都是关于参数传递过程中的类型限定，比如一个参数要从上到下的 component 中传递，需要分别在上和下两个 component 中进行定义并限制。
 
 
 - __参考材料 ：[Adding TypeScript to CRA](https://create-react-app.dev/docs/adding-typescript)__
