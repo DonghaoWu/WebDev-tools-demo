@@ -4,7 +4,7 @@
 
 ## `Section: TypeScript` (Part 2: Application)
 
-### `Summary`: In this documentation, we learn combing App with TypeScript.
+### `Summary`: In this documentation, we learn combining App with TypeScript.
 
 ### `Check Dependencies & Tools:`
 
