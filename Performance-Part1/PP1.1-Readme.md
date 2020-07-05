@@ -13,7 +13,10 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- 本章是第一部分第一小节，第一小节目的在于优化代码和文件的大小达到缩减传输文件总量大小从而提升速度，第二小节的目的在于根据 `Rendering path` 改善传输中的文件优先级和先后顺序达到提升用户浏览加载体验。
+
+- 本章分两部分，主要针对文件传输的中间环节，分别是：
+    1. 优化代码并减少传输文件数量和文件大小 :white_check_mark:
+    2. 调整文件传输中的优先级提升用户体验：`The Critical Rendering path`
 
 - 本小节包括的内容有：代码压缩工具，不同图片的使用法则，使用 `media query` 根据浏览器/平板电脑/手机的大小而分配对应大小和像素的图片，还有合并文件和删除重复无效代码。
 
@@ -65,7 +68,7 @@
 
   -------------------------------------------------------------
 
-  __`Location: ./example1.1/index.html`__
+  __`Location: ./demo-apps/transimission-performance/index.html`__
 
   <p align="center">
   <img src="../assets/w9.png" width=90%>
@@ -101,7 +104,7 @@
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
-  __`Location: ./example1.1/style.css`__
+  __`Location: ./demo-apps/transimission-performance/style.css`__
 
   ```css
   body {
@@ -134,7 +137,7 @@
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
-  __`Location: ./example1.1/index.html`__
+  __`Location: ./demo-apps/transimission-performance/index.html`__
 
   ```html
   <!DOCTYPE html>
@@ -217,6 +220,8 @@
   <p align="center">
   <img src="../assets/w13.png" width=90%>
   </p>
+
+  2. 这个工具的作用是把图片托管在网站，然后转化成 API 形式，提高图片传输效率和稳定。
 
 ### <span id="2.6">`Step6 Concept questions.`</span>
 

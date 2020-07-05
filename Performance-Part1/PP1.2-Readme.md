@@ -13,7 +13,11 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- 本章是第一部分第一小节，第一小节目的在于优化代码和文件的大小达到缩减传输文件总量大小从而提升速度，第二小节的目的在于根据 `Rendering path` 改善传输中的文件优先级和先后顺序达到提升用户浏览加载体验。
+- 参考资料：[谷歌文档](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript)
+
+- 本章分两部分，主要针对文件传输的中间环节，分别是：
+    1. 优化代码并减少传输文件数量和文件大小 
+    2. 调整文件传输中的优先级提升用户体验：`The Critical Rendering path` :white_check_mark:
 
 - 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行优化。
 
@@ -34,7 +38,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [3.1 Optimize html file.](#3.1)
+- [3.1 Optimize file position in HTML file..](#3.1)
 - [3.2 Optimize css file.](#3.2)
 - [3.3 Optimize js file.](#3.3)
 - [3.4 Tools to check website performance.](#3.4)
@@ -49,7 +53,7 @@
 
 ------------------------------------------------------------
 
-### <span id="3.1">`Step1: Optimize html file`</span>
+### <span id="3.1">`Step1: Optimize file position in HTML file.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
@@ -57,7 +61,7 @@
 
   2. 当然这种情况只对于相对静态的网页而言，相对动态一点的需要马上执行 js 文件的话就可以考虑`普通型`或者`async型`。
 
-    __`Location: ./example1.2/index.html`__
+    __`Location: ./demo-apps/transimission-performance2/index.html`__
 
   ```html
   <!DOCTYPE html>
@@ -372,7 +376,7 @@
 
   1. Above the fold loading. (把次要的 css 文件放在后台下载执行)。
 
-    __`Location: ./example1.2/index.html`__
+    __`Location: ./demo-apps/transimission-performance2/index.html`__
 
   ```html
   <body>
@@ -408,7 +412,7 @@
   ```
 
 #### `Comment:`
-1. Only load whatever is needed, check each css file. (减少加载无用的语句和文件)
+1. Only load whatever is needed, check each css file. (减少加载无效的语句和文件)
 2. Above the fold loading.（重要的首要页面先加载，次要的指定后台加载。）
 3. Media Attributes. ( css 文件根据浏览器类型大小进行针对下载)
 4. Less Specificity. （尽量缩减 css 选择器的层级，同时如果 css 内容不多可以考虑使用 `html internal css 或者 inline css`）。
@@ -438,7 +442,7 @@
 1. Load Scripts asynchronously. 具体使用规则参考 [STEP5](#3.5)。
 2. Defer Loading of Scripts.
 3. Minimize DOM manipulation.
-4. Avoid long running JavaScript. (举例，有些 JS 按钮功能会阻止整个加载过程。)
+4. Avoid long running JavaScript. (举例，有些 JS 按钮弹窗功能会阻止整个加载过程。)
 
 ### <span id="3.4">`Step4: Tools to check website performance.`</span>
 
@@ -481,7 +485,7 @@
 
 #### `B. How does the browser rendering engine work?`
 
-In order to render content the browser has to go through a series of steps:
+In order to render content the browser has to go through a series of steps: (`The Critical Rendering path`)
 1. Document Object Model(DOM)
 2. CSS object model(CSSOM)
 3. Render Tree
@@ -492,17 +496,122 @@ In order to render content the browser has to go through a series of steps:
 
 #### `C. Dealing with Javascript.`
 
-- Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for the DOM, then it has to download and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.
+- JavaScript can query and modify the DOM and the CSSOM.
+- JavaScript execution blocks on the CSSOM.
+- JavaScript blocks DOM construction unless explicitly declared as async.
 
-- When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, this is why Javascript is parser blocking.
+- When the HTML parser encounters a script tag, it pauses its process of constructing the DOM and yields control to the JavaScript engine; after the JavaScript engine finishes downloading and running, the browser then picks up where it left off and resumes DOM construction.
+
+- In other words, our script block can't find any elements later in the page because they haven't been processed yet! Or, put slightly differently: executing our inline script blocks DOM construction, which also delays the initial render.
+
+- What if the browser hasn't finished downloading and building the CSSOM when we want to run our script? The answer is simple and not very good for performance: the browser delays script execution and DOM construction until it has finished downloading and constructing the CSSOM.
+
+- The location of the script in the document is significant.
+
+- When the browser encounters a script tag, DOM construction pauses until the script finishes executing.
+
+- JavaScript can query and modify the DOM and the CSSOM.
+- JavaScript execution pauses until the CSSOM is ready.
+
+- `(不完全正确观点)`Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for the DOM, then it has to download and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.__（JS 不一定是最后执行的，也不一定是最后下载的。）__
+
+- `(不完全正确观点)`When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, this is why Javascript is parser blocking. __（在建立 DOM 和 CSSDOM 过程中遇到 JS 的话会执行 JS，其他剩下的 DOM 和 CSSDOM 都会暂时中断。）__
 
 ------------------------------------------------------------
 
-#### `D. 个人理解`
-  1. 浏览器的运作是这样的，收到 html 文件之后，就从上往下读取代码，这个过程叫做 parsing ，目的是为了建立 DOM。
-  2. 在 parsing 过程中，如果遇到了 css 文件，parsing 会被打断，DOM 的建立也会停止。这时会进行下载和读取对应 css 文件的代码，目的是为了建立 CSSOM。
-  3. 由上可见，html parsing 跟 css 的读取是共用一个线程的，所以也会有人把它们放在一起讨论。
-  4. 关于 js 文件的下载，就相对不一样。首先相同的是 js 文件跟 css 文件一样，会打断所有关于 DOM 和 CSSOM 的过程，而且 js 因为是动态互动属性，所以现在会把它的下载和执行过程分多种情况讨论，下面讨论一些常见情况：
+#### `D. 个人理解`：
+1. 浏览器是这样运作的：收到 HTML 文件之后，先扫描需要什么文件就发出相关的文件请求下载。然后就开始从上往下读取语句，其中请求文件和读取 html 语句的过程是并行的，所以也就有可能出现读到语句了还没有文件的情况。这个从上到下的过程就叫做 `parsing`，其中建立 DOM 主要是靠读取除 <script> <link> <style> 之外的元素构建 DOM tree.
+
+2. 当读到 `<link>` 或者 `<style>`的时候就标志 CSSOM 的建立开头（下载的 CSS 文件的过程可能在读到这一行之前完成，也可能在读到这一行之后完成），一旦文件准备完成就开始建立 CSSOM 的剩余过程。
+
+3. 这是一个 render blocking 的过程，但必须区分开来的是，parser 是没有停下来的，它会继续向下读取并构建 DOM tree 或者遇到 `<script>`。`建立 DOM 的过程和建立 CSSOM 的过程互相独立并行，互不阻塞，当两者准备好之后才会进入下一步 -> Render tree`
+
+4. 当读到 `<script>` 的时候，parser 会马上停下来，也就是说 DOM tree 的构建会停下来，后面的语句读取就全部暂停，但已经执行的并行程序不会暂停（如 CSSOM）。
+  - 如果这时 CSSOM 已经开始，那么 script 的执行等待 CSSOM 完成后再执行，这时候因为 JS 被延后，parser 也会跟着延后。
+  - 基于以上原因，`<script>`一般放在 `</body>`之前，等大部分语句 parsing 之后再执行 `<script>`，防止`<script>`放得太前导致要等 CSSOM 而延误了后面 DOM 的建立。这样做是优先 DOM 和 CSSOM 的并发建立，最后等 DOM 建立大部分，之后执行 `<script>` 时有可能 CSSOM 已经完成就可以直接执行 CSSOM。
+  - 以下面例子讲述观点：
+
+:star: example 1:
+```html
+<html>
+  <!-- DOM Part 1 begins -->
+  <head>
+      <title>Critical Path: Measure Script</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <!-- DOM Part 1 ends  3ms-->
+
+      <!-- CSSOM begins-->
+      <link href="style.css" rel="stylesheet">
+      <!-- CSSOM ends 10ms-->
+
+      <!-- JS part begins, wait for CSSOM ending-->
+      <script src="script1.js"></script>
+      <!-- JS part ends, 5ms-->
+
+  <!-- DOM Part 2 begins -->
+  </head>
+
+  <body>
+      <h1 id='test'>hello students</h1>
+      <div id="test2">
+          <p id="p1">This is a paragraph.</p>
+          <p id="p2">This is another paragraph.</p>
+      </div>
+      
+  </body>
+  <!-- DOM Part 2 begins 3ms-->
+</html>
+
+<!-- total = 3ms(DOM1) + 10ms(CSSOM) + 5ms(JS) + 3ms(DOM2) = 21ms -->
+```
+
+:star: example 2:
+```html
+<html>
+  <!-- DOM Part 1 begins -->
+  <head>
+      <title>Critical Path: Measure Script</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <!-- DOM Part 1 ends 3ms-->
+
+      <!-- CSSOM begins-->
+      <link href="style.css" rel="stylesheet">
+      <!-- CSSOM ends 10ms-->
+
+  <!-- DOM Part 2 begins -->
+  </head>
+
+  <body>
+      <h1 id='test'>hello students</h1>
+      <div id="test2">
+          <p id="p1">This is a paragraph.</p>
+          <p id="p2">This is another paragraph.</p>
+      </div>
+      <!-- DOM Part 2 ends 3ms-->
+
+      <!-- JS part begins, wait for CSSOM ending-->
+      <script src="script1.js"></script>
+      <!-- JS part ends, 5ms-->
+  </body>
+</html>
+
+<!-- total = 3ms(DOM1) + 10ms(CSSOM & DOM2 并发取最长) + 5ms(JS) = 18ms  -->
+```
+
+  5. 以上例子看出， CSSOM 越早建立，JS 越迟执行，对于提早进入下一阶段 `render tree` 有很大帮助。
+
+  6. 所以初步结论就是，有 `<script>` 是会停止 parsing，但不代表 JS 能马上执行， JS 能不能马上执行还要取决于 CSSOM 是否加载完成。
+
+  7. 当然还有一种办法，想要 JS 的执行不用取决 CSSOM，也不阻碍后面的 DOM 建立，可以使用 async 把 JS 从 `critical rendering path` 中抽出来，不成为 render 的必要因素，独立在另外 thread 进行。因为 async 过程没有次序性，比较适合那些不修改 DOM 或者 CSSOM 的 JS script 使用。
+
+  8. __Historically, when a browser encountered a <script> tag pointing to an external resource, the browser would stop parsing the HTML, retrieve the script, execute it, then continue parsing the HTML. In contrast, if the browser encountered a <link> for an external stylesheet, it would continue parsing the HTML while it fetched the CSS file (in parallel).__
+
+  9. 
+  - If async="async": The script is executed asynchronously with the rest of the page (the script will be executed while the page continues the parsing)
+  - If async is not present and defer="defer": The script is executed when the page has finished parsing
+  - If neither async or defer is present: The script is fetched and executed immediately, before the browser continues parsing the page.
+  - [w3School](https://www.w3schools.com/tags/tag_script.asp)
+
 
     - 如果网页是静态为主，那么应该把 js 文件放在最后，等对应的 DOM 和 CSSOM 建立完成后再下载并执行 js 文件。
 
@@ -512,9 +621,11 @@ In order to render content the browser has to go through a series of steps:
 
     - 如果相关的 js 文件是不需要马上对已建立的 DOM 进行改动的，可以考虑使用`defer`型。
 
-  5. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
+  10. 最重要的是在运行一个 html 的过程中，有两个过程很重要：parsing 和 rendering。默认的 JS 操作是 parsing blocking 并马上执行，默认的 CSS 操作是 rendering blocking 并停止其他 DOM 上的操作，包括 JS 文件的执行和 DOM 的建立。
 
-  6. 为了帮助理解可以看下面的流程图对比：
+  11. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
+
+  12. 为了帮助理解可以看下面的流程图对比：
 
   - 普通型：马上打断主进程进行下载并执行 js 文件
   - async 型：不打断主进行下载 js 文件，完成下载后打断主进程，执行 js 文件，如果是多个文件执行则是异步执行，不保证顺序。
