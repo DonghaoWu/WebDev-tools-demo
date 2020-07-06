@@ -651,7 +651,7 @@ In order to render content the browser has to go through a series of steps: (`Th
 -----------------------------------------------------------------------------
 
 12. 练习
-  1. 外联 css。
+  a. 外联 css。
 
   ```html
   <html>
@@ -670,7 +670,7 @@ In order to render content the browser has to go through a series of steps: (`Th
 
 -----------------------------------------------------------------------------
 
-  2. 外联 css + 内联 script。
+  b. 外联 css + 内联 script。
   ```html
   <html>
   <head>
@@ -692,7 +692,7 @@ In order to render content the browser has to go through a series of steps: (`Th
 
 -----------------------------------------------------------------------------
 
-  3. 外联 css + 外联 script。
+  c. 外联 css + 外联 script。
   ```html
   <html>
   <head>
