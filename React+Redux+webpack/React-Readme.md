@@ -17,7 +17,7 @@
 #### `本章背景：`
 - 先放一个典型的 react 文件，里面包含本章内容的大部分要点：
 
-    __`Location: ./robotfriends/src/App.js`__
+    __`Location: ./robotFriends-React/src/App.js`__
 
     ```jsx
     import React, { Component } from 'react';
@@ -146,7 +146,7 @@
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
-    __`Location: ./robotfriends/src/App.js`__
+    __`Location: ./robotFriends-React/src/App.js`__
 
     - Class component
     ```jsx
@@ -248,14 +248,17 @@ render(){
 
 - 例子：
 
-    - Class component.
+    - Class component with props.
     ```jsx
-    import React, {Component} from 'react';
+    import React, { Component } from 'react';
     import './Hello.css';
 
-    class HelloClass extends Component{
-        render(){
-            return(
+    class HelloClass extends Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
                 <div className='f1 tc'>
                     <h1>Hello</h1>
                     <p>{this.props.greeting}</p>
@@ -366,7 +369,7 @@ render(){
 
 2. __如何实现`窗中窗`功能 Wrap component？__
 
-    __`Location: ./robotfriends/src/containers/App.js`__
+    __`Location: ./robotFriends-React/src/containers/App.js`__
 
     ```jsx
     import Scroll from 'Scroll';
@@ -376,7 +379,7 @@ render(){
     </Scroll>
     ```
 
-    __`Location: ./robotfriends/src/components/Scoll.js`__
+    __`Location: ./robotFriends-React/src/components/Scoll.js`__
 
     ```jsx
     import React from 'react';
@@ -407,7 +410,7 @@ render(){
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
-    __`Location: ./robotfriends/src/containers/App.js`__
+    __`Location: ./robotFriends-React/src/containers/App.js`__
 
     ```jsx
     componentDidMount() {
@@ -432,13 +435,13 @@ render(){
     ```
 
 #### `Comment:`
-1. 
+1. 使用 fetch 是要进行 .json() 处理然后获得 body 的数据，使用 axios 是要进行 .data 处理然后获得 body 的数据。
 
 ### <span id="4.6">`Step6: React error boundary.`</span>
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
-    __`Location: ./robotfriends/src/components/ErrorBoundary.js`__
+    __`Location: ./robotFriends-React/src/components/ErrorBoundary.js`__
 
     ```jsx
     import React, { Component } from 'react';
@@ -467,7 +470,7 @@ render(){
     ```
 
     - 使用方法：
-    __`Location: ./robotfriends/src/containers/App.js`__
+    __`Location: ./robotFriends-React/src/containers/App.js`__
 
     ```jsx
     <Scroll>
@@ -479,7 +482,7 @@ render(){
 
     - 测试方法：
 
-    __`Location: ./robotfriends/src/components/CardList.js`__
+    __`Location: ./robotFriends-React/src/components/CardList.js`__
 
     ```jsx
     import React from 'react';
@@ -528,7 +531,17 @@ render(){
 
 1. 必须要写 `import React from 'react';`才能使用 JSX 语句。
 
-2. 不是 export default 情况，JSX 中填入 JS 变量都需要使用 `{}`，也叫做 distructuring。
+2. JSX 中填入 JS 变量都需要使用 `{}`，也叫做 distructuring。例子如下：
+
+```js
+// file name: script.js
+export { name1, name2, …, nameN };
+
+// file name: script2.js
+import { name1, name2, …, nameN } from 'script.js';
+```
+
+    - 注意，不能使用 var、let 或 const 用于导出默认值 export default。
 
 3. file structure
     - components folder: pure functions
@@ -562,16 +575,33 @@ render(){
 10. 使用 API 获得图片。
 
     ```jsx
-    <img alt='robots' src={`https://robohash.org/${props.id}?200x200`} />
+    <img alt='robots' src={`https://robohash.org/${props.id}?size=200x200`} />
     ```
 
-11. Distructuring。
+11. Distructuring，一下例子的意思是使用 {greeting} 作为函数参数后，就可以直接在函数体内使用 greeting，而不是 props.greeting。
 
     ```jsx
     import React from 'react';
     import './Hello.css';
 
     const HelloFunc = ({ greeting }) => {
+        return (
+            <div className='f1 tc'>
+                <h1>Hello</h1>
+                <p>{greeting}</p>
+            </div>
+        )
+    }
+
+    export default HelloFunc;
+    ```
+    - 相当于
+    ```jsx
+    import React from 'react';
+    import './Hello.css';
+
+    const HelloFunc = (props) => {
+        const { greeting } = props;
         return (
             <div className='f1 tc'>
                 <h1>Hello</h1>
@@ -606,7 +636,7 @@ render(){
     }
     ```
 
-13. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。`在这里要说明的是，在类中使用箭头定义法就不用在 constructor 中使用 bind 操作。`
+13. Defind a bind function,及向下传递一个函数，这个函数的操作会影响在父组件的 state 的值。:star:`在这里要说明的是，在类中使用箭头定义法就不用在 constructor 中使用 bind 操作。`
 
     ```jsx
     class App extends Component {
@@ -639,7 +669,7 @@ render(){
 
 14. 在子组件引用父组件的函数：
 
-    __`Location: ./robotfriends/src/components/SearchBox.js`__
+    __`Location: ./robotFriends-React/src/components/SearchBox.js`__
 
     ```jsx
     import React from 'react';

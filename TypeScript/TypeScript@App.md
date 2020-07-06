@@ -15,7 +15,7 @@
 #### `本章背景：`
 - __参考材料 ：[Adding TypeScript to CRA](https://create-react-app.dev/docs/adding-typescript)__
 
-- 本节中用到的 demo app 是 `robotfriends-typescript`
+- 本节中用到的 demo app 是 `robotFriends-typescript`
 
 - 对 app 加入 TypeScript ，可以在编译的时候读懂 TypeScript 的定制变量，如加入 `react@type` 这样就可以在 react app 中加入 TypeScript 的变量去限定参数对 app 进行优化。
 
@@ -75,7 +75,7 @@ $ npm install --save typescript @types/node @types/react @types/react-dom @types
 - #### Click here: [BACK TO CONTENT](#17.0)
 
 1. 对应 dependencies 可以使用的 TypeScript 版本
-__`Location: ./demo-app/robotfriends-typescript/package.json`__
+__`Location: ./demo-app/robotFriends-typescript/package.json`__
 
 ```js
   "devDependencies": {
@@ -88,7 +88,7 @@ __`Location: ./demo-app/robotfriends-typescript/package.json`__
 ```
 
 2. 对应 TypeScript 的配置
-__`Location: ./demo-app/robotfriends-typescript/tsconfig.json`__
+__`Location: ./demo-app/robotFriends-typescript/tsconfig.json`__
 
 ```js
 {
@@ -124,32 +124,32 @@ __`Location: ./demo-app/robotfriends-typescript/tsconfig.json`__
 
 3. Change files name:
 ```diff
-- ./robotfriends-typescript/src/index.js
-+ ./robotfriends-typescript/src/index.tsx
+- ./robotFriends-typescript/src/index.js
++ ./robotFriends-typescript/src/index.tsx
 
-- ./robotfriends-typescript/src/registerServiceWorker.js
-+ ./robotfriends-typescript/src/registerServiceWorker.ts
+- ./robotFriends-typescript/src/registerServiceWorker.js
++ ./robotFriends-typescript/src/registerServiceWorker.ts
 
-- ./robotfriends-typescript/src/containers/App.js
-+ ./robotfriends-typescript/src/containers/App.tsx
+- ./robotFriends-typescript/src/containers/App.js
++ ./robotFriends-typescript/src/containers/App.tsx
 
 
-- ./robotfriends-typescript/src/components/Card.js
-+ ./robotfriends-typescript/src/components/Card.tsx
+- ./robotFriends-typescript/src/components/Card.js
++ ./robotFriends-typescript/src/components/Card.tsx
 
-- ./robotfriends-typescript/src/components/CardList.js
-+ ./robotfriends-typescript/src/components/CardList.tsx
+- ./robotFriends-typescript/src/components/CardList.js
++ ./robotFriends-typescript/src/components/CardList.tsx
 
-- ./robotfriends-typescript/src/components/Scroll.js
-+ ./robotfriends-typescript/src/components/Scroll.tsx
+- ./robotFriends-typescript/src/components/Scroll.js
++ ./robotFriends-typescript/src/components/Scroll.tsx
 
-- ./robotfriends-typescript/src/components/SearchBox.js
-+ ./robotfriends-typescript/src/components/SearchBox.tsx
+- ./robotFriends-typescript/src/components/SearchBox.js
++ ./robotFriends-typescript/src/components/SearchBox.tsx
 ```
 
 4. Add some code in index.tsx
 
-__`Location: ./robotfriends-typescript/src/index.tsx`__
+__`Location: ./robotFriends-typescript/src/index.tsx`__
 ```js
 ReactDOM.render(
   <App />,
@@ -159,7 +159,7 @@ ReactDOM.render(
 
 5. Add some types in App.tsx
 
-__`Location: ./robotfriends-typescript/src/containers/App.tsx`__
+__`Location: ./robotFriends-typescript/src/containers/App.tsx`__
 
 ```js
 /*
@@ -204,7 +204,7 @@ export default App;
 - #### Click here: [BACK TO CONTENT](#17.0)
 
 1. 向下 component 的参数传递。
-- __`Location: ./robotfriends-typescript/src/containers/CardList.tsx`__
+- __`Location: ./robotFriends-typescript/src/containers/CardList.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -234,7 +234,7 @@ export default CardList;
 ```
 
 2. 从上 component 接收的参数为普通类型参数。
-- __`Location: ./robotfriends-typescript/src/containers/Card.tsx`__
+- __`Location: ./robotFriends-typescript/src/containers/Card.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -248,7 +248,7 @@ interface CardStatelessProps {
 const Card: React.SFC<CardStatelessProps> = ({ name, email, id }) => {
   return (
     <div className='tc grow bg-light-green br3 pa3 ma2 dib bw2 shadow-5'>
-      <img alt='robots' src={`https://robohash.org/${id}?200x200`} />
+      <img alt='robots' src={`https://robohash.org/${id}?size=200x200`} />
       <div>
         <h2>{name}</h2>
         <p>{email}</p>
@@ -261,7 +261,7 @@ export default Card;
 ```
 
 3. 从上 component 接收的参数为 component。
-- __`Location: ./robotfriends-typescript/src/containers/Scroll.tsx`__
+- __`Location: ./robotFriends-typescript/src/containers/Scroll.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -282,7 +282,7 @@ export default Scroll;
 ```
 
 4. 从上 component 接收的参数为 function，且函数参数为HTML输入。
-- __`Location: ./robotfriends-typescript/src/containers/SearchBox.tsx`__
+- __`Location: ./robotFriends-typescript/src/containers/SearchBox.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -308,7 +308,7 @@ export default SearchBox;
 ```
 
 5. 在最上层 component 定义各函数的 type （同时需要在接收参数的地方进行对应定义）。
-- __`Location: ./robotfriends-typescript/src/containers/App.tsx`__
+- __`Location: ./robotFriends-typescript/src/containers/App.tsx`__
 
 ```js
 import * as React from 'react';

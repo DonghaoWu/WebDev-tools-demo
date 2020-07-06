@@ -14,14 +14,14 @@ create-react-app
 
 ```bash
 $ sudo npm install -g create-react-app
-$ create-react-app robotfriends
-$ cd robotfriends
+$ create-react-app robotFriends
+$ cd robotFriends
 $ npm start
 ```
 
 ```bash
-$ create-react-app robotfriends
-$ cd robotfriends
+$ create-react-app robotFriends
+$ cd robotFriends
 $ npm start
 ```
 
@@ -186,7 +186,7 @@ ReactDOM.render(
 
 使用 API 获得图片
 ```jsx
-<img alt='robots' src={`https://robohash.org/${props.id}?200x200`} />
+<img alt='robots' src={`https://robohash.org/${props.id}?size=200x200`} />
 ```
 
 Distructuring:

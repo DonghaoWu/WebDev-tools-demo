@@ -68,7 +68,7 @@
 
   1. store and redux middleware.
 
-  __`Location: ./robotfriends-redux/src/store.js`__
+  __`Location: ./robotFriends-redux/src/store.js`__
 
   ```jsx
   import { applyMiddleware, createStore } from 'redux';
@@ -85,7 +85,7 @@
 
   2. rootReducer
 
-  __`Location: ./robotfriends-redux/src/rootReducer.js`__
+  __`Location: ./robotFriends-redux/src/rootReducer.js`__
 
   ```jsx
   import { requestRobotsReducer, searchRobotsReducer } from './reducers';
@@ -98,7 +98,7 @@
 
   3. Apply redux to application.
 
-  __`Location: ./robotfriends-redux/src/index.js`__
+  __`Location: ./robotFriends-redux/src/index.js`__
 
   ```jsx
   import React from 'react';
@@ -128,7 +128,7 @@
 
   1. TYPES
 
-  __`Location: ./robotfriends-redux/src/constants.js`__
+  __`Location: ./robotFriends-redux/src/constants.js`__
 
   ```jsx
   export const CHANGE_SEARCHFIELD = 'CHANGE_SEARCHFIELD';
@@ -140,7 +140,7 @@
 
   2. ACTIONS
 
-  __`Location: ./robotfriends-redux/src/actions.js`__
+  __`Location: ./robotFriends-redux/src/actions.js`__
 
   ```jsx
   import { apiCall } from './api/api'
@@ -164,7 +164,7 @@
 
   3. REDUCERS
 
-  __`Location: ./robotfriends-redux/src/actions.js`__
+  __`Location: ./robotFriends-redux/src/actions.js`__
 
   ```jsx
   import {
