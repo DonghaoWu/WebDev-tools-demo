@@ -1,7 +1,7 @@
-// function myFunc() {
-//     document.getElementById("test").style.color = 'green';
-// }
-// setTimeout(myFunc, 3000);
+function myFunc() {
+    document.getElementById("test").style.color = 'green';
+}
+setTimeout(myFunc, 3000);
 // console.log('script1 begins!')
 // // document.getElementById("test").style.color = 'green';
 // var para = document.createElement("p");
@@ -15,4 +15,4 @@
 
 // console.log('script1 ends here!')
 
-document.getElementById("test").style.color = 'green';
+// document.getElementById("test").style.color = 'green';

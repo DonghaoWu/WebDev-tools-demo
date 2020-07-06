@@ -13,7 +13,13 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- 参考资料：[谷歌文档](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript)
+- 参考资料：[谷歌文档（原始文档，有基础但细节不够）-- 基础](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript)
+
+- 参考资料：[HTML5 parser（英文文档，对原理较深入） -- 进阶](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#The_main_flow)
+
+- 参考资料：[掘金网站（比较易懂，但关键流程不清晰） -- 进阶](https://juejin.im/post/5c1dde33f265da61776bf49a)
+
+- 参考资料：[Github 博客（对渲染流水线有详细讲述） -- 必看推荐](https://blog.poetries.top/browser-working-principle/guide/)
 
 - 本章分两部分，主要针对文件传输的中间环节，分别是：
     1. 优化代码并减少传输文件数量和文件大小 
@@ -603,6 +609,8 @@ In order to render content the browser has to go through a series of steps: (`Th
   6. 所以初步结论就是，有 `<script>` 是会停止 parsing，但不代表 JS 能马上执行， JS 能不能马上执行还要取决于 CSSOM 是否加载完成。
 
   7. 当然还有一种办法，想要 JS 的执行不用取决 CSSOM，也不阻碍后面的 DOM 建立，可以使用 async 把 JS 从 `critical rendering path` 中抽出来，不成为 render 的必要因素，独立在另外 thread 进行。因为 async 过程没有次序性，比较适合那些不修改 DOM 或者 CSSOM 的 JS script 使用。
+
+  8. 7/5 最后的更正， parser blocking 指的是停止 DOM tree 的构建，render blocking 指的是不完成就不进入到 `critical rendering path 的下一步 -> render tree`. 
 
   8. __Historically, when a browser encountered a <script> tag pointing to an external resource, the browser would stop parsing the HTML, retrieve the script, execute it, then continue parsing the HTML. In contrast, if the browser encountered a <link> for an external stylesheet, it would continue parsing the HTML while it fetched the CSS file (in parallel).__
 
