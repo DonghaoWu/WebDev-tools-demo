@@ -645,7 +645,7 @@ In order to render content the browser has to go through a series of steps: (`Th
 -----------------------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p3-22.png" width=90%>
+<img src="../assets/p3-23.png" width=90%>
 </p>
 
 -----------------------------------------------------------------------------
