@@ -510,9 +510,9 @@ In order to render content the browser has to go through a series of steps: (`Th
 - JavaScript can query and modify the DOM and the CSSOM.
 - JavaScript execution pauses until the CSSOM is ready.
 
-- `(不完全正确观点)`Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for the DOM, then it has to download and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.__（JS 不一定是最后执行的，也不一定是最后下载的。）__
+- Javascript is a powerful tool that can manipulate both the DOM and CSSOM, so to execute Javascript, the browser has to wait for downloading and parse all the CSS files, get to the CSSOM event and only then finally execute Javascript.
 
-- `(不完全正确观点)`When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, this is why Javascript is parser blocking. __（在建立 DOM 和 CSSDOM 过程中遇到 JS 的话会执行 JS，其他剩下的 DOM 和 CSSDOM 都会暂时中断。）__
+- When the parser finds a script tag it blocks DOM construction, then waits for the browser to get the file and for the javascript engine to parse the script, and the timing when script executes depends on whether the CSSOM is ready,this is why Javascript is parser blocking. __（这里讲的是 普通型。）__
 
 ------------------------------------------------------------
 
