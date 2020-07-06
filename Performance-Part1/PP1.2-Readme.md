@@ -616,34 +616,115 @@ In order to render content the browser has to go through a series of steps: (`Th
 
   8. __Historically, when a browser encountered a <script> tag pointing to an external resource, the browser would stop parsing the HTML, retrieve the script, execute it, then continue parsing the HTML. In contrast, if the browser encountered a <link> for an external stylesheet, it would continue parsing the HTML while it fetched the CSS file (in parallel).__
 
-  9. 
-  - If async="async": The script is executed asynchronously with the rest of the page (the script will be executed while the page continues the parsing)
-  - If async is not present and defer="defer": The script is executed when the page has finished parsing
-  - If neither async or defer is present: The script is fetched and executed immediately, before the browser continues parsing the page.
-  - [w3School](https://www.w3schools.com/tags/tag_script.asp)
+  9. Attribute 的差异。:star:
+  - async 适合于不对 DOM 和 CSSOM 进行修改的 script，下载过程不阻塞 HTML parser，但是不确定什么时候和顺序执行，执行过程如果 DOM 还没建立就阻塞 HTML parser，`对 critical rendering path 有影响随机性大。`
 
+  - defer 适合于不需要马上在代码中间就对 DOM 和 CSSOM 进行修改的 script，而是等 DOM 和 CSSOM 就绪那一刻再执行修改即全局修改，下载过程不阻塞 HTML parser，可以确定什么时候和顺序执行，执行过程不阻塞 HTML parser(因为 HTML parser 已经完成 构建 DOM )，`对 critical rendering path 有影响可控制`，效果相当于把默认选项的 script 放在最后。
 
-    - 如果网页是静态为主，那么应该把 js 文件放在最后，等对应的 DOM 和 CSSOM 建立完成后再下载并执行 js 文件。
-
-    - 对于上一种情况，也可以考虑使用`defer`型，`defer`型可以开出一条或多条新进程同步下载 js 文件而不打断整体进程，当下载完毕时不马上执行，在其他同步脚本执行后，DOMContentLoaded 事件前依次执行。`具有顺序性。`
-
-    - 如果相关的 js 文件是需要马上对已建立的 DOM 进行改动的，可以使用普通型或者 `async`型，`async`型可以开出一条或多条新进程同步下载 js 文件而不打断整体进程，当下载完毕时马上执行，这时会打断原有的整体进程。但需要注意的是如果有多个`async`连续进行的话，执行时的顺序是无法分先后的，甚至是随机的。`不具有顺序性。`
-
-    - 如果相关的 js 文件是不需要马上对已建立的 DOM 进行改动的，可以考虑使用`defer`型。
-
-  10. 最重要的是在运行一个 html 的过程中，有两个过程很重要：parsing 和 rendering。默认的 JS 操作是 parsing blocking 并马上执行，默认的 CSS 操作是 rendering blocking 并停止其他 DOM 上的操作，包括 JS 文件的执行和 DOM 的建立。
+  - 默认选项（none）：适合于需要马上在代码中间就对 DOM 和 CSSOM 进行修改的 script，下载过程阻塞 HTML parser，可以确定什么时候和顺序执行，执行过程阻塞 HTML parser，`对 critical rendering path 有影响不可控制`。
 
   11. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
 
   12. 为了帮助理解可以看下面的流程图对比：
 
-  - 普通型：马上打断主进程进行下载并执行 js 文件
-  - async 型：不打断主进行下载 js 文件，完成下载后打断主进程，执行 js 文件，如果是多个文件执行则是异步执行，不保证顺序。
-  - defer 型：不打断主进程进行下载 js 文件，完成下载后执行，主进程完成后按顺序执行。
+  - 普通型：马上打断 HTML Parser 进行下载并执行 js 文件
+  - async 型：不打断主进行下载 js 文件，完成下载后执行过程打断 HTML Parser ，执行 js 文件，如果是多个文件执行则是异步执行，不保证顺序。
+  - defer 型：不打断 HTML Parser 进行下载 js 文件，完成下载后执行， HTML Parser 完成后按顺序执行。
 
 <p align="center">
 <img src="../assets/w15.png" width=90%>
 </p>
+
+-----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p3-20.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p3-21.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p3-22.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p3-22.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+- 练习：
+
+1. 外联 css。
+```html
+<html>
+<head>
+    <link href="theme.css" rel="stylesheet">
+</head>
+<body>
+    <div>geekbang com</div>
+</body>
+</html>
+```
+
+<p align="center">
+<img src="../assets/p3-24.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+2. 外联 css + 内联 script。
+```html
+<html>
+<head>
+    <link href="theme.css" rel="stylesheet">
+</head>
+<body>
+    <div>geekbang com</div>
+    <script>
+        console.log('time.geekbang.org')
+    </script>
+    <div>geekbang com</div>
+</body>
+</html>
+```
+
+<p align="center">
+<img src="../assets/p3-25.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+3. 外联 css + 外联 script。
+```html
+<html>
+<head>
+    <link href="theme.css" rel="stylesheet">
+</head>
+<body>
+    <div>geekbang com</div>
+    <script src='foo.js'></script>
+    <div>geekbang com</div>
+</body>
+</html>
+```
+
+<p align="center">
+<img src="../assets/p3-26.png" width=90%>
+</p>
+
+-----------------------------------------------------------------------------
+
+
+- 推荐阅读博客：[渲染流水线](https://blog.poetries.top/browser-working-principle/guide/part5/lesson23.html#%E9%82%A3%E6%B8%B2%E6%9F%93%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-cssom-%E5%91%A2%EF%BC%9F)
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
