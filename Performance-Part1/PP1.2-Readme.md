@@ -25,15 +25,6 @@
     1. 优化代码并减少传输文件数量和文件大小 
     2. 调整文件传输中的优先级提升用户体验：`The Critical Rendering path` :white_check_mark:
 
-- 本小节包括的内容有：分析 `critical render path`，然后从 html file，css file，还有 js file 三大类文件的位置和代码进行优化。
-
-```diff
-+ 在学习 critical render path 过程中，有两个事件需要特别重视。
-+ 第一个是 `DOMContentLoaded`，意味着内容（html，css，js）加载完毕，所有文件已经下载完毕，html 和 css 执行完毕，js 文件是否执行看实际属性，开始渲染。
-+ 第二个是 `Load`，意味着渲染完毕，整个流程完成。
-+ 要注意的是加载过程中 html 和 css 是一直在进行下载和执行动作的，但 js 文件的执行动作是根据实际的 tag attribute 而定的。
-```
-
 <p align="center">
 <img src="../assets/w18.png" width=90%>
 </p>
