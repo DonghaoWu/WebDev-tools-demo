@@ -526,16 +526,18 @@ In order to render content the browser has to go through a series of steps: (`Th
 ------------------------------------------------------------
 
 #### `D. 个人理解`：
-1. 浏览器是这样运作的：收到 HTML 文件之后，先扫描需要什么文件就发出相关的文件请求下载。然后就开始从上往下读取语句，其中请求文件和读取 html 语句的过程是并行的，所以也就有可能出现读到语句了还没有文件的情况。这个从上到下的过程就叫做 `parsing`，其中建立 DOM 主要是靠读取除 <script> <link> <style> 之外的元素构建 DOM tree.
+1. 浏览器是这样运作的：收到 HTML 文件之后，先扫描需要什么文件就发出相关的文件请求下载。然后就开始从上往下读取语句，其中请求文件和读取 html 语句的过程是并行的，所以也就有可能出现读到语句了还没有文件的情况。注意这个过程会有两个 parser，第一个是 HTML parser，通过读取除 <script> <link> <style> 之外的元素构建 DOM tree，另外一个 parser 是 CSS parser。
 
-2. 当读到 `<link>` 或者 `<style>`的时候就标志 CSSOM 的建立开头（下载的 CSS 文件的过程可能在读到这一行之前完成，也可能在读到这一行之后完成），一旦文件准备完成就开始建立 CSSOM 的剩余过程。
+2. 当读到 `<link>` 或者 `<style>`的时候就标志 CSSOM 的建立开头（下载的 CSS 文件的过程可能在读到这一行之前完成，也可能在读到这一行之后完成），一旦文件准备完成，CSS parser 就开始运作并无阻塞地完成 CSSOM 建立。
 
-3. 这是一个 render blocking 的过程，但必须区分开来的是，parser 是没有停下来的，它会继续向下读取并构建 DOM tree 或者遇到 `<script>`。`建立 DOM 的过程和建立 CSSOM 的过程互相独立并行，互不阻塞，当两者准备好之后才会进入下一步 -> Render tree`
+3. 这是一个 render blocking 的过程，但必须区分开来的是，HTML parser 是没有停下来的，它会继续向下读取并构建 DOM tree 或者遇到 `<script>`。`建立 DOM 的过程和建立 CSSOM 的过程互相独立并行，互不阻塞，当两者准备好之后才会进入下一步 -> Render tree`
 
-4. 当读到 `<script>` 的时候，parser 会马上停下来，也就是说 DOM tree 的构建会停下来，后面的语句读取就全部暂停，但已经执行的并行程序不会暂停（如 CSSOM）。
-  - 如果这时 CSSOM 已经开始，那么 script 的执行等待 CSSOM 完成后再执行，这时候因为 JS 被延后，parser 也会跟着延后。
-  - 基于以上原因，`<script>`一般放在 `</body>`之前，等大部分语句 parsing 之后再执行 `<script>`，防止`<script>`放得太前导致要等 CSSOM 而延误了后面 DOM 的建立。这样做是优先 DOM 和 CSSOM 的并发建立，最后等 DOM 建立大部分，之后执行 `<script>` 时有可能 CSSOM 已经完成就可以直接执行 CSSOM。
-  - 以下面例子讲述观点：
+4. 当读到 `<script>` 的时候，HTML parser 会马上停下来，也就是说 DOM tree 的构建会停下来，等待 CSS  文件的下载还有 CSS parser 完成 CSSOM。
+  - 这时 script 的执行等待 CSSOM 完成后再执行，因为 JS 被延后，HTML parser 也会跟着延后。
+
+  - 基于以上原因，`<script>`一般放在 `</body>`之前，等大部分语句 HTML parsing 之后再执行 `<script>`，防止`<script>`放得太前导致要等 CSSOM 而延误了后面 DOM 的建立。这样做是优先 DOM 和 CSSOM 的并发建立，最后等 DOM 建立大部分，之后执行 `<script>` ，这是一种常规有效优化方法。
+
+  - 以下面例子讲述观点，所指时间都是执行时间没有包括下载时间。
 
 :star: example 1:
 ```html
@@ -544,13 +546,13 @@ In order to render content the browser has to go through a series of steps: (`Th
   <head>
       <title>Critical Path: Measure Script</title>
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <!-- DOM Part 1 ends  3ms-->
+      <!-- DOM Part 1 ends  15ms-->
 
       <!-- CSSOM begins-->
       <link href="style.css" rel="stylesheet">
       <!-- CSSOM ends 10ms-->
 
-      <!-- JS part begins, wait for CSSOM ending-->
+      <!-- JS part begins, wait until CSSOM ending-->
       <script src="script1.js"></script>
       <!-- JS part ends, 5ms-->
 
@@ -565,10 +567,10 @@ In order to render content the browser has to go through a series of steps: (`Th
       </div>
       
   </body>
-  <!-- DOM Part 2 begins 3ms-->
+  <!-- DOM Part 2 begins 15ms-->
 </html>
 
-<!-- total = 3ms(DOM1) + 10ms(CSSOM) + 5ms(JS) + 3ms(DOM2) = 21ms -->
+<!-- total = 15ms(DOM1) + 10ms(CSSOM) + 5ms(JS) + 15ms(DOM2) = 45ms -->
 ```
 
 :star: example 2:
@@ -578,7 +580,7 @@ In order to render content the browser has to go through a series of steps: (`Th
   <head>
       <title>Critical Path: Measure Script</title>
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <!-- DOM Part 1 ends 3ms-->
+      <!-- DOM Part 1 ends 15ms-->
 
       <!-- CSSOM begins-->
       <link href="style.css" rel="stylesheet">
@@ -593,24 +595,24 @@ In order to render content the browser has to go through a series of steps: (`Th
           <p id="p1">This is a paragraph.</p>
           <p id="p2">This is another paragraph.</p>
       </div>
-      <!-- DOM Part 2 ends 3ms-->
+      <!-- DOM Part 2 ends 15ms-->
 
-      <!-- JS part begins, wait for CSSOM ending-->
+      <!-- JS part begins, wait until CSSOM ending-->
       <script src="script1.js"></script>
       <!-- JS part ends, 5ms-->
   </body>
 </html>
 
-<!-- total = 3ms(DOM1) + 10ms(CSSOM & DOM2 并发取最长) + 5ms(JS) = 18ms  -->
+<!-- total = 15ms(DOM1) + 15ms(CSSOM & DOM2 并发取最大值) + 5ms(JS) = 35ms  -->
 ```
 
   5. 以上例子看出， CSSOM 越早建立，JS 越迟执行，对于提早进入下一阶段 `render tree` 有很大帮助。
 
   6. 所以初步结论就是，有 `<script>` 是会停止 parsing，但不代表 JS 能马上执行， JS 能不能马上执行还要取决于 CSSOM 是否加载完成。
 
-  7. 当然还有一种办法，想要 JS 的执行不用取决 CSSOM，也不阻碍后面的 DOM 建立，可以使用 async 把 JS 从 `critical rendering path` 中抽出来，不成为 render 的必要因素，独立在另外 thread 进行。因为 async 过程没有次序性，比较适合那些不修改 DOM 或者 CSSOM 的 JS script 使用。
+  7. 当然还有一种办法，想要 JS 的执行不用取决 CSSOM，也不阻碍后面的 DOM 建立，可以使用 async 把 JS 从 `critical rendering path` 中抽出来，不成为 render 的必要因素，独立在另外 thread 进行。因为 async 过程没有次序性，比较适合那些不需要修改 DOM 或者 CSSOM 的 JS script 使用。
 
-  8. 7/5 最后的更正， parser blocking 指的是停止 DOM tree 的构建，render blocking 指的是不完成就不进入到 `critical rendering path 的下一步 -> render tree`. 
+  8. 7/5 最后的更正， parser blocking 指的是停止 DOM tree 的构建，特指阻塞 HTML parser 而不是 CSS parser，render blocking 指的是不完成就不进入到 `critical rendering path 的下一步 -> render tree`. 
 
   8. __Historically, when a browser encountered a <script> tag pointing to an external resource, the browser would stop parsing the HTML, retrieve the script, execute it, then continue parsing the HTML. In contrast, if the browser encountered a <link> for an external stylesheet, it would continue parsing the HTML while it fetched the CSS file (in parallel).__
 
