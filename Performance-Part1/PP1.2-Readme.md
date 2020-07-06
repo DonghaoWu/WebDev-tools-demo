@@ -650,9 +650,9 @@ In order to render content the browser has to go through a series of steps: (`Th
 
 -----------------------------------------------------------------------------
 
-12. 练习：
-
+12. 练习
   1. 外联 css。
+
   ```html
   <html>
   <head>
