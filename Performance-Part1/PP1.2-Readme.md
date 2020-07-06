@@ -601,9 +601,7 @@ In order to render content the browser has to go through a series of steps: (`Th
 
   6. 所以初步结论就是，有 `<script>` 是会停止 parsing，但不代表 JS 能马上执行， JS 能不能马上执行还要取决于 CSSOM 是否加载完成。
 
-  7. 当然还有一种办法，想要 JS 的执行不用取决 CSSOM，也不阻碍后面的 DOM 建立，可以使用 async 把 JS 从 `critical rendering path` 中抽出来，不成为 render 的必要因素，独立在另外 thread 进行。因为 async 过程没有次序性，比较适合那些不需要修改 DOM 或者 CSSOM 的 JS script 使用。
-
-  8. 7/5 最后的更正， parser blocking 指的是停止 DOM tree 的构建，特指阻塞 HTML parser 而不是 CSS parser，render blocking 指的是不完成就不进入到 `critical rendering path 的下一步 -> render tree`. 
+  7. 7/5 最后的更正， parser blocking 指的是停止 DOM tree 的构建，特指阻塞 HTML parser 而不是 CSS parser，render blocking 指的是不完成就不进入到 `critical rendering path 的下一步 -> render tree`. 
 
   8. __Historically, when a browser encountered a <script> tag pointing to an external resource, the browser would stop parsing the HTML, retrieve the script, execute it, then continue parsing the HTML. In contrast, if the browser encountered a <link> for an external stylesheet, it would continue parsing the HTML while it fetched the CSS file (in parallel).__
 
@@ -614,9 +612,9 @@ In order to render content the browser has to go through a series of steps: (`Th
 
   - 默认选项（none）：适合于需要马上在代码中间就对 DOM 和 CSSOM 进行修改的 script，下载过程阻塞 HTML parser，可以确定什么时候和顺序执行，执行过程阻塞 HTML parser，`对 critical rendering path 有影响不可控制`。
 
-  11. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
+  10. 综上所述，js 文件里面的3种类型，主要是看当前页面加载的需要，有些是偏向先加载头部的就先执行 js 文件，如果页面不复杂的话可以最后加载 js 文件，而`async`和`defer`型都可以实现异步并行下载，但最大的区别是`async`马上执行且多个无确定顺序，`defer`最后执行且多个可确定顺序。3种类型都是根据实际需要无分好坏，在实际情况中 js 文件对 DOM 的操作可以是多次且有可能是马上的，还有先后的，所以根据实际情况结合3种类型一同出现也不奇怪。
 
-  12. 为了帮助理解可以看下面的流程图对比：
+  11. 为了帮助理解可以看下面的流程图对比：
 
   - 普通型：马上打断 HTML Parser 进行下载并执行 js 文件
   - async 型：不打断主进行下载 js 文件，完成下载后执行过程打断 HTML Parser ，执行 js 文件，如果是多个文件执行则是异步执行，不保证顺序。
@@ -652,65 +650,65 @@ In order to render content the browser has to go through a series of steps: (`Th
 
 -----------------------------------------------------------------------------
 
-- 练习：
+12. 练习：
 
-1. 外联 css。
-```html
-<html>
-<head>
-    <link href="theme.css" rel="stylesheet">
-</head>
-<body>
-    <div>geekbang com</div>
-</body>
-</html>
-```
+  1. 外联 css。
+  ```html
+  <html>
+  <head>
+      <link href="theme.css" rel="stylesheet">
+  </head>
+  <body>
+      <div>geekbang com</div>
+  </body>
+  </html>
+  ```
 
-<p align="center">
-<img src="../assets/p3-24.png" width=90%>
-</p>
-
------------------------------------------------------------------------------
-
-2. 外联 css + 内联 script。
-```html
-<html>
-<head>
-    <link href="theme.css" rel="stylesheet">
-</head>
-<body>
-    <div>geekbang com</div>
-    <script>
-        console.log('time.geekbang.org')
-    </script>
-    <div>geekbang com</div>
-</body>
-</html>
-```
-
-<p align="center">
-<img src="../assets/p3-25.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p3-24.png" width=90%>
+  </p>
 
 -----------------------------------------------------------------------------
 
-3. 外联 css + 外联 script。
-```html
-<html>
-<head>
-    <link href="theme.css" rel="stylesheet">
-</head>
-<body>
-    <div>geekbang com</div>
-    <script src='foo.js'></script>
-    <div>geekbang com</div>
-</body>
-</html>
-```
+  2. 外联 css + 内联 script。
+  ```html
+  <html>
+  <head>
+      <link href="theme.css" rel="stylesheet">
+  </head>
+  <body>
+      <div>geekbang com</div>
+      <script>
+          console.log('time.geekbang.org')
+      </script>
+      <div>geekbang com</div>
+  </body>
+  </html>
+  ```
 
-<p align="center">
-<img src="../assets/p3-26.png" width=90%>
-</p>
+  <p align="center">
+  <img src="../assets/p3-25.png" width=90%>
+  </p>
+
+-----------------------------------------------------------------------------
+
+  3. 外联 css + 外联 script。
+  ```html
+  <html>
+  <head>
+      <link href="theme.css" rel="stylesheet">
+  </head>
+  <body>
+      <div>geekbang com</div>
+      <script src='foo.js'></script>
+      <div>geekbang com</div>
+  </body>
+  </html>
+  ```
+
+  <p align="center">
+  <img src="../assets/p3-26.png" width=90%>
+  </p>
 
 -----------------------------------------------------------------------------
 
