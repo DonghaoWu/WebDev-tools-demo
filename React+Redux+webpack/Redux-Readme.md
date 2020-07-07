@@ -362,7 +362,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
     - 在 thunkMiddleware 和 dispatch 的共同作用下，结果是运行从 requestRobots 返回的函数，而这个返回的函数也是以 dispatch 作为参数，且在最后使用 `dispatch`去派发 `object`。
     - 之前的疑问是既然 `dispatch` 最后都是一个 object，那么为什么不能使用 `dispatch` 直接对接异步函数返回的 `object`，正如例子一一样操作。这个问题困扰了我很久，这涉及到同步函数跟异步函数的区别，同步函数可以直接得到结果并使用在同步环境中，异步函数是另外开一条线程，可以确定开始时间，但不能确定完成时间，这也是异步情况需要移步函数处理。所以这种情况下，既然不能直接 dispatch 异步函数的结果，就只能运行这个异步函数，等待这个函数完成时在最后 dispatch 这个结果 :arrow_right: `object`。
 
-    - 详细可以参考`  [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) )
+    - 详细可以参考:  [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md)
 
     - `redux-thunk`主要的功能就是可以让我们 dispatch 一个函数，但也保留可以是普通的 `Object`。
 
