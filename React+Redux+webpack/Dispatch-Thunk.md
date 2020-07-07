@@ -39,7 +39,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-- [6.1 Dispatch an object / sync function.](#6.1)
+- [6.1 Dispatch an object / sync function result.](#6.1)
 - [6.2 How to make async action without thunk middleware?](#6.2)
 - [6.3 Dispatch a function using thunk middleware.](#6.3)
 - [6.4 My understanding.](#6.4)
@@ -48,7 +48,7 @@
 
 ------------------------------------------------------------
 
-### <span id="6.1">`Step1: Dispatch an object / sync function.`</span>
+### <span id="6.1">`Step1: Dispatch an object / sync function result.`</span>
 
 - #### Click here: [BACK TO CONTENT](#6.0)
 
@@ -199,7 +199,7 @@
 
     3. 当 `dispatch` 把 `object` 派送出去之后，`reducer`就自动接收这个`object`，然后改变对应的 `state`。
     
-    4. :star: 6/25 补充：目前在没有 `thunkMiddleware`的情况下，dispatch 只能以 `object` 或者 `生成 object 的 sync 函数`作为参数。
+    4. :star: 6/25 补充：目前在没有 `thunkMiddleware`的情况下，dispatch 只能以 `object` 或者 `返回 object 的 sync 函数`作为参数。
 
 ### <span id="6.2">`Step2: How to make async action without thunk middleware？`</span>
 
@@ -363,11 +363,13 @@
 +    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
 + }
 ```
-1. :star2: 主要变化是原来的 `dispatch` 只能以 `object` 为参数，引进 `thunkMiddleware` 之后 `dispatch` 可以是 `function` 。执行过程是如果 `dispatch` 的参数是 `function` 时，它会马上执行这个 `function` ，而由于这个函数是一个 `async function`，它会一直等着整个 `promise` 完成之后然后再调用 `dispatch` 结果（`object`）到 `reducer`。
+1. :star: 主要变化是原来的 `dispatch` 只能以 `object` 为参数，引进 `thunkMiddleware` 之后 `dispatch` 参数可以是 `function` 。执行过程是如果 `dispatch` 的参数是 `function` 时，它会马上执行这个 `function` ，而由于这个函数是一个 `async function`，这个`async function`以 `dispatch` 为参数，会调用 `dispatch` 结果（`object`）到 `reducer`。
 
 2. 一个很重要的认识是，`thunkMiddleware` 是一个使用在 `redux` 中的中间件，目的是为了将函数打包，简化 `component` 的代码，起锦上添花的作用。所以 `thunkMiddleware` __完全可以不使用__，且只使用在 `redux` 中，`react` 用不到。
 
-3. Thunk 的英文资料整理在 `step5`。
+3.  :star: 一个很重要的细节是，在 thunk-middleware 情况下返回 dispatch 的参数为 function 的话，:key:必须要以 dispatch 作为这个 function 的参数。所以 dispatch 的出现场景也是一个需要注意的细节。
+
+4. Thunk 的英文资料整理在 `step5`。
 
 ### <span id="6.4">`Step4: My understanding.`</span>
 
@@ -401,7 +403,7 @@
 
     判断运行以下代码的结果：
     ```js
-    //编写理由：认为 fetchMessages1 会返回 object，可以省去 thunkMIddleware。
+    //编写理由：认为 fetchMessages1 会返回 object，这样可以省去 thunkMiddleware。
 
     dispatch(fetchMessages1());
 
@@ -420,14 +422,13 @@
 
     :bulb: 有 middleware 的情况下，dispatch 一个 sync function，把它当作 sync function 操作，在 sync thread 中执行，得到 `object`。
 
-    :bulb: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行，得到 async action 运行结束。
+    :bulb: 有 middleware 的情况下，dispatch 一个 async function，会把它当作一个 async function 操作，并在 async thread 中执行。
 
   - :star2: 版本二（推荐）：
     1. 没有 middleware，dispatch 的参数，如果是 object，就派送 object;
-    2. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 object，就派送 object;
-    3. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 是一个 async function，就派送 undefined;
-    4. 没有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 functionB，就派送 functionB;
-    5. 有 middleware，dispatch 的参数，如果是 functionA，就先在 sync 模式下运行 functionA，如果 functionA 返回 functionB，无论 functionB 是 async 或者 sync 都运行 , 这时候 functionA 也叫做 `thunk`.
+    2. 没有 middleware，dispatch 的参数，如果是 function，不会运行 functionA，就派送 functionA;
+
+    3. 有 middleware，dispatch 的参数，如果是 functionA，无论 functionA 是 async 或者 sync 都运行 , 这时候 functionA 也叫做 `thunk`.:star: 但此时 functionA 必须是一个以 `dispatch` 为参数的函数。
 
   - :key: 弄清楚第一和第二点很重要，需要弄清楚 sync 和 async 运行的知识基础:
     - [Part7 - Async & Promise](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Promise.md) 
@@ -438,10 +439,11 @@
 
 3. dispatch （无 middleware） 使用的是同步动作，它必须马上返回一个现成的 object，显然作为 async 动作的 axio.get 跟普通的 sync 函数不一样，promise 函数的 callback 是放在 event loop 中等所有 sync 函数完成之后才按序执行，所以是无法马上提供值。
 
-4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object;因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object，:key:`没有 thunkMiddleware 使处理方法就是把 dispatch 放在 promise 链末端。`
+4. 没有加入 thunkMiddleware 时，一开始的 dispatch 是用来派发 sync 执行模式下得到的或者现成的 object;因为 async operation 的运作使 dispatch 无法马上得到并派发 object ，而需要把 dispatch 放在 async operation 过程中（比如 promise 链）才能实现派发 object。
 
 5. 加入 thunkMiddleware 后，调用时 dispatch 就可以放在函数头部，形式是 `dispatch(thunk)`，下面是 thunk 的例子
 
+    1. `thunk function` 常见写法一：
     ```js
     const fetchMessages = () => {
       return (dispatch) => {
@@ -452,7 +454,7 @@
     }
     ```
 
-    2. 另外一种写法，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
+    2. `thunk function` 常见写法二，使用 async/await，需要注明的是，这也是在使用 promise，不过表现形式不一样。
 
     ```js
     export const fetchMessages = () => {
@@ -461,6 +463,15 @@
             const messages = res.data;
             dispatch(gotMessagesFromServer(messages));
         }
+    }
+    ```
+
+    3. `thunk function` 常见写法三：
+    ```js
+    const fetchMessages = () => (dispatch) => {
+        axios.get('/api/messages')
+            .then(res => res.data)
+            .then(messages => dispatch(gotMessagesFromServer(messages)));
     }
     ```
 

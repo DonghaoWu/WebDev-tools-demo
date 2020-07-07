@@ -12,3 +12,11 @@ const HelloFunc = (props) => {
 }
 
 export default HelloFunc;
+
+
+
+const fetchMessages = () => (dispatch) => {
+    axios.get('/api/messages')
+        .then(res => res.data)
+        .then(messages => dispatch(gotMessagesFromServer(messages)));
+}
