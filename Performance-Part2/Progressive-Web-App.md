@@ -6,8 +6,8 @@
 
 ### `Summary`: In this documentation, we improve website performance by making a progressive web application.
 
-### Github Repo : [robotFriends](https://github.com/DonghaoWu/PWA-robotFriends-redux)
-### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-redux/)
+### Github Repo : [robotFriends](https://github.com/DonghaoWu/PWA-robotFriends-Redux)
+### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-Redux/)
 
 ### `Check Dependencies & Tools:`
 
@@ -218,7 +218,7 @@
 
 2. Accessibility:
 
-    __`Location: ./robotFriends-redux/src/components/SearchBox.js`__
+    __`Location: ./demo-apps/robotFriends-Redux/src/components/SearchBox.js`__
     ```js
     import React from 'react';
 
@@ -246,7 +246,7 @@
 
 3. SEO:
 
-    __`Location: ./robotFriends-redux/public/index.html`__
+    __`Location: ./demo-apps/robotFriends-Redux/public/index.html`__
 
     ```html
     <!DOCTYPE html>

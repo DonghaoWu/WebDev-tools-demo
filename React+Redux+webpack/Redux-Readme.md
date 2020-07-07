@@ -42,7 +42,7 @@
 
 - [5.1 Install the dependencies.](#5.1)
 - [5.2 Set up store, combineReducers and redux middleware.](#5.2)
-- [5.3 Set up types, actions, initialstate, reducers.](#5.3)
+- [5.3 Set up types, actions, initial state, reducers.](#5.3)
 - [5.4 Connect state and method to components and use the props and methods.](#5.4)
 - [5.5 Create redux async fucntion.](#5.5)
 
@@ -68,7 +68,7 @@
 
   1. store and redux middleware.
 
-  __`Location: ./robotFriends-redux/src/store.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/store.js`__
 
   ```jsx
   import { applyMiddleware, createStore } from 'redux';
@@ -85,7 +85,7 @@
 
   2. rootReducer
 
-  __`Location: ./robotFriends-redux/src/rootReducer.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/rootReducer.js`__
 
   ```jsx
   import { requestRobotsReducer, searchRobotsReducer } from './reducers';
@@ -98,7 +98,7 @@
 
   3. Apply redux to application.
 
-  __`Location: ./robotFriends-redux/src/index.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/index.js`__
 
   ```jsx
   import React from 'react';
@@ -128,7 +128,7 @@
 
   1. TYPES
 
-  __`Location: ./robotFriends-redux/src/constants.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/constants.js`__
 
   ```jsx
   export const CHANGE_SEARCHFIELD = 'CHANGE_SEARCHFIELD';
@@ -140,7 +140,7 @@
 
   2. ACTIONS
 
-  __`Location: ./robotFriends-redux/src/actions.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/actions.js`__
 
   ```jsx
   import { apiCall } from './api/api'
@@ -164,7 +164,7 @@
 
   3. REDUCERS
 
-  __`Location: ./robotFriends-redux/src/actions.js`__
+  __`Location: ./demo-apps/robotFriends-Redux/src/actions.js`__
 
   ```jsx
   import {
