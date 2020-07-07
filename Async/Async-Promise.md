@@ -66,7 +66,7 @@
     ```
 
 #### `Comment:`
-1. 这就是把一个 `async function` 的 `Promise化`，如果这样写：
+1. 这就是把一个 `async function` 的 `Promise 化`，如果这样写：
 
     ```js
     const x = readFilePro(`${__dirname}/dog.txt`);
@@ -108,7 +108,7 @@
     - 为什么要 `Promise` 化，不进行可不可以？
         1. Promise 化是因为使 callback 方案的代码更容易懂和更容易维护。
         2. `Promise` 精简代码的最好例子是转化 `Callback hell`，在第三步介绍 `Callback hell`。
-        3. 只有 `async function` 才需要 `Promise化`。
+        3. `async function` 都可以 `Promise 化`。
 
 4. 学习 `Promise` 的写法需要清楚语法，需要产出什么，还有包含一个异步动作。
 
@@ -146,7 +146,7 @@
     ```
 
 #### `Comment:`
-1. 目前而言 async function 在同步模式下是没有返回值，Promise 在同步模式下返回 `Promise {<pending>}`，async function 里面就算是 callback 最后返回的值也不会使用在同步函数之中，因为 callback 是在所有同步函数结束之后才执行的。
+1. 目前而言 async function 在同步模式下是没有返回值，Promise 在同步模式下返回 `Promise {<pending>}`，async function 里面就算是 callback 最后返回的值也不会使用在同步环境之中，因为 callback 是在所有同步函数结束之后才执行的。
 
 ### <span id="7.4">`Step4: Callback hell.`</span>
 
@@ -238,7 +238,7 @@
     - `superagent.get` 运行后返回的是 `promise`;
     - `writeFilePro` 运行后返回的是 `promise`;
 
-2. 在这里有两个比较难懂的点，第一个是`.then`后面意味着什么，它是 promise 的一个自带 method，类似 callback，它对应的是 promise 定义时 resolve 包含的参数。
+2. 在这里有两个比较难懂的点，第一个是`.then`后面意味着什么，它是 promise 的一个自带 method，类似 callback，它对应的是 promise 定义时 resolve 包含的参数。:star:只有 promise 才可以使用 .then。
 
 3. 第二个难点是在 `promise` 之前使用 `return` 关键词，这是因为在处理 `promise` 链条时，如果想在上一个 `promise` 成功后把数据用于下一个 `promise`，需要做的是调用当下的 `promise` 并使用 `return` 关键词，整个意思是运行一个 `promise` 并返回这个 `promise` 的结果交给 `.then`或`.catch` 处理。
 
@@ -293,12 +293,12 @@
 1. 第一个必须注明的是，这只是一种新的形式去处理`async action/ promise`。`example3`写法更好理解和维护，但是后台执行的原理跟`example1`和`example2`一模一样。其实这里使用的还是处理 promise 的方法，只是形式改变了，底下执行的原理跟原生 promise 一样。
 
 2. 使用 `async` 定义的函数，表示里面可以使用关键词`await`和`try catch`。
-3. 目前从代码上面看，`await` 后面是必须跟一个 `promise`的，所以必须要把异步函数先`promise`化。`await`的意思是等待这个`promise`成功完成，有返回值的话就赋值，`且之后的所有语句都进入 promise 链条。`
+3. :star: 目前从代码上面看，`await` 后面是必须跟一个 `promise`的，所以必须要把异步函数先`promise`化。`await`的意思是等待这个`promise`成功完成，有返回值的话就赋值，__`且之后的所有语句都自动进入 promise 链条。`__
 4. 可以看出，在异步模式下加上`async`和`await`就可以使`promise`返回一个值，不过这个异步模式的赋值不能用在同步模式的执行上，因为执行模式不一样，所以跟同步函数的运行和思考模式不一样。操作模式不一样，对应的结果也难互相使用，当然同步函数的值可以使用在异步函数中。
 
 5. 目前为止，提到几个比较容易混淆的单词：同步函数，异步函数，同步模式，异步模式，同步动作，异步动作，同步输出，异步输出。后面需要继续解释，理清概念边界。（4月20日）
 
-6. 总的来说，`async function` 加上`Promise`生成`promise`，`promise`使用`async`定义并内部调用是一种简化的`处理 promise`的方式。还是那句话，没有`async`定义并调用，`promise`也可以使用旧方式处理。
+6. 总的来说，`async function` 加上`Promise` 定义生成`promise`，`async/await` 和 `.then/.catch` 是处理 promise 的两种形式。
 
 ### <span id="7.7">`Step7: More about async function.`</span>
 
@@ -309,7 +309,7 @@
 
 #### `Comment:`
 1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。（这个观点是不正确的，async 里面的同步动作还是会直接执行的，4月28日。）
-2. 使用 `async` 定义的函数，返回值一定是一个`promise`，所以可以跟着用 .then 和 .catch。
+2. :question:使用 `async` 定义的函数，返回值一定是一个`promise`，所以可以跟着用 .then 和 .catch。
 
 3. 待补充材料：`throw` & `promise.all`
 
