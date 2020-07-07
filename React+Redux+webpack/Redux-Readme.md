@@ -41,7 +41,7 @@
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 - [5.1 Install the dependencies.](#5.1)
-- [5.2 Set up store, combineReducers and redux middleware.](#5.2)
+- [5.2 Set up store, combineReducers and apply middleware.](#5.2)
 - [5.3 Set up types, actions, initial state, reducers.](#5.3)
 - [5.4 Connect state and method to components and use the props and methods.](#5.4)
 - [5.5 Create redux async fucntion.](#5.5)
@@ -62,7 +62,7 @@
 #### `Comment:`
 1. 
 
-### <span id="5.2">`Step2: Set up store, combineReducers and redux-middleware.`</span>
+### <span id="5.2">`Step2: Set up store, combineReducers and apply middleware.`</span>
 
 - #### Click here: [BACK TO CONTENT](#5.0)
 
@@ -208,9 +208,9 @@
   ```
 
 #### `Comment:`
-1. 在这里需要说明一个事情，第一个函数 `setSearchField` 实际是一个返回 `Object` 的函数，所以在后面调用的时候直接使用 `dispatch` 就可以将 `Object` 派发到对应的 `reducer` 中。这里的函数相当于是一个 `同步函数`。可以实际调用中认为 `dispatch` 是用来派发 `Object` 的。
+1. 在这里需要说明一个事情，第一个函数 `setSearchField` 实际是一个返回 `Object` 的函数，所以在后面调用的时候直接使用 `dispatch` 就可以将 `Object` 派发到对应的 `reducer` 中。这里的函数相当于是一个 `同步函数`。可以认为普通 `dispatch` 是用来派发 `Object` 的。
 
-2. 第二个函数 `requestRobots` 是一个异步函数，定义的方式也不一样，这个在后面会有详细分析。
+2. 第二个函数 `requestRobots` 是一个异步函数，使用的 `dispatch` 需要预先加载 middleware ，后面会有详细分析。
 
 ### <span id="5.4">`Step4: Connect state and method to components and use the props and methods.`</span>
 
@@ -274,7 +274,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 - 下面具体来分析 `dispatch` 的使用。
 
-- 例子一：dispatch 同步函数/ `object`。
+- 例子一：dispatch 同步函数的结果 :arrow_right: `object`。
 
   ```jsx
   // 定义一个同步函数，作为一个 action ，返回一个 object。
@@ -315,7 +315,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
     - dispatch({ object })
     - reducer: searchRobotsReducer
 
-- 例子二：dispatch 异步函数。
+- 例子二：dispatch 函数 :arrow_right: 特指异步函数。
 
   ```jsx
   // 定义一个函数，作为一个 action ，返回一个 function。
@@ -328,8 +328,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
     }
   }
 
-  // onRequestRobots 是一个函数，跟上一个例子不一样，这里是执行了 requestRobots 之后返回一个函数，上一个例子执行了函数之后返回一个对象。
-  //这是第一个最大的不同，当返回的是一个 object 时是不用到 thunkMiddleware 的，只有返回函数的时候，才需要用到这个中间件。
+  // onRequestRobots 返回一个函数，例子一 dispatch 的参数是一个 object，由一个同步函数返回的 object，例子二 dispatch 的参数是一个 function，由一个同步函数返回的 异步函数。
+  //这是第一个最大的不同，当返回的是一个 object 时是不用到 thunkMiddleware 的，只有参数是函数的时候，才需要用到这个中间件。
   const mapDispatchToProps = (dispatch) => {
     return {
       onRequestRobots: () => dispatch(requestRobots())
@@ -359,12 +359,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
     ```
 
     - 这是一个奇怪的组合。
-    - 在 thunkMiddleware 和 dispatch 的作用下，运行从 requestRobots 得到的函数，而这个函数是一个同步函数接着异步函数，而同步函数和异步函数都有另外一个 `dispatch`去派发 `object`。
-    - 很多资料都说 thunkMiddleware 是针对 `dispatch 异步函数`，为什么不能用于同步函数，或者说这里面是怎么运作的，后面需要继续学习。(4月18日更新，thunkMiddleware 可以用于同步函数，就是用于 `object` 为参数的情况，针对异步函数是因为它可以`等异步函数全部完成之后再执行下一步`)
-    - 个人想法，异步函数是有副作用的，在这里我想 thunkMiddleware 的作用就是可以等这个异步函数完全执行之后再跳出来。`(4月18日记,这个想法已经被证实，详细可以参考`  [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) )
+    - 在 thunkMiddleware 和 dispatch 的共同作用下，结果是运行从 requestRobots 返回的函数，而这个返回的函数也是以 dispatch 作为参数，且在最后使用 `dispatch`去派发 `object`。
+    - 之前的疑问是既然 `dispatch` 最后都是一个 object，那么为什么不能使用 `dispatch` 直接对接异步函数返回的 `object`，正如例子一一样操作。这个问题困扰了我很久，这涉及到同步函数跟异步函数的区别，同步函数可以直接得到结果并使用在同步环境中，异步函数是另外开一条线程，可以确定开始时间，但不能确定完成时间，这也是异步情况需要移步函数处理。所以这种情况下，既然不能直接 dispatch 异步函数的结果，就只能运行这个异步函数，等待这个函数完成时在最后 dispatch 这个结果 :arrow_right: `object`。
 
-    - `redux-thunk`主要的功能就是可以让我们dispatch一个函数，但也保留可以是普通的 `Object`。
-    - 我们创建的 action 函数最终都返回的是对象，是因为 store 只能接受 action 对象，但是如果涉及到有请求发送的时候返回对象就不容易操作，有没有什么方法能否返回一个函数，在函数里面进行请求呢？——有的！！redux 的中间件 redux-thunk! `(这个想法不是很全面，redux-thunk 只是 redux简化代码的一个中间件，属于锦上添花类型，详细可以参考“Dispatch-Thunk.md”,4月18日记)`
+    - 详细可以参考`  [Part6 - Dispatch-Thunk](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) )
+
+    - `redux-thunk`主要的功能就是可以让我们 dispatch 一个函数，但也保留可以是普通的 `Object`。
 
 ### <span id="5.6">`Step6: More materials.`</span>
 
