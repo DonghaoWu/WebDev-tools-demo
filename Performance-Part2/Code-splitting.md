@@ -14,6 +14,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
+- :star:本章介绍了3种常见的 React code splitting 的方法，参考性比较强。
 - code splitting 的概念是使 JS file 读取需要读取的优先。
 - 当加载一个网站时如果一次过加载 bundle.js，相当于加载很多 js file，而 js file 里面的 fetch 或者其他代码会拖慢整个进程，如果有些网站，主要浏览区域和时长都是主页，那么其他副业的可以先不加载。
 - 这个概念就是从整合返回到分散，从以前的分散 html 整合到 webpack 的 bundle.js，然后从 bundle.js 发展到按需分散加载(比如按需分配 component 所在的 js file)。
@@ -40,7 +41,8 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-  - __`Location: ./example1/code-splitting/src/edition1/Page1.js`__
+  - :star: Build a custom react router with all pages loaded in advanced.
+  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page1.js`__
 
   ```js
   import React from 'react'
@@ -73,7 +75,7 @@
   export default Page1;
   ```
 
-  - __`Location: ./example1/code-splitting/src/edition1/Page2.js`__
+  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page2.js`__
 
   ```js
   import React from 'react';
@@ -106,7 +108,7 @@
   export default Page2;
   ```
 
-  - __`Location: ./example1/code-splitting/src/edition1/Page3.js`__
+  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page3.js`__
 
   ```js
   import React from 'react';
@@ -139,7 +141,7 @@
   export default Page3;
   ```
 
-  - __`Location: ./example1/code-splitting/editon1/App.js`__
+  - __`Location: ./Performance2.1/code-splitting/editon1/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -191,7 +193,9 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-  - __`Location: ./example1/code-splitting/editon2/App.js`__
+  - :star: 点击页面的时候才加载对应页面文件。
+
+  - __`Location: ./Performance2.1/code-splitting/editon2/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -284,7 +288,7 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-  - __`Location: ./example1/code-splitting/edition2/AsyncComponent.js`__
+  - __`Location: ./Performance2.1/code-splitting/edition2/AsyncComponent.js`__
 
   ```js
   import React, { Component } from 'react';
@@ -314,7 +318,7 @@
   }
   ```
 
-  - __`Location: ./example1/code-splitting/edtion2/App.js`__
+  - __`Location: ./Performance2.1/code-splitting/edtion2/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -388,9 +392,11 @@
     <AsyncPage3 onRouteChange={this.onRouteChange} />
     ```
 
-4. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
-5. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
-6. 详细查看 [React High-Order Components](https://reactjs.org/docs/higher-order-components.html).
+4. :star: 7/8/2020 更新，这里建立一个 AsyncComponent，然后接受从 App 传下来的参数，根据这个参数下载 component 文件，并把文件中的 .default 部分作为 state 的一部分，最后的 this.state.component 就是需要返回的 component，这个方法思路也是按需下载，格式比较新颖，从下载的文件中提取 component 然后作为返回结果返回一个 react 组件。
+
+5. `这个方案比较正规也比较常见，实现的是 js 文件的按需下载。`
+6. 文件 `AsyncComponent.js` 的重用性很高，实用性强。
+7. 详细查看 [React High-Order Components](https://reactjs.org/docs/higher-order-components.html).
 
 ### <span id="10.4">`Step4: Solution3: React new feature - React.lazy.`</span>
 
@@ -398,7 +404,7 @@
 
 #### `注意：这个方案需要至少 react 版本：16.10.2`
 
-  - __`Location: ./example1/code-splitting/edtion3/App.js`__
+  - __`Location: ./Performance2.1/code-splitting/edtion3/App.js`__
 
   ```js
   import React, { Component, Suspense } from 'react'

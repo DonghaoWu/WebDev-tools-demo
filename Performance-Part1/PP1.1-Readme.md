@@ -68,7 +68,7 @@
 
   -------------------------------------------------------------
 
-  __`Location: ./demo-apps/transimission-performance/index.html`__
+  __`Location: ./demo-apps/transimission-performance1/index.html`__
 
   <p align="center">
   <img src="../assets/w9.png" width=90%>
@@ -104,7 +104,7 @@
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
-  __`Location: ./demo-apps/transimission-performance/style.css`__
+  __`Location: ./demo-apps/transimission-performance1/style.css`__
 
   ```css
   body {
@@ -137,7 +137,7 @@
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
-  __`Location: ./demo-apps/transimission-performance/index.html`__
+  __`Location: ./demo-apps/transimission-performance1/index.html`__
 
   ```html
   <!DOCTYPE html>
