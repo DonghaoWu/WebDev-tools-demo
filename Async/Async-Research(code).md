@@ -343,8 +343,8 @@
     执行顺序：
     sync --->
     1. console.log(`start`);
-    2. setTimeout  ---> 开始计时
-    3. Promise.resolve('Promise')
+    2. setTimeout  ---> 开始计时 --> 放进 queue;
+    3. Promise.resolve('Promise') --> .then 放进 queue;
     4. console.log(`End!`);
 
     queue --->
@@ -371,7 +371,7 @@
     执行顺序：
     sync --->
     1. console.log(`start`);
-    2. setTimeout  ---> 开始计时
+    2. setTimeout  ---> 开始计时 --> 放进 queue。
     3. console.log('Promise')
     4. console.log(`End!`);
 
@@ -413,7 +413,7 @@
 
     queue --->
     7. console.log('PromiseA success!');
-    8. console.log(`setTimeout callback`)
+    8. console.log(`setTimeout callback`);
 
     优先调用 queue 中的 promise callback
     最后调用 另外一个 queue 中的 setTimeout 的 callback。
@@ -459,8 +459,10 @@
     6.console.log(`I am sync job 3!`);
 
     event loop --->
-    7.promiseA 的 .catch callback -----> console.log('promiseA error:', err)
-    8.promiseA 的 .finally callback -----> console.log(`a() is done!`);
+    7.setTimeout()
+    8.promiseA.reject
+    9.promiseA 的 .catch callback -----> console.log('promiseA error:', err)
+    10.promiseA 的 .finally callback -----> console.log(`a() is done!`);
     */
     ```
 
@@ -497,8 +499,9 @@
     3.console.log(`I am sync job 2!`);
     4.console.log(`I am sync job 3!`);
 
-    5.promiseA 的 .then callback -----> console.log('PromiseA success', result)
-    6.promiseA 的 .finally callback -----> console.log(`a() is done!`);
+    5.promiseA.resolve
+    6.promiseA 的 .then callback -----> console.log('PromiseA success', result)
+    7.promiseA 的 .finally callback -----> console.log(`a() is done!`);
     */
     ```      
 

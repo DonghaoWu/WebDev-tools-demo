@@ -313,7 +313,7 @@ const promiseA = new Promise((resolve, reject) => {
 
     setTimeout(() => {
         reject(`something bad happened in a()!`)
-    }, 1000);
+    }, 100);
 
     console.log(`Exiting promise executor.`)
 })
