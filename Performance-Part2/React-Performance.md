@@ -9,11 +9,14 @@
 ### `Check Dependencies & Tools:`
 
 - Chrome extension: React Developer Tools
-- localhost:3000/?react_perf + Inspect + Performance tag
+- localhost:3000/?react_perf
+- Inspect ---> Performance tag
 
 ------------------------------------------------------------
 
 #### `本章背景：`
+- :star: 本章主要讲述的是通过阻断不相关 React component 的重加载来提升前端性能。具体表现是当在 searchBar 输入时 Header 和 它的子组件 CunterButton 都不会重加载。这里活用 `shouldComponentUpdate` 是一个考点。
+
 - React 的工作原理是 state 或者 props 变化就全部重加载 `rerender`，但是有时候的实际使用情况是有些部件不需要跟着重加载，这时候就需要一些优化或设定提高 React 的效率。
 
 - Avoid unnecessary DOM manipulation.
@@ -35,7 +38,7 @@
 
 ------------------------------------------------------------
 
-### <span id="11.1">`Step1: Create a Header component`</span>
+### <span id="11.1">`Step1: Create a Header component.`</span>
 
 - #### Click here: [BACK TO CONTENT](#11.0)
 
