@@ -15,6 +15,10 @@
 #### `本章背景：`
 - 
 
+```diff
++ Promise 的作用就是让一系列无固定执行和完成时间的 async action 有秩序地按制作者制定的顺序运作。
+```
+
 ### <span id="8.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
