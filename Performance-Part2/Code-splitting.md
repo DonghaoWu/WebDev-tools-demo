@@ -42,7 +42,7 @@
 - #### Click here: [BACK TO CONTENT](#10.0)
 
   - :star: Build a custom react router with all pages loaded in advanced.
-  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page1.js`__
+  - __`Location: ./Code-splitting/robotFriends-code-splitting/src/edition1/Page1.js`__
 
   ```js
   import React from 'react'
@@ -75,7 +75,7 @@
   export default Page1;
   ```
 
-  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page2.js`__
+  - __`Location: ./Code-splitting/robotFriends-code-splitting/src/edition1/Page2.js`__
 
   ```js
   import React from 'react';
@@ -108,7 +108,7 @@
   export default Page2;
   ```
 
-  - __`Location: ./Performance2.1/code-splitting/src/edition1/Page3.js`__
+  - __`Location: ./Code-splitting/robotFriends-code-splitting/src/edition1/Page3.js`__
 
   ```js
   import React from 'react';
@@ -141,7 +141,7 @@
   export default Page3;
   ```
 
-  - __`Location: ./Performance2.1/code-splitting/editon1/App.js`__
+  - __`Location: ./Code-splitting/editon1/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -195,7 +195,7 @@
 
   - :star: 点击页面的时候才加载对应页面文件。
 
-  - __`Location: ./Performance2.1/code-splitting/editon2/App.js`__
+  - __`Location: ./Code-splitting/editon2/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -288,7 +288,7 @@
 
 - #### Click here: [BACK TO CONTENT](#10.0)
 
-  - __`Location: ./Performance2.1/code-splitting/edition2/AsyncComponent.js`__
+  - __`Location: ./Code-splitting/edition2/AsyncComponent.js`__
 
   ```js
   import React, { Component } from 'react';
@@ -318,7 +318,7 @@
   }
   ```
 
-  - __`Location: ./Performance2.1/code-splitting/edtion2/App.js`__
+  - __`Location: ./Code-splitting/edtion2/App.js`__
 
   ```js
   import React, { Component } from 'react'
@@ -404,7 +404,7 @@
 
 #### `注意：这个方案需要至少 react 版本：16.10.2`
 
-  - __`Location: ./Performance2.1/code-splitting/edtion3/App.js`__
+  - __`Location: ./Code-splitting/edtion3/App.js`__
 
   ```js
   import React, { Component, Suspense } from 'react'

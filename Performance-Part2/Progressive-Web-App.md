@@ -6,9 +6,6 @@
 
 ### `Summary`: In this documentation, we improve website performance by making a progressive web application.
 
-### Github Repo : [robotFriends](https://github.com/DonghaoWu/PWA-robotFriends-Redux)
-### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-Redux/)
-
 ### `Check Dependencies & Tools:`
 
 - [Lighthouse](https://web.dev/)
@@ -18,6 +15,10 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
+
+#### Github Repo : [robotFriends](https://github.com/DonghaoWu/PWA-robotFriends-Redux)
+#### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-Redux/)
+
 - Progress web application 的概念是想把 web application 具备 mobile application 的特征。
 
 - 将一个 web app 转化成 PWA 需要注意的3个方面。
@@ -71,7 +72,7 @@
     ```html
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     ```
-    - ./public/manifest.json, set up the icon,so a user can add an icon in a phone.(比如说一个移动端用户可以在收藏一个 web app 之后在桌面看到一个新的 icon。)
+    - ./public/manifest.json, set up the icon, so a user can add an icon in a phone.(比如说一个移动端用户可以在收藏一个 web app 之后在桌面看到一个新的 icon。)
     - 在加载时，在移动端可以看到加载背景和 icon 。
 
 ----------------------------------------------------------------------------
