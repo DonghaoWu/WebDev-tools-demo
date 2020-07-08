@@ -14,7 +14,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-- :star:本章介绍了3种常见的 React code splitting 的方法，即:key:`点击才加载`:key:特点，参考性比较强。
+- :star:本章介绍了3种常见的 React code splitting 的方法，即:key:__`点击才加载`__，参考性比较强。
 - code splitting 的概念是使 JS file 读取需要读取的优先。
 - 当加载一个网站时如果一次过加载 bundle.js，相当于加载很多 js file，而 js file 里面的 fetch 或者其他代码会拖慢整个进程，如果有些网站，主要浏览区域和时长都是主页，那么其他副业的可以先不加载。
 - 这个概念就是从整合返回到分散，从以前的分散 html 整合到 webpack 的 bundle.js，然后从 bundle.js 发展到按需分散加载(比如按需分配 component 所在的 js file)。
