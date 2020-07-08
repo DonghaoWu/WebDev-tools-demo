@@ -447,6 +447,21 @@
 
     console.log(`I am sync job 2!`);
     console.log(`I am sync job 3!`);
+
+    /*
+    执行顺序：
+    sync --->
+    1.promiseA
+    2.console.log(`Creating promise`);
+    3.console.log(`Exiting promise executor.`)
+    4.console.log(`I am sync job 1!`);
+    5.console.log(`I am sync job 2!`);
+    6.console.log(`I am sync job 3!`);
+
+    event loop --->
+    7.promiseA 的 .catch callback -----> console.log('promiseA error:', err)
+    8.promiseA 的 .finally callback -----> console.log(`a() is done!`);
+    */
     ```
 
     #### `Comment:`
@@ -483,7 +498,7 @@
     4.console.log(`I am sync job 3!`);
 
     5.promiseA 的 .then callback -----> console.log('PromiseA success', result)
-    6.promiseA 的 .fanally callback -----> console.log(`a() is done!`);
+    6.promiseA 的 .finally callback -----> console.log(`a() is done!`);
     */
     ```      
 
@@ -540,7 +555,9 @@
     #### `Comment:`
     1. 这里需要思考的是 .then 和 await 之间会不会产生竞争关系，也就是并行的 promise 在 event loop 中的执行顺序，`这是目前剩下的很大疑问`。
 
-2. 使用 promise 原生方式包装一个 promise 函数，对比使用 async/await 方式包装一个 promise。
+    2. :star: 这个例子很好的展示了 async/await 如何解决 promise 的嵌套格式。
+
+2. 使用 promise 方式包装一个 async 函数，对比使用 async/await 方式包装一个 async 函数。
 
     ```js
     function logFetch(url) {
@@ -566,7 +583,7 @@
     }
     ```
 
-3. `定义一个 promise 包装函数，然后定义一个 async 函数去调用这个包装函数，最后调用这个 async 函数去获得了新的 promise。`__（这是一个很全面使用的例子。）__
+3. `使用 promise 方式定义一个 async 函数A，然后用 async/await 方式定义一个函数B 去调用函数A，最后调用这个 async 函数去获得了新的 promise。`__（这是一个很全面使用的例子。）__
 
     ```js
     function fetchTheData(someValue){
@@ -595,6 +612,11 @@
             console.log(error);
         });
     ```
+
+    - 各函数注释：:star::star::star:
+        1. getData: callback function, 无返回值。
+        2. fetchTheData: 正常 function，返回一个 promise。
+        3. getSomeAsyncData: 调用 promise 的 function，返回一个 promise。
 
 3. 用 async 代替 promise.all 的例子。
 
@@ -718,6 +740,7 @@
 
 - #### Click here: [BACK TO CONTENT](#9.0)
 
+    :star::star::star:
     1.  promise nesting 的进化： 
 
     - Edition 1: `（ promise + callback + 多个 catch）`
