@@ -267,43 +267,69 @@ console.log(`I am sync job 3!`);
 // // normal flow
 // console.log('I am a sync operation!');
 
-const promiseA = new Promise((resolve) => {
-    console.log('ExecutorA: Begin!');
-    resolve('A');
-    console.log('ExecutorA: End!');
-});
+// const promiseA = new Promise((resolve) => {
+//     console.log('ExecutorA: Begin!');
+//     resolve('A');
+//     console.log('ExecutorA: End!');
+// });
 
-const promiseB = new Promise((resolve) => {
-    console.log('ExecutorB: Begin!');
-    resolve('B');
-    console.log('ExecutorB: End!');
-});
+// const promiseB = new Promise((resolve) => {
+//     console.log('ExecutorB: Begin!');
+//     resolve('B');
+//     console.log('ExecutorB: End!');
+// });
 
 
-// Promise: classical approach
-const getPromiseClassical = () => {
-    console.log('getPromiseClassical()');
+// // Promise: classical approach
+// const getPromiseClassical = () => {
+//     console.log('getPromiseClassical()');
 
-    return promiseA.then((resultA) => {
-        console.log('promiseClassical: A');
+//     return promiseA.then((resultA) => {
+//         console.log('promiseClassical: A');
 
-        return promiseB.then((resultB) => {
-            console.log('promiseClassical: B');
-            console.log('Classical: Promises resolved: ', resultA, resultB);
-        });
+//         return promiseB.then((resultB) => {
+//             console.log('promiseClassical: B');
+//             console.log('Classical: Promises resolved: ', resultA, resultB);
+//         });
+//     });
+// };
+// const promiseClassical = getPromiseClassical();
+
+// // Promise: async/await
+// const getPromiseAsync = async () => {
+//     console.log('getPromiseAsync()');
+
+//     const resultA = await promiseA;
+//     console.log('promiseAsync: A');
+
+//     const resultB = await promiseB;
+//     console.log('promiseAsync: B');
+//     console.log('Async: Promises resolved: ', resultA, resultB);
+// };
+// const promiseAsync = getPromiseAsync();
+
+const promiseA = new Promise((resolve, reject) => {
+    console.log(`Creating promise`);
+
+    setTimeout(() => {
+        reject(`something bad happened in a()!`)
+    }, 1000);
+
+    console.log(`Exiting promise executor.`)
+})
+
+console.log(`I am sync job 1!`);
+
+promiseA
+    .then((res) => {
+        console.log(`PromiseA success:`, res);
+    })
+    .catch(err => {
+        console.log('promiseA error:', err)
+    })
+    .finally(() => {
+        console.log(`a() is done!`);
     });
-};
-const promiseClassical = getPromiseClassical();
 
-// Promise: async/await
-const getPromiseAsync = async () => {
-    console.log('getPromiseAsync()');
-
-    const resultA = await promiseA;
-    console.log('promiseAsync: A');
-
-    const resultB = await promiseB;
-    console.log('promiseAsync: B');
-    console.log('Async: Promises resolved: ', resultA, resultB);
-};
-const promiseAsync = getPromiseAsync();
+console.log(`I am sync job 2!`);
+console.log(`I am sync job 3!`);
