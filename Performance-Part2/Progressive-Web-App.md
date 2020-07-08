@@ -17,7 +17,7 @@
 #### `本章背景：`
 
 #### Github Repo : [robotFriends](https://github.com/DonghaoWu/PWA-robotFriends-Redux)
-#### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-Redux/)
+#### Deployed : [robotFriends - Deployed](https://donghaowu.github.io/PWA-robotFriends-redux/)
 
 - Progress web application 的概念是想把 web application 具备 mobile application 的特征。
 
