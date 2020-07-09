@@ -75,7 +75,7 @@ $ npm install --save typescript @types/node @types/react @types/react-dom @types
 - #### Click here: [BACK TO CONTENT](#17.0)
 
 1. 对应 dependencies 可以使用的 TypeScript 版本
-__`Location: ./demo-app/robotFriends-typescript/package.json`__
+__`Location: ./demo-apps/robotFriends-typescript/package.json`__
 
 ```js
   "devDependencies": {
@@ -88,7 +88,7 @@ __`Location: ./demo-app/robotFriends-typescript/package.json`__
 ```
 
 2. 对应 TypeScript 的配置
-__`Location: ./demo-app/robotFriends-typescript/tsconfig.json`__
+__`Location: ./demo-apps/robotFriends-typescript/tsconfig.json`__
 
 ```js
 {
@@ -149,7 +149,7 @@ __`Location: ./demo-app/robotFriends-typescript/tsconfig.json`__
 
 4. Add some code in index.tsx
 
-__`Location: ./robotFriends-typescript/src/index.tsx`__
+__`Location: ./demp-apps/robotFriends-typescript/src/index.tsx`__
 ```js
 ReactDOM.render(
   <App />,
@@ -159,7 +159,7 @@ ReactDOM.render(
 
 5. Add some types in App.tsx
 
-__`Location: ./robotFriends-typescript/src/containers/App.tsx`__
+__`Location: ./demp-apps/robotFriends-typescript/src/containers/App.tsx`__
 
 ```js
 /*
@@ -204,7 +204,7 @@ export default App;
 - #### Click here: [BACK TO CONTENT](#17.0)
 
 1. 向下 component 的参数传递。
-- __`Location: ./robotFriends-typescript/src/containers/CardList.tsx`__
+- __`Location: ./demp-apps/robotFriends-typescript/src/containers/CardList.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -234,7 +234,7 @@ export default CardList;
 ```
 
 2. 从上 component 接收的参数为普通类型参数。
-- __`Location: ./robotFriends-typescript/src/containers/Card.tsx`__
+- __`Location: ./demp-apps/robotFriends-typescript/src/containers/Card.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -261,7 +261,7 @@ export default Card;
 ```
 
 3. 从上 component 接收的参数为 component。
-- __`Location: ./robotFriends-typescript/src/containers/Scroll.tsx`__
+- __`Location: ./demp-apps/robotFriends-typescript/src/containers/Scroll.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -282,7 +282,7 @@ export default Scroll;
 ```
 
 4. 从上 component 接收的参数为 function，且函数参数为HTML输入。
-- __`Location: ./robotFriends-typescript/src/containers/SearchBox.tsx`__
+- __`Location: ./demp-apps/robotFriends-typescript/src/containers/SearchBox.tsx`__
 
 ```tsx
 import * as React from 'react';
@@ -308,7 +308,7 @@ export default SearchBox;
 ```
 
 5. 在最上层 component 定义各函数的 type （同时需要在接收参数的地方进行对应定义）。
-- __`Location: ./robotFriends-typescript/src/containers/App.tsx`__
+- __`Location: ./demp-apps/robotFriends-typescript/src/containers/App.tsx`__
 
 ```js
 import * as React from 'react';
@@ -373,7 +373,7 @@ export default App;
 ```
 
 #### `Comment:`
-1. 本章里面提及的 TypeScript 大多都是关于参数传递过程中的类型限定，比如一个参数要从上到下的 component 中传递，需要分别在上和下两个 component 中进行定义并限制。
+1. 本章里面提及的 TypeScript 大多都是关于参数传递过程中的类型限定__`(例如数据类型，组件类型，函数类型等等)`__，比如一个参数要从上到下的 component 中传递，需要分别在上和下两个 component 中进行定义并限制。
 
 
 - __参考材料 ：[Adding TypeScript to CRA](https://create-react-app.dev/docs/adding-typescript)__

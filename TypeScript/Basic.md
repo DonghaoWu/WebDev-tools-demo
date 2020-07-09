@@ -57,7 +57,7 @@ $ tsc # check if installed correctly
 
 1. Simple function in ts file
 
-    __`Location: ./demo-app/basic/ty-demo.ts`__
+    __`Location: ./demo-apps/basic/ty-demo.ts`__
 
 ```js
 export { };
@@ -79,7 +79,7 @@ $ tsc ty-demo.ts
 
 3. Get a new js file in the same directory.
 
-    __`Location: ./demo-app/basic/ty-demo.js`__
+    __`Location: ./demo-apps/basic/ty-demo.js`__
 
 ```js
 "use strict";
@@ -96,7 +96,7 @@ console.log(func1(1, 2));
 $ tsc --init
 ```
 
-- __`Location: ./demo-app/basic/tsconfig.json`__
+- __`Location: ./demo-apps/basic/tsconfig.json`__
 
 - 在 compilerOptions 可以修改设置。
 
@@ -117,7 +117,7 @@ $ tsc ty-demo.ts --watch
 - #### Click here: [BACK TO CONTENT](#16.0)
 
 1. Basic types.
-     __`Location: ./demo-app/basic/ty-demo.ts`__
+     __`Location: ./demo-apps/basic/ty-demo.ts`__
 ```js
 // boolean
 let isCool: boolean = true;
@@ -149,7 +149,7 @@ let noo: null = null;
 - #### Click here: [BACK TO CONTENT](#16.0)
 
 1. Advanced types.
-     __`Location: ./demo-app/basic/ty-demo.ts`__
+     __`Location: ./demo-apps/basic/ty-demo.ts`__
 
 ```js
 // tuple
