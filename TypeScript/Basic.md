@@ -98,7 +98,7 @@ $ tsc --init
 
 - __`Location: ./demo-app/basic/tsconfig.json`__
 
-- 在 compilerOptions 下可以修改一些设置。
+- 在 compilerOptions 可以修改设置。
 
 5. 自动侦查修改并编译模式：
 
