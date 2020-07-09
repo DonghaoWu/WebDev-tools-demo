@@ -541,6 +541,13 @@ export const requestRobots = () => (dispatch) => {
 <img src="../assets/p15-3.png" width=90%>
 </p>
 
+3. 关于编辑模拟 api 的对接口：
+
+```diff
++ 模拟数据.body >>> fetch(...).then(res) >>> res.json() >>> data
++ 模拟数据.body >>> axios(...).then(res) >>> res.data >>> data
+```
+
 __参考材料： [Redux-testing](https://redux.js.org/recipes/writing-tests)__
 
 - #### Click here: [BACK TO CONTENT](#15.0)
