@@ -9,7 +9,7 @@
 ### `Check Dependencies & Tools:`
 
 - Enzyme
-- __[Enzyme Documentation here]__(https://enzymejs.github.io/enzyme/docs/installation/index.html)
+- __[Enzyme Documentation here](https://enzymejs.github.io/enzyme/docs/installation/index.html)__
 
 ------------------------------------------------------------
 
@@ -36,14 +36,14 @@
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
-- Enzyme working with React 16. [[Documentation here](https://enzymejs.github.io/enzyme/docs/installation/index.html)]
+- Enzyme working with React 16. [--- Documentation here](https://enzymejs.github.io/enzyme/docs/installation/index.html)
 
     ```bash
     $ npm i --save react@16 react-dom@16
     $ npm i --save-dev enzyme enzyme-adapter-react-16
     ```
 
-    __`Location: ./src/setupTests.js`__
+    __`Location: ./demo-apps/Testing-React-Redux/src/setupTests.js`__
 
     ```js
     import { configure } from 'enzyme';
@@ -63,7 +63,7 @@
 
     1. Build a testing component snapshot.
 
-     - __`Location: ./src/Card.test.js`__
+     - __`Location: ./demo-apps/Testing-React-Redux/src/Card.test.js`__
 
     ```js
     import { shallow } from 'enzyme';
@@ -82,7 +82,7 @@
 
     2. Handle compnents snapshot with map method.
 
-    - __`Location: ./src/CardList.test.js`__
+    - __`Location: ./demo-apps/Testing-React-Redux/src/CardList.test.js`__
 
     ```js
     import { shallow } from 'enzyme';
@@ -133,7 +133,7 @@
 
 - #### Click here: [BACK TO CONTENT](#14.0)
 
-    - __`Location: ./src/CounterButton.test.js`__
+    - __`Location: ./demo-apps/Testing-React-Redux/src/CounterButton.test.js`__
 
     ```js
     import { shallow } from 'enzyme';
