@@ -40,7 +40,7 @@
 
 1. Seperate App.js component to two parts.
 
-__`Location: ./src/containers/App.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/containers/App.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -75,7 +75,7 @@ class App extends Component {
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 ```
 ----------------------------------------------------------------------------
-__`Location: ./src/components/Mainpage.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/components/Mainpage.js`__
 
 ```js
 import React, { Component } from 'react';
@@ -122,7 +122,7 @@ export default Mainpage;
 
 2. Snapshot tesing, pasting props testing, self function testing.
 
-__`Location: ./src/components/Mainpage.test.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/components/Mainpage.test.js`__
 
 ```js
 import { shallow, mount, render } from 'enzyme';
@@ -201,7 +201,7 @@ it('filters robots correctly', () => {
 
 - #### Click here: [BACK TO CONTENT](#15.0)
 
-__`Location: ./src/reducers.test.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/reducers.test.js`__
 ```js
 import {
     CHANGE_SEARCHFIELD,
@@ -309,7 +309,7 @@ export const setSearchField = (text) => ({ type: CHANGE_SEARCHFIELD, payload: te
 
 4. Sync action testing.
 
-__`Location: ./src/actions.test.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/actions.test.js`__
 
 ```js
 // Sync action testing.
@@ -408,7 +408,7 @@ describe('async requestRobots action', () => {
 #### `Comment:`
 1. 完整的 async testing 文件：
 
-__`Location: ./src/actions.test.js`__
+__`Location: ./demo-apps/Testing-React-Redux/src/actions.test.js`__
 ```js
 import * as actions from './actions';
 import {
@@ -504,7 +504,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../../assets/p15-1.png" width=90%>
+<img src="../assets/p15-1.png" width=90%>
 </p>
 
 - 改成：
@@ -522,7 +522,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../../assets/p15-2.png" width=90%>
+<img src="../assets/p15-2.png" width=90%>
 </p>
 
 - 改成：
@@ -538,7 +538,7 @@ export const requestRobots = () => (dispatch) => {
 
 - 得到：
 <p align="center">
-<img src="../../assets/p15-3.png" width=90%>
+<img src="../assets/p15-3.png" width=90%>
 </p>
 
 __参考材料： [Redux-testing](https://redux.js.org/recipes/writing-tests)__
