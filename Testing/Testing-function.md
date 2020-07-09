@@ -40,7 +40,7 @@ $ npm init -y
 $ npm i --save-dev jest
 ```
 
-__`Location: ./demo-app-functions/package.json`__
+__`Location: ./demo-apps/Testing-function/package.json`__
 
 ```json
 {
@@ -76,7 +76,7 @@ __`Location: ./demo-app-functions/package.json`__
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./demo-app-functions/sync-func.js`__
+    - __`Location: ./demo-apps/Testing-function/sync-func.js`__
 
     ```js
     const googleDatabase = [
@@ -98,7 +98,7 @@ __`Location: ./demo-app-functions/package.json`__
     module.exports = googleSearch;
     ```
 
-    - __`Location: ./demo-app-functions/sync-func.test.js`__
+    - __`Location: ./demo-apps/Testing-function/sync-func.test.js`__
 
     ```js
     const googleSearch = require('./sync-func')
@@ -145,7 +145,7 @@ __`Location: ./demo-app-functions/package.json`__
 - #### Click here: [BACK TO CONTENT](#13.0)
 
 
-    - __`Location: ./demo-app-functions/async-func.js`__
+    - __`Location: ./demo-apps/Testing-function/async-func.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -191,7 +191,7 @@ __`Location: ./demo-app-functions/package.json`__
     // getPeopleAsync(fetch);
     ```
 
-    - __`Location: ./demo-app-functions/async-func.test.js`__
+    - __`Location: ./demo-apps/Testing-function/async-func.test.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -231,7 +231,7 @@ __`Location: ./demo-app-functions/package.json`__
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 
-    - __`Location: ./demo-app-functions/async-func.js`__
+    - __`Location: ./demo-apps/Testing-function/async-func.js`__
 
     ```js
     const fetch = require('node-fetch');
@@ -254,7 +254,7 @@ __`Location: ./demo-app-functions/package.json`__
     }
     ```
 
-    - __`Location: ./demo-app-functions/async-func.test.js`__
+    - __`Location: ./demo-apps/Testing-function/async-func.test.js`__
 
     ```js
     const asyncFunc = require('./async-func');
@@ -279,8 +279,8 @@ __`Location: ./demo-app-functions/package.json`__
 
 
 #### `Comment:`
-1. mocks，虚拟一个 API call 的回传数据， mockFetch 是一个模拟远程 API 回送数据， API endpoint 参数仍可以多变，但是回送数据定制，__`且没有对 endpoint 进行实际调用。`__
-2. 以上可以看出，在 test 文件中没有调用任何实际 fetch 动作，且它这里相当于自我设定一个远程数据，然后写测试文件。
+1. mocks，虚拟一个 API call 的回传数据， mockFetch 是一个模拟远程 API 回送数据， 其中可以以 API endpoint 作为参数进行检测，整个过程回送数据预设定制，__`且没有对 endpoint 进行实际调用。`__
+2. 以上可以看出，在 test 文件中没有调用任何实际 fetch 动作，且它这里相当于自我预设模拟一个远程数据，然后根据这个条件写测试文件。
 
 - #### Click here: [BACK TO CONTENT](#13.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
