@@ -576,7 +576,7 @@ export default Robotinfo;
 + getInitialProps + query 的新用法。
 ```
 
-- 参考资料：[Dynamic content in Next.js with the router](https://flaviocopes.com/nextjs-dynamic-content/)
+- __参考资料：[Dynamic content in Next.js with the router](https://flaviocopes.com/nextjs-dynamic-content/)__
 
 - #### Click here: [BACK TO CONTENT](#18.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
