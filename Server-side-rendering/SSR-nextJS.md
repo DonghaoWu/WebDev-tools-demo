@@ -578,5 +578,7 @@ export default Robotinfo;
 
 - __参考资料：[Dynamic content in Next.js with the router](https://flaviocopes.com/nextjs-dynamic-content/)__
 
+- __参考资料：[Get query params in Next.js](https://codeconqueror.com/blog/get-query-params-in-next-js)__
+
 - #### Click here: [BACK TO CONTENT](#18.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
