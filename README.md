@@ -35,3 +35,5 @@
 - [Part16 - TypeScript Part 1 Basic](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/TypeScript/Basic.md)
 
 - [Part17 - TypeScript Part 2 App](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/TypeScript/TypeScript%40App.md)
+
+- [Part18 - Server Side Rendering & nextJS](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Server-side-rendering/SSR-nextJS.md)
