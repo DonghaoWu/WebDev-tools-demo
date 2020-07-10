@@ -2,9 +2,9 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
-## `Section: Server-side-rendering` (Part 2: Application)
+## `Section: Server-side-rendering` (Basic & Application)
 
-### `Summary`: In this documentation, we learn to convert robotFriends app to nextJS app.
+### `Summary`: In this documentation, we learn to convert robotFriends app to nextJS app and some basic about SSR vs CSR.
 
 ### `Check Dependencies & Tools:`
 
@@ -19,10 +19,6 @@
 #### `本章背景：`
 - 本章参考的官方资料： [nextJS documentation](https://nextjs.org/docs/getting-started)
 - 本节中用到的 demo app 是 `robotFriends-nextJS`
-
-- 本章分两部分，分别是：
-    1. Basic 
-    2. App :white_check_mark:
 
 ------------------------------------------------------------
 
