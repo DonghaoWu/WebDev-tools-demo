@@ -1,14 +1,3 @@
-// import Head from 'next/head';
-// import 
-
-// export default function Home() {
-//   return (
-//     <div>
-
-//     </div>
-//   )
-// }
-
 import React, { Component } from 'react';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
@@ -20,7 +9,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      robots: [],
       searchfield: ''
     }
   }
@@ -30,7 +18,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.robots);
     const { searchfield } = this.state;
     const { robots } = this.props;
     const filteredRobots = robots.filter(robot => {
@@ -53,10 +40,9 @@ class App extends Component {
 }
 
 App.getInitialProps = async function () {
+  console.log(`Global call======>`);
   const response = await fetch('https://jsonplaceholder.typicode.com/users');
   const data = await response.json();
-  console.log(data);
-  console.log('========<<<<<<');
   return {
     robots: data,
   }
