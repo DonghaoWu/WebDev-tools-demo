@@ -133,3 +133,15 @@ class App extends React.Component<IAppProps, IAppState> {
 
 export default App;
 ```
+
+6. 关于 nextJS，动态 URL 的参数对应的页面设置比较特别，比如
+```diff
++ /robots/id
+
++ 对应就要在 pages 文件夹下新建一个文件夹，名字是 robots，然后 robots 下新建一个新文件，叫做 [id].js
+
++ 在 [id].js 中获取参数的方法也不一样，需要 
+
++ import { useRouter } from 'next/router';
++ const id = useRouter().query.id
+```
