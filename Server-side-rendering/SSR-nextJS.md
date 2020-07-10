@@ -4,7 +4,7 @@
 
 ## `Section: Server-side-rendering` (Basic & Application)
 
-### `Summary`: In this documentation, we learn to convert robotFriends app to nextJS app and some basic about SSR vs CSR.
+### `Summary`: In this documentation, we learn to convert robotFriends app to nextJS app and some knowledge about SSR vs CSR.
 
 ### `Check Dependencies & Tools:`
 
