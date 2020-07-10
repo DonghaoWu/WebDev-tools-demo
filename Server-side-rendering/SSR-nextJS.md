@@ -429,7 +429,12 @@ export default (props) => {
 
 #### `Comment:`
 ```diff
++ 比原版本修改了 Card.js，_app.js, index.js
++ 新增了 [id].js
++ 思路是从 _app.js 获取 data，然后传递给所有的 pages 使用
++ _app.js 中全局 data 的新用法。
 
+- 不好的地方是每次点进单独机器人时，都会运行一次 api 获取全局变量。
 ```
 
 3. :star: Solution 2:
@@ -563,7 +568,15 @@ export default Robotinfo;
 ```
 
 #### `Comment:`
-1. 
+```diff
++ 比原版本修改了 Card.js
++ 新增了 [id].js，但方案二 `[id].js` 和方案一的内容不一样。
++ 思路是从 [id].js 获取 data，全局 data 只获取一次，局部 data 在每一次点击卡片的时候才运行 api。
+
++ getInitialProps + query 的新用法。
+```
+
+- 参考资料：[Dynamic content in Next.js with the router](https://flaviocopes.com/nextjs-dynamic-content/)
 
 - #### Click here: [BACK TO CONTENT](#18.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
