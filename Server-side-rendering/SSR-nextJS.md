@@ -40,15 +40,26 @@
 
 - #### Click here: [BACK TO CONTENT](#18.0)
 
-1. [Server-side vs Client-side Routing
-](https://medium.com/@wilbo/server-side-vs-client-side-routing-71d710e9227f)
-2. 
+1. __参考资料：[Server-side vs Client-side Routing](https://medium.com/@wilbo/server-side-vs-client-side-routing-71d710e9227f)__
+
+2. __参考资料：[SSR VS CSR ,一次讲个通透](https://zhuanlan.zhihu.com/p/60975107)__
+
+3. __参考资料：[Client-side Vs. Server-side Rendering: What to choose when?](https://blog.solutelabs.com/client-side-vs-server-side-rendering-what-to-choose-when-dd1620fb2808)__
+
+4. __参考资料：[【译】什么时候应该 Server-Side Render？](https://zhuanlan.zhihu.com/p/41856333)__
 
 
 ### <span id="18.2">`Step2: Why next.js?.`</span>
 
 - #### Click here: [BACK TO CONTENT](#18.0)
 
+1. __参考资料：[Next.js指南](https://juejin.im/post/5dbf6a3651882508f40beb22)__
+
+2. __参考资料：[Next.js for React: Why You Should Give It a Try Right Now](https://medium.com/better-programming/next-js-for-react-why-you-should-give-it-a-try-right-now-e3b1886e4f20)__
+
+3. __参考资料：[How to ace the Google PageSpeed test (100/100) with React and Next.js](https://blog.usejournal.com/how-to-ace-the-google-pagespeed-test-100-100-with-react-and-next-js-d7e23280707b)__
+
+4. __参考资料：[Why Next.js? - 推荐](https://nextjsnotes.com/why-nextjs/)__
 
 ### <span id="18.3">`Step3: Configuration.`</span>
 
