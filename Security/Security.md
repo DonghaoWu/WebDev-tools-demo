@@ -197,11 +197,11 @@
     <ima src='/' onerror="alert('1')">
     ```
 
-    <p align="center"><img src="../assets/p19-01.png" width=90%></p>
+    <p align="center"><img src="../assets/p19-01.png" width=40%></p>
 
     - CSRF: 修改网页的 URL 使用户点击后作出原不想做的行为。
 
-    <p align="center"><img src="../assets/p19-02.png" width=90%></p>
+    <p align="center"><img src="../assets/p19-02.png" width=40%></p>
 
 -----------------------------------------------------------------
 
