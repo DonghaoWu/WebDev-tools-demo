@@ -240,6 +240,18 @@ const app = new Clarifai.App({
 });
 ```
 
+```js
+const db = knex({
+  client: process.env.DB_CLIENT,
+  connection: {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: '',
+    database: process.env.DB_NAME
+  }
+});
+```
+
 - 上传至 github。
 
 
