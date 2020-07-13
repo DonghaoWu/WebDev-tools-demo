@@ -145,3 +145,103 @@ export default App;
 + import { useRouter } from 'next/router';
 + const id = useRouter().query.id
 ```
+
+- 拿到一个新 app 后的动作：
+```bash
+$ npm update
+$ npm i
+$ npm audit fix
+```
+
+- 查看 README.md
+- 查看 package.json 命令，查看 script 命令
+- 查看有哪些 dependency，各个 dependency 有什么作用，用在哪里
+
+- 试运行整个 application（前端 + 后端），看有没有错误。
+- 如果有数据库，就安装对应数据库软件，并建立自定义 本地 database，连接 app 和 database。本例子使用的是 postgreSQL。（set up local database） 查看 knex ORM。
+
+```diff
++ 1. run a postgre server
++ 2. create a database
++ 3. using a GUI to connect postgre server and the database (postico)
++ 4. create tables
+```
+
+创建一个新的 database
+```bash
+$ createdb 'smart-brain-local'
+```
+
+- 修改 knex 配置
+```js
+const db = knex({
+  client: 'pg',
+  connection: {
+    host: '127.0.0.1',
+    user: 'donghao',
+    password: '',
+    database: 'smart-brain-local'
+  }
+});
+```
+
+```sql
+CREATE TABLE users(
+    id serial PRIMARY KEY,
+    name VARCHAR(100),
+    email text UNIQUE NOT NULL,
+    entries BIGINT DEFAULT 0,
+    joined TIMESTAMP NOT NULL
+)
+```
+
+```sql
+CREATE TABLE login(
+    id serial PRIMARY KEY,
+    hash VARCHAR(100) NOT NULL,
+    email text UNIQUE NOT NULL
+)
+```
+
+- 如果有 API key，需要跟相关人员请求或者上网注册。
+
+- clarify, 创建 clarity 账号，然后创建新 API key，复制黏贴到 `./controllers/image.js` 中。
+
+- 使用 dotenv 保护 API KEY。
+```bash
+$ npm i dotenv
+```
+
+- 在 server.js 使用 dotenv
+```js
+require('dotenv').config();
+```
+- 新建一个新文件，名字是 `.env`，设定 API key，注意不用加引号
+```js
+API_KEY=adva892310230192y2jhbsdh
+
+DB_HOST=10.10.10.1
+DB_USER=TEST
+DB_NAME=my-database
+DB_CLIENT=pg
+```
+
+- 在 `.gitignore` 文件中加入屏蔽列表
+```js
+/node_modules
+
+*.env
+```
+
+- 使用变量，并运行 application 查看使用。
+```js
+const app = new Clarifai.App({
+  apiKey: process.env.API_KEY
+});
+```
+
+- 上传至 github。
+
+
+- 开始分析代码，从整体上了解整个工作流程而不需要了解细节。
+- 整个 application 分为 前端 app 和后端 app。
