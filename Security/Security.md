@@ -367,6 +367,9 @@
 #### `Comment:`
 1. 关于密码的设置文章：[How to Store User Passwords and Overcome Security Threats](https://rangle.io/blog/how-to-store-user-passwords-and-overcome-security-threats-in-2017/)
 
+2. 参考资料：[bcrypt npm](https://www.npmjs.com/package/bcrypt)
+
+
 ### <span id="19.10">`Step10: Don't trust anyone.`</span>
 
 - #### Click here: [BACK TO CONTENT](#19.0)
@@ -375,7 +378,7 @@
     - 在数据传输的各个环节进行保护和预保障。
 
 #### `Comment:`
-1. 参考资料：[bcrypt npm](https://www.npmjs.com/package/bcrypt)
+1. 
 
 ### <span id="19.11">`Step11: Authentication.`</span>
 
