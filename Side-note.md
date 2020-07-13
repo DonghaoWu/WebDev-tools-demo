@@ -175,12 +175,12 @@ $ createdb 'smart-brain-local'
 - 修改 knex 配置
 ```js
 const db = knex({
-  client: 'pg',
+  client: process.env.DB_CLIENT,
   connection: {
-    host: '127.0.0.1',
-    user: 'donghao',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
     password: '',
-    database: 'smart-brain-local'
+    database: process.env.DB_NAME
   }
 });
 ```
