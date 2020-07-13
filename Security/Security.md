@@ -10,11 +10,11 @@
 
 - body-parser
 - express
-- helmet
 - nodemon
 - winston
 - morgan
 - dotenv
+- helmet
 - cors
 - bcrypt
 
@@ -58,7 +58,7 @@
         username: example@test.com
         password: ‘ or 1=1--
         ```
-        2. 向 SQL database 输入可以删除整个 table：
+        2. 向 SQL database 输入以下语句可以删除整个 table：
         ```sql
         ; DROP TABLE tableName; --
         ```
@@ -177,7 +177,6 @@
 
 2. 详细方案：
     - 给自己的网站添加 HTTPS。
-    - 
 
 3. 安全策略：
     - 使用 [Let's Encrypt](https://letsencrypt.org/)
@@ -199,7 +198,7 @@
 
     <p align="center"><img src="../assets/p19-01.png" width=40%></p>
 
-    - CSRF: 修改网页的 URL 使用户点击后作出原不想做的行为。
+    - CSRF: 修改网页的 URL 使用户点击后做出原不想做的行为。
 
     <p align="center"><img src="../assets/p19-02.png" width=40%></p>
 
@@ -208,6 +207,7 @@
 
 2. 详细方案：
     - 设定 header 避免 cookie 被盗用
+
     __`Location:./demo-apps/security-server-exercise/server.js`__
 
     ```js
@@ -245,18 +245,18 @@
 
 1. 行为定义：
     - Environmental Variables: 一些敏感的 API key 还有一些配置 token 都不能上传公开。
-    - Commit History：不上传 password
+    - Commit History：不上传 password 和 API key
 
 2. 详细方案：
     - 安装 dotenv dependency，Create react app 默认自带 dotenv。
     - 生成 `.env` 文件，设定全局变量，例如 API_KEY=example，使用：
-    ```js
-    process.env.API_KEY
-    ```
+        ```js
+        process.env.API_KEY
+        ```
     - 上传前必须生成 `.gitignore` 文件
 
 3. 安全策略：
-    - 另外注意不要在向 github 上传任何关于私密数据，因为都会有上传记录切容易被搜索得到。
+    - 另外注意不要向 github 上传任何关于私密数据，因为上传记录容易被搜索得到。
 
 #### `Comment:`
 1. 
@@ -341,7 +341,7 @@
 
 2. 使用 cors dependency 就可以解决浏览器同源策略给我们的限制。
 
-3. [cors middleware npm](https://www.npmjs.com/package/cors)
+3. 参考资料：[cors middleware npm](https://www.npmjs.com/package/cors)
 
 
 ### <span id="19.9">`Step9: Data Management.`</span>
@@ -375,7 +375,7 @@
     - 在数据传输的各个环节进行保护和预保障。
 
 #### `Comment:`
-1. 
+1. 参考资料：[bcrypt npm](https://www.npmjs.com/package/bcrypt)
 
 ### <span id="19.11">`Step11: Authentication.`</span>
 
