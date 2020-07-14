@@ -196,13 +196,13 @@
 
     ```js
     const db = knex({
-    client: 'pg',
-    connection: {
-        host: 127.0.0.1,
-        user: <Your postgreSQL username>,
-        password: '',
-        database: 'smart-brain-local'
-    }
+        client: 'pg',
+        connection: {
+            host: 127.0.0.1,
+            user: <Your postgreSQL username>,
+            password: '',
+            database: 'smart-brain-local'
+        }
     });
     ```
 
@@ -257,12 +257,12 @@
     ```js
     const db = knex({
     client: process.env.DB_CLIENT,
-    connection: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: '',
-        database: process.env.DB_NAME
-    }
+        connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: '',
+            database: process.env.DB_NAME
+        }
     });
     ```
 
@@ -274,7 +274,7 @@
     //You must add your own API key here from Clarifai.
 
     const app = new Clarifai.App({
-    apiKey: process.env.API_KEY
+        apiKey: process.env.API_KEY
     });
     ```
 
