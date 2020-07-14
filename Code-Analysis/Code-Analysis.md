@@ -437,10 +437,10 @@
         <p  onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
         ```
 
-    - component & functions
-        - component: Signin -> onEmailChange, onPasswordChange, onSubmitSignIn
+        - component & functions
+            - component: Signin -> onEmailChange, onPasswordChange, onSubmitSignIn
 
-        - onSubmitSignIn -> `http://localhost:3000/signin` -> loadUser + onRouteChange
+            - onSubmitSignIn -> `http://localhost:3000/signin` -> loadUser + onRouteChange
 
     2. Register.js: 3 个函数
         - onNameChange, onEmailChange, onPasswordChange: 改变 state, 以上了条都是表格函数
