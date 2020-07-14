@@ -35,6 +35,7 @@
 - #### Click here: [BACK TO CONTENT](#20.0)
 
 1. Frontend documentation:
+
     __`Location:./demo-apps/frontend-smart-brain/README.md`__
 
     ```md
@@ -47,6 +48,7 @@
     ```
 
 2. Frontend package.json:
+
     __`Location:./demo-apps/frontend-smart-brain/package.json`__
 
     ```json
@@ -84,6 +86,7 @@
     ```
 
 3. Backend documentation:
+
     __`Location:./demo-apps/backend-smart-brain-api/README.md`__
 
     ```md
@@ -101,6 +104,7 @@
     ```
 
 4. Backend package.json:
+
     __`Location:./demo-apps/backend-smart-brain-api/package.json`__
 
     ```json
@@ -181,7 +185,7 @@
     ```
 
 <p align="center">
-<img src="../assets/p20-01.png" width=85%>
+<img src="../assets/p20-01.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -214,7 +218,7 @@
 2. Copy your API key.
 
 <p align="center">
-<img src="../assets/p20-02.png" width=85%>
+<img src="../assets/p20-02.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -292,25 +296,25 @@
 9. Check the `register` and `signin` feature.
 
 <p align="center">
-<img src="../assets/p20-03.png" width=85%>
+<img src="../assets/p20-03.png" width=90%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p20-04.png" width=85%>
+<img src="../assets/p20-04.png" width=90%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p20-05.png" width=85%>
+<img src="../assets/p20-05.png" width=90%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p20-06.png" width=85%>
+<img src="../assets/p20-06.png" width=90%>
 </p>
 
 ------------------------------------------------------------
