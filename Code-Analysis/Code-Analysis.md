@@ -53,35 +53,35 @@
 
     ```json
     {
-    "name": "facerecognitionbrain",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
-        "react-particles-js": "^2.1.0",
-        "react-scripts": "^3.4.1",
-        "react-tilt": "^0.1.4",
-        "tachyons": "^4.9.0"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
-    },
-    "browserslist": {
-        "production": [
-        ">0.2%",
-        "not dead",
-        "not op_mini all"
-        ],
-        "development": [
-        "last 1 chrome version",
-        "last 1 firefox version",
-        "last 1 safari version"
-        ]
-    }
+        "name": "facerecognitionbrain",
+        "version": "0.1.0",
+        "private": true,
+        "dependencies": {
+            "react": "^16.2.0",
+            "react-dom": "^16.2.0",
+            "react-particles-js": "^2.1.0",
+            "react-scripts": "^3.4.1",
+            "react-tilt": "^0.1.4",
+            "tachyons": "^4.9.0"
+        },
+        "scripts": {
+            "start": "react-scripts start",
+            "build": "react-scripts build",
+            "test": "react-scripts test --env=jsdom",
+            "eject": "react-scripts eject"
+        },
+        "browserslist": {
+            "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+            ],
+            "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+            ]
+        }
     }
     ```
 
@@ -109,29 +109,29 @@
 
     ```json
     {
-    "name": "node",
-    "version": "1.0.0",
-    "main": "script.js",
-    "scripts": {
-        "start": "nodemon server.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "bcrypt-nodejs": "0.0.3",
-        "body-parser": "^1.18.2",
-        "clarifai": "^2.5.0",
-        "cors": "^2.8.4",
-        "dotenv": "^8.2.0",
-        "express": "^4.16.2",
-        "knex": "^0.19.5",
-        "pg": "^7.4.0"
-    },
-    "devDependencies": {
-        "nodemon": "^1.12.7"
-    },
-    "description": ""
+        "name": "node",
+        "version": "1.0.0",
+        "main": "script.js",
+        "scripts": {
+            "start": "nodemon server.js"
+        },
+        "keywords": [],
+        "author": "",
+        "license": "ISC",
+        "dependencies": {
+            "bcrypt-nodejs": "0.0.3",
+            "body-parser": "^1.18.2",
+            "clarifai": "^2.5.0",
+            "cors": "^2.8.4",
+            "dotenv": "^8.2.0",
+            "express": "^4.16.2",
+            "knex": "^0.19.5",
+            "pg": "^7.4.0"
+        },
+        "devDependencies": {
+            "nodemon": "^1.12.7"
+        },
+        "description": ""
     }
     ```
 
