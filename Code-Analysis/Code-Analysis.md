@@ -26,7 +26,8 @@
 - [20.3 Setup API key and .env file.](#20.3)
 - [20.4 Backend application.](#20.4)
 - [20.5 Frontend application.](#20.5)
-
+- [20.6 Data flow.](#20.6)
+- [20.7 Others.](#20.)
 
 ------------------------------------------------------------
 
@@ -326,7 +327,58 @@
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 
-1. 
+1. Dependencies:
+    - bcrypt-nodejs: 加密密码的库
+    - body-parser: 一个HTTP请求体解析中间件, 使用这个模块可以解析JSON、Raw、文本、URL-encoded格式的请求体, Express框架中就是使用这个模块做为请求体解析中间件。
+    - clarifai: 图像识别 API 对应的库
+    - cors: 允许跨域
+    - dotenv: 允许建立 .env
+    - express: 服务器软件
+    - knex: 数据库SQL查询构建器 (ORM)
+    - pg: postgreSQL
+
+2. 查看 `server.js`
+
+    __`Location:./demo-apps/backend-smart-brain-api/server.js`__
+
+    1. 可以查看后面的查看文件夹, `controllers`
+    2. 这里使用 `knex` 连接了 db
+    3. 这里使用了中间件
+    4. 这里建立了 6条 route, 对应不同的 method。
+    5. 最后建立了 server, 端口为 3000.
+
+    ```js
+    app.get('/', (req, res) => { res.send(db.users) })
+    app.post('/signin', signin.handleSignin(db, bcrypt))
+    app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+    app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) })
+    app.put('/image', (req, res) => { image.handleImage(req, res, db) })
+    app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
+    ```
+
+3. 查看 `controllers` 文件夹
+
+    __`Location:./demo-apps/backend-smart-brain-api/controllers`__
+
+    1. image.js, 两个函数: 
+
+        - `handleApiCall`: req, res 为参数, 将 input 发送到 app, 并返回数据, 这个在 server.js 中对应 url 为 `/imageurl`.是一个对外查询 API 函数。
+
+        - `handleImage`: req, res, db 为参数, 将 req 的一些数据在 db 中查询, 并改变查询对象的一些数据, 这个在 server.js 中对应 url 为 `/image`.是一个对内查询并修改 database 函数。
+
+    2. profile.js, 一个函数: 
+
+        - `handleProfileGet`: req,res, db 为参数, 将 req 的一些数据在 db 中查询, 并返回对应用户的全部数据, 这个在 server.js 中对应 url 为 `/profile/:id`.是一个对内查询 database 函数。
+
+    3. register.js, 一个函数: 
+
+        - `handleRegister`: req, res, db, bcrypt 为参数, 先对 req 中一些数据进行判断, 将密码进行加密并储存在 database, 这个在 server.js 中对应 url 为 `/register`.是一个对内查询 database 函数。
+
+    4. signin.js, 一个函数: 
+
+        - `handleSignin`: db, bcrypt, req, res 为参数, 先查询 table login, 在其中找到对应的 email 并使用 bcrypt 核对密码, 如果吻合就返回用户, 这个在 server.js 中对应 url 为 `/signin`.是一个对内查询 database 函数。
+
+    5. 一共 6 条 route, 还有一条没有使用到 method, 这个会在后面提到。 
 
 #### `Comment:`
 1. 
@@ -335,11 +387,194 @@
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 
-1. 
+1. dependency: 
+    - react: 
+    - react-dom: 
+    - react-particles-js:
+    - react-scripts
+    - react-tilt
+    - tachyons
+
+2. 查看 `src/index.js`
+
+    __`Location:./demo-apps/frontend-smart-brain/src/index.js`__
+
+3. 查看 `App.js`(重点):
+
+    __`Location:./demo-apps/frontend-smart-brain/src/App.js`__
+
+    - 这里有两个预设变量, 一个 particlesOptions, 暂时不知道作用, 一个是 initialState, 用来初始化清零数据，应用场景为第一次加载或者用户退出登录时清空 state 信息。
+
+    - 使用 `class component`。
+
+    - 函数 `loadUser`: 调用时把用户信息加入 state
+
+    - 函数 `calculateFaceLocation`: 获取 data 之后, 对对应的图片进行计算。
+
+    - 函数 `displayFacebox`: 改变 state 里面的 box 信息，配合函数 calculateFaceLocation 使用。
+
+    - 函数 `onInputChange`: 检测输入, 然后用输入改变 state
+
+    - 函数 `onButtonSubmit`: 利用 state 的信息, 激发一条 route: `http://localhost:3000/imageurl` 先把 state 里面的 url 传到 api, 得到回传之后整理, 接着激发另外一条 route `http://localhost:3000/image`, 对内 database 查询用户并修改信息, 最后调用函数 `calculateFaceLocation` 对图片进行计算, 得到的结果作为函数 `displayFaceBox` 的参数, 修改 state 中的 box 数据。
+
+    - 函数 `onRouteChange`: 改变 state 的 route 信息, 同时加入 state 变量 isSignedIn 去判断用户是否已经登陆, 如果 isSignedIn 为 true, 则显示 route 为 home 的页面。
+
+    - 关于 render()
+        - 它根据变量 state.isSignedIn 去决定显示的组件和传输的数据和函数，`这里设定没有 router`，效果是显示的都是同一个 url，但根据 `state.isSignedIn` 显示不同的组件群。
+        - 备注一个是: App 里面定义到函数都是用箭头定义的方式, 所以向下传递时如果被激发就会影响到 App 组建里面的 state。
+
+4. 查看 `components` 文件夹
+
+    __`Location:./demo-apps/frontend-smart-brain/src/components`__
+
+    1. `Signin.js`: 3 个函数, 
+
+    - `onEmailChange`: 改变 state, onPasswordChange: 改变 state, 以上了条都是表格函数, 
+    
+    - `onSubmitSignIn`: 利用 state 的信息, 激发一条 route: `http://localhost:3000/signin`, 对内 database 查询用户并修改信息, 如果有用户就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。关于 render(), 这里的 onRouteChange 除了在 onRouteChange 中使用, 而且还在 render 里面使用, 语句是：
+
+    ```jsx
+    <p  onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+    ```
+
+    - component & functions
+        - component: Signin -> onEmailChange, onPasswordChange, onSubmitSignIn
+
+        - onSubmitSignIn -> `http://localhost:3000/signin` -> loadUser + onRouteChange
+
+    2. Register.js: 3 个函数
+    - onNameChange, onEmailChange, onPasswordChange: 改变 state, 以上了条都是表格函数
+    
+    - onSubmitRegister: 利用 state 的信息, 激发一条 route: `http://localhost:3000/register`, 对内 database 创建新用户, 如果创建成功就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。
+
+    - component & functions
+        - component: Register -> onNameChange, onEmailChange, onPasswordChange, onSubmitRegister
+        
+        - onSubmitRegister -> `http://localhost:3000/register`-> loadUser + onRouteChange
+
+    3. Logo.js, 无函数无参数组件。
+
+    4. Rank.js, 无函数有两个来自 App.js 的参数: 
+        ```jsx
+        name={this.state.user.name}
+        entries={this.state.user.entries}
+        ```
+
+    5. ImageLinkForm.js, 无参数有两个来自 App.js 的函数: 
+        ```jsx
+        onInputChange={this.onInputChange}
+        onButtonSubmit={this.onButtonSubmit}
+        ```
+
+        - 这两个函数的主要作用是，一个是用来捕捉输入的 url 并更发改 App.js 中的 state，另外一个是用来向 API 发送请求。
+
+    6. FaceRecognition.js, 无函数有两个来自 App.js 的参数: 
+
+        ```jsx
+        box={box}
+        imageUrl={imageUrl}
+        ```
+
+        - 主要作用是 显示输入 url 对应的图片并绘画脸部边框。
+
+5. 目前来看有两条 route 暂时还没有用到，分别是：
+
+    ```js
+    app.get('/', (req, res) => { res.send(db.users) });
+    app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) });
+    ```
+
+    - 都是关于查询用户资料的 api，猜测作用应该是修改用户资料。
 
 #### `Comment:`
 1. 
 
+### <span id="20.6">`Step6: Data flow.`</span>
+
+- #### Click here: [BACK TO CONTENT](#20.0)
+
+- 前后端函数对接：
+
+1. onSubmitSignIn(Signin.js) -> `http://localhost:3000/signin` -> handleSignin(signin.js) -> loadUser + onRouteChange (App.js)
+
+2. onSubmitRegister(Register.js) -> `http://localhost:3000/register`->  handleRegister(register.js) -> loadUser + onRouteChange (App.js)
+
+3. onButtonSubmit(ImageLinkForm.js) -> `http://localhost:3000/imageurl` -> handleApiCall(image.js) -> `http://localhost:3000/image` -> handleImage(image.js)
+
+### <span id="20.1">`Step7: Others.`</span>
+
+- #### Click here: [BACK TO CONTENT](#20.0)
+
+1. 本应用最值得学习代码：
+
+- :star::star::star: 连续 promise。
+```js
+  onButtonSubmit = () => {
+    this.setState({imageUrl: this.state.input});
+      fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count}))
+            })
+            .catch(console.log)
+
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      })
+      .catch(err => console.log(err));
+  }
+```
+
+- :star::star::star:无 router 设计:
+
+```js
+  render() {
+    const { isSignedIn, imageUrl, route, box } = this.state;
+    return (
+      <div className="App">
+         <Particles className='particles'
+          params={particlesOptions}
+        />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        { route === 'home'
+          ? <div>
+              <Logo />
+              <Rank
+                name={this.state.user.name}
+                entries={this.state.user.entries}
+              />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onButtonSubmit={this.onButtonSubmit}
+              />
+              <FaceRecognition box={box} imageUrl={imageUrl} />
+            </div>
+          : (
+             route === 'signin'
+             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+             : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            )
+        }
+      </div>
+    );
+  }
+```
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
