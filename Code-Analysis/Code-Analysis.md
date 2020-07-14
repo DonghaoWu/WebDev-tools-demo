@@ -26,12 +26,6 @@
 - [20.3 Setup API key and .env file.](#20.3)
 - [20.4 Backend application.](#20.4)
 - [20.5 Frontend application.](#20.5)
-- [20.6 Code Secrets. -- dotenv](#20.6)
-- [20.7 Secure Headers. -- helmet](#20.7)
-- [20.8 Access Control. -- cors](#20.8)
-- [20.9 Data Management. -- bcrypt](#20.9)
-- [20.10 Don't trust anyone.](#20.10)
-- [20.11 Authentication.](#20.11)
 
 
 ------------------------------------------------------------
@@ -193,6 +187,7 @@ $ npm audit fix
 ------------------------------------------------------------
 
 5. Connect backend application and the new database.
+
 __`Location:./demo-apps/backend-smart-brain-api/server.js`__
 
 ```js
@@ -200,7 +195,7 @@ const db = knex({
   client: 'pg',
   connection: {
     host: 127.0.0.1,
-    user: Your postgreSQL username,
+    user: <Your postgreSQL username>,
     password: '',
     database: 'smart-brain-local'
   }
@@ -214,7 +209,7 @@ const db = knex({
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 
-1. Register a new account in [clarifai](https://www.clarifai.com/)
+1. Register a new account in [clarifai.com](https://www.clarifai.com/).
 
 2. Copy your API key.
 
@@ -224,12 +219,14 @@ const db = knex({
 
 ------------------------------------------------------------
 
-3. Install dotenv dependency.
+3. Install dotenv dependency in backend application.
+
 ```bash
 $ npm i dotenv
 ```
 
 4. Apply the dependency in the first line of the file.
+
 __`Location:./demo-apps/backend-smart-brain-api/server.js`__
 
 ```js
@@ -237,6 +234,7 @@ require('dotenv').config();
 ```
 
 5. Create a new file in root directory, name it `.env`, then put all private data here.
+
 __`Location:./demo-apps/backend-smart-brain-api/.env`__
 
 ```js
@@ -249,6 +247,7 @@ DB_CLIENT=pg
 ```
 
 6. Replace the variables.
+
 __`Location:./demo-apps/backend-smart-brain-api/server.js`__
 
 ```js
@@ -284,7 +283,7 @@ __`Location:./demo-apps/backend-smart-brain-api/.gitignore`__
 *.env
 ```
 
-8. Run both frontend-app and backend app.
+8. Run both frontend app and backend app.
 ```bash
 $ npm start
 ```
