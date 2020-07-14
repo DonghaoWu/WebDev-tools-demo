@@ -9,6 +9,7 @@
 ### `Check Dependencies & Tools:`
 
 - dotenv
+- uuid
 
 ------------------------------------------------------------
 
@@ -27,7 +28,9 @@
 - [20.4 Backend application.](#20.4)
 - [20.5 Frontend application.](#20.5)
 - [20.6 Data flow.](#20.6)
-- [20.7 Others.](#20.)
+- [20.7 Others.](#20.7)
+- [20.8 Change the code to recognize mutiple faces.](#20.8)
+
 
 ------------------------------------------------------------
 
@@ -501,7 +504,7 @@
 
     3. onButtonSubmit(ImageLinkForm.js) -> `http://localhost:3000/imageurl` -> handleApiCall(image.js) -> `http://localhost:3000/image` -> handleImage(image.js)
 
-### <span id="20.1">`Step7: Others.`</span>
+### <span id="20.7">`Step7: Others.`</span>
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 
@@ -575,6 +578,330 @@
     );
   }
 ```
+
+### <span id="20.8">`Step8: Change the code to recognize mutiple faces.`</span>
+
+- #### Click here: [BACK TO CONTENT](#20.0)
+
+1. __`Location:./demo-apps/frontend-smart-brain/src/App.js`__
+
+```jsx
+import React, { Component } from 'react';
+import Particles from 'react-particles-js';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import Navigation from './components/Navigation/Navigation';
+import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
+import Logo from './components/Logo/Logo';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Rank from './components/Rank/Rank';
+import './App.css';
+
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 30,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+}
+
+const initialState = {
+  input: '',
+  imageUrl: '',
+  boxes: [],
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = initialState;
+  }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    })
+  }
+
+  calculateFaceLocations = (data) => {
+    return data.outputs[0].data.regions.map(region => {
+      let clarifaiFace = region.region_info.bounding_box;
+      const image = document.getElementById('inputimage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      return {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height)
+      }
+    })
+  }
+
+  displayFaceBox = (boxes) => {
+    this.setState({ boxes: boxes });
+  }
+
+  onInputChange = (event) => {
+    this.setState({ input: event.target.value });
+  }
+
+  onButtonSubmit = () => {
+    this.setState({ imageUrl: this.state.input });
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+            })
+            .catch(console.log)
+
+        }
+        this.displayFaceBox(this.calculateFaceLocations(response))
+      })
+      .catch(err => console.log(err));
+  }
+
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState(initialState)
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true })
+    }
+    this.setState({ route: route });
+  }
+
+  render() {
+    const { isSignedIn, imageUrl, route, boxes } = this.state;
+    return (
+      <div className="App">
+        <Particles className='particles'
+          params={particlesOptions}
+        />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        {route === 'home'
+          ? <div>
+            <Logo />
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+          </div>
+          : (
+            route === 'signin'
+              ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+              : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          )
+        }
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+#### `Comment:`
+```diff
+-  calculateFaceLocation = (data) => {
+-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+-    const image = document.getElementById('inputimage');
+-    const width = Number(image.width);
+-    const height = Number(image.height);
+-    return {
+-      leftCol: clarifaiFace.left_col * width,
+-      topRow: clarifaiFace.top_row * height,
+-      rightCol: width - (clarifaiFace.right_col * width),
+-      bottomRow: height - (clarifaiFace.bottom_row * height)
+-    }
+-  }
+
++  calculateFaceLocations = (data) => {
++   return data.outputs[0].data.regions.map(region => {
++      let clarifaiFace = region.region_info.bounding_box;
++      const image = document.getElementById('inputimage');
++      const width = Number(image.width);
++      const height = Number(image.height);
++      return {
++        leftCol: clarifaiFace.left_col * width,
++        topRow: clarifaiFace.top_row * height,
++        rightCol: width - (clarifaiFace.right_col * width),
++        bottomRow: height - (clarifaiFace.bottom_row * height)
++      }
++    })
++  }
+```
+
+```diff
+-  this.displayFaceBox(this.calculateFaceLocation(response))
++  this.displayFaceBox(this.calculateFaceLocations(response))
+```
+
+```diff
+-  const initialState = {
+-    input: '',
+-    imageUrl: '',
+-    box: {},
+-    route: 'signin',
+-    isSignedIn: false,
+-    user: {
+-      id: '',
+-      name: '',
+-      email: '',
+-      entries: 0,
+-      joined: ''
+-    }
+-  }
+
++  const initialState = {
++    input: '',
++    imageUrl: '',
++    boxes: [],
++    route: 'signin',
++    isSignedIn: false,
++    user: {
++      id: '',
++      name: '',
++      email: '',
++      entries: 0,
++      joined: ''
++    }
++  }
+```
+
+```diff
+-  displayFaceBox = (box) => {
+-    this.setState({ box: box });
+-  }
+
++  displayFaceBox = (boxes) => {
++    this.setState({ boxes: boxes });
++  }
+```
+
+```diff
+-  const { isSignedIn, imageUrl, route, box } = this.state;
++  const { isSignedIn, imageUrl, route, boxes } = this.state;
+```
+
+```diff
+-  <FaceRecognition box={box} imageUrl={imageUrl} />
++  <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+```
+
+2. __`Location:./demo-apps/frontend-smart-brain/src/components/FaceRecognition.js`__
+
+```bash
+$ npm i uuid
+```
+
+```jsx
+import React from 'react';
+import './FaceRecognition.css';
+import { v4 as uuidv4 } from 'uuid';
+
+const FaceRecognition = ({ imageUrl, boxes }) => {
+  return (
+    <div className='center ma'>
+      <div className='absolute mt2'>
+        <img id='inputimage' alt='' src={imageUrl} width='500px' heigh='auto'/>
+        {
+          boxes.map(box =>{
+             return <div key={uuidv4()} className='bounding-box' style={{top: box.topRow, right: box.rightCol, bottom: box.bottomRow, left: box.leftCol}}></div>
+          })
+        }
+      </div>
+    </div>
+  );
+}
+
+export default FaceRecognition;
+```
+
+#### `Comment:`
+```diff
+    import React from 'react';
+    import './FaceRecognition.css';
+
+    const FaceRecognition = ({ imageUrl, box }) => {
+        return (
+            <div className='center ma'>
+                <div className='absolute mt2'>
+                <img id='inputimage' alt='' src={imageUrl} width='500px' heigh='auto'/>
+-               <div className='bounding-box' style={{top: box.topRow, right: box.rightCol, bottom: box.bottomRow, left: box.leftCol}}></div>
+                </div>
+            </div>
+        );
+    }
+
+    export default FaceRecognition;
+
+-------------------------------------------------------------------------------------------
+
+    import React from 'react';
+    import './FaceRecognition.css';
++   import { v4 as uuidv4 } from 'uuid';
+
+    const FaceRecognition = ({ imageUrl, boxes }) => {
+        return (
+            <div className='center ma'>
+                <div className='absolute mt2'>
+                <img id='inputimage' alt='' src={imageUrl} width='500px' heigh='auto'/>
++               {
++                  boxes.map(box =>{
++                      return <div key={uuidv4()} className='bounding-box' style={{top: box.topRow, right: box.rightCol, bottom: box.bottomRow, left: box.leftCol}}></div>
++                  })
++               }
+                </div>
+            </div>
+        );
+    }
+```
+
+<p align="center">
+<img src="../assets/p20-07.png" width=90%>
+</p>
+
+------------------------------------------------------------
 
 - #### Click here: [BACK TO CONTENT](#20.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
