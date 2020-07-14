@@ -388,9 +388,9 @@
 - #### Click here: [BACK TO CONTENT](#20.0)
 
 1. dependency: 
-    - react: 
-    - react-dom: 
-    - react-particles-js:
+    - react
+    - react-dom
+    - react-particles-j
     - react-scripts
     - react-tilt
     - tachyons
@@ -429,13 +429,13 @@
 
     1. `Signin.js`: 3 个函数, 
 
-    - `onEmailChange`: 改变 state, onPasswordChange: 改变 state, 以上了条都是表格函数, 
-    
-    - `onSubmitSignIn`: 利用 state 的信息, 激发一条 route: `http://localhost:3000/signin`, 对内 database 查询用户并修改信息, 如果有用户就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。关于 render(), 这里的 onRouteChange 除了在 onRouteChange 中使用, 而且还在 render 里面使用, 语句是：
+        - `onEmailChange`: 改变 state, onPasswordChange: 改变 state, 以上了条都是表格函数, 
+        
+        - `onSubmitSignIn`: 利用 state 的信息, 激发一条 route: `http://localhost:3000/signin`, 对内 database 查询用户并修改信息, 如果有用户就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。关于 render(), 这里的 onRouteChange 除了在 onRouteChange 中使用, 而且还在 render 里面使用, 语句是：
 
-    ```jsx
-    <p  onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
-    ```
+        ```jsx
+        <p  onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+        ```
 
     - component & functions
         - component: Signin -> onEmailChange, onPasswordChange, onSubmitSignIn
@@ -443,14 +443,14 @@
         - onSubmitSignIn -> `http://localhost:3000/signin` -> loadUser + onRouteChange
 
     2. Register.js: 3 个函数
-    - onNameChange, onEmailChange, onPasswordChange: 改变 state, 以上了条都是表格函数
-    
-    - onSubmitRegister: 利用 state 的信息, 激发一条 route: `http://localhost:3000/register`, 对内 database 创建新用户, 如果创建成功就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。
-
-    - component & functions
-        - component: Register -> onNameChange, onEmailChange, onPasswordChange, onSubmitRegister
+        - onNameChange, onEmailChange, onPasswordChange: 改变 state, 以上了条都是表格函数
         
-        - onSubmitRegister -> `http://localhost:3000/register`-> loadUser + onRouteChange
+        - onSubmitRegister: 利用 state 的信息, 激发一条 route: `http://localhost:3000/register`, 对内 database 创建新用户, 如果创建成功就调用 loadUser 更改 APP 组件的用户信息, 然后使用onRouteChange 改变 App 组件的 route 信息。
+
+        - component & functions
+            - component: Register -> onNameChange, onEmailChange, onPasswordChange, onSubmitRegister
+            
+            - onSubmitRegister -> `http://localhost:3000/register`-> loadUser + onRouteChange
 
     3. Logo.js, 无函数无参数组件。
 
@@ -495,11 +495,11 @@
 
 - 前后端函数对接：
 
-1. onSubmitSignIn(Signin.js) -> `http://localhost:3000/signin` -> handleSignin(signin.js) -> loadUser + onRouteChange (App.js)
+    1. onSubmitSignIn(Signin.js) -> `http://localhost:3000/signin` -> handleSignin(signin.js) -> loadUser + onRouteChange (App.js)
 
-2. onSubmitRegister(Register.js) -> `http://localhost:3000/register`->  handleRegister(register.js) -> loadUser + onRouteChange (App.js)
+    2. onSubmitRegister(Register.js) -> `http://localhost:3000/register`->  handleRegister(register.js) -> loadUser + onRouteChange (App.js)
 
-3. onButtonSubmit(ImageLinkForm.js) -> `http://localhost:3000/imageurl` -> handleApiCall(image.js) -> `http://localhost:3000/image` -> handleImage(image.js)
+    3. onButtonSubmit(ImageLinkForm.js) -> `http://localhost:3000/imageurl` -> handleApiCall(image.js) -> `http://localhost:3000/image` -> handleImage(image.js)
 
 ### <span id="20.1">`Step7: Others.`</span>
 
