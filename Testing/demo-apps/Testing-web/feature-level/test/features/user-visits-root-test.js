@@ -5,7 +5,8 @@ describe('User visits root', () => {
   describe('without existing messages', () => {
     it('starts blank', () => {
       browser.url('/');
-      assert.equal(browser.getText('#messages'),'');
+      const elem = $('#messages');
+      assert.equal(elem.getText(),'');
     });
   });
 
@@ -16,12 +17,19 @@ describe('User visits root', () => {
       const author = 'username';
 
       browser.url('/');
-      browser.setValue('input[id=author]', author);
-      browser.setValue('textarea[id=message]', message);
-      browser.click('input[type=submit]');
+      const elem1 = $('#author');
+      const elem2 = $('#message');
+      const elem3 = $('#submit-input');
 
-      assert.include(browser.getText('#messages'), message);
-      assert.include(browser.getText('#messages'), author);
+      elem1.setValue(author);
+      elem2.setValue(message);
+      elem3.click();
+
+      const elem4 = $('#author');
+      const elem5 = $('#message');
+
+      // assert.equal(elem4.getText('#author'), author);
+      assert.equal(elem5.getText('#message'), message);
  
     });
   });

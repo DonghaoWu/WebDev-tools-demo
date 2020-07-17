@@ -1,23 +1,26 @@
 {
-    "name": "calculator-js",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-      "start": "node ./bin/www",
-      "test": "PORT=8001 bin/wdio-test"
-    },
-    "dependencies": {
-      "express": "~4.15.2",
-      "morgan": "~1.8.1",
-      "wdio-spec-reporter": "^0.1.2"
-    },
-    "devDependencies": {
-      "chai": "3.5.0",
-      "eslint-config-google": "^0.9.1",
-      "mocha": "^3.0.0",
-      "wdio-mocha-framework": "^0.4.0",
-      "wdio-selenium-standalone-service": "0.0.9",
-      "webdriverio": "^4.2.3"
-    }
+  "name": "webdriverio-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/cli": "^6.3.0",
+    "@wdio/local-runner": "^6.3.0",
+    "@wdio/mocha-framework": "^6.3.0",
+    "@wdio/spec-reporter": "^6.3.0",
+    "@wdio/sync": "^6.3.0",
+    "chromedriver": "^84.0.0",
+    "wdio-chromedriver-service": "^6.0.3"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
   }
-  
+}
