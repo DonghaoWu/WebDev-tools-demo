@@ -103,7 +103,7 @@ $ git checkout HEAD filename
 #### `Comment:`
 1. :star::star::star:小场景：想要把目标分支例如 skills 跟 master 分支合并:
 ```bash
-$ git chenckout master
+$ git checkout master
 $ git merge skills
 ``` 
 
@@ -175,7 +175,7 @@ $ git checkout change-config
 $ git push origin change-config
 ```
 
-5. 在 github 上申请 pull request 并通知 B 审核，B 和 A 商量审核过后没问题就 approve，把新分支合并到 master。这个步骤全部在 github 上面操作。__也就是说，现在更新了 master，一切都按现在的 master 为基准进行开发。__
+5. 在 github 上申请 pull request 并通知 B 审核，B 和 A 商量审核过后没问题就 approve，把新分支合并到 master。这个步骤全部在 github 上面操作。 __也就是说，现在更新了 master，一切都按现在的 master 为基准进行开发。__
 
 6. A更新本地 master， 然后删除分支 change-config，并开始在 feature-A 上的工作。
 
@@ -200,7 +200,7 @@ $ git merge origin/master
 
 8. 现在针对正在开发的 feature-B， B 有两个选择，一个是删除之前在建的分支 feature-B，重新以最新的本地 master 为基础创建新的 feature-B，这个做法是不可取的，因为很难全部记住之前旧 feature-B 上的修改，其次如果是一个多人经常修改的 github master，这会需要重复这个动作很多次。
 
-:star::star::star:所以我们会选择另外一个选项，`__用更新之后的 master 合并现有的 feature-B__`:
+:star::star::star:所以我们会选择另外一个选项， `__用更新之后的 master 合并现有的 feature-B__`:
 
 ```bash
 $ git checkout feature-B
