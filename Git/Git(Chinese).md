@@ -200,7 +200,7 @@ $ git merge origin/master
 
 8. 现在针对正在开发的 feature-B， B 有两个选择，一个是删除之前在建的分支 feature-B，重新以最新的本地 master 为基础创建新的 feature-B，这个做法是不可取的，因为很难全部记住之前旧 feature-B 上的修改，其次如果是一个多人经常修改的 github master，这会需要重复这个动作很多次。
 
-:star::star::star:所以我们会选择另外一个选项， `__用更新之后的 master 合并现有的 feature-B__`:
+:star::star::star:所以我们会选择另外一个选项， __`用更新之后的 master 合并现有的 feature-B`__ :
 
 ```bash
 $ git checkout feature-B
