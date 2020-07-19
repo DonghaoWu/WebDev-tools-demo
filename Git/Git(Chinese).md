@@ -38,7 +38,7 @@
 
 - `git init`: 将本地文件夹 git 化，这样就可以在 terminal 上面操作 git command。（英）creates a new Git repository.
 
-- `git statu`s: 查看目前文件夹下面有多少个文件修改了，有多少个文件上架了（stage），就是查看所有文件的 git 状态。（英）inspects the contents of the working directory and staging area.
+- `git status`: 查看目前文件夹下面有多少个文件修改了，有多少个文件上架了（stage），就是查看所有文件的 git 状态。（英）inspects the contents of the working directory and staging area.
 
 - `git add`: 把对应的文件上架。（英）adds files from the working directory to the staging area.
 
@@ -70,8 +70,8 @@
 
 
 #### `Comment:`
-1. `git checkout HEAD filename` 是会__改变__目前文件内容的，清除在目标文件上面的修改。
-2. `git reset HEAD filename` __不会改变__目前的文件内容，只是把已经上架的文件下架。
+1. `git checkout HEAD filename` 是会__`改变`__目前文件内容的，清除在目标文件上面的修改。
+2. `git reset HEAD filename` __`不会改变`__目前的文件内容，只是把已经上架的文件下架。
 3. 在这里要注意的是，reset 命令是会更改 git 的 HEAD 位置的，但不会修改目前文件内容。
 4. :star::star::star:小场景：想要取消目前的修改并返回到某一 commit，且使所有内容返回到跟那个 commit 相同时，使用: 
 
