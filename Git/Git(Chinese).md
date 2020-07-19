@@ -149,7 +149,7 @@ $ git merge skills
 
 - #### Click here: [BACK TO CONTENT](#21.0)
 
-1. A 和 B 一起在一个 project，A 负责一个分支 feature-A 负责一个分支 feature-B，A 和 B 都从 github 下载原始文件：
+1. A 和 B 一起在一个 project，A 负责一个分支 feature-A， B 负责一个分支 feature-B，A 和 B 都从 github 下载原始文件：
 
 ```bash
 $ git clone <http...>
@@ -194,7 +194,7 @@ $ git merge origin/master
 
 8. 现在针对正在开发的 feature-B， B 有两个选择，一个是删除之前在建的分支 feature-B，重新以最新的本地 master 为基础创建新的 feature-B，这个做法是不可取的，因为很难全部记住之前旧 feature-B 上的修改，其次如果是一个多人经常修改的 github master，这会需要重复这个动作很多次。
 
-- :star::star::star:所以我们会选择另外一个选项，`__用更新之后的 master 合并现有的 feature-B__`:
+:star::star::star:所以我们会选择另外一个选项，`__用更新之后的 master 合并现有的 feature-B__`:
 
 ```bash
 $ git checkout feature-B
@@ -207,9 +207,9 @@ $ git merge master
 #### `Comment:`
 1. 这个属于多人协作 project 常见情况，每个人都在自己的 feature 上运作，但同时 master 在经常更新。‘
 2. 出现 merge conflict 的时候如果出现差别，第一要进行沟通，然后取舍。而减少 merge conflict 的尝试有几种：
-    - 第7点的错误方法，有效但很低效且容易遗漏出错。
+    - 第7点的第一种尝试，有效但很低效且容易遗漏出错。
     - 每个人尽量在自己划定的文件范围内修改，尽量少修改共有范围文件，或者共有范围文件的修改由特定人员负责，并进行协调和通知。
-3. 其实 master 进场更新是常事，遇到 merge conflict 也是常事，这就是为什么程序员需要沟通协调的原因，处理 merge conflict 的取舍应该是一个必要技能。
+3. 其实 master 更新是常事，遇到 merge conflict 也是常事，这就是为什么程序员需要沟通协调的原因，处理 merge conflict 应该是一个必要技能。
 
 ------------------------------------------------------------
 
