@@ -177,11 +177,17 @@ $ git push origin change-config
 
 5. 在 github 上申请 pull request 并通知 B 审核，B 和 A 商量审核过后没问题就 approve，把新分支合并到 master。这个步骤全部在 github 上面操作。__也就是说，现在更新了 master，一切都按现在的 master 为基准进行开发。__
 
-6. A 删除分支 change-config
+6. A更新本地 master， 然后删除分支 change-config，并开始在 feature-A 上的工作。
 
 ```bash
 $ git checkout master
+$ git fetch
+$ git merge origin/master
+
 $ git branch -d change-config
+
+$ git branch feature-A
+$ git checkout feature-A
 ```
 
 7. B 现在需要下载最新的 master 跟本地 master 合并：
