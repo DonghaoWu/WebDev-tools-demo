@@ -152,6 +152,8 @@ export default App;
 <img src="./assets/sn-01.png" width=85%>
 </p>
 
-- 解决尝试：1. 删除文件夹 node_modules，然后重新运行命令 `npm install`
+- 解决尝试：
+  1. 删除文件夹 node_modules，然后重新运行命令 `npm install`
+  2. 个人估计这个原因是原始的 project 在 node_modules 在安装的时候有特定的 path 设定，所以直接复制过来的话会有些设定按原路径是无法找到的。
 
 ----------------------------------------------------------------------------
