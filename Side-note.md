@@ -149,7 +149,9 @@ export default App;
 7. 如果你从本地一个文件夹（假设为 App-A）下面的一个 project（假设为 project-A）复制到另外一个本地文件夹（假设为 App-B），当运行 project-A 的时候（npm start）可能会有以下错误发生而不能运行：
 
 <p align="center">
-<img src="../assets/sn-01.png" width=85%>
+<img src="./assets/sn-01.png" width=85%>
 </p>
+
+- 解决尝试：1. 删除文件夹 node_modules，然后重新运行命令 `npm install`
 
 ----------------------------------------------------------------------------
