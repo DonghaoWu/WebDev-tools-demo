@@ -18,7 +18,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./:/usr/src/smart-brain-api
+      - ./:/usr/src/smart-brain-api-docker
 
   # Postgres
   postgres:

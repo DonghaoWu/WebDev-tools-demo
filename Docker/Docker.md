@@ -15,6 +15,22 @@
 1. 本章里面会提到两种文件，文件有 Dockerfile 和 docker-compose.yml，其中 Dockerfile 是用来生成单独 container service 的，docker-compose 是用来生成多个 container services 的。而且 docker-compose 文件还可以调用特定位置的 Dockerfile 来生成 container service。
 
 2. 本章里面会提到两种命令，一种是 docker 命令，另外一种是 docker-compose 命令。
+
+3. 使用 Docker 必须要注意的事情：
+
+    1. :star: 每一次修改源代码，Dockerfile 或者 docker-compose.yml 之后都要重新执行 `build` 命令。
+    2. :star: 一个文件夹对应一个 container_name，如果修改了源代码文件夹名字，那么 container_name 也必须修改才能运行，同时推荐也修改 work directory。
+    3. :star: docker-compose 中的 working directory 的设置必须跟主 Dockerfile (__`Location: ./demo-apps/backend-smart-brain-api-docker/Dockerfile`__)里面的一致。
+
+    4. :star: 推荐 docker-compose 命令组合：
+        ```bash
+        $ docker-compose up --build
+        $ docker-compose down
+        ```
+
+    5. :star: docker-compose.yml 里面的 database 环境变量设置必须要跟 application 里面获得变量的变量名称一样。
+
+    6. SQL 文件的编写和检查需要特别严谨，需要注意`空格标点还有拼写`。
 ------------------------------------------------------------
 
 ### <span id="22.0">`Brief Contents & codes position`</span>
@@ -26,8 +42,9 @@
 - [22.3 Docker commands.](#22.3)
 - [22.4 docker-compose.yml file.](#22.4)
 - [22.5 docker-compose commands.](#22.5)
-- [22.6 Add new servie to docker-compose.](#22.6)
-- [22.7 All needed files.](#22.7)
+- [22.6 Add postgres code in docker-compose.](#22.6)
+- [22.7 Add postgres Dockerfile.](#22.7)
+- [22.8 Run.](#22.8)
 
 ------------------------------------------------------------
 
@@ -67,7 +84,7 @@ CMD ["/bin/bash"]
 ```
 
 #### `Comment:`
-1. 以下逐条分析命令：
+1. Dockerfile 命令代码分析：
     - __`FROM node:12.18.2`__ --> 生成一个 node 环境，并标注版本号。
     - __`WORKDIR /usr/src/smart-brain-api-docker`__ --> 在将要生成的 container 里面命名选择一个路径作为工作文件夹，这里要说的是，因为这个 Dockerfile 是主要的 Dockerfile，它这里设置的路径，将要包涵目前 app 文件夹内所有的文件。
     - __`COPY ./ ./`__ --> 复制指定文件到第二步的路径中，第一个 `./` 指的是文件范围，跟这个 Dockerfile 同层的文件（也就是 backend-smart-api-docker 中所有文件），第二个 `./` 指的是位置，这里指选择所有文件。
@@ -158,94 +175,314 @@ root@3b1e6d9800f6:/usr/src/smart-brain-api-docker# npm start
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
-1. 
+- :star:这里要先有个预先认识，docker-compose 相当于多个 Dockerfile 的合集，可以在这里创建多个 service，也可以引用其他位置的 Dockerfile 创建 service。
+
+1. Create a Dockerfile in application root directory.
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/docker-compose.yml`__
+
+```yml
+version: '3.8'
+
+services:
+  # Backend API
+  smart-brain-api:
+    container_name: backend-docker
+    # image: node:12.18.2 这个在已经有 image 的情况下可以省略
+    build: ./
+    command: npm start
+    working_dir: /usr/src/smart-brain-api-docker
+    links:
+      - postgres
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/smart-brain-api-docker
+```
 
 #### `Comment:`
-1. `git fetch`: 不会更改任何文件。
-2. `git merge origin/master`: 有可能产生 Merge conflict。
+1. docker-compose.yml 命令代码分析：
+    - __`version: '3.8'`__ --> docker-compose 的版本号，可以在这里查询:[docker-compose version](https://docs.docker.com/compose/compose-file/)
 
-### <span id="22.5">`Step5: 常见场景.`</span>
+    - __`smart-brain-api:`__ --> 服务名字。
+
+    - __`container_name: backend-docker`__ --> container 名字，注意这里一个源文件夹名字对应一个 container_name，修改了源文件夹名字就必须修改新的 container_name。
+
+    - __`build: ./`__ --> 调用同文件层中的 Dockerfile 并运行 build 命令，这里要说明的是，如果有 Dockerfile 建立 image 了，就不需要使用代码 `image: node:12.18.2`。
+
+    - __`command: npm start`__ --> 执行 terminal 命令。
+
+    - __`working_dir: /usr/src/smart-brain-api-docker`__ --> working directory，这里的设置必须跟主 Dockerfile (__`Location: ./demo-apps/backend-smart-brain-api-docker/Dockerfile`__)里面的一致。
+
+    - __`links: - postgres`__ --> 关联服务，:star:现在可以省略不用了。
+
+    - __`ports:- "4000:4000"`__ --> container 与外界的对接接口设定。
+
+    - __`volumes: - ./:/usr/src/smart-brain-api-docker`__ --> 允许在本地修改源代码，使 container 做出同步改变，例如可以使用 nodemon 监测。:star:注意参数文件夹要准确。
+
+### <span id="22.5">`Step5: docker-compose commands.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
-1. A 和 B 一起在一个 project，A 负责一个分支 feature-A， B 负责一个分支 feature-B，A 和 B 都从 github 下载原始文件：
+1. 参考资料：[docker-compose cli](https://docs.docker.com/compose/reference/overview/)
 
-```bash
-$ git clone <http...>
-```
+2. 常见命令，备注：:star:所有命令都是在 Dockerfile 所在层位置的。
 
-2. B 创建分支并转换到分支 feature-B，并开始对文件进行修改：
+    - __`docker-compose run <serviecesName>`__: 运行一个 service。
 
-```bash
-$ git branch feature-B
-$ git checkout feature-B
-```
+    - __`docker-compose build`__: Build or rebuild services。
 
-3. A 发现 project 的一些原始设置需要修正并加入一些 dependency，同时也对一些原始文件进行修改，于是生成新分支 ‘change-config’
+    - __`docker-compose down`__:Stop and remove containers, networks, images, and volumes。
 
-```bash
-$ git branch change-config
-$ git checkout change-config
-```
+    - __`docker-compose up`__: Create and start containers。
 
-4. A 修改完之后把分支上传到 github
-
-```bash
-$ git push origin change-config
-```
-
-5. 在 github 上申请 pull request 并通知 B 审核，B 和 A 商量审核过后没问题就 approve，把新分支合并到 master。这个步骤全部在 github 上面操作。 __也就是说，现在更新了 master，一切都按现在的 master 为基准进行开发。__
-
-6. A更新本地 master， 然后删除分支 change-config，并开始在 feature-A 上的工作。
-
-```bash
-$ git checkout master
-$ git fetch
-$ git merge origin/master
-
-$ git branch -d change-config
-
-$ git branch feature-A
-$ git checkout feature-A
-```
-
-7. B 现在需要下载最新的 master 跟本地 master 合并：
-
-```bash
-$ git checkout master
-$ git fetch
-$ git merge origin/master
-```
-
-8. 现在针对正在开发的 feature-B， B 有两个选择，一个是删除之前在建的分支 feature-B，重新以最新的本地 master 为基础创建新的 feature-B，这个做法是不可取的，因为很难全部记住之前旧 feature-B 上的修改，其次如果是一个多人经常修改的 github master，这会需要重复这个动作很多次。
-
-:star::star::star:所以我们会选择另外一个选项， __`用更新之后的 master 合并现有的 feature-B`__ :
-
-```bash
-$ git checkout feature-B
-$ git merge master
-```
-
-:key::key::key: 请注意，这是一个 merge 过程，有可能产生 merge conflict 的情况，当然也可能没有，主要取决于 B 在 feature-B 分支上有没有修改跟 A 在 change-config 分支上同一个文件。如果有 merge conflict，参考上面的 step3 情况处理。
-
+    - __`docker-compose up --build`__: 先执行 build 命令，然后执行 up 命令。
 
 #### `Comment:`
-1. 这个属于多人协作 project 常见情况，每个人都在自己的 feature 上运作，但同时 master 在经常更新。‘
-2. 出现 merge conflict 的时候如果出现差别，第一要进行沟通，然后取舍。而减少 merge conflict 的尝试有几种：
+1. 推荐组合：
 
-    - :star: 第7点的第一种尝试，有效但很低效且容易遗漏出错。
-    - :star: 每个人尽量在自己划定的文件范围内修改，尽量少修改共有范围文件，或者共有范围文件的修改由特定人员负责，并进行协调和通知。
-    - :star: 防止多人多次对共有文件的修改。
+```bash
+$ docker-compose up --build
+$ docker-compose down
+```
 
-3. 其实 master 更新是常事，遇到 merge conflict 也是常事，这就是为什么程序员需要沟通协调的原因，处理 merge conflict 应该是一个必要技能。
+2. 其他组合，用来后台运行，并进入 bash terminal。
+
+```bash
+$ docker-compose up -d
+$ docker-compose exec <container_name> bash
+```
 
 ------------------------------------------------------------
 
-### <span id="22.6">`Step6: 后续补充更新.`</span>
+### <span id="22.6">`Step6: Add postgres code in docker-compose.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
+1. :star: 要注意的是执行这个命令的时候如果 local postgres 已经连接了 port 5432，就算你用 postico 登录也不能用已定义的 USER 和 PASSWORD 登录，因为这个时候 5432 端口是为 local database 服务，只能查询 local database 上面的数据。需要关掉本地 5432 端口的数据库服务之后，再运行 down 和 build 命令，就可以用 postico 用上面的 USER 和 PASSWORD 登录 docker 对应的database。 
+
+2. postgres 的数据库虽然都在本地，但它使用的是端口化访问的形式，每个 postgres 的默认端口是 5432，也就是说本地和 container 里面生成的 database 都是默认使用 5432 接口才能访问的，如果本地的 database 已经占用，解决方法有两个，一是停止本地 database 运作，二是在 docker-compose.yml 中的 ports 设置中改变本地参数，如改为：
+
+```diff
+-    ports:
+-      - "5432:5432"
+
++    ports:
++      - "5431:5432"
+```
+
+- 当然改变本地端口的话，front-end 中的设置也要相应改变，:star:综上所述推荐第一种方法。
+
+3. Add postgres service in docker-compose.yml file
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/docker-compose.yml`__
+
+```yml
+version: '3.8'
+
+services:
+  # Backend API service
+  smart-brain-api:
+    container_name: backend-docker
+    build: ./
+    command: npm start
+    working_dir: /usr/src/smart-brain-api-docker
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+    links:
+      - postgres
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/smart-brain-api-docker
+
+  # Postgres service
+  postgres:
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+    build: ./postgres
+    ports:
+      - "5432:5432"
+```
+
+4. Change code in server.js
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/server.js`__
+
+```js
+const db = knex({
+  client: process.env.POSTGRES_CLIENT,
+  connection: {
+    host: process.env.POSTGRES_HOST,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB
+  }
+});
+```
+
 #### `Comment:`
+1. docker-compose.yml 命令代码分析：
+    - __`environment`__ --> 设定环境变量，当设定好这些变量之后，container 里面的 application 就可以通过 process.env 来获得这些全局变量。
+
+    - __`build: ./postgres`__ --> 调用同层文件夹 postgre 下面的 Dockerfile 来build service。
+
+    - __`ports:- "5432:5432"`__ --> container database 的对外接口设定。
+
+### <span id="22.7">`Step7: Add postgres Dockerfile.`</span>
+
+- #### Click here: [BACK TO CONTENT](#22.0)
+
+1. Add new folder.
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres`__
+
+2. Add files in the new folder.
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres/Dockerfile`__
+
+```dockerfile
+FROM postgres:12.1
+
+ADD /tables/ /docker-entrypoint-initdb.d/tables/
+ADD /seed/ /docker-entrypoint-initdb.d/seed/
+ADD deploy_schemas.sql /docker-entrypoint-initdb.d/
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres/deploy_schemas.sql`__
+
+```sql
+-- Deploy fresh database tables
+
+-- table files,'/i' means execute.
+\i '/docker-entrypoint-initdb.d/tables/users.sql'
+\i '/docker-entrypoint-initdb.d/tables/login.sql'
+
+-- seed files
+\i '/docker-entrypoint-initdb.d/seed/seed.sql'
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres/tables/users.sql`__
+
+```sql
+BEGIN TRANSACTION;
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    name VARCHAR(100),
+    email text UNIQUE NOT NULL,
+    entries BIGINT DEFAULT 0,
+    joined TIMESTAMP NOT NULL
+);
+COMMIT;
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres/tables/login.sql`__
+
+```sql
+BEGIN TRANSACTION;
+
+CREATE TABLE login (
+    id serial PRIMARY KEY,
+    hash VARCHAR(100) NOT NULL,
+    email text UNIQUE NOT NULL
+);
+
+COMMIT;
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/postgres/seed/seed.sql`__
+
+```sql
+BEGIN TRANSACTION;
+
+-- email: test@0721.com, password:123
+INSERT INTO users (name, email, entries, joined ) values ('test-docker-0721', 'test@0721.com', 5, '2020-07-21');
+INSERT INTO login (hash, email ) values ('$2a$10$KqWcUNkhvZXYQcxcbSxhCeyTFA.s0/fHR2xXhsi58//jmWvPqGA8W', 'test@0721.com');
+
+COMMIT;
+```
+
+
+#### `Comment:`
+1. file structure:
+
+<p align="center">
+<img src="../assets/p22-06.png" width=80%>
+</p>
+
+------------------------------------------------------------
+
+2. 查询 postgres 版本：
+
+```bash
+$ psql --version
+```
+
+3. 关于使用 sql script 建立 table 的参考内容：- [创建 sql](http://joshualande.com/create-tables-sql)
+
+4. seed.sql 中的 hash 是使用 bcrypt-nodejs 库生成，使用的密码是字符串 '123',实际登录时直接输入 123 即可，代码为：
+
+```js
+const bcrypt = require('bcrypt-nodejs');
+const hash = bcrypt.hashSync(`123`);
+
+bcrypt.hash("123", null, null, function(err, hash) {
+    // Store hash in your password DB.
+    console.log(hash);
+});
+
+// Load hash from your password DB.
+bcrypt.compare("123", hash, function(err, res) {
+    console.log(res)
+});
+```
+
+
+### <span id="22.8">`Step7: Run.`</span>
+
+- #### Click here: [BACK TO CONTENT](#22.0)
+
+1. 运行命令：
+```bash
+$ docker-compose down
+$ docker-compose up --build
+```
+
+2. 执行命令
+<p align="center">
+<img src="../assets/p22-07.png" width=80%>
+</p>
+
+------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p22-08.png" width=80%>
+</p>
+
+------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p22-09.png" width=80%>
+</p>
+
+------------------------------------------------------------
+
+3. 打开 front-end，使用 `email: test@0721.com, password:123`登录。
+
+<p align="center">
+<img src="../assets/p22-10.png" width=80%>
+</p>
+
+------------------------------------------------------------
+
+<p align="center">
+<img src="../assets/p22-11.png" width=80%>
+</p>
 
 ------------------------------------------------------------
 
