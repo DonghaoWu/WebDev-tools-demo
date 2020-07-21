@@ -1,6 +1,6 @@
 FROM node:12.18.2
 
-WORKDIR /usr/src/smart-brain-api
+WORKDIR /usr/src/smart-brain-api-docker
 
 COPY ./ ./
 

@@ -328,6 +328,8 @@ const db = knex({
 
 - '$2a$10$KqWcUNkhvZXYQcxcbSxhCeyTFA.s0/fHR2xXhsi58//jmWvPqGA8W' 对应密码`123`,这是个字符串，使用 bcrypt-nodejs 库生成。
 
+- 如果你修改了文件夹名字，那么一定要修改 docker file 中的container_name, 不然会产生冲突而不能生成 container。
+
 
 
 

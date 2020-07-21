@@ -4,10 +4,10 @@ services:
 
   # Backend API
   smart-brain-api:
-    container_name: backend
+    container_name: backend-docker
     build: ./
     command: npm start
-    working_dir: /usr/src/smart-brain-api
+    working_dir: /usr/src/smart-brain-api-docker
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_USER: sally
