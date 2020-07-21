@@ -158,17 +158,7 @@ root@3b1e6d9800f6:/usr/src/smart-brain-api-docker# npm start
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
-1. 常见命令：
-
-- `git clone`: 从目标复制一份到本地。（英）Creates a local copy of a remote.
-
-- `git remote -v`: 查看原份文件地址。（英）Lists a Git project’s remotes.
-
-- `git fetch`: 把原分文件的更新带到本地，但不更改本地文件，也不会执行合并命令，下载的更新储存在本地一个地方。（英）This command will not merge changes from the remote into your local repository. It brings those changes onto what’s called a remote branch. Learn more about how this works below.
-
-- `git merge origin/master`: 把 `git fetch` 获得的更新资料合并到本地。（英）Merges origin/master into your local branch.
-
-- `git push origin <branch_name>`: 把当前的本地分支上传到原分文件地址，这样在原分地址就可以看到一个新的分支。（英）Pushes a local branch to the origin remote.
+1. 
 
 #### `Comment:`
 1. `git fetch`: 不会更改任何文件。
