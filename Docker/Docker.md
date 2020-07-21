@@ -30,7 +30,9 @@
 
     5. :star: docker-compose.yml 里面的 database 环境变量设置必须要跟 application 里面获得变量的变量名称一样。
 
-    6. SQL 文件的编写和检查需要特别严谨，需要注意`空格标点还有拼写`。
+    6. :star: SQL 文件的编写和检查需要特别严谨，需要注意`空格标点还有拼写`。
+
+    7. :star: docker 的设置很讲究接口设置。
 ------------------------------------------------------------
 
 ### <span id="22.0">`Brief Contents & codes position`</span>
@@ -206,7 +208,7 @@ services:
 
     - __`smart-brain-api:`__ --> 服务名字。
 
-    - __`container_name: backend-docker`__ --> container 名字，注意这里一个源文件夹名字对应一个 container_name，修改了源文件夹名字就必须修改新的 container_name。
+    - __`container_name: backend-docker`__ --> container 名字，:star:注意这里一个源文件夹名字对应一个 container_name，修改了源文件夹名字就必须修改新的 container_name。
 
     - __`build: ./`__ --> 调用同文件层中的 Dockerfile 并运行 build 命令，这里要说明的是，如果有 Dockerfile 建立 image 了，就不需要使用代码 `image: node:12.18.2`。
 
@@ -224,9 +226,9 @@ services:
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
-1. 参考资料：[docker-compose cli](https://docs.docker.com/compose/reference/overview/)
+1. 参考资料：[点击这里 -- docker-compose cli](https://docs.docker.com/compose/reference/overview/)
 
-2. 常见命令，备注：:star:所有命令都是在 Dockerfile 所在层位置的。
+2. 常见命令，备注：:star:所有命令都是在 docker-compose.yml 所在层位置的。
 
     - __`docker-compose run <serviecesName>`__: 运行一个 service。
 
@@ -331,7 +333,7 @@ const db = knex({
 1. docker-compose.yml 命令代码分析：
     - __`environment`__ --> 设定环境变量，当设定好这些变量之后，container 里面的 application 就可以通过 process.env 来获得这些全局变量。
 
-    - __`build: ./postgres`__ --> 调用同层文件夹 postgre 下面的 Dockerfile 来build service。
+    - __`build: ./postgres`__ --> 调用同层文件夹 postgre 下面的 Dockerfile 来 build service。:star: 这里同样有了 build 就不用 image 关键词。
 
     - __`ports:- "5432:5432"`__ --> container database 的对外接口设定。
 
@@ -423,7 +425,7 @@ COMMIT;
 $ psql --version
 ```
 
-3. 关于使用 sql script 建立 table 的参考内容：- [创建 sql](http://joshualande.com/create-tables-sql)
+3. 关于使用 sql script 建立 table 的参考内容： [点击这里 -- 创建 sql](http://joshualande.com/create-tables-sql)
 
 4. seed.sql 中的 hash 是使用 bcrypt-nodejs 库生成，使用的密码是字符串 '123',实际登录时直接输入 123 即可，代码为：
 
