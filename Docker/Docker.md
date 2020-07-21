@@ -68,11 +68,11 @@ CMD ["/bin/bash"]
 
 #### `Comment:`
 1. 以下逐条分析命令：
-    - `FROM node:12.18.2` --> 生成一个 node 环境，并标注版本号。
-    - `WORKDIR /usr/src/smart-brain-api-docker` --> 在将要生成的 container 里面命名选择一个路径作为工作文件夹，这里要说的是，因为这个 Dockerfile 是主要的 Dockerfile，它这里设置的路径，将要包涵目前 app 文件夹内所有的文件。
-    - `COPY ./ ./` --> 复制指定文件到第二步的路径中，第一个 `./` 指的是文件范围，跟这个 Dockerfile 同层的文件（也就是 backend-smart-api-docker 中所有文件），第二个 `./` 指的是位置，这里指选择所有文件。
-    - `RUN npm install` --> 这里指的是建立环境之后执行的命令，可以有多条。
-    - `CMD ["/bin/bash"]` --> 完成配置之后进入 bash terminal，这里指的是 CMD 命令，只能有一条。
+    - __`FROM node:12.18.2`__ --> 生成一个 node 环境，并标注版本号。
+    - __`WORKDIR /usr/src/smart-brain-api-docker`__ --> 在将要生成的 container 里面命名选择一个路径作为工作文件夹，这里要说的是，因为这个 Dockerfile 是主要的 Dockerfile，它这里设置的路径，将要包涵目前 app 文件夹内所有的文件。
+    - __`COPY ./ ./`__ --> 复制指定文件到第二步的路径中，第一个 `./` 指的是文件范围，跟这个 Dockerfile 同层的文件（也就是 backend-smart-api-docker 中所有文件），第二个 `./` 指的是位置，这里指选择所有文件。
+    - __`RUN npm install`__ --> 这里指的是建立环境之后执行的命令，可以有多条。
+    - __`CMD ["/bin/bash"]`__ --> 完成配置之后进入 bash terminal，这里指的是 CMD 命令，只能有一条。
 
 ### <span id="22.3">`Step3: Docker commands.`</span>
 
@@ -80,23 +80,23 @@ CMD ["/bin/bash"]
 
 1. 常见命令，备注：:star:所有命令都是在 Dockerfile 所在层位置的。
 
-    - `docker build -t <container-name> .`: 生成一个镜像，按照本层存在的 dockerfile 里面的配置下载需要的软件和配置环境。
+    - __`docker build -t <container-name> .`__: 生成一个镜像，按照本层存在的 dockerfile 里面的配置下载需要的软件和配置环境。
 
-    - `docker run -it <container-name>`: 进入目标 container ，__注意命令中 -it 不能缺少__，这个除了进入之外同时在运行 docker container。
+    - __`docker run -it <container-name>`__: 进入目标 container ，__注意命令中 -it 不能缺少__，这个除了进入之外同时在运行 docker container。
 
-    - `node -v`:在 container 内查看当前 node 的版本。
+    - __`node -v`__:在 container 内查看当前 node 的版本。
 
-    - `exit`: 退出当前 container 的 terminal ，但不停止 container 的运作。
+    - __`exit`__: 退出当前 container 的 terminal ，但不停止 container 的运作。
 
-    - `docker run -it -d <container-name>`: 这个命令使 container 后台运行，但不进入 container。
+    - __`docker run -it -d <container-name>`__: 这个命令使 container 后台运行，但不进入 container。
 
-    - `docker ps`: 查看当前正在运行的 container 数据。
+    - __`docker ps`__: 查看当前正在运行的 container 数据。
 
-    - `docker exec -it <containerID> bash`: 前提：目标 container 在后台运行中，输入此命令可进入那个 container 的命令行。
+    - __`docker exec -it <containerID> bash`__: 前提：目标 container 在后台运行中，输入此命令可进入那个 container 的命令行。
 
-    - `docker stop <containerID> `: 停止指定的正在运作的 container。
+    - __`docker stop <containerID>`__: 停止指定的正在运作的 container。
 
-    - `docker run -it -p 4000:4000 my-container`: port binding，主要是设置在本地访问 4000 端口时会转接到 container 的 4000 端口，这样就可以在本地 browser 中访问正在运行的 docker container application。
+    - __`docker run -it -p 4000:4000 my-container`__: port binding，主要是设置在本地访问 4000 端口时会转接到 container 的 4000 端口，这样就可以在本地 browser 中访问正在运行的 docker container application。
 
 ------------------------------------------------------------
 
