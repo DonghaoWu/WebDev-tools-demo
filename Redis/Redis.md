@@ -213,7 +213,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-9.png" width=90%>
+<img src="../assets/p23-09.png" width=90%>
 </p>
 
 ------------------------------------------------------------
