@@ -447,6 +447,9 @@ bcrypt.compare("123", hash, function(err, res) {
 });
 ```
 
+5. 关于 postgres 的 Dockerfile 的配置问题：
+    - /docker-entrypoint-initdb.d 文件夹是在 documentation 找到的，这个文件夹下面的 sql 文件都是自动执行的初始化文件，我们把 `deploy-schemas.sql` 放在这文件夹在建造 container 时就会自动执行，我们换其他名字，比如说 `init.sql` 也会执行这个文件，这些都是在 docker documentation 中找到的。
+
 ### <span id="22.8">`Step8: Other needed files.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
@@ -586,6 +589,16 @@ $ docker-compose up --build
 </p>
 
 ------------------------------------------------------------
+
+- 本章用到的全部资料：
+
+    1. [Docker download website](https://www.docker.com/products/docker-desktop)
+
+    2. [docker-compose version](https://docs.docker.com/compose/compose-file/)
+
+    3. [docker-compose cli](https://docs.docker.com/compose/reference/overview/)
+
+    4. [创建 sql](http://joshualande.com/create-tables-sql)
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
