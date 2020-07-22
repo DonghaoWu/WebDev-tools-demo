@@ -45,3 +45,5 @@
 - [Part21 - Git commands](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Git/Git(Chinese).md)
 
 - [Part22 - Docker](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Docker/Docker.md)
+
+- [Part23 - redis](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Redis/Redis.md)

@@ -65,11 +65,6 @@ $ src/redis-cli
 </p>
 
 ------------------------------------------------------------
-<p align="center">
-<img src="../assets/p23-03.png" width=80%>
-</p>
-
-------------------------------------------------------------
 
 
 ### <span id="23.2">`Step2: redis types.`</span>
@@ -95,7 +90,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-04.png" width=80%>
+<img src="../assets/p23-03.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -113,7 +108,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-05.png" width=80%>
+<img src="../assets/p23-04.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -131,7 +126,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-06.png" width=80%>
+<img src="../assets/p23-05.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -150,7 +145,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-07.png" width=80%>
+<img src="../assets/p23-06.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -174,7 +169,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-08.png" width=80%>
+<img src="../assets/p23-07.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -196,7 +191,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-09.png" width=80%>
+<img src="../assets/p23-08.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -218,7 +213,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-10.png" width=80%>
+<img src="../assets/p23-9.png" width=80%>
 </p>
 
 ------------------------------------------------------------
