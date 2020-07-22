@@ -56,12 +56,12 @@ $ src/redis-cli
 1. 展示：
 
 <p align="center">
-<img src="../assets/p23-01.png" width=80%>
+<img src="../assets/p23-01.png" width=90%>
 </p>
 
 ------------------------------------------------------------
 <p align="center">
-<img src="../assets/p23-02.png" width=80%>
+<img src="../assets/p23-02.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -90,7 +90,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-03.png" width=80%>
+<img src="../assets/p23-03.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -108,7 +108,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-04.png" width=80%>
+<img src="../assets/p23-04.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -126,7 +126,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-05.png" width=80%>
+<img src="../assets/p23-05.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -145,7 +145,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-06.png" width=80%>
+<img src="../assets/p23-06.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -169,7 +169,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-07.png" width=80%>
+<img src="../assets/p23-07.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -191,7 +191,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-08.png" width=80%>
+<img src="../assets/p23-08.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -213,7 +213,7 @@ $ src/redis-cli
 ```
 
 <p align="center">
-<img src="../assets/p23-9.png" width=80%>
+<img src="../assets/p23-9.png" width=90%>
 </p>
 
 ------------------------------------------------------------
