@@ -447,7 +447,7 @@ bcrypt.compare("123", hash, function(err, res) {
 });
 ```
 
-### <span id="22.8">`Step9: Other needed files.`</span>
+### <span id="22.8">`Step8: Other needed files.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
