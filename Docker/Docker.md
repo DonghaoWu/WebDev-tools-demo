@@ -44,7 +44,7 @@
 - [22.3 Docker commands.](#22.3)
 - [22.4 docker-compose.yml file.](#22.4)
 - [22.5 docker-compose commands.](#22.5)
-- [22.6 Add postgres code in docker-compose.](#22.6)
+- [22.6 Add postgres code in docker-compose.yml file.](#22.6)
 - [22.7 Add postgres Dockerfile and sql files.](#22.7)
 - [22.8 Other needed files.](#22.8)
 - [22.9 Run the application.](#22.9)
@@ -258,7 +258,7 @@ $ docker-compose exec <container_name> bash
 
 ------------------------------------------------------------
 
-### <span id="22.6">`Step6: Add postgres code in docker-compose.`</span>
+### <span id="22.6">`Step6: Add postgres code in docker-compose.yml file.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
