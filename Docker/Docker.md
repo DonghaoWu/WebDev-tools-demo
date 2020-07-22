@@ -374,6 +374,7 @@ ADD deploy_schemas.sql /docker-entrypoint-initdb.d/
 
 ```sql
 BEGIN TRANSACTION;
+
 CREATE TABLE users (
     id serial PRIMARY KEY,
     name VARCHAR(100),
@@ -381,6 +382,7 @@ CREATE TABLE users (
     entries BIGINT DEFAULT 0,
     joined TIMESTAMP NOT NULL
 );
+
 COMMIT;
 ```
 
