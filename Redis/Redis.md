@@ -222,14 +222,5 @@ $ src/redis-cli
 #### `Comment:`
 1. 
 
-
-### <span id="23.6">`Step6: 后续补充更新.`</span>
-
-- #### Click here: [BACK TO CONTENT](#23.0)
-
-#### `Comment:`
-
-------------------------------------------------------------
-
 - #### Click here: [BACK TO CONTENT](#23.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
