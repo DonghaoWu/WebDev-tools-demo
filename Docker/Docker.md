@@ -45,8 +45,9 @@
 - [22.4 docker-compose.yml file.](#22.4)
 - [22.5 docker-compose commands.](#22.5)
 - [22.6 Add postgres code in docker-compose.](#22.6)
-- [22.7 Add postgres Dockerfile.](#22.7)
-- [22.8 Run the application.](#22.8)
+- [22.7 Add postgres Dockerfile and sql files.](#22.7)
+- [22.8 Other needed files.](#22.8)
+- [22.9 Run the application.](#22.9)
 
 ------------------------------------------------------------
 
@@ -337,7 +338,7 @@ const db = knex({
 
     - __`ports:- "5432:5432"`__ --> container database 的对外接口设定。
 
-### <span id="22.7">`Step7: Add postgres Dockerfile.`</span>
+### <span id="22.7">`Step7: Add postgres Dockerfile and sql files.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
@@ -444,8 +445,104 @@ bcrypt.compare("123", hash, function(err, res) {
 });
 ```
 
+### <span id="22.8">`Step9: Other needed files.`</span>
 
-### <span id="22.8">`Step7: Run the application.`</span>
+- #### Click here: [BACK TO CONTENT](#22.0)
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/docker-compose.yml`__
+
+```yml
+version: '3.8'
+
+services:
+
+  # Backend API
+  smart-brain-api:
+    container_name: backend-docker
+    build: ./
+    command: npm start
+    working_dir: /usr/src/smart-brain-api-docker
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/smart-brain-api-docker
+
+  # Postgres
+  postgres:
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+    build: ./postgres
+    ports:
+      - "5432:5432"
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/Dockerfile`__
+
+```dockerfile
+FROM node:12.18.2
+
+WORKDIR /usr/src/smart-brain-api-docker
+
+COPY ./ ./
+
+RUN npm install
+
+CMD ["/bin/bash"]
+```
+
+- __`Location: ./demo-apps/backend-smart-brain-api-docker/server.js`__
+
+```js
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
+const knex = require('knex');
+const morgan = require('morgan');
+
+const register = require('./controllers/register');
+const signin = require('./controllers/signin');
+const profile = require('./controllers/profile');
+const image = require('./controllers/image');
+
+const db = knex({
+  client: process.env.POSTGRES_CLIENT,
+  connection: {
+    host: process.env.POSTGRES_HOST,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB
+  }
+});
+
+const app = express();
+
+app.use(morgan('tiny'));
+app.use(cors());
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => { res.send(`This message is from server.js. You will get this message when visit http://localhost:4000/`) })
+app.post('/signin', signin.handleSignin(db, bcrypt))
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) })
+app.put('/image', (req, res) => { image.handleImage(req, res, db) })
+app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
+
+app.listen(4000, () => {
+  console.log('app is running on port 4000');
+})
+```
+
+### <span id="22.9">`Step9: Run the application.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
