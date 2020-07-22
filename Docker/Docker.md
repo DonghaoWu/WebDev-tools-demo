@@ -28,7 +28,7 @@
         $ docker-compose down
         ```
 
-    5. :star: docker-compose.yml 里面的 database 环境变量设置必须要跟 application 里面获得变量的变量名称一样。
+    5. :star: docker-compose.yml 里面的 database 环境变量名称设置必须要跟 application 里面获得变量的变量名称一样。
 
     6. :star: SQL 文件的编写和检查需要特别严谨，需要注意`空格标点还有拼写`。
 
@@ -46,7 +46,7 @@
 - [22.5 docker-compose commands.](#22.5)
 - [22.6 Add postgres code in docker-compose.](#22.6)
 - [22.7 Add postgres Dockerfile.](#22.7)
-- [22.8 Run.](#22.8)
+- [22.8 Run the application.](#22.8)
 
 ------------------------------------------------------------
 
@@ -88,7 +88,7 @@ CMD ["/bin/bash"]
 #### `Comment:`
 1. Dockerfile 命令代码分析：
     - __`FROM node:12.18.2`__ --> 生成一个 node 环境，并标注版本号。
-    - __`WORKDIR /usr/src/smart-brain-api-docker`__ --> 在将要生成的 container 里面命名选择一个路径作为工作文件夹，这里要说的是，因为这个 Dockerfile 是主要的 Dockerfile，它这里设置的路径，将要包涵目前 app 文件夹内所有的文件。
+    - __`WORKDIR /usr/src/smart-brain-api-docker`__ --> 在将要生成的 container 里面命名选择一个路径作为工作文件夹，这里要说的是，因为这个 Dockerfile 是主要的 Dockerfile，它这里设置的路径，将要用来存放目前 application 文件夹内所有的文件。
     - __`COPY ./ ./`__ --> 复制指定文件到第二步的路径中，第一个 `./` 指的是文件范围，跟这个 Dockerfile 同层的文件（也就是 backend-smart-api-docker 中所有文件），第二个 `./` 指的是位置，这里指选择所有文件。
     - __`RUN npm install`__ --> 这里指的是建立环境之后执行的命令，可以有多条。
     - __`CMD ["/bin/bash"]`__ --> 完成配置之后进入 bash terminal，这里指的是 CMD 命令，只能有一条。
@@ -212,7 +212,7 @@ services:
 
     - __`build: ./`__ --> 调用同文件层中的 Dockerfile 并运行 build 命令，这里要说明的是，如果有 Dockerfile 建立 image 了，就不需要使用代码 `image: node:12.18.2`。
 
-    - __`command: npm start`__ --> 执行 terminal 命令。
+    - __`command: npm start`__ --> 在执行完 build 中所有指令，包括 npm install 之后，执行 npm start。
 
     - __`working_dir: /usr/src/smart-brain-api-docker`__ --> working directory，这里的设置必须跟主 Dockerfile (__`Location: ./demo-apps/backend-smart-brain-api-docker/Dockerfile`__)里面的一致。
 
@@ -220,7 +220,7 @@ services:
 
     - __`ports:- "4000:4000"`__ --> container 与外界的对接接口设定。
 
-    - __`volumes: - ./:/usr/src/smart-brain-api-docker`__ --> 允许在本地修改源代码，使 container 做出同步改变，例如可以使用 nodemon 监测。:star:注意参数文件夹要准确。
+    - __`volumes: - ./:/usr/src/smart-brain-api-docker`__ --> 允许在本地修改源代码，使 container 做出同步改变，例如可以使用 nodemon 监测。:star:注意参数文件夹位置要准确。
 
 ### <span id="22.5">`Step5: docker-compose commands.`</span>
 
@@ -261,9 +261,9 @@ $ docker-compose exec <container_name> bash
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
-1. :star: 要注意的是执行这个命令的时候如果 local postgres 已经连接了 port 5432，就算你用 postico 登录也不能用已定义的 USER 和 PASSWORD 登录，因为这个时候 5432 端口是为 local database 服务，只能查询 local database 上面的数据。需要关掉本地 5432 端口的数据库服务之后，再运行 down 和 build 命令，就可以用 postico 用上面的 USER 和 PASSWORD 登录 docker 对应的database。 
+1. :star: 要注意的是执行这个命令的时候如果 local postgres 已经连接了 port 5432，用 postico 不能用已定义的 USER 和 PASSWORD 登录，因为这个时候 5432 端口是为 local database 服务，只能查询 local database 上面的数据。需要关掉 local database 服务之后 5432 才会空出来，再运行 down 和 build 命令，就可以通过访问 5432 端口接触 container 里面的数据库，当然不一定是 5432 端口，也可以修改对接端口。 
 
-2. postgres 的数据库虽然都在本地，但它使用的是端口化访问的形式，每个 postgres 的默认端口是 5432，也就是说本地和 container 里面生成的 database 都是默认使用 5432 接口才能访问的，如果本地的 database 已经占用，解决方法有两个，一是停止本地 database 运作，二是在 docker-compose.yml 中的 ports 设置中改变本地参数，如改为：
+2. postgres 的数据库虽然都在本地，但它使用的是端口化访问的形式，每个 postgres database 的默认端口是 5432，也就是说本地和 container 里面生成的 database 都是默认使用 5432 接口才能访问的，如果本地的 database 已经占用 5432，解决方法有两个，一是停止本地 database 运作，二是在 docker-compose.yml 中的 ports 设置中改变本地参数，如改为：
 
 ```diff
 -    ports:
@@ -445,7 +445,7 @@ bcrypt.compare("123", hash, function(err, res) {
 ```
 
 
-### <span id="22.8">`Step7: Run.`</span>
+### <span id="22.8">`Step7: Run the application.`</span>
 
 - #### Click here: [BACK TO CONTENT](#22.0)
 
