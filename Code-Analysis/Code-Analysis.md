@@ -498,9 +498,10 @@
 
 - 前后端函数对接：
 
-    1. onSubmitSignIn(Signin.js) -> `http://localhost:3000/signin` -> handleSignin(signin.js) -> loadUser + onRouteChange (App.js)
+    1. onSubmitSignIn(Signin.js) -> `http://localhost:3000/signin` -> handleSignin(signin.js) -> loadUser + onRouteChange('home') :star: switch to home page (App.js)
 
-    2. onSubmitRegister(Register.js) -> `http://localhost:3000/register`->  handleRegister(register.js) -> loadUser + onRouteChange (App.js)
+    2. onSubmitRegister(Register.js) -> `http://localhost:3000/register`->  handleRegister(register.js) -> loadUser + onRouteChange('home') :star: switch to home page (App.js)
+
 
     3. onButtonSubmit(ImageLinkForm.js) -> `http://localhost:3000/imageurl` -> handleApiCall(image.js) -> `http://localhost:3000/image` -> handleImage(image.js)
 
