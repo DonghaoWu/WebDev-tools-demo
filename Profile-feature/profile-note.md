@@ -1,4 +1,6 @@
-1. 设置 css
+1. 写一个总体思路，想要做的是什么，打算怎么做，增加什么 component ，增加什么 method，增加什么 state，后端增加什么 handle method，增加什么 library，在哪个地方增加 component，增加的 component 需要什么 bind method？
+
+1. 设置 css `index.js`
 
 `npm install reactstrap`
 
@@ -29,6 +31,8 @@ import css file to js file.
 Profileicon.js component
 
 疑问：要不要 return。
+
+- 原版：
 ```js
   onRouteChange = (route) => {
     if (route === 'signout') {
@@ -37,6 +41,28 @@ Profileicon.js component
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
+  }
+```
+
+```js
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      return this.setState(initialState)
+    } else if (route === 'home') {
+      this.setState({isSignedIn: true})
+    }
+    this.setState({route: route});
+  }
+```
+
+```js
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState(initialState)
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true, route: route })
+    }
+    else this.setState({ route: route });
   }
 ```
 
@@ -97,11 +123,12 @@ sign out 之后 转到 sign in page， 在 App.js 修改
 在sign in 加一个 css 文件 hover black
 
 fix position position of dropdown content
-在 dropdownmenu tag 下面加 right，reactstrap
+在 dropdownmenu tag 下面加 right，reactstrap(`现在是删除 style` ProfileIcon.js)
 
 
+3. `index.html, Modal.js, Modal.css, App.js, Profile.js, Profile.css`
 
-3. 
+`react Portal documentaction`
 
 - Profile modal
 
@@ -192,6 +219,9 @@ export default Profile;
 - 增加 Profile 获取数据库数据。
 
 - 下面在表格更新资料上面下功夫。
+
+
+4. backend `server.js, profile.js`
 
 
 - 在 server.js 中增加一个 route app.post（。。。）

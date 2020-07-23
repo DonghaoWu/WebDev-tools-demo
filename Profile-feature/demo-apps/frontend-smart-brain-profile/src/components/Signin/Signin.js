@@ -18,12 +18,8 @@ class Signin extends React.Component {
     this.setState({signInPassword: event.target.value})
   }
 
-  saveAuthTokenInSessions = (token) => {
-    window.sessionStorage.setItem('token', token);
-  }
-
   onSubmitSignIn = () => {
-    fetch('http://localhost:3000/signin', {
+    fetch('http://localhost:4000/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -32,14 +28,12 @@ class Signin extends React.Component {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        if (data && data.success === "true") {
-          this.saveAuthTokenInSessions(data.token)
-          this.props.loadUser(data.user)
+      .then(user => {
+        if (user.id) {
+          this.props.loadUser(user)
           this.props.onRouteChange('home');
         }
       })
-      .catch(console.log)
   }
 
   render() {
@@ -53,7 +47,7 @@ class Signin extends React.Component {
               <div className="mt3">
                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                 <input
-                  className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
+                  className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                   type="email"
                   name="email-address"
                   id="email-address"
@@ -63,7 +57,7 @@ class Signin extends React.Component {
               <div className="mv3">
                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                 <input
-                  className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
+                  className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                   type="password"
                   name="password"
                   id="password"
