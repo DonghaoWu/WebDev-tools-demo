@@ -810,13 +810,15 @@ export default Modal;
 
     // ...
 
-    onClick={() => this.onProfileUpdate({ name, age, pet })}>
+    onClick={() => this.onProfileUpdate({ name, age, pet })}
 
+
+    // or write the code like this.
     onClick={() => this.onProfileUpdate({ 
         name: this.state.name, 
         age: this.state.age, 
         pet: this.state.pet
-    })}>
+    })}
 ```
 
 6. :star::star::star: profile.js 中的 handleProfileUpdate
