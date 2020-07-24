@@ -531,7 +531,7 @@ export default Profile;
 
 - __`Location: ./demo-apps/backend-smart-brain-api-profile/server.js`__
 
-```js
+```diff
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -565,7 +565,7 @@ app.get('/', (req, res) => { res.send(`This message is from server.js. You will 
 app.post('/signin', signin.handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) })
-app.post('/profile/:id', (req, res) => { profile.handleProfileUpdate(req, res, db) });
++app.post('/profile/:id', (req, res) => { profile.handleProfileUpdate(req, res, db) });
 app.put('/image', (req, res) => { image.handleImage(req, res, db) })
 app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
 
@@ -624,7 +624,7 @@ module.exports = {
 
 - #### Click here: [BACK TO CONTENT](#24.0)
 
-1. App.js 中 onRouteChange 的多种变化：
+1. :star::star::star: App.js 中 onRouteChange 的多种变化，这个 method 里面包含整个 app 的页面转换逻辑：
 
 - 原版：
 ```js
@@ -658,6 +658,43 @@ module.exports = {
     }
     else this.setState({ route: route });
   }
+```
+
+- :star::star::star:不需要 react-router 实现的页面转换，页面转换的思维可以很多，但这个是一个可以学习的基础例子。
+```jsx
+    return (
+      <div className="App">
+        <Particles className='particles'
+          params={particlesOptions}
+        />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} toggleModal={this.toggleModal} />
+        {
+          isProfileOpen &&
+          <Modal>
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser} />
+          </Modal>
+        }
+        {route === 'home'
+          ? <div>
+            <Logo />
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+          </div>
+          : (
+            route === 'signin'
+              ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+              : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          )
+        }
+      </div>
+    );
 ```
 
 2. App.js 中的 toggleModal，结合 state 中的 isProfileOpen，分别派发到两个不同组件，而 isProfileOpen 当作是 Modal 的开关：
