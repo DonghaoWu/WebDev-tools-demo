@@ -13,7 +13,6 @@ const handleProfileGet = (req, res, db) => {
 
 const handleProfileUpdate = (req, res, db) => {
   const { id } = req.params;
-  console.log('hit');
   const { name, age, pet } = req.body.formInput
   db('users')
     .where({ id })

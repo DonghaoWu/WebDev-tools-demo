@@ -158,3 +158,42 @@ export default App;
   3. :boom: 需要注意的是，如果不删除 node_modules 而运行 `npm install`，在执行安装的过程中会报错，而且`npm start`照样不会成功。
 
 ----------------------------------------------------------------------------
+
+8. JSX 的新写法：
+
+```js
+        {
+          isProfileOpen ?
+          <Modal>
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser} />
+          </Modal>
+          :
+          null
+        }
+```
+
+- 改成：
+
+```js
+        {
+          isProfileOpen &&
+          <Modal>
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser} />
+          </Modal>
+        }
+```
+
+9. 对于 onClick 的新认识： onClick 后面必须加上一个函数体，而不是一个运行的函数，表示点击行为之后就启动对应函数，如下：
+
+
+```diff
+// 有参数
+- onClick={someMethod(ag1,ag2,...)}
++ onClick={()=> someMethod(ag1,ag2,...)}
+
+// 无参数
++ onClick={someMethod}
+```
+
+
+
