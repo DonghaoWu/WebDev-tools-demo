@@ -47,9 +47,9 @@
 
         - 配置 ProfileIcon.js 的资源：ProfileIcon.js, reactstrap, toggleModal method, onRouteChange method.
 
-        - `index.js`
-        - `Navigation.js`
-        - `ProfileIcon.js`
+            - `index.js`
+            - `Navigation.js`
+            - `ProfileIcon.js`
         
     2. 把想要显示的 Profile.js 放在展开的 Modal 中：
         - Modal 的设置： index.html -> Modal.js
@@ -58,20 +58,22 @@
 
         - 在 App.js 设置 method 并安排 Modal component 和 Profile component 的位置： App.js -> toggleModal -> Profile.js
 
-        - `index.html`
-        - `Modal.js`
-        - `Modal.css`
-        - `App.js`
+            - `index.html`
+            - `Modal.js`
+            - `Modal.css`
+            - `App.js`
 
-    3. 设计 Profile.js: Profile.js -> Profile.css
+    3. 设计 Profile.js: 
+        - Profile.js -> Profile.css
 
-        - `Profile.js`
-        - `Profile.css`
+            - `Profile.js`
+            - `Profile.css`
 
-    4. 设计 back end 的功能：server.js -> ./controllers/profile.js
+    4. 设计 back end 的功能：
+        - server.js -> ./controllers/profile.js
 
-        - `server.js`
-        - `profile.js`
+            - `server.js`
+            - `profile.js`
 
 #### `Comment:`
 1. 
