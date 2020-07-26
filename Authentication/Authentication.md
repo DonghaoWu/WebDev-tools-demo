@@ -631,9 +631,9 @@ $ ps aux | grep redis
 
 __`本章用到的全部资料：`__
 
-1. [Bearer token](https://security.stackexchange.com/questions/108662/why-is-bearer-required-before-the-token-in-authorization-header-in-a-http-re)
+1. [Bearer token I](https://security.stackexchange.com/questions/108662/why-is-bearer-required-before-the-token-in-authorization-header-in-a-http-re)
 
-2. [Bearer token](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
+2. [Bearer token II](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
 
 
 - #### Click here: [BACK TO CONTENT](#25.0)
