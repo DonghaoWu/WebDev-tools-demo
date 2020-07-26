@@ -355,7 +355,7 @@ module.exports = {
 
 1. Handle no token (Signin.js).
 
-__`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Signin/Signin.js`__
+    __`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Signin/Signin.js`__
 
 
 ```js
@@ -403,7 +403,7 @@ __`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Signin/Signin.j
 
 2. Handle token (App.js).
 
-__`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
+    __`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
 
 ```js
   componentDidMount() {
