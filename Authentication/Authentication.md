@@ -574,7 +574,7 @@ app.listen(4000, () => {
 ```
 
 
-    __`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Profile/Profile.js`__
+__`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Profile/Profile.js`__
 
 ```diff
     onProfileUpdate = (data) => {
