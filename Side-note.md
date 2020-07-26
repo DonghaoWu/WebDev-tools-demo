@@ -253,7 +253,7 @@ export default App;
   }
   ```
 
-  - 在 server.js 中加 middleware，同时在 App。js 中的 headers 中加 authorization。
+  - 在 server.js 中加 middleware，同时在 App.js 中的 headers 中加 authorization。
 
   - 修正，可以在 middleware 中加入 errorHandler，当发生错误时处理 error。
 
@@ -264,3 +264,31 @@ export default App;
   - 这里提到 取消 session‘ token 的情况下能不能够运行功能。
 
   - 在加入 author middleware 但没有加入 token 到 headers 的时候，还是可以收到 resp（Profile.js），且能看到更改了名字，但实际上没有，这说明就算不通过 middleware，但是也会有 resp，而这里 front end 的设定是有 resp 就更改前端，这是不稳妥的做法。
+
+  14. 判断回传数据，api 的会传数据成功或者不成功都会回传 resp，这时候需要判断然后再做动作，比如：
+  ```js
+  if (resp.status === 200 || resp.status === 304) {
+      this.props.toggleModal();
+      this.props.loadUser({ ...this.props.user, ...data });
+  }
+  ```
+  再比如
+  ```js
+  if (session.userId && session.success === 'true') {
+    this.saveAuthTokenInSession(session.token);
+    fetch(`http://localhost:4000/profile/${session.userId}`, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': data.token
+      }
+    })
+  ```
+
+  15. 作者对 resp 的多重 if 判断是一个很好的习惯，同时作者在 postgres 里面的 2 个表，还有 redis 里面的数据储存都是能提供少数据就尽量少的做法很好。
+
+  16. 对于切换 docker 里面的 postgre 跟 local postgre 的区别：
+
+  - 连接 docker 的 postgres 需要先关闭本地 postgres server，然后使用 postico 连接，database name 还有账户密码在 `docker-compose.yml` 中。
+
+  - 连接 local 的 postgres 需要先关闭本地 docker container，然后使用 postico 连接，database name 还有账户密码在 `.env` 中。

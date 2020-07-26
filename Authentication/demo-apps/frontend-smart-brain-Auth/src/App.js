@@ -89,33 +89,30 @@ class App extends Component {
         name: data.name,
         email: data.email,
         entries: data.entries,
-        joined: data.joined
+        joined: data.joined,
+        pet: data.pet,
+        age: data.age
       }
     })
   }
 
   calculateFaceLocations = (data) => {
-    if (data && data.output) {
-      const image = document.getElementById('inputimage');
-      const width = Number(image.width);
-      const height = Number(image.height);
-      return data.outputs[0].data.regions.map(face => {
-        const clarifaiFace = face.region_info.bounding_box;
-        return {
-          leftCol: clarifaiFace.left_col * width,
-          topRow: clarifaiFace.top_row * height,
-          rightCol: width - (clarifaiFace.right_col * width),
-          bottomRow: height - (clarifaiFace.bottom_row * height)
-        }
-      });
-    }
-    return;
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return data.outputs[0].data.regions.map(face => {
+      const clarifaiFace = face.region_info.bounding_box;
+      return {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height)
+      }
+    });
   }
 
   displayFaceBox = (boxes) => {
-    if (boxes) {
-      this.setState({ boxes: boxes });
-    }
+    this.setState({ boxes: boxes });
   }
 
   onInputChange = (event) => {
@@ -123,12 +120,18 @@ class App extends Component {
   }
 
   onButtonSubmit = () => {
+    const token = window.localStorage.getItem('token');
+    if (!token) {
+      this.setState(initialState);
+      window.localStorage.removeItem('token');
+      return;
+    }
     this.setState({ imageUrl: this.state.input });
     fetch('http://localhost:4000/imageurl', {
       method: 'post',
       headers: {
         'Content-type': 'application/json',
-        'Authorization': window.localStorage.getItem('token'),
+        'Authorization': token,
       },
       body: JSON.stringify({
         input: this.state.input
@@ -140,7 +143,7 @@ class App extends Component {
             method: 'put',
             headers: {
               'Content-type': 'application/json',
-              'Authorization': window.localStorage.getItem('token'),
+              'Authorization': token,
             },
             body: JSON.stringify({
               id: this.state.user.id

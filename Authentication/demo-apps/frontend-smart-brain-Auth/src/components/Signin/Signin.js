@@ -32,14 +32,14 @@ class Signin extends React.Component {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        if (data.userId && data.success === 'true') {
-          this.saveAuthTokenInSession(data.token);
-          fetch(`http://localhost:4000/profile/${data.userId}`, {
+      .then(session => {
+        if (session.userId && session.success === 'true') {
+          this.saveAuthTokenInSession(session.token);
+          fetch(`http://localhost:4000/profile/${session.userId}`, {
             method: 'get',
             headers: {
               'Content-type': 'application/json',
-              'Authorization': data.token
+              'Authorization': session.token
             }
           })
             .then(res => res.json())
@@ -48,6 +48,9 @@ class Signin extends React.Component {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
               }
+            })
+            .catch(err => {
+              console.log(err);
             })
         }
       })

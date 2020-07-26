@@ -11,21 +11,25 @@ class Register extends React.Component {
   }
 
   onNameChange = (event) => {
-    this.setState({name: event.target.value})
+    this.setState({ name: event.target.value })
   }
 
   onEmailChange = (event) => {
-    this.setState({email: event.target.value})
+    this.setState({ email: event.target.value })
   }
 
   onPasswordChange = (event) => {
-    this.setState({password: event.target.value})
+    this.setState({ password: event.target.value })
+  }
+
+  saveAuthTokenInSession = (token) => {
+    window.localStorage.setItem('token', token);
   }
 
   onSubmitRegister = () => {
     fetch('http://localhost:4000/register', {
       method: 'post',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: this.state.email,
         password: this.state.password,
@@ -33,11 +37,30 @@ class Register extends React.Component {
       })
     })
       .then(response => response.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user)
-          this.props.onRouteChange('home');
+      .then(session => {
+        if (session.userId && session.success === 'true') {
+          this.saveAuthTokenInSession(session.token);
+          fetch(`http://localhost:4000/profile/${session.userId}`, {
+            method: 'get',
+            headers: {
+              'Content-type': 'application/json',
+              'Authorization': session.token
+            }
+          })
+            .then(res => res.json())
+            .then(user => {
+              if (user && user.email) {
+                this.props.loadUser(user);
+                this.props.onRouteChange('home');
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
         }
+      })
+      .catch(err => {
+        console.log(err);
       })
   }
 

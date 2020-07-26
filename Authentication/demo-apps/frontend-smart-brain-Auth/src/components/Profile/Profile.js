@@ -12,11 +12,17 @@ class Profile extends Component {
     }
 
     onProfileUpdate = (data) => {
+        const token = window.localStorage.getItem('token');
+        if (!token) {
+            this.setState(initialState);
+            window.localStorage.removeItem('token');
+            return;
+        }
         fetch(`http://localhost:4000/profile/${this.props.user.id}`, {
             method: 'post',
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': window.localStorage.getItem('token'),
+                'Authorization': token,
             },
             body: JSON.stringify({
                 formInput: data
@@ -26,7 +32,9 @@ class Profile extends Component {
                 this.props.toggleModal();
                 this.props.loadUser({ ...this.props.user, ...data });
             }
-        }).catch(console.log)
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     onFormChange = (event) => {

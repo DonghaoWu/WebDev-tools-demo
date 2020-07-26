@@ -4,7 +4,7 @@ const redis = require('redis');
 // setup Redis:
 const redisClient = redis.createClient(process.env.REDIS_URI);
 
-const checkUserAndPasswordPromise = (req, res, db, bcrypt) => {
+const noTokenSigninAndGetUser = (req, res, db, bcrypt) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
@@ -16,7 +16,9 @@ const checkUserAndPasswordPromise = (req, res, db, bcrypt) => {
       if (isValid) {
         return db.select('*').from('users')
           .where('email', '=', email)
-          .then(user => user[0])
+          .then(user => {
+            return Promise.resolve(user[0]);
+          })
           .catch(err => Promise.reject('unable to get user'))
       } else {
         return Promise.reject('wrong credentials (wrong password)')
@@ -25,7 +27,7 @@ const checkUserAndPasswordPromise = (req, res, db, bcrypt) => {
     .catch(err => Promise.reject('wrong credentials (wrong email)'))
 }
 
-const getAuthIdByToken = (req, res) => {
+const hasTokenAndGetIdFromRedis = (req, res) => {
   const { authorization } = req.headers;
   return redisClient.get(authorization, (err, reply) => {
     if (err || !reply) {
@@ -62,8 +64,8 @@ const createSession = (user) => {
 
 const signinAuthentication = (req, res, db, bcrypt) => {
   const { authorization } = req.headers;
-  return authorization ? getAuthIdByToken(req, res)
-    : checkUserAndPasswordPromise(req, res, db, bcrypt)
+  return authorization ? hasTokenAndGetIdFromRedis(req, res)
+    : noTokenSigninAndGetUser(req, res, db, bcrypt)
       .then(data => {
         return data.id && data.email ? createSession(data) : Promise.reject(data)
       })
