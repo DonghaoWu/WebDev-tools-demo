@@ -49,3 +49,5 @@
 - [Part23 - redis](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Redis/Redis.md)
 
 - [Part24 - Profile feature](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Profile-feature/Profile-feature.md)
+
+- [Part25 - Authentication](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Authentication/Authentication.md)
