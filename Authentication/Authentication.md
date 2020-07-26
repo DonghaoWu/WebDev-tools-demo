@@ -35,24 +35,26 @@ app.post('/signin', (req, res) => { signin.signinAuthentication(req, res, db, bc
 
 1. 后端思路：一个用户接触 signin route，系统会调用 signinAuthentication，在这里面会先做一个判断，在 req.headers 有没有 authorization key？
 
-- 有，就调用 hasTokenAndGetIdFromRedis，使用已知的 authorization 值去 redis 查询__`获得 id 并 json 返回。`__
+    - 有，就调用 hasTokenAndGetIdFromRedis，使用已知的 authorization 值去 redis 查询__`获得 id 并 json 返回。`__
 
-- 没有，就调用 noTokenSigninAndGetUser，先检查里面包含的 email 和 password 是否符合，成功后获得 id 和 email，然后把 email 作为参数配合 jsonwebtoken 转化成 token 并储存在 redis 里面。__`最后把 id，token 还有一些另外信息打包成 session 然后 json 返回。`__
+    - 没有，就调用 noTokenSigninAndGetUser，先检查里面包含的 email 和 password 是否符合，成功后获得 id 和 email，然后把 email 作为参数配合 jsonwebtoken 转化成 token 并储存在 redis 里面。__`最后把 id，token 还有一些另外信息打包成 session 然后 json 返回。`__
 
-- 这里要说明的是 redis 里面的信息每条是以 token 为 key，id 为 value 的，而 token 其实使用 email 转化而来。
+    - 这里要说明的是 redis 里面的信息每条是以 token 为 key，id 为 value 的，而 token 其实使用 email 转化而来。
 
 2. 前端思路：
 
-- 每次开始读取 App.js 的时候都要先检查 window.localStorage 有没有 token，如果有就调用 backend 的 signin route，其实就是调用 hasTokenAndGetIdFromRedis，最后返回 id，`然后根据 id 获取用户其他信息，最后转换到 home 页并加载用户信息到 state。`
+    - 每次开始读取 App.js 的时候都要先检查 window.localStorage 有没有 token，如果有就调用 backend 的 signin route，其实就是调用 hasTokenAndGetIdFromRedis，最后返回 id，`然后根据 id 获取用户其他信息，最后转换到 home 页并加载用户信息到 state。`
 
-- 如果 App.js 检测不到 token，就按照 initialState 转到 Signin page，在 Signin page 填写 email 和 password 之后，在 onSubmitSignin 处调用 backend 的 signin route，其实就是调用 noTokenSigninAndGetUser，`最后返回包含 id 和 token 的 session data，把 token 保存在 window.localStorage 中，然后根据 id 获取用户其他信息，最后转换到 home 页并加载用户信息到 state。`
+    - 如果 App.js 检测不到 token，就按照 initialState 转到 Signin page，在 Signin page 填写 email 和 password 之后，在 onSubmitSignin 处调用 backend 的 signin route，其实就是调用 noTokenSigninAndGetUser，`最后返回包含 id 和 token 的 session data，把 token 保存在 window.localStorage 中，然后根据 id 获取用户其他信息，最后转换到 home 页并加载用户信息到 state。`
 
 3. 后期工作：
     - signout 加入 delete session 功能。（已完成）
     - table 加入 age 和 pet 属性。 （已完成）
     - register 加入 session 内容。 （已完成, 修改 Register.js 和 register.js）
-    - 前端登录后手动撤掉 session 后调用其他功能会返回 Signin page。（已完成）
+    - 前端登录后手动撤掉 session 后调用其他功能会返回 Signin page，token 被删除或失效。（已完成）
     - 后端发现没 token 调用会报错，也就是说测试一个功能要从前端和后端一同测试，给出前端的反应行为，同时在后端也要在 postman 上面测试反应行为。（已完成）
+
+
     - 增加前端错误信息显示条，比如说前端和后端都遇到错误，前端进行页面跳转并显示来自后端的错误信息。
     - 提升 code 的逻辑，减少重复。
     - 增加 errorHandler。
@@ -122,7 +124,9 @@ app.post('/signin', (req, res) => { signin.signinAuthentication(req, res, db, bc
 
 - #### Click here: [BACK TO CONTENT](#25.0)
 
-1.  Change the function name   __`Location:./demo-apps/backend-smart-brain-api-Auth/server.js`__
+1.  Change the function name
+
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/server.js`__
 
 
 ```diff
@@ -132,7 +136,8 @@ app.post('/signin', (req, res) => { signin.signinAuthentication(req, res, db, bc
 ```
 
 2. Add the new function.
-__`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
+
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
 
 ```js
 const signinAuthentication = (req, res, db, bcrypt) => {
@@ -153,6 +158,8 @@ const signinAuthentication = (req, res, db, bcrypt) => {
 
 3. Add function hasTokenAndGetIdFromRedis. （有 token 的时候就用 token 在 redis 中取得 id。）
 
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
+
 ```js
 const hasTokenAndGetIdFromRedis = (req, res) => {
   const { authorization } = req.headers;
@@ -167,7 +174,7 @@ const hasTokenAndGetIdFromRedis = (req, res) => {
 
 4. Promise the handleSignin function, and change the name to noTokenSigninAndGetUser.（无 token 的时候先验证 email 和 password， 然后在 postgres database 中获得 email 和 id。）
 
-__`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
 
 ```diff
 
@@ -221,7 +228,7 @@ __`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
 
 5. Create session.（接上，获得 id 和 email 之后以 email 作为参数生成 token，然后储存在 redis 中，最后返回一个包含 id 和 token 等信息的 session data）。
 
-__`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/controllers/signin.js`__
 
 ```js
 const signToken = (email) => {
