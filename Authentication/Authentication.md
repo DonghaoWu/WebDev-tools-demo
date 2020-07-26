@@ -449,7 +449,8 @@ __`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
 - #### Click here: [BACK TO CONTENT](#25.0)
 
 1. Create a middleware.
-__`Location:./demo-apps/backend-smart-brain-api-Auth/middlewares/authorization.js`__
+
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/middlewares/authorization.js`__
 
 ```js
 const redis = require('redis');
@@ -476,7 +477,7 @@ module.exports = {
 
 2. Add middleware to routes.
 
-__`Location:./demo-apps/backend-smart-brain-api-Auth/server.js`__
+    __`Location:./demo-apps/backend-smart-brain-api-Auth/server.js`__
 
 ```diff
 require('dotenv').config();
@@ -524,7 +525,7 @@ app.listen(4000, () => {
 
 3. Add header in Front end api call.
 
-__`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
+    __`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
 
 ```diff
   onButtonSubmit = () => {
@@ -570,7 +571,8 @@ __`Location:./demo-apps/frontend-smart-brain-Auth/src/App.js`__
   }
 ```
 
-__`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Profile/Profile.js`__
+
+    __`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Profile/Profile.js`__
 
 ```diff
     onProfileUpdate = (data) => {
