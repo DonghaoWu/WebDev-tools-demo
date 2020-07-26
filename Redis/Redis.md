@@ -52,6 +52,11 @@ $ src/redis-server
 $ src/redis-cli
 ```
 
+5. 进入 cli 之后关闭 redis-server：
+```js
+127.0.0.1:6379> shutdown
+```
+
 #### `Comment:`
 1. 展示：
 

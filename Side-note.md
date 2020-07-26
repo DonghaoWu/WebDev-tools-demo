@@ -195,5 +195,72 @@ export default App;
 + onClick={someMethod}
 ```
 
+10. res.json(data) 的意思是把 data 转换成 json 并发送出去，不需要 return 或者其他关键词。
 
+- res => res.json() 是将返回数据经 json method 处理之后成为一个 object。
 
+11. .then 一整块是一个 promise，但它里面的内容必须带 return，而return 后面可以带一个运行的 promise，也可以带一个普通 datatype。
+
+12. steps
+  - npm install jsonwebtoken
+  - change frontend recieve data name
+  - npm i redis
+  - add redis in backend app
+  - set up redis docker docker-compose.yml
+  - set up env
+  - cd bakcend directory
+  - docker-compose exec redis redis-cli
+  - when get token back, store it in redis
+  - 将一个 function 转变为 promise 是比较新鲜的事情。
+
+  - redis 连接本地, 当然还要使用本地连接 redis 的命令 
+  ```js
+  const redisClient = redis.createClient({ host: '127.0.0.1' });
+  ```
+
+  - redis docker: 
+  ```js
+  const redisClient = redis.createClient(process.env.REDIS_URI);
+  ```
+
+13. work in front end
+
+  - Signin.js store session
+
+  - 查看正在运行的 redis 端口：ps aux | grep redis
+
+  - 'Authorization': `Bearer` + token
+  [https://security.stackexchange.com/questions/108662/why-is-bearer-required-before-the-token-in-authorization-header-in-a-http-re](https://security.stackexchange.com/questions/108662/why-is-bearer-required-before-the-token-in-authorization-header-in-a-http-re))
+
+  [https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/))
+  
+  - 在 App.js 的 componentDidMount 中调用 http://localhost:3000/signin
+
+  - 也修改 Signin.js 中的逻辑
+
+  - midlleware：
+
+  - remove session
+  ```js
+    onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState(initialState);
+      window.localStorage.removeItem('token');
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true, route: route })
+    }
+    else this.setState({ route: route });
+  }
+  ```
+
+  - 在 server.js 中加 middleware，同时在 App。js 中的 headers 中加 authorization。
+
+  - 修正，可以在 middleware 中加入 errorHandler，当发生错误时处理 error。
+
+  - 在 calculateFaceLocations 加入 if
+
+  - 在 displayFaceBox 加入 if
+
+  - 这里提到 取消 session‘ token 的情况下能不能够运行功能。
+
+  - 在加入 author middleware 但没有加入 token 到 headers 的时候，还是可以收到 resp（Profile.js），且能看到更改了名字，但实际上没有，这说明就算不通过 middleware，但是也会有 resp，而这里 front end 的设定是有 resp 就更改前端，这是不稳妥的做法。
