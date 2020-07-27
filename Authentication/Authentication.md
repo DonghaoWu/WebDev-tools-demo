@@ -580,8 +580,10 @@ __`Location:./demo-apps/frontend-smart-brain-Auth/src/components/Profile/Profile
     onProfileUpdate = (data) => {
 +       const token = window.localStorage.getItem('token');
 +       if (!token) {
-+           this.setState(initialState);
++           this.props.loadUser(this.props.initialState);
 +           window.localStorage.removeItem('token');
++           this.props.onRouteChange('signin');
++           this.props.toggleModal();
 +           return;
 +       }
         fetch(`http://localhost:4000/profile/${this.props.user.id}`, {
