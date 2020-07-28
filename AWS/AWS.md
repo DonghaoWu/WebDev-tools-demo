@@ -110,7 +110,7 @@ functions:
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 要注意的是 `service 指的是 IAM Username`。
+1. :star::star::star:要注意的是 `service 指的是 IAM Username`。
 
 ### <span id="26.4">`Step4: Connect AWS with credentials in terminal.`</span>
 
@@ -160,7 +160,11 @@ module.exports.rank = async event => {
 ```
 
 #### `Comment:`
-1. 
+1. :star::star::star: `event.queryStringParameters.rank` 就是指 endpoint 里面包含的查询值，如 endpoint:
+
+- https://6ilr84f27c.execute-api.us-east-1.amazonaws.com/prod/rank`?rank=5`
+
+2. `event.queryStringParameters.rank` 的值为 5。
 
 ### <span id="26.6">`Step6: Deploy the Lambda function and get the endpoint.`</span>
 
