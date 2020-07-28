@@ -278,6 +278,8 @@ export default Rank;
 
 3. :star::star::star: 注意里面 `componentDidMount` 和 `componentDidUpdate` 的用法。
 
+4. 7/28 已删除 iam user(这样还不会停止 lambda，`需要进入 Lambda 删除 function`)，重装要记得设置 username 为：smart-brain-lambda，然后取得 2 个 key， deploy 之后取得 endpoint 复制到 Rank.js。同时也注释了 handler.js 中 function 的 headers 部分，目前 app 是无法使用连接的，但单独访问 endpoint 还是可以。 
+
 - 本章用到的全部资料：
 
 - #### Click here: [BACK TO CONTENT](#26.0)
