@@ -276,6 +276,8 @@ export default Rank;
 
 ------------------------------------------------------------
 
+3. 注意里面 `componentDidMount` 和 `componentDidUpdate` 的用法。
+
 - 本章用到的全部资料：
 
 - #### Click here: [BACK TO CONTENT](#26.0)
