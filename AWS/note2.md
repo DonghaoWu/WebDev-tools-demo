@@ -21,7 +21,7 @@ provider:
   name: aws
   runtime: nodejs12.x
 
-  stage: dev
+  stage: dev # or prod
   region: us-east-1
 
 functions:
@@ -134,3 +134,5 @@ export default Rank;
 - 7/28 修补无输入图片 url 的漏洞。
 - yml 里面的 stage 可以修改为 prod。
 - 7/28 已删除 iam user(这样还不会停止 lambda，`需要进入 Lambda 删除 function`)，重装要记得设置 username 为：smart-brain-lambda，然后取得 2 个 key， deploy 之后取得 endpoint 复制到 Rank.js
+
+- As an idea, you can use an upload profile button to trigger a lambda function that uploads the image to an S3 bucket where you store user profile pictures. Good luck!
