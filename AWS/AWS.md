@@ -276,7 +276,7 @@ export default Rank;
 
 ------------------------------------------------------------
 
-3. 注意里面 `componentDidMount` 和 `componentDidUpdate` 的用法。
+3. :star::star::star: 注意里面 `componentDidMount` 和 `componentDidUpdate` 的用法。
 
 - 本章用到的全部资料：
 
