@@ -51,3 +51,5 @@
 - [Part24 - Profile feature](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Profile-feature/Profile-feature.md)
 
 - [Part25 - Authentication](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Authentication/Authentication.md)
+
+- [Part26 - AWS Lambda function](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/AWS/AWS.md)
