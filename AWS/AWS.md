@@ -163,7 +163,7 @@ module.exports.rank = async event => {
 1. :star::star::star: `event.queryStringParameters.rank` 就是指 endpoint 里面包含的查询值，如 endpoint:
 
 ```bash
-https://6ilr84f878.execute-api.us-east-1.amazonaws.com/prod/rank`?rank=5`
+https://6ilr84f878.execute-api.us-east-1.amazonaws.com/prod/rank?rank=5
 ```
 
 2. `event.queryStringParameters.rank` 的值为 5。
