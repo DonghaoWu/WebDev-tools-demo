@@ -8,7 +8,8 @@
 
 ### `Check Dependencies & Tools:`
 
-- 
+- compression
+- loadtest
 
 ------------------------------------------------------------
 
