@@ -25,12 +25,12 @@
 
 
 <p align="center">
-<img src="../assets/p27-12.png" width=85%>
+<img src="../assets/p27-12.png" width=70%>
 </p>
 
 ------------------------------------------------------------
 <p align="center">
-<img src="../assets/p27-01.png" width=85%>
+<img src="../assets/p27-01.png" width=70%>
 </p>
 
 ------------------------------------------------------------
