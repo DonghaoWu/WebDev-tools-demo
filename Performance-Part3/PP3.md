@@ -255,14 +255,6 @@ $ loadtest -t 5 -c 100 --rps 100 http://localhost:80
 
 2. 上面的 Nginx 不是一个典型服务器配置，只是使用一个 container 来模拟 load balancer 运作的状态。
 
-
-### <span id="27.6">`Step6 Concept questions.`</span>
-
-- #### Click here: [BACK TO CONTENT](#27.0)
-
-  #### `A. `
-
-
 - #### Click here: [BACK TO CONTENT](#27.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
