@@ -53,3 +53,5 @@
 - [Part25 - Authentication](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Authentication/Authentication.md)
 
 - [Part26 - AWS Lambda function](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/AWS/AWS.md)
+
+- [Part26 - Performance Part 3 backend](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part3/PP3.md)
