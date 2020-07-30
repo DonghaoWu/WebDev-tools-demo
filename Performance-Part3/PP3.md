@@ -23,14 +23,14 @@
     - [Nginx doc](https://nginx.org/en/docs/)
     - [How to Configure NGINX](https://www.linode.com/docs/web-servers/nginx/how-to-configure-nginx/)
 
-<p align="center">
-<img src="../assets/p27-01.png" width=85%>
-</p>
-
-------------------------------------------------------------
 
 <p align="center">
 <img src="../assets/p27-12.png" width=85%>
+</p>
+
+------------------------------------------------------------
+<p align="center">
+<img src="../assets/p27-01.png" width=85%>
 </p>
 
 ------------------------------------------------------------
