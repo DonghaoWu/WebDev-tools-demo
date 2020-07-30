@@ -24,13 +24,13 @@
     - [How to Configure NGINX](https://www.linode.com/docs/web-servers/nginx/how-to-configure-nginx/)
 
 <p align="center">
-<img src="../assets/p27-01.png" width=90%>
+<img src="../assets/p27-01.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p27-12.png" width=90%>
+<img src="../assets/p27-12.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -83,7 +83,7 @@
     3. Github pages make it automatically, you cancheck here.
 
 <p align="center">
-<img src="../assets/p27-02.png" width=90%>
+<img src="../assets/p27-02.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -112,19 +112,19 @@
 - #### Click here: [BACK TO CONTENT](#27.0)
 
 <p align="center">
-<img src="../assets/p27-03.png" width=90%>
+<img src="../assets/p27-03.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p27-04.png" width=90%>
+<img src="../assets/p27-04.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p27-05.png" width=90%>
+<img src="../assets/p27-05.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -132,7 +132,7 @@
 1. Identify files changing:
 
 <p align="center">
-<img src="../assets/p27-06.png" width=90%>
+<img src="../assets/p27-06.png" width=85%>
 </p>
 
 - 在每次 build 命令中会生成不同的文件后缀名，如果修改了文件，就会生成新的后缀名，从而 Caching 会根据文件名的不同更新缓存。
@@ -171,19 +171,19 @@
 - 通过 ETag 的不同判断是否需要更新缓存。
 
 <p align="center">
-<img src="../assets/p27-07.png" width=90%>
+<img src="../assets/p27-07.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p27-08.png" width=90%>
+<img src="../assets/p27-08.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p27-09.png" width=90%>
+<img src="../assets/p27-09.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -230,7 +230,7 @@ $ docker-compose up --build
 ```
 
 <p align="center">
-<img src="../assets/p27-10.png" width=90%>
+<img src="../assets/p27-10.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -243,7 +243,7 @@ $ loadtest -t 5 -c 100 --rps 100 http://localhost:80
 ```
 
 <p align="center">
-<img src="../assets/p27-11.png" width=90%>
+<img src="../assets/p27-11.png" width=85%>
 </p>
 
 - :star: 在 loadtest 结果来看，load balancing 会带来 latency（相对一个 server 没有 load balancing），但 load balancing 给整个服务器系统带来稳定性。
