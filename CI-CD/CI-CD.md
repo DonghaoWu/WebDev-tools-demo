@@ -19,6 +19,8 @@
 - 本章用到的全部资料：
     - [Top 8 Continuous Integration Tools](https://code-maze.com/top-8-continuous-integration-tools/)
 
+    - [Prettier doc](https://prettier.io/docs/en/precommit.html)
+
 - circleCI 在组员使用 pull request 时才会用到。
 
 - Prettier will work when we make a commit.
@@ -131,19 +133,38 @@ $ git push origin circleci-demo
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. Remote master 更新之后的操作：
+
+```bash
+$ git checkout master
+$ git fetch
+$ git merge origin/master
+```
 
 ### <span id="28.2">`Step2: Prettier.`</span>
 
 - #### Click here: [BACK TO CONTENT](#28.0)
 
     1. Install.
+
     ```bash
-    $ npm i compression
+    $ npm install --save-dev --save-exact prettier
+    $ npm install --save-dev pretty-quick husky
+    ```
+
+    2. Add script in package.json
+    ```js
+    {
+        "scripts":{
+            "precommit": "pretty-quick --staged"
+        }
+    }
     ```
 
 #### `Comment:`
-1. 
+1. Prettier 会在 commit 的时候运作。
+
+2. 8/1/2020 prettier 未操作展示成功，后补。
 
 - #### Click here: [BACK TO CONTENT](#28.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
