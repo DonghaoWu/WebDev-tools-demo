@@ -31,9 +31,9 @@
 
 - [Part3 - Performance Part 1.2 - Critical rendring path. :diamonds::diamonds:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Performance-Part1/PP1.2-Readme.md) 
 
-- [Part4 - React](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/React-Readme.md) 
+- [Part4 - React :diamonds::diamonds:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/React-Readme.md) 
 
-- [Part5 - Redux](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Redux-Readme.md) 
+- [Part5 - Redux :diamonds::diamonds:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Redux-Readme.md) 
 
 - [Part6 - Dispatch & Thunk :diamonds::diamonds:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/React%2BRedux%2Bwebpack/Dispatch-Thunk.md) 
 
