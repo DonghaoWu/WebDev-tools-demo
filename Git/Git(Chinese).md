@@ -149,6 +149,7 @@ $ git merge skills
 
 - #### Click here: [BACK TO CONTENT](#21.0)
 
+#### `场景一:`
 1. A 和 B 一起在一个 project，A 负责一个分支 feature-A， B 负责一个分支 feature-B，A 和 B 都从 github 下载原始文件：
 
 ```bash
@@ -209,9 +210,19 @@ $ git merge master
 
 :key::key::key: 请注意，这是一个 merge 过程，有可能产生 merge conflict 的情况，当然也可能没有，主要取决于 B 在 feature-B 分支上有没有修改跟 A 在 change-config 分支上同一个文件。如果有 merge conflict，参考上面的 step3 情况处理。
 
+#### `场景二:`
+1. 如果在本地 master 上面编辑了，但又不想删除修改，而是想把改动搬到新的 branch 而不改变 master 该怎么办。
+
+```bash
+$ git branch my-feature
+$ git checkout my-feature
+```
+
+2. 解决方法就是不在 master 上面 add 和 commit，直接转到新的 branch 上编辑就可以，当然这里指`全新的 branch`。
+
 
 #### `Comment:`
-1. 这个属于多人协作 project 常见情况，每个人都在自己的 feature 上运作，但同时 master 在经常更新。‘
+1. 这个属于多人协作 project 常见情况，每个人都在自己的 feature 上运作，但同时 master 在经常更新。
 2. 出现 merge conflict 的时候如果出现差别，第一要进行沟通，然后取舍。而减少 merge conflict 的尝试有几种：
 
     - :star: 第7点的第一种尝试，有效但很低效且容易遗漏出错。
