@@ -16,7 +16,7 @@
 - ####
 
 <p align="center">
-<img src="../assets/p26-micky.png" width=90%>
+<img src="./assets/p26-micky.png" width=90%>
 </p>
 
 ------------------------------------------------------------
@@ -47,7 +47,7 @@
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p26-micky.png" width=90%>
+<img src="./assets/p26-micky.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -69,7 +69,7 @@
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p26-micky.png" width=90%>
+<img src="./assets/p26-micky.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -93,7 +93,7 @@
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p26-micky.png" width=90%>
+<img src="./assets/p26-micky.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
@@ -117,7 +117,7 @@
 - __`Result`__:
 
 <p align="center">
-<img src="../assets/p26-micky.png" width=90%>
+<img src="./assets/p26-micky.png" width=90%>
 </p>
 
 ----------------------------------------------------------------------------
