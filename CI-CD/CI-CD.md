@@ -24,13 +24,13 @@
 - Prettier will work when we make a commit.
 
 <p align="center">
-<img src="../assets/p28-01.png" width=70%>
+<img src="../assets/p28-01.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-<img src="../assets/p28-02.png" width=70%>
+<img src="../assets/p28-02.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -95,14 +95,14 @@ workflows:
 5. Create a new branch and make a pull request.
 
 ```bash
-$ git checkout -b circleci
+$ git checkout -b circleci-demo
 $ git add .
-$ git commit -m'add yml file'
-$ git push origin circleci
+$ git commit -m'add new test in CounterButton.test.js'
+$ git push origin circleci-demo
 ```
 
 <p align="center">
-<img src="../assets/p28-03.png" width=70%>
+<img src="../assets/p28-03.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -110,7 +110,7 @@ $ git push origin circleci
 6. Make a pull request in Github.
 
 <p align="center">
-<img src="../assets/p28-04.png" width=70%>
+<img src="../assets/p28-04.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -118,14 +118,14 @@ $ git push origin circleci
 7. Check the processes in circleci.
 
 <p align="center">
-<img src="../assets/p28-05.png" width=70%>
+<img src="../assets/p28-05.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 8. Merge.
 <p align="center">
-<img src="../assets/p28-06.png" width=70%>
+<img src="../assets/p28-06.png" width=85%>
 </p>
 
 ------------------------------------------------------------
