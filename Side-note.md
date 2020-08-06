@@ -307,3 +307,5 @@ export default App;
   $ lsof -i tcp:3000 # <- port number
   $ kill -9 42898 # <- PID number
   ```
+
+  - 参考资料：[How to kill server when seeing “EADDRINUSE: address already in use”](https://levelup.gitconnected.com/how-to-kill-server-when-seeing-eaddrinuse-address-already-in-use-16c4c4d7fe5d)
