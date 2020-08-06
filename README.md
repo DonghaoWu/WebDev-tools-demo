@@ -80,5 +80,5 @@
 
 - [Part28 - CI/CD :star:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/CI-CD/CI-CD.md)
 
-- [Part29 - Heroku postgreSQL deploy :star::star:](https://github.com/DonghaoWu/Weather-RNEP-heroku-new) __`KEY_WORD: Heroku deploy addon postgreSQL, PostgreSQL pool, package.json scrips, full-stack app file structure, Callback function order, Frontend options input.`__
+- [Part29 - Heroku postgreSQL deploy :star::star:](https://github.com/DonghaoWu/Weather-RNEP-heroku-new/blob/master/README.md) __`KEY_WORD: Heroku deploy addon postgreSQL, PostgreSQL pool, package.json scrips, full-stack app file structure, Callback function order, Frontend options input.`__
 
