@@ -297,6 +297,13 @@ export default App;
 
   18. 改变当前 app 对应的 heroku remote，（比如：实现一个本地 repo 建立多个 heroku app）
 
-  ```basj
+  ```bash
   $ heroku git:remote -a <new-app-name>
+  ```
+
+  19. 查看当前端口占用情况：
+
+  ```bash
+  $ lsof -i tcp:3000 # <- port number
+  $ kill -9 42898 # <- PID number
   ```
