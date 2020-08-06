@@ -294,3 +294,9 @@ export default App;
   - 连接 local 的 postgres 需要先关闭本地 docker container，然后使用 postico 连接，database name 还有账户密码在 `.env` 中。
 
   17. 新场景，如果在 master 上面不小心编辑了，但又不想删除修改，而是想把改动搬到新的 branch 而不改变 master 该怎么办。
+
+  18. 改变当前 app 对应的 heroku remote，（比如：实现一个本地 repo 建立多个 heroku app）
+
+  ```basj
+  $ heroku git:remote -a <new-app-name>
+  ```
