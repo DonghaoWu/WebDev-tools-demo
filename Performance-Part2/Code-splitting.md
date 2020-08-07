@@ -1,5 +1,7 @@
 # Web development tools (Part 10)
 
+### `Key Word: code-splitting, import file when needed, async Compomnent, React.lazy`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.1)

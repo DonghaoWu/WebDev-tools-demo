@@ -1,5 +1,7 @@
 # Web development tools (Part 6)
 
+### `Key Word: thunk middleware, dispatch an async function, dispatch 一个以 dispatch 为参数的函数, thunk 使用规范`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Thunk)

@@ -1,5 +1,7 @@
 # Web development tools (Part 12)
 
+### `Key Word: SEO, manifest, HTTPS, Service worker, React app deploy, Generate report, Favicon.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.3)

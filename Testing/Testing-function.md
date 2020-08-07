@@ -1,5 +1,7 @@
 # Web development tools (Part 13)
 
+### `Key Word: jest, Test sync/async function, Build mocks to test async function.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Testing` (Part 1: Function)

@@ -1,5 +1,7 @@
 # Web development tools (Part 14)
 
+### `Key Word: Enzyme, snapshot testing, code coverage, stateful component testing, mock behaviors.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Testing` (Part 2: React)

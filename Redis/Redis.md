@@ -1,5 +1,7 @@
 # Web development tools (Part 23)
 
+### `Key Word: redis configuration, redis types.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: redis`(Basic)

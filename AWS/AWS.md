@@ -1,5 +1,7 @@
 # Web development tools (Part 26)
 
+### `Key Word: serverless dependency, serverless.yml, deploy lambda function then get the endpoint.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: AWS Lambda.`(Basic)

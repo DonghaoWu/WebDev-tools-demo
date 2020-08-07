@@ -1,5 +1,7 @@
 # Web development tools (Part 5)
 
+### `Key Word: store, types, reducers, actions, redux async fucntion.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Redux)

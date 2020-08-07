@@ -1,5 +1,7 @@
 # Web development tools (Part 25)
 
+### `Key Word: jsonwebtoken, redis, window.localStorage, session, componentDidMount load user, authorization middleware.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Authentication.` (Basic)

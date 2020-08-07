@@ -1,5 +1,7 @@
 # Web development tools (Part 11)
 
+### `Key Word: setState, shouldCOmponentUpdate.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part2.2)

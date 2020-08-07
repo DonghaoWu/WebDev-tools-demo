@@ -1,5 +1,7 @@
 # Web development tools (Part 4)
 
+### `Key Word: create react app, class component & functional component, props & state, <Fragment> & wrap component, error boundary, react syntax, Deploy react app.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(React)

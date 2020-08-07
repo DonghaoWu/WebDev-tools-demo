@@ -1,5 +1,7 @@
 # Web development tools (Part 17)
 
+### `Key Word: TypeScript + App, configuration and code, props types, function types, components types.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: TypeScript` (Part 2: Application)

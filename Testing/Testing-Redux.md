@@ -1,5 +1,7 @@
 # Web development tools (Part 15)
 
+### `Key Word: Enzyme, testing props, beforeEach, shallow, reducer testing, sync/async actions testing.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Testing` (Part 3: Redux)

@@ -1,5 +1,7 @@
 # Web development tools (Part 2)
 
+### `Key Word: Minimize code and less trips, media queries`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part1.1)

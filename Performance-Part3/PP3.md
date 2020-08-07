@@ -1,5 +1,7 @@
 # Web development tools (Part 27)
 
+### `Key Word: CDNs, GZIP, Caching, Database scaling.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Performance`(Performance-Part3)
@@ -16,7 +18,7 @@
 #### `本章背景：`
 
 - 本章用到的全部资料：
-    - [Cachng](https://www.freecodecamp.org/news/the-hidden-components-of-web-caching-970854fe2c49/)
+    - [Caching](https://www.freecodecamp.org/news/the-hidden-components-of-web-caching-970854fe2c49/)
     - [Cache Headers](https://web.dev/http-cache/)
     - [Caching and Performance](https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers)
 

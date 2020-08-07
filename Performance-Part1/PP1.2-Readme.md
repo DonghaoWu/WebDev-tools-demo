@@ -4,6 +4,8 @@
 
 ## `Section: Performance`(Performance-Part1.2)
 
+### `Key Word: Critical render path, css and script position, browser behaviors`
+
 ### `Summary`: In this documentation, we improve website performance by analycing the critical render path.
 
 ### `Check Dependencies & Tools:`

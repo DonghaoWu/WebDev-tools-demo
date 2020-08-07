@@ -1,5 +1,8 @@
 # Web development tools (Part 7)
 
+### `Key Word: calback function order, promise, callback hell, 函数 promise 化, async mode.`
+
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: Front-end`(Async - Promise)

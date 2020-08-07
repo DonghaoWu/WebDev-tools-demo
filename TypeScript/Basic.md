@@ -1,5 +1,7 @@
 # Web development tools (Part 16)
 
+### `Key Word: TypeScript configuration, data types.`
+
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
 
 ## `Section: TypeScript` (Part 1: Basic)
