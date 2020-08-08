@@ -45,12 +45,16 @@ $ make
 3. Run Redis with:
 
 ```bash
+$ cd
+$ cd redis-6.0.6
 $ src/redis-server
 ```
 
 4. You can interact with Redis using the built-in client:
 
 ```bash
+$ cd
+$ cd redis-6.0.6
 $ src/redis-cli
 ```
 
