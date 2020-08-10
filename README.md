@@ -112,3 +112,5 @@
 - [Part29 - <Weather App> Heroku postgreSQL deploy :gem::gem::gem:](https://github.com/DonghaoWu/Weather-RNEP-heroku-new/blob/master/README.md) 
     - __`Key Words: Heroku deploy addon postgreSQL, PostgreSQL pool, package.json scrips, __dirname, full-stack app file structure, Callback function order, Frontend options input.`__
 
+- [Part30 - <Smart brain App> Heroku postgreSQL + redis deploy :gem::gem::gem:](https://github.com/DonghaoWu/smart-brain-prod/blob/master/README.md) 
+    - __`Key Words: Heroku deploy addon postgreSQL, addon redis, Heroku environment variable, package.json scrips, Heroku debug.`__
