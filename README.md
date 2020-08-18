@@ -113,4 +113,4 @@
     - __`Key Words: Heroku deploy addon postgreSQL, PostgreSQL pool, package.json scrips, __dirname, full-stack app file structure, Callback function order, Frontend options input.`__
 
 - [Part30 - <Smart brain App> Heroku postgreSQL + redis deploy :gem::gem::gem:](https://github.com/DonghaoWu/smart-brain-doc/blob/master/README.md) 
-    - __`Key Words: Heroku deploy addon postgreSQL & redis, Heroku environment variable, package.json scrips/ npm scripts, Heroku debug, full-stack app file structure.`__
+    - __`Key Words: Heroku deploy addon postgreSQL & redis, Heroku environment variable, package.json scrips/ npm scripts, Heroku debug, full-stack app files structure.`__
