@@ -86,7 +86,9 @@
 - [Part28 - CI/CD :gem:](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/CI-CD/CI-CD.md) 
     - __`Key Words: circleCI, Prettier.`__
 
-- [Part29 - <Weather App> Heroku postgreSQL deploy :gem::gem::gem:](https://github.com/DonghaoWu/Weather-RNEP-heroku-new/blob/master/README.md) 
+- [Part29 - <Weather App> Heroku postgreSQL deploy :gem::gem::gem:](https://github.com/DonghaoWu/Weather-R.N.E.P-doc-heroku/blob/master/README.md)
+    - __`Code base: NEW`__ 
+    - __`Doc Repo URL:`__[Weather app R.N.E.P](https://github.com/DonghaoWu/Weather-R.N.E.P-doc-heroku)
     - __`Key Words: Heroku deploy addon postgreSQL, PostgreSQL pool, package.json scrips, __dirname, full-stack app file structure, Callback function order, Frontend options input.`__
 
 - [Part30 - <Smart brain App> Heroku postgreSQL + redis deploy :gem::gem::gem:](https://github.com/DonghaoWu/smart-brain-doc/blob/master/README.md) 
